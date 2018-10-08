@@ -10,6 +10,7 @@ import {IRoutePermission} from "../../assets/route-permissions/route-permissions
 import {RouteWithPermissionsModel} from "./route-with-permissions.model";
 import {NextFunction, Request, Response} from "express";
 import {IUpdatePasswordModel} from "./update-password.model";
+import {isNullOrUndefined} from "../util";
 
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -174,7 +175,7 @@ export class AuthUtil {
         }
         try {
             let power: number = 0;
-            let roles: number[] = [];
+            let roles: number[] = [0];
             if (userId && route.requiredPower > 0) {
                 const rows: RowDataPacket[] = await this.db.query(
                     `SELECT auth_user_role.role_id as id, auth_role.power as power
@@ -187,7 +188,7 @@ export class AuthUtil {
                         power = row.power;
                     }
                 });
-                roles = rows.map(row => row.id);
+                roles = roles.concat(rows.map(row => row.id));
             }
             if (route.requiredPower <= power) {
                 return true;
@@ -216,7 +217,7 @@ export class AuthUtil {
 
         const roleIds: Map<string, number> = new Map();
         rows.forEach(row => {
-            if (row.name && row.id) {
+            if (row.name && !isNullOrUndefined(row.id)) {
                 roleIds.set(row.name, row.id);
             }
         });

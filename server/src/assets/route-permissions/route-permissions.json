@@ -20,7 +20,8 @@
           "route": "category",
           "requiredPower": 70,
           "permittedRoles": [
-            "user"
+            "user",
+            "none"
           ]
         }
       ]

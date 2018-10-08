@@ -1,8 +1,7 @@
-import {Application, NextFunction, Request, Response, Router} from "express";
-import {TestService} from "../services/test.service";
-import {AuthUtil} from "../utils/auth/auth.util";
+import {Application} from "express";
 import {authRouter} from "./auth-routes";
-import {finRouter} from "./fin-routes";
+import {CRUDConstructor} from "../core/crud-constructor";
+import {CategoryModel} from "../models/category.model";
 
 const express = require('express');
 export const router = express.Router();
@@ -11,14 +10,9 @@ export class Routes {
 
     public static init(app: Application) {
 
-        const t: TestService = new TestService();
-        const auth: AuthUtil = new AuthUtil();
-
-        app.use('/index', async (req: Request, res: Response, next: NextFunction) => {
-            res.json(await t.getTest());
-        });
-
         app.use('/auth', authRouter);
-        app.use('/fin', finRouter);
+
+        const categoryModelCRUD: CRUDConstructor<CategoryModel> = new CRUDConstructor(new CategoryModel(), 'fin_category', {softDelete: true})
+        app.use('/fin/category', categoryModelCRUD.getRouter());
     }
 }
