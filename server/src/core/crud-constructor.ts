@@ -11,9 +11,8 @@ const express = require('express');
 
 /**
  * Constructs all CRUD operations for objects (modelled as classes implementing ICRUDModel) and saved in a MySQL table.
- * Special properties are 'id' and 'valid' - 'id' identifies the object and must be a property of all provided models,
- * 'valid' is used to soft-delete objects and is optional (The fields don't need to have this name in the MySQL table
- * - you can change it in the optional 'fieldMappings').
+ * Special property is 'id' - 'id' identifies the object and must be a property of all provided models
+ * (The fields don't need to have this name in the MySQL table - you can change it in the optional 'fieldMappings').
  */
 export class CRUDConstructor<T extends ICRUDModel, > {
 
@@ -161,7 +160,7 @@ export class CRUDConstructor<T extends ICRUDModel, > {
 
         // Add check for validity if the objects are soft-deleted
         if(this.softDelete) {
-            statement += ` AND ${this.fieldMappings.get('valid').name} = 1`;
+            statement += ` AND ${this.validFieldMapping} = 1`;
         }
 
         statement += ';';
@@ -173,9 +172,12 @@ export class CRUDConstructor<T extends ICRUDModel, > {
             const result: any = {};
             properties.forEach((property, index) => {
                 if(this.fieldMappings.get(property).type === DBFieldType.BOOLEAN) {
-
+                    result[property] = Boolean(rows[0][fieldsArray[index]]);
+                } else if(this.fieldMappings.get(property).type === DBFieldType.TIMESTAMP) {
+                    result[property] = new Date(Date.parse(rows[0][fieldsArray[index]]));
+                } else {
+                    result[property] = rows[0][fieldsArray[index]];
                 }
-                result[property] = rows[0][fieldsArray[index]];
             });
             // @ts-ignore
             return <T>result;
@@ -236,7 +238,7 @@ export class CRUDConstructor<T extends ICRUDModel, > {
     public async delete(id: number): Promise<number> {
         let statement: string = '';
         if(this.softDelete) {
-            statement = `UPDATE ${this.dbTable} SET ${this.fieldMappings.get('valid').name} = 0 WHERE ${this.fieldMappings.get('id').name} = ${id};`;
+            statement = `UPDATE ${this.dbTable} SET ${this.validFieldMapping} = 0 WHERE ${this.fieldMappings.get('id').name} = ${id};`;
         } else {
             statement = `DELETE FROM ${this.dbTable} WHERE ${this.fieldMappings.get('id').name} = ${id};`;
         }
@@ -325,5 +327,5 @@ interface CRUDOptions {
     autoFilledFields?: string[];
     dbconfig?: IDBConfig;
     fieldMappings?: Map<string, string>;
-    validFieldMapping: string;
+    validFieldMapping?: string;
 }
