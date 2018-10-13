@@ -101,12 +101,12 @@ export class ErrorCodeUtil {
  */
 class ErrorWithCode extends Error {
 
-    id: number;
+    error_code_id: number;
 
     constructor(id: number) {
         super();
         super.message = ErrorCodeUtil.errors.find(value => value.id === id).text;
-        this.id = id;
+        this.error_code_id = id;
     }
 
 }
