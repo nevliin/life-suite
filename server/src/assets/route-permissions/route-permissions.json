@@ -23,6 +23,14 @@
             "user",
             "none"
           ]
+        },
+        {
+          "route": "account",
+          "requiredPower": 70,
+          "permittedRoles": [
+            "user",
+            "none"
+          ]
         }
       ]
     }
