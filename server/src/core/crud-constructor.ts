@@ -6,6 +6,7 @@ import {ErrorCodeUtil} from "../utils/error-code/error-code.util";
 import {NextFunction, Router, Response, Request} from "express";
 import {OkPacket, RowDataPacket} from "mysql";
 import {isNullOrUndefined} from "../utils/util";
+import {catchClause} from "babel-types";
 
 const express = require('express');
 
@@ -127,7 +128,9 @@ export class CRUDConstructor<T extends ICRUDModel, > {
                 statement += ', ';
             }
             if (this.fieldMappings.get(property).type === (DBFieldType.STRING || DBFieldType.TIMESTAMP)) {
-                statement += `'${this.db.esc(data[property].toString())}'`;
+                (data[property] != null)
+                    ? statement += `'${this.db.esc(data[property].toString())}'`
+                    : statement += `null`;
             } else if (this.fieldMappings.get(property).type === DBFieldType.BOOLEAN) {
                 if (typeof data[property] === 'boolean') {
                     const value: number = data[property] ? 1 : 0;
@@ -142,8 +145,16 @@ export class CRUDConstructor<T extends ICRUDModel, > {
         });
         statement += ');';
 
-        const result: OkPacket = await this.db.execute(statement);
-        return result.insertId;
+        try {
+            const result: OkPacket = await this.db.execute(statement);
+            if(this.autoIncrementId) {
+                return result.insertId;
+            } else {
+                return data['id'];
+            }
+        } catch (e) {
+            ErrorCodeUtil.findErrorCodeAndThrow(e);
+        }
     }
 
     /**
@@ -208,7 +219,9 @@ export class CRUDConstructor<T extends ICRUDModel, > {
                 statement += this.fieldMappings.get(property).name + ' = ';
             }
             if (this.fieldMappings.get(property).type === (DBFieldType.STRING || DBFieldType.TIMESTAMP)) {
-                statement += `'${this.db.esc(data[property].toString())}'`;
+                (data[property] != null)
+                    ? statement += `'${this.db.esc(data[property].toString())}'`
+                    : statement += `null`;
             } else if (this.fieldMappings.get(property).type === DBFieldType.BOOLEAN) {
                 if (typeof data[property] === 'boolean') {
                     const value: number = data[property] ? 1 : 0;
