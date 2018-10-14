@@ -17,10 +17,18 @@ export class Routes {
         const categoryModelCRUD: CRUDConstructor<CategoryModel> = new CRUDConstructor(new CategoryModel(), 'fin_category', {softDelete: true});
         app.use('/fin/category', categoryModelCRUD.getRouter());
 
-        const accountModelCRUD: CRUDConstructor<AccountModel> = new CRUDConstructor(new AccountModel(), 'fin_account', {softDelete: true});
+        const accountModelCRUD: CRUDConstructor<AccountModel> = new CRUDConstructor(new AccountModel(), 'fin_account', {
+            softDelete: false,
+            autoFilledFields: ['created_on', 'deactivated'],
+            autoIncrementId: false
+        });
         app.use('/fin/account', accountModelCRUD.getRouter());
 
-        const transactionModelCRUD: CRUDConstructor<TransactionModel> = new CRUDConstructor(new TransactionModel(), 'fin_transaction', {softDelete: true});
+        const transactionModelCRUD: CRUDConstructor<TransactionModel> = new CRUDConstructor(new TransactionModel(), 'fin_transaction', {
+            softDelete: false,
+            autoFilledFields: ['created_on', 'deactivated'],
+            autoIncrementId: true
+        });
         app.use('/fin/transaction', transactionModelCRUD.getRouter());
     }
 }
