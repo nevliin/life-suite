@@ -1,12 +1,12 @@
 {
-  "name": "playground-server",
+  "name": "life-suite-server",
   "version": "1.0.0",
-  "description": "Server for playground",
+  "description": "Server for life-suite",
   "main": "index.js",
   "scripts": {
     "dev": "SET NODE_ENV=development NODE_PATH=src && grunt && nodemon ./bin/start",
     "grunt": "grunt",
-    "start": "node ./bin/start"
+    "start": "PORT=65432 nodemon ./bin/start"
   },
   "author": "",
   "license": "ISC",
