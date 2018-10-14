@@ -107,8 +107,8 @@ export class AuthUtil {
      */
     static routeGuard = async function (req: Request, res: Response, next: NextFunction) {
             try {
-                if (req.get('auth-token')) {
-                    const userId: number = await AuthUtil.verifyToken(req.get('auth-token'));
+                if (req.cookies.auth_token) {
+                    const userId: number = await AuthUtil.verifyToken(req.cookies.auth_token);
                     const route: RouteWithPermissionsModel = AuthUtil.isRouteGuarded(req.path);
                     if (await AuthUtil.verifyRoutePermission(route, userId)) {
                         next();

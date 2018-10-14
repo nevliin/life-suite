@@ -11,7 +11,6 @@ export const init = (): Router => {
     const authRouter = express.Router();
     authRouter.post('/signup', async (req: Request, res: Response, next: NextFunction) => {
         try {
-
             const userId: number = await AuthUtil.signUp((<ISignUpModel>req.body));
             res.status(200).send({
                 userId: userId
@@ -24,9 +23,9 @@ export const init = (): Router => {
     authRouter.post('/login', async (req: Request, res: Response, next: NextFunction) => {
         try {
             const token: string = await AuthUtil.login(<ILoginModel>req.body);
-            res.status(200).send({
-                token: token
-            })
+            res.cookie('auth_token', token).status(200).send({
+                success: true
+            });
         } catch (e) {
             ErrorCodeUtil.resolveErrorOnRoute(e, res);
         }
