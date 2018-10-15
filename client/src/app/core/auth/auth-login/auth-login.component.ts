@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Http} from "@angular/http";
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
+import {jsonpCallbackContext} from "@angular/common/http/src/module";
 
 @Component({
   selector: 'app-auth-login',
@@ -27,10 +28,11 @@ export class AuthLoginComponent implements OnInit {
   }
 
   async submit() {
-    this.http.post('k-kohlen.com/api/auth/login', {
+    console.log(this.loginForm.get('username')!.value);
+    this.http.post('/api/auth/login', {
       username: this.loginForm.get('username').value,
       password: this.loginForm.get('password').value
-    });
+    }).subscribe(response => console.log(response));
   }
 
   async cancel() {

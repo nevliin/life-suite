@@ -1,7 +1,7 @@
 <div>
-  <form formGroup="loginModel">
-    <input type="text" formGroupName="username">
-    <input type="text" formGroupName="password">
+  <form [formGroup]="loginForm">
+    <input type="text" formControlName="username">
+    <input type="text" formControlName="password">
   </form>
   <button (click)="cancel()">Cancel</button>
   <button (click)="submit()">Submit</button>
