@@ -9,7 +9,17 @@ module.exports = function(grunt) {
                         expand: true,
                         cwd: "src",
                         src: ["assets/**/*.json"],
-                        dest: "./dist"
+                        dest: "../build/server/dist"
+                    },
+                    {
+                        expand: false,
+                        src: ["package.json"],
+                        dest: "../build/server/package.json"
+                    },
+                    {
+                        expand: false,
+                        src: ["start.js"],
+                        dest: "../build/server/start.js"
                     }
                 ]
             }
@@ -18,7 +28,7 @@ module.exports = function(grunt) {
             app: {
                 files: [{
                     src: ["src/**/*.ts", "!src/.baseDir.ts"],
-                    dest: "./dist"
+                    dest: "../build/server/dist"
                 }],
                 options: {
                     module: "commonjs",

@@ -4,9 +4,11 @@
   "description": "Server for life-suite",
   "main": "index.js",
   "scripts": {
-    "dev": "SET NODE_ENV=development NODE_PATH=src && grunt && nodemon ./bin/start",
+    "dev": "SET NODE_ENV=development && SET NODE_PATH=src && SET PORT=4000 && grunt && nodemon ./start",
     "grunt": "grunt",
-    "start": "PORT=65432 nodemon ./bin/start"
+    "start:nodemon": "nodemon ./start",
+    "start:node": "node ./start",
+    "prod": "pkill -f node && npm install && nohup node ./start &"
   },
   "author": "",
   "license": "ISC",

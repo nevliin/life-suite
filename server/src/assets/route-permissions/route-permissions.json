@@ -14,23 +14,19 @@
     },
     {
       "route": "fin",
-      "requiredPower": 50,
+      "requiredPower": 0,
       "children": [
         {
           "route": "category",
-          "requiredPower": 70,
-          "permittedRoles": [
-            "user",
-            "none"
-          ]
+          "requiredPower": 10
         },
         {
           "route": "account",
-          "requiredPower": 70,
-          "permittedRoles": [
-            "user",
-            "none"
-          ]
+          "requiredPower": 10
+        },
+        {
+          "route": "transaction",
+          "requiredPower": 10
         }
       ]
     }

@@ -1,6 +1,8 @@
 {
-  "/": {
-    "target": "localhost:4000",
-    "secure": false
+  "/api": {
+    "target": "http://k-kohlen.com",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   }
 }
