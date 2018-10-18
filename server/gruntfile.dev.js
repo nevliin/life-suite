@@ -9,27 +9,16 @@ module.exports = function (grunt) {
                         expand: true,
                         cwd: "src",
                         src: ["assets/**/*.json"],
-                        dest: "../build/server/dist"
-                    },
-                    {
-                        expand: false,
-                        src: ["package.json"],
-                        dest: "../build/server/package.json"
-                    },
-                    {
-                        expand: false,
-                        src: ["start.js"],
-                        dest: "../build/server/start.js"
+                        dest: "./dist"
                     }
                 ]
             }
         },
         ts: {
             app: {
-                files: [
-                    {
+                files: [{
                         src: ["src/**/*.ts", "!src/.baseDir.ts"],
-                        dest: "../build/server/dist"
+                        dest: "./dist"
                     }
                 ],
                 options: {
@@ -41,9 +30,16 @@ module.exports = function (grunt) {
 
             }
         },
+        watch: {
+            ts: {
+                files: ["src/**/*.ts", "!src/.baseDir.ts"],
+                tasks: ["ts"]
+            }
+        }
     });
 
     grunt.loadNpmTasks("grunt-contrib-copy");
+    grunt.loadNpmTasks("grunt-contrib-watch");
     grunt.loadNpmTasks("grunt-ts");
 
     grunt.registerTask("default", [

@@ -1,4 +1,4 @@
-import {ICRUDModel} from "../core/crud.model";
+import {ICRUDModel} from "../../core/crud.model";
 
 export class AccountModel implements ICRUDModel {
     id: number = null;

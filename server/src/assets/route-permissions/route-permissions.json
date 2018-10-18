@@ -29,6 +29,10 @@
           "requiredPower": 10
         }
       ]
+    },
+    {
+      "route": "inv",
+      "requiredPower": 0
     }
   ]
 }
