@@ -6,7 +6,6 @@ import {ErrorCodeUtil} from "../utils/error-code/error-code.util";
 import {NextFunction, Router, Response, Request} from "express";
 import {OkPacket, RowDataPacket} from "mysql";
 import {isNullOrUndefined} from "../utils/util";
-import {catchClause} from "babel-types";
 
 const express = require('express');
 
@@ -198,6 +197,51 @@ export class CRUDConstructor<T extends ICRUDModel, > {
     }
 
     /**
+     * Read object
+     * @param limit - ID of the object
+     * @returns Object with properties read from the DB table
+     */
+    public async list(limit: number): Promise<T[]> {
+        // Get fields to be read and add create the statement with them
+        const properties: string[] = Array.from(this.fieldMappings.keys());
+        const fieldsArray: string[] = properties.map(property => this.fieldMappings.get(property).name);
+        const fields: string = fieldsArray.join(', ');
+        let statement: string = `SELECT ${fields} FROM ${this.dbTable}`;
+
+        // Add check for validity if the objects are soft-deleted
+        if(this.softDelete) {
+            statement += ` WHERE ${this.validFieldMapping} = 1`;
+        }
+
+        if(!isNullOrUndefined(limit)) {
+            statement += ` LIMIT ${limit};`;
+        } else {
+            statement += `;`;
+        }
+
+        const rows: RowDataPacket[] = await this.db.query(statement);
+
+        let result: T[] = [];
+        rows.forEach(row => {
+            if(row) {
+                const rowResult: any = {};
+                properties.forEach((property, index) => {
+                    if(this.fieldMappings.get(property).type === DBFieldType.BOOLEAN) {
+                        rowResult[property] = Boolean(row[fieldsArray[index]]);
+                    } else if(this.fieldMappings.get(property).type === DBFieldType.TIMESTAMP) {
+                        rowResult[property] = new Date(Date.parse(row[fieldsArray[index]]));
+                    } else {
+                        rowResult[property] = row[fieldsArray[index]];
+                    }
+                });
+                // @ts-ignore
+                result.push(<T>rowResult)
+            }
+        });
+        return result;
+    }
+
+    /**
      * Update object
      * @param data - Object to be written to the DB table
      * @returns Object ID
@@ -277,6 +321,26 @@ export class CRUDConstructor<T extends ICRUDModel, > {
         router.get('/read/:id', async (req: Request, res: Response, next: NextFunction) => {
             try {
                 const data: T = await this.read(req.params.id);
+                res.status(200).send({
+                    data: data
+                });
+            } catch (e) {
+                ErrorCodeUtil.resolveErrorOnRoute(e, res);
+            }
+        });
+        router.post('/list', async (req: Request, res: Response, next: NextFunction) => {
+            try {
+                const data: T[] = await this.list(req.body.limit);
+                res.status(200).send({
+                    data: data
+                });
+            } catch (e) {
+                ErrorCodeUtil.resolveErrorOnRoute(e, res);
+            }
+        });
+        router.get('/list', async (req: Request, res: Response, next: NextFunction) => {
+            try {
+                const data: T[] = await this.list(undefined);
                 res.status(200).send({
                     data: data
                 });
