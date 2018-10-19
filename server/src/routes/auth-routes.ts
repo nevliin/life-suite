@@ -23,9 +23,15 @@ export const init = (): Router => {
     authRouter.post('/login', async (req: Request, res: Response, next: NextFunction) => {
         try {
             const token: string = await AuthUtil.login(<ILoginModel>req.body);
-            res.cookie('auth_token', token).status(200).send({
-                success: true
-            });
+            if((<ILoginModel>req.body).rememberMe) {
+                res.cookie('auth_token', token, {maxAge: 2592000000}).status(200).send({
+                    success: true
+                });
+            } else {
+                res.cookie('auth_token', token).status(200).send({
+                    success: true
+                });
+            }
         } catch (e) {
             ErrorCodeUtil.resolveErrorOnRoute(e, res);
         }
