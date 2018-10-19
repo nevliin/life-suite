@@ -4,8 +4,10 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import {CoreModule} from "./core/core.module";
 import {RouterModule} from "@angular/router";
-import {AppRoutingModule} from "./app-routing.module";
+import {AppRouting} from "./app.routing";
 import {HttpClientModule} from "@angular/common/http";
+import {AuthModule} from "./core/auth/auth.module";
+import {InvModule} from "./inv/inv.module";
 
 @NgModule({
   declarations: [
@@ -15,8 +17,10 @@ import {HttpClientModule} from "@angular/common/http";
     BrowserModule,
     CoreModule,
     RouterModule,
-    AppRoutingModule,
-    HttpClientModule
+    AppRouting,
+    HttpClientModule,
+    AuthModule,
+    InvModule
   ],
   providers: [],
   bootstrap: [AppComponent]
