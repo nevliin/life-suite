@@ -1,0 +1,12 @@
+<div id="center">
+  <div class="entry header" [formGroup]="orderForm">
+    <p>Sortierung:
+      <p-dropdown [options]="orderOptions" formControlName="selectedOrder" (onChange)="sortEntries($event.value)"></p-dropdown>
+    </p>
+  </div>
+  <div class="entry" *ngFor="let entry of entries">
+    <button type="button" class="eaten-btn" (click)="eatConfirmation(entry.id)">ESSEN</button>
+    <h1>{{entry.id}} - {{entry.name}}</h1>
+    <p>Verfallsdatum: {{entry.expirationDate.toLocaleDateString()}}</p>
+  </div>
+</div>
