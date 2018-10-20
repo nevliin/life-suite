@@ -1,0 +1,19 @@
+@import '../inv.css';
+
+
+p.difference {
+  font-size: 120%;
+  font-weight: bold;
+  float: right;
+  width: auto;
+  border: 2px solid black;
+  border-radius: 6px;
+}
+
+.difference.missing {
+  background-color: #ff4d4d;
+}
+
+.difference.overflow {
+  background-color: #4dff4d;
+}

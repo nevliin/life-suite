@@ -1,0 +1,9 @@
+<div id="center">
+  <div class="entry header">
+    <p>Soll-Ist-Vergleich</p>
+  </div>
+  <div class="entry" *ngFor="let compareEntry of comparison">
+    <p class="difference" [ngClass]="{'missing': compareEntry.amount < 0, 'overflow': compareEntry.amount > 0}">{{compareEntry.amount | abs}}</p>
+    <h1>{{compareEntry.name}}</h1>
+  </div>
+</div>
