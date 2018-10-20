@@ -1,13 +1,3 @@
-<div id="menu" class="sidenav" [ngClass]="{'opened': menuOpen}">
-  <div class="closebtn" (click)="menuOpen = !menuOpen">&times;</div>
-  <a href="http://epicmusicdb.com/inv/client/index.html">Liste</a>
-  <a href="http://epicmusicdb.com/inv/client/target.html">Zielbestand</a>
-  <a href="http://epicmusicdb.com/inv/client/comparison.html">Abgleich</a>
-  <a href="http://epicmusicdb.com/inv/client/add.html">Hinzuf&uuml;gen</a>
-  <a href="http://epicmusicdb.com/inv/client/search.html">Suchen</a>
-  <a href="http://epicmusicdb.com/inv/client/expirations.html">Verfallsdaten</a>
-  <a href="http://epicmusicdb.com/inv/client/stats.html">Statistiken</a>
-</div>
-<img *ngIf="!menuOpen" id="menu-icon" src="https://epicmusicdb.com/inv/client/src/menu_icon.svg" (click)="menuOpen = !menuOpen">
+<side-menu></side-menu>
 <router-outlet></router-outlet>
 
