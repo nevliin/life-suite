@@ -1,6 +1,4 @@
 import {NextFunction, Request, Response, Router} from "express";
-import {AuthUtil} from "../utils/auth/auth.util";
-import {IUpdatePasswordModel} from "../utils/auth/update-password.model";
 import {ErrorCodeUtil} from "../utils/error-code/error-code.util";
 import {CRUDConstructor} from "../core/crud-constructor";
 import {EntryModel} from "../models/inv/entry.model";
@@ -15,6 +13,21 @@ export const init = (): Router => {
 
     const invService: InvService = new InvService();
 
+    // CRUD Routes
+    const entryModelCRUD: CRUDConstructor<EntryModel> = new CRUDConstructor(new EntryModel(), 'inv_entry', {
+        softDelete: true,
+        autoIncrementId: true
+    });
+
+    const targetEntryModelCRUD: CRUDConstructor<TargetEntryModel> = new CRUDConstructor(new TargetEntryModel(), 'inv_target_entry', {
+        softDelete: false,
+        autoIncrementId: true
+    });
+
+    invRouter.use('/entry', entryModelCRUD.getRouter());
+
+    invRouter.use('/targetEntry', targetEntryModelCRUD.getRouter());
+
     invRouter.get('/comparison', async (req: Request, res: Response, next: NextFunction) => {
         try {
             const result: CompareEntry[] = await invService.getComparison();
@@ -26,18 +39,33 @@ export const init = (): Router => {
         }
     });
 
-    // CRUD Routes
-    const entryModelCRUD: CRUDConstructor<EntryModel> = new CRUDConstructor(new EntryModel(), 'inv_entry', {
-        softDelete: true,
-        autoIncrementId: true
+    invRouter.post('/autoFill', async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const result: number = await invService.getAutoFill(req.body.name);
+            if (result !== null) {
+                res.status(200).send({
+                    data: await entryModelCRUD.readAll(result)
+                });
+            } else {
+                res.status(200).send({
+                    data: null
+                });
+            }
+        } catch (e) {
+            ErrorCodeUtil.resolveErrorOnRoute(e, res);
+        }
     });
-    invRouter.use('/entry', entryModelCRUD.getRouter());
 
-    const targetEntryModelCRUD: CRUDConstructor<TargetEntryModel> = new CRUDConstructor(new TargetEntryModel(), 'inv_target_entry', {
-        softDelete: false,
-        autoIncrementId: true
+    invRouter.get('/nextId', async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const result: number = await invService.getNextId();
+            res.status(200).send({
+                nextId: result
+            });
+        } catch (e) {
+            ErrorCodeUtil.resolveErrorOnRoute(e, res);
+        }
     });
-    invRouter.use('/targetEntry', targetEntryModelCRUD.getRouter());
 
     return invRouter;
 };
