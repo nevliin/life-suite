@@ -304,6 +304,41 @@ export class CRUDConstructor<T extends ICRUDModel, > {
     }
 
     /**
+     * Read object
+     * @param id - ID of the object
+     * @returns Object with properties read from the DB table
+     */
+    public async readAll(id: number): Promise<T> {
+        // Get fields to be read and add create the statement with them
+        const properties: string[] = Array.from(this.fieldMappings.keys());
+        const fieldsArray: string[] = properties.map(property => this.fieldMappings.get(property).name);
+        const fields: string = fieldsArray.join(', ');
+        let statement: string = `SELECT ${fields} FROM ${this.dbTable} WHERE ${this.fieldMappings.get('id').name} = ${id}`;
+
+        statement += ';';
+
+        const rows: RowDataPacket[] = await this.db.query(statement);
+
+        if(rows[0]) {
+            // Assign fields of the result to an empty object and return it
+            const result: any = {};
+            properties.forEach((property, index) => {
+                if(this.fieldMappings.get(property).type === DBFieldType.BOOLEAN) {
+                    result[property] = Boolean(rows[0][fieldsArray[index]]);
+                } else if(this.fieldMappings.get(property).type === DBFieldType.TIMESTAMP) {
+                    result[property] = new Date(Date.parse(rows[0][fieldsArray[index]]));
+                } else {
+                    result[property] = rows[0][fieldsArray[index]];
+                }
+            });
+            // @ts-ignore
+            return <T>result;
+        } else {
+            ErrorCodeUtil.findErrorCodeAndThrow('NO_SUCH_OBJECT');
+        }
+    }
+
+    /**
      * Get router with paths for all CRUD operations
      */
     public getRouter(): Router {
@@ -368,6 +403,18 @@ export class CRUDConstructor<T extends ICRUDModel, > {
                 ErrorCodeUtil.resolveErrorOnRoute(e, res);
             }
         });
+        if(this.softDelete) {
+            router.get('/readAll/:id', async (req: Request, res: Response, next: NextFunction) => {
+                try {
+                    const data: T = await this.readAll(req.params.id);
+                    res.status(200).send({
+                        data: data
+                    });
+                } catch (e) {
+                    ErrorCodeUtil.resolveErrorOnRoute(e, res);
+                }
+            });
+        }
         return router;
     }
 }
