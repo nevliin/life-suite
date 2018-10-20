@@ -1,9 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Http} from "@angular/http";
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
-import {jsonpCallbackContext} from "@angular/common/http/src/module";
 
 @Component({
   selector: 'app-auth-login',
