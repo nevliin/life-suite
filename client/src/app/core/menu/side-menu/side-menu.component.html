@@ -1,0 +1,5 @@
+<div id="menu" class="sidenav" [ngClass]="{'opened': menuOpen}">
+  <div class="closebtn" (click)="menuOpen = !menuOpen">&times;</div>
+  <a *ngFor="let menuEntry of menuEntries" [routerLink]="menuEntry.route" (click)="menuOpen = !menuOpen">{{menuEntry.label}}</a>
+</div>
+<img *ngIf="!menuOpen" id="menu-icon" src="../../../../assets/menu_icon.svg" (click)="menuOpen = !menuOpen">
