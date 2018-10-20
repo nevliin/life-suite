@@ -1,9 +1,13 @@
-import { NgModule } from '@angular/core';
+import {NgModule, Pipe, PipeTransform} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InvListComponent } from './inv-list/inv-list.component';
 import {DropdownModule} from "primeng/dropdown";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { InvComparisonComponent } from './inv-comparison/inv-comparison.component';
+import {PipesModule} from "../core/pipes/pipes.module";
+import { InvTargetComponent } from './inv-target/inv-target.component';
+import { InvExpirationsComponent } from './inv-expirations/inv-expirations.component';
 
 @NgModule({
   imports: [
@@ -11,8 +15,9 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     DropdownModule,
     ReactiveFormsModule,
     FormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    PipesModule
   ],
-  declarations: [InvListComponent]
+  declarations: [InvListComponent, InvComparisonComponent, InvTargetComponent, InvTargetComponent, InvExpirationsComponent]
 })
 export class InvModule { }
