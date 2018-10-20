@@ -1,0 +1,22 @@
+<div id="center">
+  <div class="entry header">
+    <p>Abgelaufende Produkte</p>
+  </div>
+  <div class="entry" *ngFor="let entry of expiredEntries">
+    <button type="button" class="eaten-btn" (click)="eatConfirmation(entry.id)">ESSEN</button>
+    <h1>{{entry.id}} - {{entry.name}}</h1>
+    <p>Verfallsdatum: {{entry.expirationDate.toLocaleDateString()}}</p>
+  </div>
+  <div class="entry header" [formGroup]="expirationsForm">
+    <p>
+      Läuft in den nächsten
+      <input type="text" formControlName="months" size="2" id="months" (change)="findNextExpirations()">
+      Monaten ab
+    </p>
+  </div>
+  <div class="entry" *ngFor="let entry of nextExpiringEntries">
+    <button type="button" class="eaten-btn" (click)="eatConfirmation(entry.id)">ESSEN</button>
+    <h1>{{entry.id}} - {{entry.name}}</h1>
+    <p>Verfallsdatum: {{entry.expirationDate.toLocaleDateString()}}</p>
+  </div>
+</div>
