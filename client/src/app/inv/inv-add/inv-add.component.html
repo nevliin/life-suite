@@ -1,0 +1,52 @@
+<div id="center">
+  <form id="add-product" [formGroup]="entryForm">
+    <fieldset>
+      <legend>Produkt hinf&uuml;gen</legend>
+      <button type="button" (click)="submit()" id="btn-save">Speichern</button>
+      <button type="button" id="btn-autofill" (click)="autoFill()">Ausf&uuml;llen</button>
+      <span width="100%"></span>
+      <table>
+        <tr>
+          <td>ID</td>
+          <td><input type="text" size="5" formControlName="id"/></td>
+        </tr>
+        <tr>
+          <td>Menge</td>
+          <td><input type="number" size="2" formControlName="amount" value="1" (change)="adjustIds($event.value)"/></td>
+        </tr>
+        <tr>
+          <td>Produktname</td>
+          <td><input type="text" size="60" formControlName="name"/></td>
+        </tr>
+        <tr>
+          <td>Hersteller</td>
+          <td><input type="text" size="60" formControlName="producer"/></td>
+        </tr>
+        <tr>
+          <td>Discounter</td>
+          <td><input type="text" size="60" formControlName="market"/></td>
+        </tr>
+        <tr>
+          <td>Gewicht (g)</td>
+          <td><input type="number" size="6" formControlName="weight"/></td>
+        </tr>
+        <tr>
+          <td>Brennwert (kcal)</td>
+          <td><input type="number" size="7" formControlName="kcal"/></td>
+        </tr>
+        <tr>
+          <td>Verfallsdatum</td>
+          <td><input type="date" formControlName="expirationDate"/></td>
+        </tr>
+        <tr>
+          <td>Preis (€)</td>
+          <td><input type="number" size="10" formControlName="price"/></td>
+        </tr>
+        <tr>
+          <td>Notiz</td>
+          <td><input type="text" size="255" formControlName="note"/></td>
+        </tr>
+      </table>
+    </fieldset>
+  </form>
+</div>

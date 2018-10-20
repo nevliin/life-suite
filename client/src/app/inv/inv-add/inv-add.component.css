@@ -1,0 +1,28 @@
+@import '../inv.css';
+
+
+#add-product td {
+  font-size: 100%;
+}
+
+#add-product input {
+  font-size: 100%;
+  width: 50%;
+  padding: 3px;
+  border: 2px solid black;
+  border-radius: 5px;
+}
+
+#add-product legend {
+  font-size: 100%;
+}
+
+#add-product fieldset {
+  padding: 10px;
+  border-radius: 10px;
+}
+
+#add-product table {
+  border-spacing: 5px;
+  clear: right;
+}
