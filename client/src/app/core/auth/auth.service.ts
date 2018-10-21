@@ -5,6 +5,7 @@ import {map} from "rxjs/operators";
 import {ActivatedRouteSnapshot, CanActivate} from "@angular/router";
 import decode from 'jwt-decode';
 import {JwtPayload} from "./jwt-payload";
+import {CookieService} from "../cookie.service";
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,8 @@ export class AuthService implements CanActivate{
   verified: boolean;
 
   constructor(
-    readonly http: HttpClient
+    readonly http: HttpClient,
+    readonly cookieService: CookieService
   ) {
   }
 
@@ -38,10 +40,17 @@ export class AuthService implements CanActivate{
     if(!this.verified) {
       await this.verifyUser();
     }
-    const jwtPayload: JwtPayload = decode(localStorage.getItem('auth_token'));
-    if(jwtPayload && jwtPayload.power) {
-      if(jwtPayload.power >= route.data.requiredPower) {
-        return true;
+    if(this.cookieService.readCookie('auth_token') !== '') {
+      try {
+        const jwtPayload: JwtPayload = decode(this.cookieService.readCookie('auth_token'));
+        if (jwtPayload && jwtPayload.power) {
+          if (jwtPayload.power >= route.data.requiredPower) {
+            return true;
+          }
+        }
+      } catch(e) {
+        console.log(e);
+        return false;
       }
     }
     return false;
