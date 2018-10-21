@@ -25,6 +25,12 @@
         "route": [
           "expirations"
         ]
+      },
+      {
+        "label": "Hinzufügen",
+        "route": [
+          "add"
+        ]
       }
     ]
   }
