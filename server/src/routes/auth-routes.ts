@@ -10,6 +10,8 @@ import {RoleModel} from "../models/auth/role.model";
 
 const express = require('express');
 
+const authCookieName: string = 'auth_token';
+
 export const init = (): Router => {
     const authRouter = express.Router();
     authRouter.post('/signup', async (req: Request, res: Response, next: NextFunction) => {
@@ -26,12 +28,12 @@ export const init = (): Router => {
     authRouter.post('/login', async (req: Request, res: Response, next: NextFunction) => {
         try {
             const token: string = await AuthUtil.login(<ILoginModel>req.body);
-            if((<ILoginModel>req.body).rememberMe) {
-                res.cookie('auth_token', token, {maxAge: 2592000000}).status(200).send({
+            if ((<ILoginModel>req.body).rememberMe) {
+                res.cookie(authCookieName, token, {maxAge: 2592000000}).status(200).send({
                     success: true
                 });
             } else {
-                res.cookie('auth_token', token).status(200).send({
+                res.cookie(authCookieName, token).status(200).send({
                     success: true
                 });
             }
@@ -42,7 +44,8 @@ export const init = (): Router => {
 
     authRouter.get('/logout', async (req: Request, res: Response, next: NextFunction) => {
         try {
-            await AuthUtil.logOut(req.cookies['auth_token']);
+            await AuthUtil.logOut(req.cookies[authCookieName]);
+            res.cookie(authCookieName, '', {expires: new Date()});
             res.status(200).send({
                 success: true
             })
@@ -53,7 +56,7 @@ export const init = (): Router => {
 
     authRouter.get('/verify', async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const result: boolean = await AuthUtil.verifyLogin(req.cookies['auth_token']);
+            const result: boolean = await AuthUtil.verifyLogin(req.cookies[authCookieName]);
             res.status(200).send({
                 valid: result
             })
