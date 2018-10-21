@@ -61,8 +61,11 @@ export class AuthUtil {
             const rows: RowDataPacket[] = await this.db.query(`SELECT id, salted_hash FROM auth_user WHERE username = '${loginModel.username}';`)
             if (rows[0] && rows[0].salted_hash && rows[0].id) {
                 if (loginModel.password && bcrypt.compareSync(loginModel.password, rows[0].salted_hash)) {
+                    const powerAndRoles: { power: number, roles: number[] } = await AuthUtil.getPowerAndRoles(rows[0].id);
                     const token: string = jwt.sign({
-                            userId: rows[0].id
+                            userId: rows[0].id,
+                            power: powerAndRoles.power,
+                            roles: powerAndRoles.roles
                         },
                         config.jwtsecret,
                         {
@@ -82,13 +85,19 @@ export class AuthUtil {
         }
     }
 
-    public static async updatePassword(updatePasswordModel: IUpdatePasswordModel) {
+    public static async logOut(token: string) {
+        if(!isNullOrUndefined(token)) {
+            await this.invalidateToken(token);
+        }
+    }
+
+    public static async updatePassword(updatePasswordModel: IUpdatePasswordModel): Promise<number> {
         const rows: RowDataPacket[] = await this.db.query(`SELECT id, salted_hash FROM auth_user WHERE username = '${updatePasswordModel.username}';`);
         if (rows[0] && rows[0].salted_hash && rows[0].id) {
             if (updatePasswordModel.oldPassword && bcrypt.compareSync(updatePasswordModel.oldPassword, rows[0].salted_hash)) {
                 const hash: string = await bcrypt.hash(updatePasswordModel.newPassword, 10);
                 await this.db.execute(`UPDATE auth_user SET salted_hash='${hash}' WHERE id = ${rows[0].id};`);
-                await this.db.execute(`UPDATE auth_token SET valid = 0 WHERE user_id = ${rows[0].id};`);
+                await this.invalidateTokens(rows[0].id);
                 return rows[0].id;
             } else {
                 ErrorCodeUtil.findErrorCodeAndThrow('INVALID_CREDENTIALS');
@@ -96,6 +105,20 @@ export class AuthUtil {
         } else {
             ErrorCodeUtil.findErrorCodeAndThrow('NO_SUCH_USER');
         }
+    }
+
+    public static async verifyLogin(token: string): Promise<boolean> {
+        if(!isNullOrUndefined(token)) {
+            let statement: string = `SELECT valid FROM auth_token WHERE token='${token}';`;
+            const rows: RowDataPacket[] = await this.db.query(statement);
+            if(rows.length === 0) {
+                return false;
+            } else if(rows[0].valid === 1) {
+                return true;
+            }
+            return false;
+        }
+        return false;
     }
 
     /**
@@ -106,27 +129,47 @@ export class AuthUtil {
      * @param next
      */
     static routeGuard = async function (req: Request, res: Response, next: NextFunction) {
-            try {
-                if (req.cookies.auth_token) {
-                    const userId: number = await AuthUtil.verifyToken(req.cookies.auth_token);
-                    const route: RouteWithPermissionsModel = AuthUtil.isRouteGuarded(req.path);
-                    if (await AuthUtil.verifyRoutePermission(route, userId)) {
-                        next();
-                    } else {
-                        ErrorCodeUtil.resolveErrorOnRoute(ErrorCodeUtil.findErrorCode('ACC_DENIED'), res);
-                    }
+        try {
+            if (req.cookies.auth_token) {
+                const userId: number = await AuthUtil.verifyToken(req.cookies.auth_token);
+                const route: RouteWithPermissionsModel = AuthUtil.isRouteGuarded(req.path);
+                if (await AuthUtil.verifyRoutePermission(route, userId)) {
+                    next();
                 } else {
-                    const route: RouteWithPermissionsModel = AuthUtil.isRouteGuarded(req.path);
-                    if (await AuthUtil.verifyRoutePermission(route, null)) {
-                        next();
-                    } else {
-                        ErrorCodeUtil.resolveErrorOnRoute(ErrorCodeUtil.findErrorCode('ACC_DENIED'), res);
-                    }
+                    ErrorCodeUtil.resolveErrorOnRoute(ErrorCodeUtil.findErrorCode('ACC_DENIED'), res);
                 }
-            } catch (e) {
-                ErrorCodeUtil.resolveErrorOnRoute(ErrorCodeUtil.findErrorCode('ACC_DENIED'), res);
+            } else {
+                const route: RouteWithPermissionsModel = AuthUtil.isRouteGuarded(req.path);
+                if (await AuthUtil.verifyRoutePermission(route, null)) {
+                    next();
+                } else {
+                    ErrorCodeUtil.resolveErrorOnRoute(ErrorCodeUtil.findErrorCode('ACC_DENIED'), res);
+                }
             }
+        } catch (e) {
+            ErrorCodeUtil.resolveErrorOnRoute(ErrorCodeUtil.findErrorCode('ACC_DENIED'), res);
+        }
     };
+
+    public static async getPowerAndRoles(userId: number): Promise<{ power: number, roles: number[] }> {
+        let power: number = 0;
+        let roles: number[] = [0];
+        if (userId) {
+            const rows: RowDataPacket[] = await this.db.query(
+                `SELECT auth_user_role.role_id as id, auth_role.power as power
+                    FROM auth_user_role 
+                    JOIN auth_user ON auth_user.id = auth_user_role.user_id
+                    JOIN auth_role ON auth_role.id = auth_user_role.role_id
+                    WHERE auth_user.id = ${userId};`);
+            rows.forEach(row => {
+                if (row.power > power) {
+                    power = row.power;
+                }
+            });
+            roles = roles.concat(rows.map(row => row.id));
+        }
+        return {power: power, roles: roles};
+    }
 
     /**
      * Verifies the validity of a JWT token and returns the user id stored in it
@@ -135,11 +178,29 @@ export class AuthUtil {
     public static async verifyToken(token: string): Promise<number> {
         try {
             const payload: IJWTPayloadModel = await jwt.verify(token, config.jwtsecret);
+
+            let statement: string = `SELECT valid FROM auth_token WHERE token='${token}';`;
+            const rows: RowDataPacket[] = await this.db.query(statement);
+            if(rows.length === 0) {
+                return undefined;
+            } else if(rows[0].valid === 0) {
+                return undefined;
+            }
             return payload.userId;
         } catch (e) {
             this.logger.debug(e, 'verifyToken');
             throw e;
         }
+    }
+
+    public static async invalidateTokens(userId: number) {
+        let statement: string = `UPDATE auth_token SET valid=0 WHERE user_id=${userId};`;
+        await this.db.execute(statement);
+    }
+
+    public static async invalidateToken(token: string) {
+        let statement: string = `UPDATE auth_token SET valid=0 WHERE token='${this.db.esc(token)}';`;
+        await this.db.execute(statement);
     }
 
     /**
@@ -148,14 +209,14 @@ export class AuthUtil {
      */
     public static isRouteGuarded(routeName: string): RouteWithPermissionsModel {
         let route: RouteWithPermissionsModel;
-        if(this.routePermissions.has(routeName)) {
+        if (this.routePermissions.has(routeName)) {
             route = this.routePermissions.get(routeName);
         } else {
             const splitName: string[] = routeName.split('/');
             splitName.splice(0, 1);
-            for(let i = 0; i < (splitName.length + 1); i++) {
-                splitName.splice(splitName.length-1, 1);
-                if(this.routePermissions.has('/' + splitName.join('/'))) {
+            for (let i = 0; i < (splitName.length + 1); i++) {
+                splitName.splice(splitName.length - 1, 1);
+                if (this.routePermissions.has('/' + splitName.join('/'))) {
                     route = this.routePermissions.get('/' + splitName.join('/'));
                     break;
                 }
@@ -170,26 +231,13 @@ export class AuthUtil {
      * @param userId
      */
     public static async verifyRoutePermission(route: RouteWithPermissionsModel, userId: number): Promise<boolean> {
-        if(!route) {
+        if (!route) {
             return true;
         }
         try {
-            let power: number = 0;
-            let roles: number[] = [0];
-            if (userId && route.requiredPower > 0) {
-                const rows: RowDataPacket[] = await this.db.query(
-                    `SELECT auth_user_role.role_id as id, auth_role.power as power
-                    FROM auth_user_role 
-                    JOIN auth_user ON auth_user.id = auth_user_role.user_id
-                    JOIN auth_role ON auth_role.id = auth_user_role.role_id
-                    WHERE auth_user.id = ${userId};`);
-                rows.forEach(row => {
-                    if (row.power > power) {
-                        power = row.power;
-                    }
-                });
-                roles = roles.concat(rows.map(row => row.id));
-            }
+            const result: { power: number, roles: number[] } = await AuthUtil.getPowerAndRoles(userId);
+            const power: number = result.power;
+            const roles: number[] = result.roles;
             if (route.requiredPower <= power) {
                 return true;
             } else if (roles.some(role => route.permittedRoles.includes(role))) {

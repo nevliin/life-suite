@@ -37,6 +37,28 @@ export const init = (): Router => {
         }
     });
 
+    authRouter.get('/logout', async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            await AuthUtil.logOut(req.cookies['auth_token']);
+            res.status(200).send({
+                success: true
+            })
+        } catch (e) {
+            ErrorCodeUtil.resolveErrorOnRoute(e, res);
+        }
+    });
+
+    authRouter.get('/verify', async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const result: boolean = await AuthUtil.verifyLogin(req.cookies['auth_token']);
+            res.status(200).send({
+                valid: result
+            })
+        } catch (e) {
+            ErrorCodeUtil.resolveErrorOnRoute(e, res);
+        }
+    });
+
     authRouter.post('/updatePassword', async (req: Request, res: Response, next: NextFunction) => {
         try {
             const userId: number = await AuthUtil.updatePassword(<IUpdatePasswordModel>req.body);
