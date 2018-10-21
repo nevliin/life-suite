@@ -5,6 +5,8 @@ import {ErrorCodeUtil} from "../utils/error-code/error-code.util";
 import {ILoginModel} from "../utils/auth/login.model";
 import {IUpdatePasswordModel} from "../utils/auth/update-password.model";
 import {IEditRolesModel} from "../utils/auth/edit-roles.model";
+import {CRUDConstructor} from "../core/crud-constructor";
+import {RoleModel} from "../models/auth/role.model";
 
 const express = require('express');
 
@@ -81,6 +83,14 @@ export const init = (): Router => {
             ErrorCodeUtil.resolveErrorOnRoute(e, res);
         }
     });
+
+    const roleModelCRUD: CRUDConstructor<RoleModel> = new CRUDConstructor<RoleModel>(new RoleModel(), 'auth_role', {
+        autoIncrementId: true,
+        autoFilledFields: [
+            'created_on'
+        ]
+    });
+    authRouter.use('/role', roleModelCRUD.getRouter());
 
     return authRouter;
 };

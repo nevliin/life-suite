@@ -13,6 +13,10 @@
         {
           "route": "editRoles",
           "requiredPower": 100
+        },
+        {
+          "route": "role",
+          "requiredPower": 100
         }
       ]
     },
