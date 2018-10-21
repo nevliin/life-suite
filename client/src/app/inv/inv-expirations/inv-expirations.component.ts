@@ -28,21 +28,20 @@ export class InvExpirationsComponent implements OnInit {
   }
 
   async fetchEntries() {
-    this.entries = await this.http.get('/api/inv/entry/list')
+    this.entries = (await this.http.get('/api/inv/entry/list')
       .pipe(map((response: { data: InvEntry[] }) => { return response.data
           .map((entry: InvEntry) => {
             entry.expirationDate = new Date(entry.expirationDate);
             return entry;
           })
         })
-      ).toPromise();
+      ).toPromise()).sort((entry1, entry2) => entry1.expirationDate.getTime() - entry2.expirationDate.getTime());
     this.expiredEntries = this.entries.filter(entry => entry.expirationDate.getTime() < (new Date()).getTime());
     this.findNextExpirations();
   }
 
   findNextExpirations() {
     const months: number = Number.parseInt(this.expirationsForm.get('months')!.value);
-    console.log(months);
     this.nextExpiringEntries = this.entries.filter(entry => {
       const date: Date = new Date();
       date.setMonth(date.getMonth()+months);
