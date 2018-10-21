@@ -11,6 +11,7 @@ import {RouteWithPermissionsModel} from "./route-with-permissions.model";
 import {NextFunction, Request, Response} from "express";
 import {IUpdatePasswordModel} from "./update-password.model";
 import {isNullOrUndefined} from "../util";
+import {IEditRolesModel} from "./edit-roles.model";
 
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -86,7 +87,7 @@ export class AuthUtil {
     }
 
     public static async logOut(token: string) {
-        if(!isNullOrUndefined(token)) {
+        if (!isNullOrUndefined(token)) {
             await this.invalidateToken(token);
         }
     }
@@ -108,15 +109,34 @@ export class AuthUtil {
     }
 
     public static async verifyLogin(token: string): Promise<boolean> {
-        if(!isNullOrUndefined(token)) {
+        if (!isNullOrUndefined(token)) {
             let statement: string = `SELECT valid FROM auth_token WHERE token='${token}';`;
             const rows: RowDataPacket[] = await this.db.query(statement);
-            if(rows.length === 0) {
+            if (rows.length === 0) {
                 return false;
-            } else if(rows[0].valid === 1) {
+            } else if (rows[0].valid === 1) {
                 return true;
             }
             return false;
+        }
+        return false;
+    }
+
+    public static async editRoles(editRolesModel: IEditRolesModel): Promise<boolean> {
+        if (!isNullOrUndefined(editRolesModel.userId)) {
+            if (editRolesModel.addRoles.length > 0) {
+                for (const role of editRolesModel.addRoles) {
+                    let statement: string = `INSERT INTO auth_user_role(user_id, role_id) VALUES(${editRolesModel.userId}, ${role});`;
+                    await this.db.execute(statement);
+                }
+            }
+            if (editRolesModel.removeRoles.length > 0) {
+                for (const role of editRolesModel.addRoles) {
+                    let statement: string = `DELETE FROM auth_user_role(user_id, role_id) WHERE user_id=${editRolesModel.userId} AND role_id=${role};`;
+                    await this.db.execute(statement);
+                }
+            }
+            return true;
         }
         return false;
     }
@@ -181,9 +201,9 @@ export class AuthUtil {
 
             let statement: string = `SELECT valid FROM auth_token WHERE token='${token}';`;
             const rows: RowDataPacket[] = await this.db.query(statement);
-            if(rows.length === 0) {
+            if (rows.length === 0) {
                 return undefined;
-            } else if(rows[0].valid === 0) {
+            } else if (rows[0].valid === 0) {
                 return undefined;
             }
             return payload.userId;

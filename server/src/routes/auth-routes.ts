@@ -4,6 +4,7 @@ import {ISignUpModel} from "../utils/auth/signup.model";
 import {ErrorCodeUtil} from "../utils/error-code/error-code.util";
 import {ILoginModel} from "../utils/auth/login.model";
 import {IUpdatePasswordModel} from "../utils/auth/update-password.model";
+import {IEditRolesModel} from "../utils/auth/edit-roles.model";
 
 const express = require('express');
 
@@ -64,6 +65,17 @@ export const init = (): Router => {
             const userId: number = await AuthUtil.updatePassword(<IUpdatePasswordModel>req.body);
             res.status(200).send({
                 userId: userId
+            });
+        } catch (e) {
+            ErrorCodeUtil.resolveErrorOnRoute(e, res);
+        }
+    });
+
+    authRouter.post('/editRoles', async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const success: boolean = await AuthUtil.editRoles(<IEditRolesModel>req.body);
+            res.status(200).send({
+                success: success
             });
         } catch (e) {
             ErrorCodeUtil.resolveErrorOnRoute(e, res);

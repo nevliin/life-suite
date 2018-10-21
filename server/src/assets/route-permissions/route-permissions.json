@@ -9,6 +9,10 @@
         },
         {
           "route": "login"
+        },
+        {
+          "route": "editRoles",
+          "requiredPower": 100
         }
       ]
     },
