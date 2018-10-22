@@ -4,7 +4,7 @@ import {AuthModule} from "./auth/auth.module";
 import {ErrorHandlingModule} from "./error-handling/error-handling.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {PipesModule} from "./pipes/pipes.module";
-import {MenuModule} from "./menu/menu.module";
+import {DynamicMenuModule} from "./menu/dynamic-menu.module";
 
 @NgModule({
   imports: [
@@ -14,7 +14,7 @@ import {MenuModule} from "./menu/menu.module";
     FormsModule,
     ReactiveFormsModule,
     PipesModule,
-    MenuModule
+    DynamicMenuModule
   ],
   declarations: []
 })

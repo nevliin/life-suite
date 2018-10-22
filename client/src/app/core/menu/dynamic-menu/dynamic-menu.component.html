@@ -1,0 +1,5 @@
+<p-sidebar [(visible)]="menuOpen" [baseZIndex]="10000">
+  <h1 style="font-weight:normal">Inventory</h1>
+  <p-menu [model]="menuEntries" (click)="menuOpen = false"></p-menu>
+</p-sidebar>
+<img *ngIf="!menuOpen" id="menu-icon" src="../../../../assets/menu_icon.svg" (click)="menuOpen = !menuOpen">

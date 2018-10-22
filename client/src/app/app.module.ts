@@ -8,7 +8,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {AuthModule} from "./core/auth/auth.module";
 import {InvModule} from "./inv/inv.module";
 import {CoreModule} from "./core/core.module";
-import {MenuModule} from "./core/menu/menu.module";
+import {DynamicMenuModule} from "./core/menu/dynamic-menu.module";
 
 @NgModule({
   declarations: [
@@ -17,7 +17,7 @@ import {MenuModule} from "./core/menu/menu.module";
   imports: [
     BrowserModule,
     CoreModule,
-    MenuModule,
+    DynamicMenuModule,
     RouterModule,
     AppRouting,
     HttpClientModule,
