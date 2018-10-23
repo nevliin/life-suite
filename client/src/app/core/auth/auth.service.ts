@@ -33,6 +33,10 @@ export class AuthService implements CanActivate{
     this.verified = true;
   }
 
+  /**
+   * Route guard, returns true if the user is logged in and has enough power or an appropriate role for the route
+   * @param route
+   */
   async canActivate(route: ActivatedRouteSnapshot): Promise<boolean> {
     if(this.roles === undefined) {
       await this.fetchRoleIds();
@@ -56,6 +60,9 @@ export class AuthService implements CanActivate{
     return false;
   }
 
+  /**
+   * Get IDs of all roles
+   */
   async fetchRoleIds() {
     await this.http.get('/api/auth/role/list').pipe(map((response: any) => {
       const tempMap: Map<number, string> = new Map();

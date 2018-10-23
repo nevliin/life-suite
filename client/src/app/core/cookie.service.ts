@@ -8,7 +8,11 @@ export class CookieService {
   constructor() {
   }
 
-  readCookie(name: string) {
+  /**
+   * Read cookie with the given name and return its value
+   * @param name
+   */
+  readCookie(name: string): string {
     let nameEQ = name + "=";
     let ca = document.cookie.split(';');
     for (let i = 0; i < ca.length; i++) {

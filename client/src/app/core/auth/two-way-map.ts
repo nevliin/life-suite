@@ -1,3 +1,6 @@
+/**
+ * Map to get A from B and vice versa
+ */
 export class TwoWayMap<A, B>{
 
   map: Map<A, B>;
