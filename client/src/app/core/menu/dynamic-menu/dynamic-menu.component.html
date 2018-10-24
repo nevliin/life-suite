@@ -1,5 +1,8 @@
+<p-menubar [model]="menuBarItems">
+    <input type="text" pInputText placeholder="Search">
+    <button pButton label="Logout" icon="pi pi-sign-out" style="margin-left:.25em"></button>
+</p-menubar>
 <p-sidebar [(visible)]="menuOpen" [baseZIndex]="10000">
-  <h1 style="font-weight:normal">Inventory</h1>
-  <p-menu [model]="menuEntries" (click)="menuOpen = false"></p-menu>
+  <h1 style="font-weight:normal">{{menuTitle}}</h1>
+  <p-menu [model]="menuItems" (click)="menuOpen = false"></p-menu>
 </p-sidebar>
-<img *ngIf="!menuOpen" id="menu-icon" src="../../../../assets/menu_icon.svg" (click)="menuOpen = !menuOpen">
