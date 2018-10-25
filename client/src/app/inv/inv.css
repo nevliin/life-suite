@@ -8,13 +8,13 @@
 
 .entry > h1 {
   font-size: 150%;
-  margin: 0px;
+  margin: 0;
   padding: 5px;
 }
 
 .entry > p {
   font-size: 100%;
-  margin: 0px;
+  margin: 0;
   padding: 5px;
 }
 
@@ -38,6 +38,12 @@
   width: 150px;
 }
 
-#center {
-  margin-left: 66px;
+button[type=button] {
+    border-radius: 10px;
+    background-color: #9c9c9c;
+    margin: 5px;
+    padding: 5px;
+    font-size: 2em;
+    display: inline-block;
+    width: 100%;
 }

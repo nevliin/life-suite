@@ -8,6 +8,7 @@ import { InvComparisonComponent } from './inv-comparison/inv-comparison.componen
 import {PipesModule} from "../core/pipes/pipes.module";
 import { InvTargetComponent } from './inv-target/inv-target.component';
 import { InvExpirationsComponent } from './inv-expirations/inv-expirations.component';
+import { InvAddComponent } from './inv-add/inv-add.component';
 
 @NgModule({
   imports: [
@@ -18,6 +19,6 @@ import { InvExpirationsComponent } from './inv-expirations/inv-expirations.compo
     BrowserAnimationsModule,
     PipesModule
   ],
-  declarations: [InvListComponent, InvComparisonComponent, InvTargetComponent, InvTargetComponent, InvExpirationsComponent]
+  declarations: [InvListComponent, InvComparisonComponent, InvTargetComponent, InvTargetComponent, InvExpirationsComponent, InvAddComponent]
 })
 export class InvModule { }
