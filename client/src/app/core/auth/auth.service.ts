@@ -2,75 +2,132 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {TwoWayMap} from "./two-way-map";
 import {map} from "rxjs/operators";
-import {ActivatedRouteSnapshot, CanActivate} from "@angular/router";
+import {ActivatedRouteSnapshot, CanActivate, Router} from "@angular/router";
 import decode from 'jwt-decode';
 import {JwtPayload} from "./jwt-payload";
 import {CookieService} from "../cookie.service";
+import {BehaviorSubject} from "rxjs";
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
-export class AuthService implements CanActivate{
+export class AuthService implements CanActivate {
 
-  roles: TwoWayMap<number, string>;
-  verified: boolean;
+    roles: TwoWayMap<number, string>;
+    verified: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
+    verificationStarted: boolean;
+    waitForVerification: Promise<void>;
 
-  constructor(
-    readonly http: HttpClient,
-    readonly cookieService: CookieService
-  ) {
-  }
-
-  /**
-   * Only called once - I'M AWARE THIS IS SUBOPTIMAL
-   */
-  verifyUser() {
-    this.http.get('/api/auth/verify').pipe(map((response: any) => {
-      if(response.success !== true) {
-        localStorage.removeItem('auth_token');
-      }
-    }));
-    this.verified = true;
-  }
-
-  /**
-   * Route guard, returns true if the user is logged in and has enough power or an appropriate role for the route
-   * @param route
-   */
-  async canActivate(route: ActivatedRouteSnapshot): Promise<boolean> {
-    if(this.roles === undefined) {
-      await this.fetchRoleIds();
+    constructor(
+        readonly http: HttpClient,
+        readonly cookieService: CookieService,
+        readonly router: Router
+    ) {
     }
-    if(!this.verified) {
-      await this.verifyUser();
-    }
-    if(this.cookieService.readCookie('auth_token') !== '') {
-      try {
-        const jwtPayload: JwtPayload = decode(this.cookieService.readCookie('auth_token'));
-        if (jwtPayload && jwtPayload.power) {
-          if (jwtPayload.power >= route.data.requiredPower) {
-            return true;
-          }
+
+    /**
+     * Only called once - I'M AWARE THIS IS SUBOPTIMAL
+     */
+    async verifyUser(): Promise<boolean> {
+        if(this.verificationStarted) {
+            await this.waitForVerification;
+            return this.verified.getValue();
         }
-      } catch(e) {
-        console.log(e);
-        return false;
-      }
-    }
-    return false;
-  }
 
-  /**
-   * Get IDs of all roles
-   */
-  async fetchRoleIds() {
-    await this.http.get('/api/auth/role/list').pipe(map((response: any) => {
-      const tempMap: Map<number, string> = new Map();
-      response.data.forEach((role: { name: string, id: number}) => {
-        tempMap.set(role.id, role.name);
-      });
-      this.roles = new TwoWayMap(tempMap);
-    })).toPromise();
-  }
+        this.verificationStarted = true;
+        let resolveFunc: Function = new Function();
+        this.waitForVerification = new Promise(resolve => {
+            resolveFunc = resolve;
+        });
+
+        try {
+            await this.http.get('/api/auth/verify').pipe(map((response: any) => {
+                if (response.success !== true) {
+                    this.cookieService.deleteCookie('auth_token');
+                    this.verified.next(false);
+                } else {
+                    this.verified.next(true);
+                }
+            })).toPromise();
+        } catch(e) {
+            this.verified.next(false);
+        }
+
+        resolveFunc();
+        this.verificationStarted = false;
+    }
+
+    async verifyUserLight(): Promise<boolean> {
+        if(this.verified.getValue() === null) {
+            await this.verifyUser();
+            return this.verified.getValue();
+        }
+        return this.verified.getValue();
+    }
+
+    getVerification$(): BehaviorSubject<boolean> {
+        return this.verified;
+    }
+
+    /**
+     * Route guard, returns true if the user is logged in and has enough power or an appropriate role for the route
+     * @param route
+     */
+    async canActivate(route: ActivatedRouteSnapshot): Promise<boolean> {
+        if (this.roles === undefined) {
+            await this.fetchRoleIds();
+        }
+
+        let jwtPayload: JwtPayload;
+
+        if (this.verified.getValue() === null) {
+            await this.verifyUser();
+        }
+        if(this.verified.getValue() === false) {
+            jwtPayload = {
+                power: 0,
+                roles: [0],
+                userId: -1
+            }
+        }
+        if(this.verified.getValue() === true) {
+            const cookie: string = this.cookieService.readCookie('auth_token');
+            if (cookie !== '' && cookie !== undefined && cookie !== null) {
+                try {
+                    jwtPayload = decode(cookie);
+                } catch (e) {
+                    jwtPayload = {
+                        power: 0,
+                        roles: [0],
+                        userId: -1
+                    }
+                }
+            } else {
+                jwtPayload = {
+                    power: 0,
+                    roles: [0],
+                    userId: -1
+                }
+            }
+        }
+        if(jwtPayload.power >= route.data.power) {
+            return true;
+        }
+        this.router.navigate(['/auth', 'login']);
+        return false;
+    }
+
+    /**
+     * Get IDs of all roles
+     */
+    async fetchRoleIds() {
+        await this.http.get('/api/auth/role/list').pipe(map((response: any) => {
+            const tempMap: Map<number, string> = new Map();
+            response.data.forEach((role: { name: string, id: number }) => {
+                tempMap.set(role.id, role.name);
+            });
+            this.roles = new TwoWayMap(tempMap);
+        })).toPromise();
+    }
 
 }
