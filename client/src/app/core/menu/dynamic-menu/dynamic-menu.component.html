@@ -1,8 +1,9 @@
 <p-menubar [model]="menuBarItems">
-    <input type="text" pInputText placeholder="Search">
-    <button pButton label="Logout" icon="pi pi-sign-out" style="margin-left:.25em"></button>
+    <input type="text" pInputText placeholder="Search" style="margin-top: 0.3em">
+    <i *ngIf="false" class="fa fa-user fa-2x"></i>
+    <button *ngIf="false" pButton label="Login" icon="pi pi-sign-in" style="margin-left:.5em; margin-top: 0.3em; margin-right: 0.2em;"></button>
 </p-menubar>
 <p-sidebar [(visible)]="menuOpen" [baseZIndex]="10000">
-  <h1 style="font-weight:normal">{{menuTitle}}</h1>
+  <h2 style="font-weight:normal">{{menuTitle}}</h2>
   <p-menu [model]="menuItems" (click)="menuOpen = false"></p-menu>
 </p-sidebar>

@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {MenuService} from "../menu.service";
 import {MenuItem} from "primeng/api";
 import {MenuEntry} from "../menu-structure";
+import {AuthService} from "../../auth/auth.service";
 
 @Component({
     selector: 'dynamic-menu',
@@ -17,7 +18,7 @@ export class DynamicMenuComponent implements OnInit {
 
     menuBarItems: MenuItem[] = [
         {
-            icon: '../../../../assets/menu_icon.svg',
+            icon: 'fa fa-bars fa-2x',
             label: '',
             command: () => this.menuOpen = !this.menuOpen
         }
@@ -26,7 +27,8 @@ export class DynamicMenuComponent implements OnInit {
     constructor(
         readonly route: ActivatedRoute,
         readonly menuService: MenuService,
-        readonly router: Router
+        readonly router: Router,
+        readonly authService: AuthService
     ) {
     }
 
@@ -44,6 +46,7 @@ export class DynamicMenuComponent implements OnInit {
                 });
             }
         });
+
     }
 
 }

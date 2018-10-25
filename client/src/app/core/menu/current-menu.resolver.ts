@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from "@angular/router";
-import {Menu, MenuEntry} from "./menu-structure";
-import {Observable} from "rxjs";
 import {MenuService} from "./menu.service";
 
 @Injectable({
