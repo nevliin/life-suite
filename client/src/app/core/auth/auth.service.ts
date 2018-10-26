@@ -7,6 +7,7 @@ import decode from 'jwt-decode';
 import {JwtPayload} from "./jwt-payload";
 import {CookieService} from "../cookie.service";
 import {BehaviorSubject} from "rxjs";
+import {isNullOrUndefined} from "util";
 
 @Injectable({
     providedIn: 'root'
@@ -42,7 +43,7 @@ export class AuthService implements CanActivate {
 
         try {
             await this.http.get('/api/auth/verify').pipe(map((response: any) => {
-                if (response.success !== true) {
+                if (response.valid !== true) {
                     this.cookieService.deleteCookie('auth_token');
                     this.verified.next(false);
                 } else {
@@ -78,6 +79,15 @@ export class AuthService implements CanActivate {
             await this.fetchRoleIds();
         }
 
+        const requiredPower: number = (!isNullOrUndefined(route.data.requiredPower)) ? route.data.requiredPower : 0;
+        const permittedRoles: number[] = (!isNullOrUndefined(route.data.permittedRoles))
+            ? route.data.permittedRoles.map((role: string) => this.roles.revGet(role)).filter((role: number) => !isNullOrUndefined(role))
+            : [0];
+
+        if(requiredPower === 0 || permittedRoles.includes(0)) {
+            return true;
+        }
+
         let jwtPayload: JwtPayload;
 
         if (this.verified.getValue() === null) {
@@ -110,7 +120,7 @@ export class AuthService implements CanActivate {
                 }
             }
         }
-        if(jwtPayload.power >= route.data.power) {
+        if(jwtPayload.power >= route.data.requiredPower) {
             return true;
         }
         this.router.navigate(['/auth', 'login']);
