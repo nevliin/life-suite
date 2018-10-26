@@ -11,12 +11,23 @@
           "route": "login"
         },
         {
+          "route": "userDetail"
+        },
+        {
           "route": "editRoles",
           "requiredPower": 100
         },
         {
           "route": "role",
-          "requiredPower": 100
+          "requiredPower": 100,
+          "children": [
+            {
+              "route": "list",
+              "permittedRoles": [
+                "none"
+              ]
+            }
+          ]
         }
       ]
     },
