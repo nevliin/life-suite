@@ -70,7 +70,7 @@ export class DbUtil {
      * Escape a string to make it safe for the usage in a SQL query
      * @param str
      */
-    esc(str: string) {
+    esc(str: string): string {
         return str.replace(/[\0\x08\x09\x1a\n\r"'\\\%]/g, function (char) {
             switch (char) {
                 case "\0":
@@ -93,5 +93,12 @@ export class DbUtil {
                                         // and double/single quotes
             }
         });
+    }
+
+    escNumber(num: number): number {
+        if(Number.isNaN(Number.parseFloat(num.toString()))) {
+            throw new Error('Not a number!');
+        }
+        return num;
     }
 }
