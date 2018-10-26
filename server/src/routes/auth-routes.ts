@@ -7,6 +7,8 @@ import {IUpdatePasswordModel} from "../utils/auth/update-password.model";
 import {IEditRolesModel} from "../utils/auth/edit-roles.model";
 import {CRUDConstructor} from "../core/crud-constructor";
 import {RoleModel} from "../models/auth/role.model";
+import {IUserDetailsModel} from "../utils/auth/user-details.model";
+import {ValidatorUtil} from "../utils/validator/validator.util";
 
 const express = require('express');
 
@@ -81,6 +83,18 @@ export const init = (): Router => {
             const success: boolean = await AuthUtil.editRoles(<IEditRolesModel>req.body);
             res.status(200).send({
                 success: success
+            });
+        } catch (e) {
+            ErrorCodeUtil.resolveErrorOnRoute(e, res);
+        }
+    });
+
+    authRouter.get('/userDetails/:userId', async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            ValidatorUtil.valNum(req.params.userId);
+            const userDetails: IUserDetailsModel = await AuthUtil.getUserDetails(req.params.userId);
+            res.status(200).send({
+                userDetails: userDetails
             });
         } catch (e) {
             ErrorCodeUtil.resolveErrorOnRoute(e, res);

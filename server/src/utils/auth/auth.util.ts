@@ -12,6 +12,7 @@ import {NextFunction, Request, Response} from "express";
 import {IUpdatePasswordModel} from "./update-password.model";
 import {isNullOrUndefined} from "../util";
 import {IEditRolesModel} from "./edit-roles.model";
+import {IUserDetailsModel} from "./user-details.model";
 
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -73,7 +74,7 @@ export class AuthUtil {
                             expiresIn: '30d'
                         }
                     );
-                    const result: OkPacket = await this.db.execute(`INSERT INTO auth_token(user_id, token) VALUES(${rows[0].id}, '${token}');`);
+                    await this.db.execute(`INSERT INTO auth_token(user_id, token) VALUES(${rows[0].id}, '${token}');`);
                     return token;
                 } else {
                     ErrorCodeUtil.findErrorCodeAndThrow('INVALID_CREDENTIALS');
@@ -139,6 +140,38 @@ export class AuthUtil {
             return true;
         }
         return false;
+    }
+
+    public static async getUserDetails(userId: number): Promise<IUserDetailsModel> {
+        const statement: string = `SELECT a.id, a.username, a.created_on, b.last_login, c.power 
+            FROM 
+            (SELECT id, username, created_on FROM auth_user WHERE id = ${this.db.escNumber(userId)}) AS a, 
+            (SELECT MAX(created_on) AS last_login FROM auth_token WHERE user_id = ${this.db.escNumber(userId)}) AS b,
+            (SELECT MAX(power) AS power FROM auth_user JOIN auth_user_role ON auth_user.id = auth_user_role.user_id JOIN auth_role ON auth_user_role.role_id = auth_role.id WHERE auth_user.id = ${this.db.escNumber(userId)}) AS c;`;
+        const rows: RowDataPacket[] = await this.db.query(statement);
+        if (rows.length === 1) {
+            const statement2: string = `SELECT auth_role.id 
+                FROM auth_role 
+                JOIN auth_user_role ON auth_role.id = auth_user_role.role_id 
+                JOIN auth_user ON auth_user_role.user_id = auth_user.id
+                WHERE auth_user.id = ${userId};`;
+            const rows2: RowDataPacket[] = await this.db.query(statement2);
+            let roles: number[] = [];
+            if (rows2.length > 0) {
+                roles = rows2.map((row: RowDataPacket) => row['id']);
+            }
+            return {
+                id: rows[0]['id'],
+                name: rows[0]['username'],
+                createdOn: rows[0]['created_on'],
+                lastLogin: rows[0]['last_login'],
+                power: rows[0]['power'],
+                roles: roles
+            }
+        } else {
+            ErrorCodeUtil.findErrorCodeAndThrow('NO_SUCH_USER');
+        }
+
     }
 
     /**
