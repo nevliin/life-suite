@@ -12,6 +12,7 @@ import {AuthService} from "../../auth/auth.service";
 })
 export class DynamicMenuComponent implements OnInit {
 
+    isVerified: boolean = false;
     menuOpen: boolean = false;
     menuTitle: string;
     menuItems: MenuItem[] = [];
@@ -46,7 +47,15 @@ export class DynamicMenuComponent implements OnInit {
                 });
             }
         });
+        this.authService.getVerification$().subscribe((verified: boolean) => {
+            console.log(verified);
+            return this.isVerified = verified;
+        });
+    }
 
+    async logOut() {
+        await this.authService.logOut();
+        this.menuOpen = false;
     }
 
 }
