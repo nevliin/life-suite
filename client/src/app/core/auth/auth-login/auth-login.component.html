@@ -1,16 +1,21 @@
-<div id="center">
-    <h3 class="first">Login</h3>
-    <div [formGroup]="loginForm" class="ui-g ui-fluid">
-        <div class="ui-inputgroup">
+<div class="p-grid">
+    <div class="p-col-12 p-md-12 p-lg-3">
+        <h3 class="first">Login</h3>
+    </div>
+    <div [formGroup]="loginForm">
+        <div class="p-col-12 p-md-6 p-lg-3 ui-inputgroup">
             <span class="ui-inputgroup-addon"><i class="fa fa-user"></i></span>
-            <input type="text" pInputText placeholder="Username" formControlName="username">
+            <input type="text" pInputText placeholder="Username" formControlName="username" class="ui-button-secondary">
         </div>
-        <div>
+        <div class="p-col-12 p-md-6 p-lg-3 ui-inputgroup">
+            <span class="ui-inputgroup-addon"><i class="fa fa-key"></i></span>
             <input type="password" pInputText placeholder="********" formControlName="password">
         </div>
     </div>
-    <div>
-        <button pButton type="button" label="Secondary" (click)="cancel()">Cancel</button>
-        <button pButton type="button" label="Primary" (click)="submit()">Submit</button>
+    <div class="p-col-12 p-md-6 p-lg-3">
+        <button pButton label="Cancel" (click)="cancel()"></button>
+    </div>
+    <div class="p-col-12 p-md-6 p-lg-3">
+        <button pButton label="Login" (click)="submit()"></button>
     </div>
 </div>
