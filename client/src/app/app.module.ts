@@ -10,6 +10,7 @@ import {InvModule} from "./inv/inv.module";
 import {CoreModule} from "./core/core.module";
 import {DynamicMenuModule} from "./core/menu/dynamic-menu.module";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {ComponentsModule} from "./core/components/components.module";
 
 @NgModule({
     declarations: [
@@ -24,7 +25,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
         HttpClientModule,
         AuthModule,
         InvModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        ComponentsModule
     ],
     providers: [],
     bootstrap: [AppComponent]

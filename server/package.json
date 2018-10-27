@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "SET NODE_ENV=development && SET NODE_PATH=src && SET PORT=4000 && grunt --gruntfile ./gruntfile.dev.js && nodemon ./start",
-    "grunt": "grunt --gruntfile ./gruntfile.js",
+    "build": "grunt --gruntfile ./gruntfile.js",
     "start:nodemon": "nodemon ./start",
     "start:node": "node ./start",
     "prod": "pkill -f node && npm install && nohup node ./start &"

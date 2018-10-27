@@ -27,7 +27,8 @@
     "primeng": "^6.1.4",
     "primeicons": "^1.0.0",
     "jwt-decode": "^2.2.0",
-    "@fortawesome/fontawesome-free": "^5.4.1"
+    "@fortawesome/fontawesome-free": "^5.4.1",
+    "primeflex": "1.0.0-rc.1"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.8.0",

@@ -25,8 +25,24 @@ export class InvService {
 
         return rows.map(row => {
             return new CompareEntry(row.name, row.comparison);
-        })
+        });
+    }
 
+    async getAutoFill(name: string) {
+        let statement: string = `SELECT id FROM inv_entry WHERE name LIKE '${this.db.esc(name)}';`;
+        const rows: RowDataPacket[] = await this.db.query(statement);
+
+        if(rows.length > 0) {
+            return rows[0].id;
+        } else {
+            return null;
+        }
+    }
+
+    async getNextId(): Promise<number> {
+        let statement: string = 'SELECT MAX(id) AS maxid FROM inv_entry;';
+        const rows: RowDataPacket[] = await this.db.query(statement);
+        return Number.parseInt(rows[0]['maxid'])+1;
 
     }
 }

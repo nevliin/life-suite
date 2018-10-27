@@ -1,6 +1,7 @@
 [
   {
     "routeName": "inv",
+    "menuTitle": "Inventory",
     "menuEntries": [
       {
         "label": "Liste",

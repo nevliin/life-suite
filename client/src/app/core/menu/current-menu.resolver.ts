@@ -10,7 +10,6 @@ export class CurrentMenuResolver implements Resolve<any> {
   constructor(readonly menuService: MenuService) { }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    console.log(route.url[0].path);
     this.menuService.setCurrentMenuRoute(route.url[0].path);
   }
 }

@@ -1,21 +1,19 @@
-<div class="p-grid">
-    <div class="p-col-12 p-md-12 p-lg-3">
+<div class="p-grid" [formGroup]="loginForm">
+    <div class="p-col-12 p-md-12 p-lg-4">
         <h3 class="first">Login</h3>
     </div>
-    <div [formGroup]="loginForm">
-        <div class="p-col-12 p-md-6 p-lg-3 ui-inputgroup">
-            <span class="ui-inputgroup-addon"><i class="fa fa-user"></i></span>
-            <input type="text" pInputText placeholder="Username" formControlName="username" class="ui-button-secondary">
-        </div>
-        <div class="p-col-12 p-md-6 p-lg-3 ui-inputgroup">
-            <span class="ui-inputgroup-addon"><i class="fa fa-key"></i></span>
-            <input type="password" pInputText placeholder="********" formControlName="password">
-        </div>
+    <div class="p-col-12 p-md-6 p-lg-2 ui-inputgroup">
+        <span class="ui-inputgroup-addon"><i class="fa fa-user"></i></span>
+        <input type="text" pInputText placeholder="Username" formControlName="username" class="ui-button-secondary">
     </div>
-    <div class="p-col-12 p-md-6 p-lg-3">
+    <div class="p-col-12 p-md-6 p-lg-2 ui-inputgroup">
+        <span class="ui-inputgroup-addon"><i class="fa fa-key"></i></span>
+        <input type="password" pInputText placeholder="********" formControlName="password">
+    </div>
+    <div class="p-col-12 p-md-6 p-lg-2">
         <button pButton label="Cancel" (click)="cancel()"></button>
     </div>
-    <div class="p-col-12 p-md-6 p-lg-3">
+    <div class="p-col-12 p-md-6 p-lg-2">
         <button pButton label="Login" (click)="submit()"></button>
     </div>
 </div>

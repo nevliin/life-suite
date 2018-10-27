@@ -1,4 +1,4 @@
-<div id="center">
+<div id="center" class="p-grid">
   <form id="add-product" [formGroup]="entryForm">
     <fieldset>
       <legend>Produkt hinf&uuml;gen</legend>
@@ -44,7 +44,7 @@
         </tr>
         <tr>
           <td>Notiz</td>
-          <td><input type="text" size="255" formControlName="note"/></td>
+          <td><textarea type="text" rows="3" cols="50" formControlName="note"></textarea></td>
         </tr>
       </table>
     </fieldset>

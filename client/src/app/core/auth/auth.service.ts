@@ -7,7 +7,13 @@ import decode from 'jwt-decode';
 import {JwtPayload} from "./jwt-payload";
 import {CookieService} from "../cookie.service";
 import {BehaviorSubject} from "rxjs";
-import {isNullOrUndefined} from "util";
+import {isNullOrUndefined} from "../util";
+
+const defaultPayload: JwtPayload = {
+    power: 0,
+    roles: [0],
+    userId: -1
+};
 
 @Injectable({
     providedIn: 'root'
@@ -24,6 +30,29 @@ export class AuthService implements CanActivate {
         readonly cookieService: CookieService,
         readonly router: Router
     ) {
+    }
+
+    async logIn(username: string, password: string): Promise<boolean> {
+        const res: { success: boolean } = <{ success: boolean }>(await this.http.post('/api/auth/login', {
+            username: username,
+            password: password
+        }).toPromise());
+        if(!isNullOrUndefined(res.success)) {
+            this.verified.next(res.success);
+            return res.success;
+        }
+    }
+
+    async logOut() {
+        try {
+            const res: { success: boolean } = <{ success: boolean }>await this.http.get('/api/auth/logout').toPromise();
+            if (isNullOrUndefined(res.success) || !res.success) {
+                this.cookieService.deleteCookie('auth_token');
+            }
+        } catch (e) {
+            this.cookieService.deleteCookie('auth_token');
+        }
+        this.verified.next(false);
     }
 
     /**
@@ -53,7 +82,6 @@ export class AuthService implements CanActivate {
         } catch(e) {
             this.verified.next(false);
         }
-
         resolveFunc();
         this.verificationStarted = false;
     }
@@ -67,6 +95,9 @@ export class AuthService implements CanActivate {
     }
 
     getVerification$(): BehaviorSubject<boolean> {
+        if(this.verified.getValue() === null) {
+            this.verifyUser();
+        }
         return this.verified;
     }
 
@@ -94,11 +125,7 @@ export class AuthService implements CanActivate {
             await this.verifyUser();
         }
         if(this.verified.getValue() === false) {
-            jwtPayload = {
-                power: 0,
-                roles: [0],
-                userId: -1
-            }
+            jwtPayload = defaultPayload;
         }
         if(this.verified.getValue() === true) {
             const cookie: string = this.cookieService.readCookie('auth_token');
@@ -106,18 +133,10 @@ export class AuthService implements CanActivate {
                 try {
                     jwtPayload = decode(cookie);
                 } catch (e) {
-                    jwtPayload = {
-                        power: 0,
-                        roles: [0],
-                        userId: -1
-                    }
+                    jwtPayload = defaultPayload;
                 }
             } else {
-                jwtPayload = {
-                    power: 0,
-                    roles: [0],
-                    userId: -1
-                }
+                jwtPayload = defaultPayload;
             }
         }
         if(jwtPayload.power >= route.data.requiredPower) {
