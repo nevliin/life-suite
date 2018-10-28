@@ -24,6 +24,12 @@
           ]
         },
         {
+          "route": "verify",
+          "permittedRoles": [
+            "none"
+          ]
+        },
+        {
           "route": "userDetail"
         },
         {
