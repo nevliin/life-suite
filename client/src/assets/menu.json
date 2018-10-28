@@ -34,5 +34,18 @@
         ]
       }
     ]
+  },
+  {
+    "routeName": "default",
+    "menuTitle": "Life Suite",
+    "absolute": true,
+    "menuEntries": [
+      {
+        "label": "Inv",
+        "route": [
+          "inv"
+        ]
+      }
+    ]
   }
 ]
