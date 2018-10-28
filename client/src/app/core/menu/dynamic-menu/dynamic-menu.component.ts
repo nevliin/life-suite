@@ -48,7 +48,6 @@ export class DynamicMenuComponent implements OnInit {
             }
         });
         this.authService.getVerification$().subscribe((verified: boolean) => {
-            console.log(verified);
             return this.isVerified = verified;
         });
     }

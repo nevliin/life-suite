@@ -1,6 +1,7 @@
 export class Menu {
   routeName: string;
   menuTitle: string;
+  absolute?: boolean;
   menuEntries: MenuEntry[];
 }
 

@@ -26,8 +26,11 @@ export class MenuService {
     }
 
     getMenu(menu: string): Menu {
-        if (menu !== null) {
+        if (menu !== null && this.menus.has(menu)) {
             return this.menus.get(menu);
+        }
+        if(this.menus.has('default')) {
+            return this.menus.get('default');
         }
         return null;
     }
@@ -36,7 +39,9 @@ export class MenuService {
         if (!this.menus) {
             this.menus = new Map();
             (<Menu[]>(await this.http.get('./assets/menu.json').toPromise())).forEach((menu: Menu) => {
-                menu.menuEntries.forEach(menuEntry => menuEntry.route.unshift(menu.routeName));
+                /*if(!menu.absolute) {
+                    menu.menuEntries.forEach(menuEntry => menuEntry.route.unshift(menu.routeName));
+                }*/
                 this.menus.set(menu.routeName, menu);
             });
         }
