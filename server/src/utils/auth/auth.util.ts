@@ -80,7 +80,7 @@ export class AuthUtil {
                     ErrorCodeUtil.findErrorCodeAndThrow('INVALID_CREDENTIALS');
                 }
             } else {
-                ErrorCodeUtil.findErrorCodeAndThrow('NO_SUCH_USER');
+                ErrorCodeUtil.findErrorCodeAndThrow('INVALID_CREDENTIALS');
             }
         } catch (e) {
             throw e;
