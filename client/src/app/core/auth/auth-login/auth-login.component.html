@@ -1,19 +1,14 @@
-<div class="p-grid" [formGroup]="loginForm">
-    <div class="p-col-12 p-md-12 p-lg-4">
-        <h3 class="first">Login</h3>
-    </div>
-    <div class="p-col-12 p-md-6 p-lg-2 ui-inputgroup">
+<h3 style="margin: 5px;">Login</h3>
+<div style="" [formGroup]="loginForm" class="ui-g ui-fluid">
+    <div class="ui-inputgroup flex-child">
         <span class="ui-inputgroup-addon"><i class="fa fa-user"></i></span>
         <input type="text" pInputText placeholder="Username" formControlName="username" class="ui-button-secondary">
     </div>
-    <div class="p-col-12 p-md-6 p-lg-2 ui-inputgroup">
+    <div class="ui-inputgroup flex-child">
         <span class="ui-inputgroup-addon"><i class="fa fa-key"></i></span>
         <input type="password" pInputText placeholder="********" formControlName="password">
     </div>
-    <div class="p-col-12 p-md-6 p-lg-2">
-        <button pButton label="Cancel" (click)="cancel()"></button>
-    </div>
-    <div class="p-col-12 p-md-6 p-lg-2">
-        <button pButton label="Login" (click)="submit()"></button>
-    </div>
+    <button pButton label="Cancel" class="flex-child" (click)="cancel()"></button>
+    <button pButton label="Login" class="flex-child" (click)="submit()"></button>
 </div>
+<p-messages [(value)]="messages" [closable]="false"></p-messages>

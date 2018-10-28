@@ -14,6 +14,7 @@ export class AuthLoginComponent implements OnInit {
         'username': ['', Validators.required],
         'password': ['', Validators.required]
     });
+    messages: {severity: string, summary: string, detail: string}[] = [];
 
     constructor(
         readonly fb: FormBuilder,
@@ -28,11 +29,28 @@ export class AuthLoginComponent implements OnInit {
     }
 
     async submit() {
-        await this.authService.logIn(this.loginForm.get('username')!.value, this.loginForm.get('password')!.value);
+
+        this.messages = [];
+        if(this.loginForm.valid) {
+            try {
+                const result: boolean = await this.authService.logIn(this.loginForm.get('username')!.value, this.loginForm.get('password')!.value);
+                if (result) {
+                    this.messages.push({severity: 'success', summary: 'Success', detail: 'Successfully logged in.'});
+                    this.router.navigate(['home']);
+                } else {
+                    this.messages.push({severity: 'error', summary: 'Warn', detail: 'Invalid credentials provided.'});
+                }
+            } catch (e) {
+                this.messages.push({severity: 'error', summary: 'Error', detail: e.error.message});
+            }
+        } else {
+            this.messages.push({severity: 'error', summary: 'Error', detail: 'Please fill all fields'});
+        }
+
     }
 
     async cancel() {
-        await this.router.navigate([]);
+        await this.router.navigate(['/']);
     }
 
 }
