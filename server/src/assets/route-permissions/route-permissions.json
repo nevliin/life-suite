@@ -3,23 +3,34 @@
   "children": [
     {
       "route": "auth",
+      "requiredPower": 100,
       "children": [
         {
-          "route": "signup"
+          "route": "signup",
+          "permittedRoles": [
+            "none"
+          ]
         },
         {
-          "route": "login"
+          "route": "login",
+          "permittedRoles": [
+            "none"
+          ]
+        },
+        {
+          "route": "changePassword",
+          "permittedRoles": [
+            "none"
+          ]
         },
         {
           "route": "userDetail"
         },
         {
-          "route": "editRoles",
-          "requiredPower": 100
+          "route": "editRoles"
         },
         {
           "route": "role",
-          "requiredPower": 100,
           "children": [
             {
               "route": "list",
@@ -33,25 +44,11 @@
     },
     {
       "route": "fin",
-      "requiredPower": 0,
-      "children": [
-        {
-          "route": "category",
-          "requiredPower": 10
-        },
-        {
-          "route": "account",
-          "requiredPower": 10
-        },
-        {
-          "route": "transaction",
-          "requiredPower": 10
-        }
-      ]
+      "requiredPower": 10
     },
     {
       "route": "inv",
-      "requiredPower": 0
+      "requiredPower": 10
     }
   ]
 }
