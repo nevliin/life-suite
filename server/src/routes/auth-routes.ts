@@ -31,11 +31,11 @@ export const init = (): Router => {
         try {
             const token: string = await AuthUtil.login(<ILoginModel>req.body);
             if ((<ILoginModel>req.body).rememberMe) {
-                res.cookie(authCookieName, token, {maxAge: 2592000000, httpOnly: true, secure: true}).status(200).send({
+                res.cookie(authCookieName, token, {maxAge: 30*24*60*60*1000}).status(200).send({
                     success: true
                 });
             } else {
-                res.cookie(authCookieName, token, {httpOnly: true, secure: true}).status(200).send({
+                res.cookie(authCookieName, token).status(200).send({
                     success: true
                 });
             }
