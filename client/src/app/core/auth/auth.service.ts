@@ -145,7 +145,7 @@ export class AuthService implements CanActivate {
             this.router.navigate(['/home']);
             return false;
         }
-        this.router.navigate(['/auth', 'login']);
+        this.router.navigate(['/auth', 'login'], { queryParams: {intendedRoute: route.url } });
         return false;
     }
 

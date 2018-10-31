@@ -9,3 +9,7 @@
     width: 344px;
     /*margin: 10px auto 0 auto;*/
 }
+
+button {
+    margin: 10px;
+}

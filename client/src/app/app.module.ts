@@ -19,6 +19,7 @@ import {ErrorHandlingModule} from "./core/error-handling/error-handling.module";
 import { HomeDashboardComponent } from './home/home-dashboard/home-dashboard.component';
 import { MatGridListModule, MatCardModule, MatMenuModule, MatIconModule, MatButtonModule } from '@angular/material';
 import { LayoutModule } from '@angular/cdk/layout';
+import {MenuModule} from "primeng/menu";
 
 @NgModule({
     declarations: [

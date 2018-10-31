@@ -6,6 +6,7 @@ import {RouterModule} from "@angular/router";
 import {AuthLoginWrapperComponent} from './auth-login-wrapper/auth-login-wrapper.component';
 import {ButtonModule} from "primeng/button";
 import {CheckboxModule, MessagesModule} from "primeng/primeng";
+import {MatButtonModule, MatProgressSpinnerModule} from "@angular/material";
 
 @NgModule({
     imports: [
@@ -14,7 +15,9 @@ import {CheckboxModule, MessagesModule} from "primeng/primeng";
         RouterModule,
         ButtonModule,
         MessagesModule,
-        CheckboxModule
+        CheckboxModule,
+        MatProgressSpinnerModule,
+        MatButtonModule
     ],
     declarations: [
         AuthLoginComponent,
