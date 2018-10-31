@@ -1,23 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e1fb510a-f0b7-420f-b0c1-da12d8e0f58c" name="Default Changelist" comment="Added InvAddComponent">
-      <change afterPath="$PROJECT_DIR$/client/src/app/core/components/components.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="e1fb510a-f0b7-420f-b0c1-da12d8e0f58c" name="Default Changelist" comment="Improved">
+      <change afterPath="$PROJECT_DIR$/client/src/app/home/home-dashboard/home-dashboard.component.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/app/home/home-dashboard/home-dashboard.component.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/app/home/home-dashboard/home-dashboard.component.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/assets/404.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/assets/triangular.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/app/app.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/app.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/app/core/auth/auth-login/auth-login.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/core/auth/auth-login/auth-login.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/app.routing.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/app.routing.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/core/auth/auth-login/auth-login.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/core/auth/auth-login/auth-login.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/core/auth/auth.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/core/auth/auth.module.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/app/core/auth/auth.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/core/auth/auth.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/app/core/core.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/core/core.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/app/core/menu/current-menu.resolver.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/core/menu/current-menu.resolver.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/app/inv/inv-add/inv-add.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/inv/inv-add/inv-add.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/app/inv/inv-add/inv-add.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/inv/inv-add/inv-add.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/assets/menu.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/assets/menu.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/core/components/dialog-wrapper/dialog-wrapper.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/core/components/dialog-wrapper/dialog-wrapper.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/core/components/dialog-wrapper/dialog-wrapper.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/core/components/dialog-wrapper/dialog-wrapper.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/core/error-handling/error-handling.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/core/error-handling/error-handling.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/core/error-handling/page-not-found/page-not-found.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/core/error-handling/page-not-found/page-not-found.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/core/error-handling/page-not-found/page-not-found.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/core/error-handling/page-not-found/page-not-found.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/core/menu/menu.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/core/menu/menu.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/core/util.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/core/util.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/home/home.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/home/home.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/home/home/home.component.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/home/home/home.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/home/home/home.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/styles.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/services/inv/inv.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/services/inv/inv.service.ts" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -112,13 +124,14 @@
     <session id="602190625">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="23" />
+          <entry key="project.closed" value="27" />
           <entry key="project.open.time.10" value="2" />
-          <entry key="project.open.time.12" value="1" />
-          <entry key="project.open.time.13" value="3" />
+          <entry key="project.open.time.12" value="2" />
+          <entry key="project.open.time.13" value="5" />
           <entry key="project.open.time.14" value="3" />
           <entry key="project.open.time.15" value="1" />
           <entry key="project.open.time.16" value="1" />
+          <entry key="project.open.time.18" value="1" />
           <entry key="project.open.time.19" value="1" />
           <entry key="project.open.time.20" value="1" />
           <entry key="project.open.time.21" value="3" />
@@ -127,69 +140,78 @@
           <entry key="project.open.time.26" value="1" />
           <entry key="project.open.time.33" value="1" />
           <entry key="project.open.time.34" value="1" />
+          <entry key="project.open.time.35" value="1" />
           <entry key="project.open.time.5" value="1" />
           <entry key="project.open.time.7" value="1" />
           <entry key="project.open.time.8" value="2" />
-          <entry key="project.opened" value="25" />
+          <entry key="project.opened" value="30" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="css" value="69" />
-          <entry key="gif" value="1" />
+          <entry key="css" value="87" />
+          <entry key="gif" value="2" />
           <entry key="gitignore" value="10" />
           <entry key="htacess" value="1" />
-          <entry key="html" value="60" />
+          <entry key="html" value="89" />
           <entry key="ico" value="2" />
-          <entry key="js" value="73" />
-          <entry key="json" value="109" />
+          <entry key="js" value="78" />
+          <entry key="json" value="125" />
+          <entry key="md" value="1" />
+          <entry key="png" value="2" />
           <entry key="resolver" value="1" />
           <entry key="sql" value="13" />
           <entry key="svg" value="3" />
-          <entry key="ts" value="312" />
+          <entry key="ts" value="381" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="CSS" value="69" />
+          <entry key="CSS" value="87" />
           <entry key="DBN-SQL" value="13" />
-          <entry key="HTML" value="60" />
-          <entry key="Image" value="3" />
-          <entry key="JSON" value="105" />
-          <entry key="JavaScript" value="73" />
-          <entry key="PLAIN_TEXT" value="11" />
+          <entry key="HTML" value="89" />
+          <entry key="Image" value="6" />
+          <entry key="JSON" value="121" />
+          <entry key="JavaScript" value="78" />
+          <entry key="PLAIN_TEXT" value="12" />
           <entry key="SVG" value="3" />
-          <entry key="TypeScript" value="313" />
+          <entry key="TypeScript" value="382" />
           <entry key="tsconfig" value="4" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.js.language.service.starts">
         <counts>
-          <entry key="Angular2LanguageService" value="22" />
+          <entry key="Angular2LanguageService" value="25" />
           <entry key="TypeScriptServerServiceImpl" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="css" value="440" />
+          <entry key="css" value="592" />
           <entry key="gitignore" value="16" />
-          <entry key="html" value="2443" />
-          <entry key="js" value="335" />
-          <entry key="json" value="1308" />
+          <entry key="html" value="3315" />
+          <entry key="js" value="353" />
+          <entry key="json" value="1551" />
           <entry key="sql" value="137" />
-          <entry key="ts" value="19755" />
-          <entry key="txt" value="3529" />
+          <entry key="ts" value="22380" />
+          <entry key="txt" value="4091" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="CSS" value="440" />
+          <entry key="CSS" value="592" />
           <entry key="DBN-SQL" value="137" />
-          <entry key="HTML" value="2440" />
-          <entry key="JSON" value="1308" />
-          <entry key="JavaScript" value="338" />
-          <entry key="PLAIN_TEXT" value="3545" />
-          <entry key="TypeScript" value="19755" />
+          <entry key="HTML" value="3312" />
+          <entry key="JSON" value="1551" />
+          <entry key="JavaScript" value="356" />
+          <entry key="PLAIN_TEXT" value="4107" />
+          <entry key="TypeScript" value="22380" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.vcs.git.usages">
+        <counts>
+          <entry key="git.branch.checkout.local" value="1" />
+          <entry key="git.branch.create.new" value="1" />
         </counts>
       </usages-collector>
     </session>
@@ -197,45 +219,84 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/src/app/core/auth/auth.service.ts">
+        <entry file="file://$PROJECT_DIR$/server/src/routes/auth-routes.ts">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="238">
-              <caret line="18" column="22" lean-forward="true" selection-start-line="18" selection-start-column="22" selection-end-line="18" selection-end-column="22" />
+              <caret line="14" column="44" selection-start-line="14" selection-start-column="44" selection-end-line="14" selection-end-column="44" />
               <folding>
-                <element signature="e#0#41#0" expanded="true" />
+                <element signature="e#0#64#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/src/app/core/auth/auth-login/auth-login.component.css">
+        <entry file="file://$PROJECT_DIR$/client/src/app/app.component.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="85">
+              <caret line="5" selection-start-line="5" selection-end-line="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/src/app/core/auth/auth-login/auth-login.component.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="187">
+              <caret line="16" column="28" selection-start-line="16" selection-start-column="28" selection-end-line="16" selection-end-column="28" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/src/app/app.routing.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="184">
+              <caret line="11" column="102" selection-start-line="11" selection-start-column="102" selection-end-line="11" selection-end-column="102" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/src/app/home/home-dashboard/home-dashboard.component.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="357">
+              <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/src/app/home/home-dashboard/home-dashboard.component.html">
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/src/app/core/auth/auth.module.ts">
+        <entry file="file://$PROJECT_DIR$/client/src/app/app.module.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="21" selection-start-line="21" selection-end-line="21" />
+            <state relative-caret-position="323">
+              <caret line="39" column="27" selection-start-line="39" selection-start-column="27" selection-end-line="39" selection-end-column="27" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/client/src/app/home/home-dashboard/home-dashboard.component.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="10" column="36" selection-start-line="10" selection-start-column="36" selection-end-line="10" selection-end-column="36" />
+              <folding>
+                <element signature="e#0#42#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/src/app/core/components/dialog-wrapper/dialog-wrapper.component.ts">
+        <entry file="file://$PROJECT_DIR$/client/src/app/home/home.module.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="13" column="14" selection-start-line="13" selection-start-column="14" selection-end-line="13" selection-end-column="14" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/src/app/core/components/components.module.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="11" column="36" selection-start-line="11" selection-start-column="36" selection-end-line="11" selection-end-column="36" />
+            <state relative-caret-position="136">
+              <caret line="8" column="21" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -246,47 +307,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/src/app/core/auth/auth-login/auth-login.component.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="18" selection-start-column="18" selection-end-column="18" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/src/app/core/core.module.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="18" column="24" lean-forward="true" selection-start-line="18" selection-start-column="24" selection-end-line="18" selection-end-column="24" />
-              <folding>
-                <element signature="e#0#39#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/src/app/core/util.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="1" selection-start-line="2" selection-start-column="1" selection-end-line="2" selection-end-column="1" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/src/app/app.component.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/client/src/styles.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="12" column="24" lean-forward="true" selection-start-line="12" selection-start-column="24" selection-end-line="12" selection-end-column="24" />
+            <state relative-caret-position="153">
+              <caret line="9" column="10" selection-start-line="9" selection-start-column="10" selection-end-line="9" selection-end-column="10" />
             </state>
           </provider>
         </entry>
@@ -324,64 +346,64 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="material-ui" />
       </map>
     </option>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/server/src/core/crud-constructor.ts" />
-        <option value="$PROJECT_DIR$/server/src/services/inv/inv.service.ts" />
-        <option value="$PROJECT_DIR$/server/src/routes/inv-routes.ts" />
-        <option value="$PROJECT_DIR$/client/src/app/inv/inv-add/inv-add.component.ts" />
-        <option value="$PROJECT_DIR$/server/src/assets/auth.util.ts" />
-        <option value="$PROJECT_DIR$/server/src/utils/auth/edit-roles.model.ts" />
-        <option value="$PROJECT_DIR$/server/src/models/auth/role.model.ts" />
-        <option value="$PROJECT_DIR$/server/src/utils/auth/jwt-payload.model.ts" />
-        <option value="$PROJECT_DIR$/client/src/app/core/auth/jwt-payload.ts" />
-        <option value="$PROJECT_DIR$/client/src/app/inv/inv-expirations/inv-expirations.component.ts" />
-        <option value="$PROJECT_DIR$/client/src/app/inv/inv-add/inv-add.component.css" />
-        <option value="$PROJECT_DIR$/client/src/app/inv/inv-add/inv-add.component.html" />
-        <option value="$PROJECT_DIR$/client/src/app/core/menu/side-menu/side-menu.component.html" />
-        <option value="$PROJECT_DIR$/client/src/app/core/menu/menu.module.ts" />
-        <option value="$PROJECT_DIR$/client/src/app/core/menu/side-menu/side-menu.component.ts" />
-        <option value="$PROJECT_DIR$/client/src/app/core/menu/side-menu/dynamic-menu.component.ts" />
-        <option value="$PROJECT_DIR$/client/src/app/core/auth/two-way-map.ts" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/client/src/assets/menu.json" />
-        <option value="$PROJECT_DIR$/client/src/app/core/menu/menu-structure.ts" />
-        <option value="$PROJECT_DIR$/client/src/app/core/menu/menu.service.ts" />
-        <option value="$PROJECT_DIR$/client/src/app/app.routing.ts" />
         <option value="$PROJECT_DIR$/client/src/app/core/menu/dynamic-menu.module.ts" />
         <option value="$PROJECT_DIR$/client/src/app/inv/inv.css" />
         <option value="$PROJECT_DIR$/client/src/app/core/cookie.service.ts" />
         <option value="$PROJECT_DIR$/server/src/utils/auth/user-details.model.ts" />
         <option value="$PROJECT_DIR$/server/dist/utils/auth/auth.util.js" />
-        <option value="$PROJECT_DIR$/server/src/utils/auth/auth.util.ts" />
         <option value="$PROJECT_DIR$/server/src/utils/db/db.util.ts" />
         <option value="$PROJECT_DIR$/server/src/assets/error-codes/error-codes.json" />
         <option value="$PROJECT_DIR$/server/src/utils/validator/validator.util.ts" />
-        <option value="$PROJECT_DIR$/server/src/routes/auth-routes.ts" />
-        <option value="$PROJECT_DIR$/server/src/assets/route-permissions/route-permissions.json" />
         <option value="$PROJECT_DIR$/client/src/app/core/menu/current-menu.resolver.ts" />
-        <option value="$PROJECT_DIR$/client/src/app/core/menu/dynamic-menu/dynamic-menu.component.css" />
-        <option value="$PROJECT_DIR$/client/src/app/core/auth/auth-login/auth-login.component.ts" />
-        <option value="$PROJECT_DIR$/client/src/app/core/menu/dynamic-menu/dynamic-menu.component.html" />
-        <option value="$PROJECT_DIR$/client/src/app/core/menu/dynamic-menu/dynamic-menu.component.ts" />
-        <option value="$PROJECT_DIR$/client/src/app/core/auth/auth.service.ts" />
-        <option value="$PROJECT_DIR$/client/src/app/core/auth/auth-login-wrapper/auth-login-wrapper.component.html" />
         <option value="$PROJECT_DIR$/client/src/app/core/auth/auth-login-wrapper/auth-login-wrapper.component.ts" />
         <option value="$PROJECT_DIR$/client/src/app/core/core.module.ts" />
-        <option value="$PROJECT_DIR$/client/src/app/core/components/dialog-wrapper/dialog-wrapper.component.html" />
-        <option value="$PROJECT_DIR$/client/src/app/app.module.ts" />
-        <option value="$PROJECT_DIR$/client/src/app/core/components/dialog-wrapper/dialog-wrapper.component.ts" />
-        <option value="$PROJECT_DIR$/client/src/app/app.component.html" />
+        <option value="$PROJECT_DIR$/client/src/app/core/menu/dynamic-menu/dynamic-menu.component.html" />
+        <option value="$PROJECT_DIR$/client/src/app/core/menu/dynamic-menu/dynamic-menu.component.css" />
+        <option value="$PROJECT_DIR$/client/src/app/core/auth/auth-login/auth-login.component.css" />
+        <option value="$PROJECT_DIR$/client/src/app/core/auth/auth-login-wrapper/auth-login-wrapper.component.css" />
+        <option value="$PROJECT_DIR$/server/src/utils/auth/auth.util.ts" />
+        <option value="$PROJECT_DIR$/client/src/app/core/auth/auth-login-wrapper/auth-login-wrapper.component.html" />
+        <option value="$PROJECT_DIR$/client/src/app/core/menu/menu-structure.ts" />
+        <option value="$PROJECT_DIR$/client/src/app/core/menu/dynamic-menu/dynamic-menu.component.ts" />
+        <option value="$PROJECT_DIR$/client/src/assets/menu.json" />
+        <option value="$PROJECT_DIR$/server/src/assets/route-permissions/route-permissions.json" />
+        <option value="$PROJECT_DIR$/server/package.json" />
+        <option value="$PROJECT_DIR$/client/src/app/inv/inv.module.ts" />
+        <option value="$PROJECT_DIR$/client/src/app/core/menu/menu.service.ts" />
         <option value="$PROJECT_DIR$/client/src/app/core/components/components.module.ts" />
-        <option value="$PROJECT_DIR$/client/src/app/core/auth/auth.module.ts" />
+        <option value="$PROJECT_DIR$/client/src/app/app.component.html" />
+        <option value="$PROJECT_DIR$/client/src/app/inv/inv-list/inv-list.component.ts" />
+        <option value="$PROJECT_DIR$/client/src/app/core/error-handling/error-handling.service.ts" />
+        <option value="$PROJECT_DIR$/client/src/app/core/components/dialog-wrapper/dialog-wrapper.component.ts" />
+        <option value="$PROJECT_DIR$/client/src/app/core/components/dialog-wrapper/dialog-wrapper.component.html" />
+        <option value="$PROJECT_DIR$/client/src/app/inv/inv-comparison/inv-comparison.component.ts" />
+        <option value="$PROJECT_DIR$/client/src/app/inv/inv-expirations/inv-expirations.component.ts" />
+        <option value="$PROJECT_DIR$/client/src/app/inv/inv-target/inv-target.component.ts" />
         <option value="$PROJECT_DIR$/client/package.json" />
         <option value="$PROJECT_DIR$/client/src/styles.css" />
+        <option value="$PROJECT_DIR$/client/src/index.html" />
+        <option value="$PROJECT_DIR$/client/src/app/core/error-handling/page-not-found/page-not-found.component.ts" />
+        <option value="$PROJECT_DIR$/client/src/app/core/error-handling/error-handling.module.ts" />
+        <option value="$PROJECT_DIR$/client/src/app/core/error-handling/page-not-found/page-not-found.component.html" />
+        <option value="$PROJECT_DIR$/client/src/app/core/util.ts" />
+        <option value="$PROJECT_DIR$/build/server/dist/routes/auth-routes.js" />
+        <option value="$PROJECT_DIR$/client/src/app/core/auth/auth.service.ts" />
+        <option value="$PROJECT_DIR$/client/src/app/core/auth/auth.module.ts" />
+        <option value="$PROJECT_DIR$/client/src/app/core/auth/auth-login/auth-login.component.ts" />
         <option value="$PROJECT_DIR$/client/src/app/core/auth/auth-login/auth-login.component.html" />
+        <option value="$PROJECT_DIR$/server/src/routes/auth-routes.ts" />
+        <option value="$PROJECT_DIR$/client/src/app/app.routing.ts" />
+        <option value="$PROJECT_DIR$/client/src/app/app.module.ts" />
+        <option value="$PROJECT_DIR$/client/src/app/home/home.module.ts" />
+        <option value="$PROJECT_DIR$/client/src/app/home/home-dashboard/home-dashboard.component.ts" />
       </list>
     </option>
   </component>
@@ -404,8 +426,9 @@
       <path value="$PROJECT_DIR$/server/package.json" />
     </packageJsonPaths>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="-967" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="641" />
+    <option name="y" value="-8" />
     <option name="width" value="974" />
     <option name="height" value="1047" />
   </component>
@@ -415,6 +438,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -451,7 +475,16 @@
               <item name="client" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="core" type="462c0819:PsiDirectoryNode" />
+              <item name="home" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="life-suite" type="b2602c69:ProjectViewProjectNode" />
+              <item name="life-suite" type="462c0819:PsiDirectoryNode" />
+              <item name="client" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="home" type="462c0819:PsiDirectoryNode" />
+              <item name="home-dashboard" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="life-suite" type="b2602c69:ProjectViewProjectNode" />
@@ -464,91 +497,18 @@
             <path>
               <item name="life-suite" type="b2602c69:ProjectViewProjectNode" />
               <item name="life-suite" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="life-suite" type="b2602c69:ProjectViewProjectNode" />
-              <item name="life-suite" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="life-suite" type="b2602c69:ProjectViewProjectNode" />
-              <item name="life-suite" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
+              <item name="client" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="assets" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="life-suite" type="b2602c69:ProjectViewProjectNode" />
-              <item name="life-suite" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="error-codes" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="life-suite" type="b2602c69:ProjectViewProjectNode" />
-              <item name="life-suite" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="route-permissions" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="life-suite" type="b2602c69:ProjectViewProjectNode" />
-              <item name="life-suite" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="routes" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="life-suite" type="b2602c69:ProjectViewProjectNode" />
-              <item name="life-suite" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="utils" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="life-suite" type="b2602c69:ProjectViewProjectNode" />
-              <item name="life-suite" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="utils" type="462c0819:PsiDirectoryNode" />
-              <item name="auth" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="life-suite" type="b2602c69:ProjectViewProjectNode" />
-              <item name="life-suite" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="utils" type="462c0819:PsiDirectoryNode" />
-              <item name="db" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="life-suite" type="b2602c69:ProjectViewProjectNode" />
-              <item name="life-suite" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="utils" type="462c0819:PsiDirectoryNode" />
-              <item name="error-code" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="life-suite" type="b2602c69:ProjectViewProjectNode" />
-              <item name="life-suite" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="utils" type="462c0819:PsiDirectoryNode" />
-              <item name="validator" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SearchEverywhereHistoryKey" value="Hom&#9;null&#9;null" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="C:/Program Files/nodejs/node.exe" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
@@ -558,19 +518,19 @@
     <property name="ts.external.directory.path" value="O:\Github\life-suite\client\node_modules\typescript\lib" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="O:\Github\life-suite\client\src\app\home" />
+      <recent name="O:\Github\life-suite\client\src\assets" />
+      <recent name="O:\Github\life-suite\server\src\utils\auth" />
+      <recent name="O:\Github\life-suite\server\src\assets" />
+      <recent name="O:\Github\life-suite\client\src\app" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="O:\Github\life-suite\client\src\app\core" />
       <recent name="O:\Github\life-suite\server\src\models\auth" />
       <recent name="O:\Github\life-suite\client\src\app\inv" />
       <recent name="O:\Github\life-suite\client\src\assets" />
       <recent name="O:\Github\life-suite\client" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="O:\Github\life-suite\server\src\utils\auth" />
-      <recent name="O:\Github\life-suite\server\src\assets" />
-      <recent name="O:\Github\life-suite\client\src\app" />
-      <recent name="O:\Github\life-suite\client\src\app\core\menu" />
-      <recent name="O:\Github\life-suite\client\src\app\core" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -585,17 +545,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="npm.start">
-    <configuration name="build (1)" type="js.build_tools.npm" factoryName="npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/server/package.json" />
-      <command value="run" />
-      <scripts>
-        <script value="build" />
-      </scripts>
-      <node-interpreter value="project" />
-      <envs />
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="npm.server:build:prod">
     <configuration name="build" type="js.build_tools.npm" factoryName="npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/client/package.json" />
       <command value="run" />
@@ -606,11 +556,31 @@
       <envs />
       <method v="2" />
     </configuration>
-    <configuration name="dev" type="js.build_tools.npm" factoryName="npm" temporary="true" nameIsGenerated="true">
+    <configuration name="client:start" type="js.build_tools.npm" factoryName="npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/client/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="client:start" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="server:build:prod" type="js.build_tools.npm" factoryName="npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/server/package.json" />
       <command value="run" />
       <scripts>
-        <script value="dev" />
+        <script value="server:build:prod" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="server:start:dev" type="js.build_tools.npm" factoryName="npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/server/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="server:start:dev" />
       </scripts>
       <node-interpreter value="project" />
       <envs />
@@ -626,30 +596,20 @@
       <envs />
       <method v="2" />
     </configuration>
-    <configuration name="start:dev" type="js.build_tools.npm" factoryName="npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/client/package.json" />
-      <command value="run" />
-      <scripts>
-        <script value="start:dev" />
-      </scripts>
-      <node-interpreter value="project" />
-      <envs />
-      <method v="2" />
-    </configuration>
     <list>
-      <item itemvalue="npm.build" />
-      <item itemvalue="npm.build (1)" />
-      <item itemvalue="npm.start:dev" />
-      <item itemvalue="npm.dev" />
       <item itemvalue="npm.start" />
+      <item itemvalue="npm.server:build:prod" />
+      <item itemvalue="npm.server:start:dev" />
+      <item itemvalue="npm.build" />
+      <item itemvalue="npm.client:start" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.start" />
+        <item itemvalue="npm.server:build:prod" />
+        <item itemvalue="npm.server:start:dev" />
+        <item itemvalue="npm.client:start" />
         <item itemvalue="npm.build" />
-        <item itemvalue="npm.dev" />
-        <item itemvalue="npm.build (1)" />
-        <item itemvalue="npm.start:dev" />
+        <item itemvalue="npm.start" />
       </list>
     </recent_temporary>
   </component>
@@ -696,112 +656,12 @@
       <workItem from="1540411208729" duration="232000" />
       <workItem from="1540487678516" duration="9549000" />
       <workItem from="1540575933887" duration="13516000" />
-      <workItem from="1540647845819" duration="16537000" />
-    </task>
-    <task id="LOCAL-00032" summary="Added sidemenu with styles">
-      <created>1539977573188</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1539977573188</updated>
-    </task>
-    <task id="LOCAL-00033" summary="Added InvModule">
-      <created>1539977583630</created>
-      <option name="number" value="00033" />
-      <option name="presentableId" value="LOCAL-00033" />
-      <option name="project" value="LOCAL" />
-      <updated>1539977583630</updated>
-    </task>
-    <task id="LOCAL-00034" summary="Added '/inv' to routes">
-      <created>1539977600076</created>
-      <option name="number" value="00034" />
-      <option name="presentableId" value="LOCAL-00034" />
-      <option name="project" value="LOCAL" />
-      <updated>1539977600076</updated>
-    </task>
-    <task id="LOCAL-00035" summary="Added several favicons">
-      <created>1539977614826</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1539977614826</updated>
-    </task>
-    <task id="LOCAL-00036" summary="Added rememberMe functionality to /login to set a session cookie for 30d; renamed grunt to build in package.json">
-      <created>1539978969956</created>
-      <option name="number" value="00036" />
-      <option name="presentableId" value="LOCAL-00036" />
-      <option name="project" value="LOCAL" />
-      <updated>1539978969956</updated>
-    </task>
-    <task id="LOCAL-00037" summary="Added MenuModule with SideMenuComponent and CurrentMenuResolver to determine the menu contents based on the route">
-      <created>1540051775024</created>
-      <option name="number" value="00037" />
-      <option name="presentableId" value="LOCAL-00037" />
-      <option name="project" value="LOCAL" />
-      <updated>1540051775024</updated>
-    </task>
-    <task id="LOCAL-00038" summary="Added MenuModule">
-      <created>1540051792423</created>
-      <option name="number" value="00038" />
-      <option name="presentableId" value="LOCAL-00038" />
-      <option name="project" value="LOCAL" />
-      <updated>1540051792423</updated>
-    </task>
-    <task id="LOCAL-00039" summary="Added InvComparisonComponent">
-      <created>1540051807374</created>
-      <option name="number" value="00039" />
-      <option name="presentableId" value="LOCAL-00039" />
-      <option name="project" value="LOCAL" />
-      <updated>1540051807374</updated>
-    </task>
-    <task id="LOCAL-00040" summary="Added InvExpirationsComponent">
-      <created>1540051860167</created>
-      <option name="number" value="00040" />
-      <option name="presentableId" value="LOCAL-00040" />
-      <option name="project" value="LOCAL" />
-      <updated>1540051860167</updated>
-    </task>
-    <task id="LOCAL-00041" summary="Added InvTargetComponent">
-      <created>1540051876622</created>
-      <option name="number" value="00041" />
-      <option name="presentableId" value="LOCAL-00041" />
-      <option name="project" value="LOCAL" />
-      <updated>1540051876622</updated>
-    </task>
-    <task id="LOCAL-00042" summary="Added models for CompareEntry and InvTargetEntry">
-      <created>1540051913971</created>
-      <option name="number" value="00042" />
-      <option name="presentableId" value="LOCAL-00042" />
-      <option name="project" value="LOCAL" />
-      <updated>1540051913971</updated>
-    </task>
-    <task id="LOCAL-00043" summary="Moved side menu to component">
-      <created>1540051933781</created>
-      <option name="number" value="00043" />
-      <option name="presentableId" value="LOCAL-00043" />
-      <option name="project" value="LOCAL" />
-      <updated>1540051933781</updated>
-    </task>
-    <task id="LOCAL-00044" summary="Added route resolvers and multiple '/inv' routes">
-      <created>1540051967274</created>
-      <option name="number" value="00044" />
-      <option name="presentableId" value="LOCAL-00044" />
-      <option name="project" value="LOCAL" />
-      <updated>1540051967274</updated>
-    </task>
-    <task id="LOCAL-00045" summary="Minor changes">
-      <created>1540051976688</created>
-      <option name="number" value="00045" />
-      <option name="presentableId" value="LOCAL-00045" />
-      <option name="project" value="LOCAL" />
-      <updated>1540051976688</updated>
-    </task>
-    <task id="LOCAL-00046" summary="Minor changes">
-      <created>1540051992479</created>
-      <option name="number" value="00046" />
-      <option name="presentableId" value="LOCAL-00046" />
-      <option name="project" value="LOCAL" />
-      <updated>1540051992479</updated>
+      <workItem from="1540647845819" duration="16619000" />
+      <workItem from="1540723670798" duration="19064000" />
+      <workItem from="1540834944635" duration="3015000" />
+      <workItem from="1540851468392" duration="13000" />
+      <workItem from="1540923392454" duration="2910000" />
+      <workItem from="1541007230619" duration="10202000" />
     </task>
     <task id="LOCAL-00047" summary="Added InvAddComponent">
       <created>1540075554328</created>
@@ -1041,11 +901,116 @@
       <option name="project" value="LOCAL" />
       <updated>1540679271549</updated>
     </task>
-    <option name="localTasksCounter" value="81" />
+    <task id="LOCAL-00081" summary="Minor changes">
+      <created>1540682244457</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1540682244457</updated>
+    </task>
+    <task id="LOCAL-00082" summary="Added fallback default menu">
+      <created>1540734185026</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1540734185026</updated>
+    </task>
+    <task id="LOCAL-00083" summary="Added home module and component">
+      <created>1540734218023</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1540734218023</updated>
+    </task>
+    <task id="LOCAL-00084" summary="Added default menu">
+      <created>1540734229633</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1540734229633</updated>
+    </task>
+    <task id="LOCAL-00085" summary="Improved AuthLoginComponent's layout">
+      <created>1540734257233</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1540734257233</updated>
+    </task>
+    <task id="LOCAL-00086" summary="Centered 404 not found error">
+      <created>1540734277063</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1540734277063</updated>
+    </task>
+    <task id="LOCAL-00087" summary="Updated route permissions">
+      <created>1540734296857</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1540734296857</updated>
+    </task>
+    <task id="LOCAL-00088" summary="Return invalid credentials error if user doesn't exist">
+      <created>1540734317706</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1540734317706</updated>
+    </task>
+    <task id="LOCAL-00089" summary="Added '/verify' to open routes">
+      <created>1540742450088</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1540742450088</updated>
+    </task>
+    <task id="LOCAL-00090" summary="Added HTTP error handling">
+      <created>1540765204702</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1540765204703</updated>
+    </task>
+    <task id="LOCAL-00091" summary="Added ErrorHandlingService; functionality for display errors returned over http">
+      <created>1540765250489</created>
+      <option name="number" value="00091" />
+      <option name="presentableId" value="LOCAL-00091" />
+      <option name="project" value="LOCAL" />
+      <updated>1540765250489</updated>
+    </task>
+    <task id="LOCAL-00092" summary="Added http error handling">
+      <created>1540838261913</created>
+      <option name="number" value="00092" />
+      <option name="presentableId" value="LOCAL-00092" />
+      <option name="project" value="LOCAL" />
+      <updated>1540838261914</updated>
+    </task>
+    <task id="LOCAL-00093" summary="Fixed maxAge on cookie">
+      <created>1541013081650</created>
+      <option name="number" value="00093" />
+      <option name="presentableId" value="LOCAL-00093" />
+      <option name="project" value="LOCAL" />
+      <updated>1541013081651</updated>
+    </task>
+    <task id="LOCAL-00094" summary="Fixed maxAge again">
+      <created>1541014613379</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1541014613379</updated>
+    </task>
+    <task id="LOCAL-00095" summary="Secure-Attribute on cookies breaks everything :(">
+      <created>1541016404011</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
+      <option name="project" value="LOCAL" />
+      <updated>1541016404011</updated>
+    </task>
+    <option name="localTasksCounter" value="96" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="157970000" />
+    <option name="totallyTimeSpent" value="193256000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1057,9 +1022,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-967" y="0" width="974" height="1047" extended-state="0" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.62393165" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.30769232" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info id="DB Browser" order="3" />
@@ -1076,7 +1042,7 @@
       <window_info anchor="bottom" id="DB Execution Console" order="10" />
       <window_info anchor="bottom" id="File Transfer" order="11" sideWeight="0.49309245" weight="0.33188722" />
       <window_info anchor="bottom" id="TypeScript" order="12" sideWeight="0.49894625" weight="0.3286334" />
-      <window_info active="true" anchor="bottom" id="Run" order="13" sideWeight="0.487882" visible="true" weight="0.33734939" />
+      <window_info anchor="bottom" id="Run" order="13" sideWeight="0.487882" visible="true" weight="0.3383948" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -1120,21 +1086,6 @@
       <path value="$PROJECT_DIR$/client/playground-client" />
       <path value="$PROJECT_DIR$/server" />
     </ignored-roots>
-    <MESSAGE value="Completed RouteGuard" />
-    <MESSAGE value="Added menu items" />
-    <MESSAGE value="Sorted entries by expirationDate" />
-    <MESSAGE value="Switched to primeng's sidebar and menu" />
-    <MESSAGE value="Added MenuBar, worked on items" />
-    <MESSAGE value="Minor changes" />
-    <MESSAGE value="Tried fixing primeng icons" />
-    <MESSAGE value="Separated verifyUser() and verifyUserLight() for different security levels and higher performance" />
-    <MESSAGE value="Added home-button, icons and changed calls to AuthService" />
-    <MESSAGE value="Added deleteCookie()" />
-    <MESSAGE value="Removed #entry" />
-    <MESSAGE value="Added font-awesome" />
-    <MESSAGE value="Added ValidatorUtil for REST input" />
-    <MESSAGE value="Added escNum()" />
-    <MESSAGE value="Added /userDetails/:userId for getting info about a specific user" />
     <MESSAGE value="Added error code for invalid REST params" />
     <MESSAGE value="Added new routes" />
     <MESSAGE value="Authentication rework" />
@@ -1145,356 +1096,362 @@
     <MESSAGE value="Changed layout; added user detail button; moved login/logout to sidebar menu" />
     <MESSAGE value="Added util methods" />
     <MESSAGE value="Added primeflex" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added primeflex" />
+    <MESSAGE value="Minor changes" />
+    <MESSAGE value="Added fallback default menu" />
+    <MESSAGE value="Added home module and component" />
+    <MESSAGE value="Added default menu" />
+    <MESSAGE value="Improved AuthLoginComponent's layout" />
+    <MESSAGE value="Centered 404 not found error" />
+    <MESSAGE value="Updated route permissions" />
+    <MESSAGE value="Return invalid credentials error if user doesn't exist" />
+    <MESSAGE value="Added '/verify' to open routes" />
+    <MESSAGE value="Added HTTP error handling" />
+    <MESSAGE value="Added ErrorHandlingService; functionality for display errors returned over http" />
+    <MESSAGE value="Added http error handling" />
+    <MESSAGE value="Fixed maxAge on cookie" />
+    <MESSAGE value="Fixed maxAge again" />
+    <MESSAGE value="Secure-Attribute on cookies breaks everything :(" />
+    <option name="LAST_COMMIT_MESSAGE" value="Secure-Attribute on cookies breaks everything :(" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/server/node_modules/express/lib/router/layer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="197">
-          <caret line="94" column="4" selection-start-line="94" selection-start-column="4" selection-end-line="94" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/dist/routes/auth-routes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="86" column="59" selection-start-line="86" selection-start-column="59" selection-end-line="86" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/dist/utils/auth/auth.util.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="116" column="35" selection-start-line="116" selection-start-column="35" selection-end-line="116" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/src/utils/auth/update-password.model.ts">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/src/utils/auth/user-details.model.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="19" selection-start-line="3" selection-start-column="19" selection-end-line="3" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/node_modules/mysql/lib/protocol/sequences/Query.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="76" column="17" selection-start-line="76" selection-start-column="17" selection-end-line="76" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/src/utils/db/db.util.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1666">
-          <caret line="101" column="19" selection-start-line="101" selection-start-column="19" selection-end-line="101" selection-end-column="19" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/src/utils/validator/validator.util.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="9" selection-start-line="7" selection-start-column="9" selection-end-line="7" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/src/assets/route-permissions/route-permissions.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" column="24" selection-start-line="16" selection-start-column="24" selection-end-line="16" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/src/assets/error-codes/error-codes.model.ts">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/src/assets/error-codes/error-codes.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="748">
-          <caret line="44" column="40" selection-start-line="44" selection-start-column="40" selection-end-line="44" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/src/utils/error-code/error-code.util.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="10" selection-start-line="10" selection-end-line="10" />
-          <folding>
-            <element signature="e#0#33#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/src/routes/auth-routes.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1411">
-          <caret line="93" column="52" selection-start-line="93" selection-start-column="52" selection-end-line="93" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/src/utils/auth/auth.util.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2499">
-          <caret line="161" column="13" selection-start-line="161" selection-start-column="13" selection-end-line="161" selection-end-column="13" />
-          <folding>
-            <element signature="e#0#70#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="4" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/src/utils/util.ts">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/core/auth/jwt-payload.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="13" selection-start-column="13" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/app.routing.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="25" column="28" selection-start-line="25" selection-start-column="28" selection-end-line="25" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/core/menu/current-menu.resolver.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="14" column="1" selection-start-line="14" selection-start-column="1" selection-end-line="14" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/core/auth/auth-login-wrapper/auth-login-wrapper.component.css">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/core/auth/auth-login-wrapper/auth-login-wrapper.component.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="23" selection-start-line="1" selection-start-column="23" selection-end-line="1" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/core/auth/auth-login-wrapper/auth-login-wrapper.component.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" selection-start-line="14" selection-end-line="14" />
-          <folding>
-            <element signature="e#0#48#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/test.ts">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/main.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#47#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="23" selection-start-line="11" selection-start-column="23" selection-end-line="11" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/src/app/inv/inv.module.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#60#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="170">
+          <caret line="10" column="60" selection-start-line="10" selection-start-column="60" selection-end-line="10" selection-end-column="60" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/inv/inv-target-entry.ts">
+    <entry file="file://$PROJECT_DIR$/client/src/app/inv/inv-list/inv-list.component.css">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/inv/inv-entry.ts">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/app.component.ts">
+    <entry file="file://$PROJECT_DIR$/client/src/app/core/components/dialog-wrapper/dialog-wrapper.component.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="40" selection-start-column="40" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/core/cookie.service.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="23" column="5" lean-forward="true" selection-start-line="23" selection-start-column="5" selection-end-line="23" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/app.module.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="28" column="24" lean-forward="true" selection-start-line="28" selection-start-column="24" selection-end-line="28" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#56#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/core/menu/dynamic-menu.module.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="18" selection-start-line="18" selection-end-line="18" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/package-lock.json">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="28" column="27" lean-forward="true" selection-start-line="28" selection-start-column="27" selection-end-line="28" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/core/auth/auth-login/auth-login.component.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="23" selection-start-line="23" selection-end-line="23" />
-          <folding>
-            <element signature="e#0#48#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/core/menu/dynamic-menu/dynamic-menu.component.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="24" selection-start-line="3" selection-start-column="24" selection-end-line="3" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/core/menu/dynamic-menu/dynamic-menu.component.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="12" lean-forward="true" selection-start-line="15" selection-start-column="12" selection-end-line="15" selection-end-column="12" />
-          <folding>
-            <element signature="n#style#0;n#h2#0;n#p-sidebar#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/core/menu/dynamic-menu/dynamic-menu.component.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="1" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
-          <folding>
-            <element signature="e#0#48#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="153">
+          <caret line="9" column="28" selection-start-line="9" selection-start-column="28" selection-end-line="9" selection-end-column="28" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/client/src/app/core/components/dialog-wrapper/dialog-wrapper.component.css">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/core/components/dialog-wrapper/dialog.service.ts">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/src/app/core/components/dialog-wrapper/dialog-wrapper.component.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" selection-start-line="2" selection-end-line="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/core/components/dialog-wrapper/dialog-wrapper.component.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" column="14" selection-start-line="13" selection-start-column="14" selection-end-line="13" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/core/components/components.module.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="36" selection-start-line="11" selection-start-column="36" selection-end-line="11" selection-end-column="36" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/core/auth/auth.module.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="21" selection-start-line="21" selection-end-line="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/core/auth/auth.service.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="18" column="22" lean-forward="true" selection-start-line="18" selection-start-column="22" selection-end-line="18" selection-end-column="22" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/core/auth/auth-login/auth-login.component.css">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/core/auth/auth-login/auth-login.component.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="18" selection-start-column="18" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/core/core.module.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="24" lean-forward="true" selection-start-line="18" selection-start-column="24" selection-end-line="18" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/core/util.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="1" selection-start-line="2" selection-start-column="1" selection-end-line="2" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/app.component.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/inv/inv-list/inv-list.component.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="901">
+          <caret line="59" selection-start-line="59" selection-end-line="61" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/inv/inv-add/inv-add.component.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="629">
+          <caret line="42" column="20" selection-start-line="42" selection-start-column="20" selection-end-line="42" selection-end-column="20" />
+          <folding>
+            <element signature="e#0#50#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/inv/inv-comparison/inv-comparison.component.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="24" selection-start-line="24" selection-end-line="26" selection-end-column="9" />
+          <folding>
+            <element signature="e#0#48#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/inv/inv-expirations/inv-expirations.component.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/inv/inv-expirations/inv-expirations.component.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="493">
+          <caret line="29" column="34" selection-start-line="29" selection-start-column="34" selection-end-line="29" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#48#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/inv/inv-target/inv-target.component.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="34" selection-start-line="16" selection-start-column="34" selection-end-line="16" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#48#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/inv/inv-comparison/inv-comparison.component.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/inv/inv-list/inv-list.component.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/client/src/styles.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="24" lean-forward="true" selection-start-line="12" selection-start-column="24" selection-end-line="12" selection-end-column="24" />
+        <state relative-caret-position="102">
+          <caret line="6" column="61" selection-start-line="6" selection-start-column="61" selection-end-line="6" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/core/auth/jwt-payload.ts">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/angular.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="16" lean-forward="true" selection-start-line="9" selection-start-column="16" selection-end-line="9" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/app.component.ts">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/core/auth/auth-login-wrapper/auth-login-wrapper.component.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="14" selection-start-line="3" selection-start-column="14" selection-end-line="3" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/core/auth/auth-login-wrapper/auth-login-wrapper.component.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#48#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/assets/404.gif">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/core/error-handling/error-handling.module.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="20" selection-start-line="10" selection-start-column="20" selection-end-line="10" selection-end-column="20" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/core/error-handling/error-handling.service.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="16" column="158" lean-forward="true" selection-start-line="16" selection-start-column="8" selection-end-line="16" selection-end-column="158" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/core/util.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="34" selection-start-line="4" selection-start-column="34" selection-end-line="4" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/core/error-handling/page-not-found/page-not-found.component.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/core/error-handling/page-not-found/page-not-found.component.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="29" selection-start-line="11" selection-start-column="29" selection-end-line="11" selection-end-column="29" />
+          <folding>
+            <element signature="e#0#50#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/server/start.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/src/utils/auth/auth.util.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1768">
+          <folding>
+            <element signature="e#0#70#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/server/dist/routes/auth-routes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="32" column="33" selection-start-line="32" selection-start-column="33" selection-end-line="32" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/core/auth/auth-login/auth-login.component.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="20" selection-start-line="2" selection-start-column="20" selection-end-line="2" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/core/auth/auth.service.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="41" column="24" selection-start-line="41" selection-start-column="24" selection-end-line="41" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/core/auth/auth.module.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="16" column="22" selection-start-line="16" selection-start-column="22" selection-end-line="16" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/node_modules/@types/express-serve-static-core/index.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2091">
+          <caret line="163" column="17" selection-start-line="163" selection-start-column="17" selection-end-line="163" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/node_modules/cookie-parser/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-612">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/node_modules/cookie/HISTORY.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1549" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/node_modules/cookie/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2788">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package-lock.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-68">
+          <caret line="8" column="39" selection-start-line="8" selection-start-column="39" selection-end-line="8" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/core/auth/auth-login/auth-login.component.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="10" selection-start-line="9" selection-start-column="10" selection-end-line="9" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/app.component.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/src/routes/auth-routes.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="44" selection-start-line="14" selection-start-column="44" selection-end-line="14" selection-end-column="44" />
+          <folding>
+            <element signature="e#0#64#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/core/auth/auth-login/auth-login.component.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="16" column="28" selection-start-line="16" selection-start-column="28" selection-end-line="16" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/home/home/home.component.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/home/home-dashboard/home-dashboard.component.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/home/home-dashboard/home-dashboard.component.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/app.routing.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="11" column="102" selection-start-line="11" selection-start-column="102" selection-end-line="11" selection-end-column="102" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/app.module.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="39" column="27" selection-start-line="39" selection-start-column="27" selection-end-line="39" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/home/home.module.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="21" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/home/home-dashboard/home-dashboard.component.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="36" selection-start-line="10" selection-start-column="36" selection-end-line="10" selection-end-column="36" />
+          <folding>
+            <element signature="e#0#42#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

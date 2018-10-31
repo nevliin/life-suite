@@ -11,6 +11,14 @@ import {CoreModule} from "./core/core.module";
 import {DynamicMenuModule} from "./core/menu/dynamic-menu.module";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ComponentsModule} from "./core/components/components.module";
+import {HomeModule} from "./home/home.module";
+import {MessageService} from "primeng/api";
+import {ToastModule} from "primeng/toast";
+import {ErrorHandlingService} from "./core/error-handling/error-handling.service";
+import {ErrorHandlingModule} from "./core/error-handling/error-handling.module";
+import { HomeDashboardComponent } from './home/home-dashboard/home-dashboard.component';
+import { MatGridListModule, MatCardModule, MatMenuModule, MatIconModule, MatButtonModule } from '@angular/material';
+import { LayoutModule } from '@angular/cdk/layout';
 
 @NgModule({
     declarations: [
@@ -26,9 +34,12 @@ import {ComponentsModule} from "./core/components/components.module";
         AuthModule,
         InvModule,
         BrowserAnimationsModule,
-        ComponentsModule
+        ComponentsModule,
+        HomeModule,
+        ToastModule,
+        ErrorHandlingModule
     ],
-    providers: [],
+    providers: [MessageService, ErrorHandlingService],
     bootstrap: [AppComponent]
 })
 export class AppModule {

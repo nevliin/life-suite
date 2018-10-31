@@ -9,13 +9,25 @@ import {InvTargetComponent} from "./inv/inv-target/inv-target.component";
 import {InvExpirationsComponent} from "./inv/inv-expirations/inv-expirations.component";
 import {InvAddComponent} from "./inv/inv-add/inv-add.component";
 import {AuthService} from "./core/auth/auth.service";
+import {AuthLoginWrapperComponent} from "./core/auth/auth-login-wrapper/auth-login-wrapper.component";
+import {HomeDashboardComponent} from "./home/home-dashboard/home-dashboard.component";
 
 const routes: Routes = [
     {
+        path: 'home',
+        resolve: {
+            menu: CurrentMenuResolver
+        },
+        component: HomeDashboardComponent
+    },
+    {
         path: 'auth',
+        resolve: {
+            menu: CurrentMenuResolver
+        },
         children: [
             {
-                path: 'login', component: AuthLoginComponent
+                path: 'login', component: AuthLoginWrapperComponent
             }
         ]
     },
@@ -26,7 +38,7 @@ const routes: Routes = [
             menu: CurrentMenuResolver
         },
         data: {
-            requiredPower: 10
+            requiredPower: 50
         },
         children: [
             {
@@ -51,11 +63,14 @@ const routes: Routes = [
     },
     {
         path: '',
-        redirectTo: '/front',
+        redirectTo: '/home',
         pathMatch: 'full'
     },
     {
         path: '**',
+        resolve: {
+            menu: CurrentMenuResolver
+        },
         component: PageNotFoundComponent
     }
 ];

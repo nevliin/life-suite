@@ -5,7 +5,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {RouterModule} from "@angular/router";
 import {AuthLoginWrapperComponent} from './auth-login-wrapper/auth-login-wrapper.component';
 import {ButtonModule} from "primeng/button";
-import {MessagesModule} from "primeng/primeng";
+import {CheckboxModule, MessagesModule} from "primeng/primeng";
 
 @NgModule({
     imports: [
@@ -13,7 +13,8 @@ import {MessagesModule} from "primeng/primeng";
         ReactiveFormsModule,
         RouterModule,
         ButtonModule,
-        MessagesModule
+        MessagesModule,
+        CheckboxModule
     ],
     declarations: [
         AuthLoginComponent,

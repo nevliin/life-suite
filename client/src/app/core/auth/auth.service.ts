@@ -7,7 +7,8 @@ import decode from 'jwt-decode';
 import {JwtPayload} from "./jwt-payload";
 import {CookieService} from "../cookie.service";
 import {BehaviorSubject} from "rxjs";
-import {isNullOrUndefined} from "../util";
+import {isNullOrUndefined, sleep} from "../util";
+import {MessageService} from "primeng/api";
 
 const defaultPayload: JwtPayload = {
     power: 0,
@@ -28,14 +29,16 @@ export class AuthService implements CanActivate {
     constructor(
         readonly http: HttpClient,
         readonly cookieService: CookieService,
-        readonly router: Router
+        readonly router: Router,
+        readonly messageService: MessageService
     ) {
     }
 
-    async logIn(username: string, password: string): Promise<boolean> {
+    async logIn(username: string, password: string, rememberMe: boolean): Promise<boolean> {
         const res: { success: boolean } = <{ success: boolean }>(await this.http.post('/api/auth/login', {
             username: username,
-            password: password
+            password: password,
+            rememberMe: rememberMe
         }).toPromise());
         if(!isNullOrUndefined(res.success)) {
             this.verified.next(res.success);
@@ -55,9 +58,6 @@ export class AuthService implements CanActivate {
         this.verified.next(false);
     }
 
-    /**
-     * Only called once - I'M AWARE THIS IS SUBOPTIMAL
-     */
     async verifyUser(): Promise<boolean> {
         if(this.verificationStarted) {
             await this.waitForVerification;
@@ -70,6 +70,7 @@ export class AuthService implements CanActivate {
             resolveFunc = resolve;
         });
 
+        let result: boolean = false;
         try {
             await this.http.get('/api/auth/verify').pipe(map((response: any) => {
                 if (response.valid !== true) {
@@ -77,6 +78,7 @@ export class AuthService implements CanActivate {
                     this.verified.next(false);
                 } else {
                     this.verified.next(true);
+                    result = true;
                 }
             })).toPromise();
         } catch(e) {
@@ -84,6 +86,7 @@ export class AuthService implements CanActivate {
         }
         resolveFunc();
         this.verificationStarted = false;
+        return result;
     }
 
     async verifyUserLight(): Promise<boolean> {
@@ -109,25 +112,18 @@ export class AuthService implements CanActivate {
         if (this.roles === undefined) {
             await this.fetchRoleIds();
         }
-
         const requiredPower: number = (!isNullOrUndefined(route.data.requiredPower)) ? route.data.requiredPower : 0;
         const permittedRoles: number[] = (!isNullOrUndefined(route.data.permittedRoles))
             ? route.data.permittedRoles.map((role: string) => this.roles.revGet(role)).filter((role: number) => !isNullOrUndefined(role))
-            : [0];
+            : [];
 
         if(requiredPower === 0 || permittedRoles.includes(0)) {
             return true;
         }
-
         let jwtPayload: JwtPayload;
 
-        if (this.verified.getValue() === null) {
-            await this.verifyUser();
-        }
-        if(this.verified.getValue() === false) {
-            jwtPayload = defaultPayload;
-        }
-        if(this.verified.getValue() === true) {
+        const loggedInUser: boolean = await this.verifyUser();
+        if(loggedInUser === true) {
             const cookie: string = this.cookieService.readCookie('auth_token');
             if (cookie !== '' && cookie !== undefined && cookie !== null) {
                 try {
@@ -138,9 +134,16 @@ export class AuthService implements CanActivate {
             } else {
                 jwtPayload = defaultPayload;
             }
+        } else {
+            jwtPayload = defaultPayload;
         }
-        if(jwtPayload.power >= route.data.requiredPower) {
+        if(jwtPayload.power >= requiredPower || permittedRoles.some((role: number) => jwtPayload.roles.includes(role))) {
             return true;
+        } else if(loggedInUser) {
+            this.messageService.add({ severity: 'error', summary: 'Access Denied', detail: 'Your permissions do not meet the requirements for this route. Redirecting to Home.', life: 3000, closable: true});
+            await sleep(1500);
+            this.router.navigate(['/home']);
+            return false;
         }
         this.router.navigate(['/auth', 'login']);
         return false;

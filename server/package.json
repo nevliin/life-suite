@@ -4,10 +4,10 @@
   "description": "Server for life-suite",
   "main": "index.js",
   "scripts": {
-    "dev": "SET NODE_ENV=development && SET NODE_PATH=src && SET PORT=4000 && grunt --gruntfile ./gruntfile.dev.js && nodemon ./start",
-    "build": "grunt --gruntfile ./gruntfile.js",
-    "start:nodemon": "nodemon ./start",
-    "start:node": "node ./start",
+    "server:start:dev": "SET NODE_ENV=development && SET NODE_PATH=src && SET PORT=4000 && grunt --gruntfile ./gruntfile.dev.js && nodemon ./start",
+    "server:build:prod": "grunt --gruntfile ./gruntfile.js",
+    "server:start:nodemon": "nodemon ./start",
+    "server:start:node": "node ./start",
     "prod": "pkill -f node && npm install && nohup node ./start &"
   },
   "author": "",
