@@ -31,7 +31,7 @@ export const init = (): Router => {
         try {
             const token: string = await AuthUtil.login(<ILoginModel>req.body);
             if ((<ILoginModel>req.body).rememberMe) {
-                res.cookie(authCookieName, token, {maxAge: 2592000000}).status(200).send({
+                res.cookie(authCookieName, token, {maxAge: (new Date()).getTime() + 2592000000}).status(200).send({
                     success: true
                 });
             } else {
