@@ -1,11 +1,12 @@
-import {IDBConfig} from "../assets/config/server-config.model";
-import {DbUtil} from "../utils/db/db.util";
+import {IDBConfig} from "../../assets/config/server-config.model";
+import {DbUtil} from "../../utils/db/db.util";
 import {ICRUDModel} from "./crud.model";
-import {Logger, LoggingUtil} from "../utils/logging/logging.util";
-import {ErrorCodeUtil} from "../utils/error-code/error-code.util";
-import {NextFunction, Router, Response, Request} from "express";
+import {Logger, LoggingUtil} from "../../utils/logging/logging.util";
+import {ErrorCodeUtil} from "../../utils/error-code/error-code.util";
+import {NextFunction, Request, Response, Router} from "express";
 import {OkPacket, RowDataPacket} from "mysql";
-import {isNullOrUndefined} from "../utils/util";
+import {isNullOrUndefined} from "../../utils/util";
+import {CRUDListOptions} from "./crud-list-options";
 
 const express = require('express');
 
@@ -52,13 +53,12 @@ export class CRUDConstructor<T extends ICRUDModel, > {
         this.logger = LoggingUtil.getLogger('CRUDConstructor');
         this.model = model;
         this.dbTable = dbTable;
-        if(options) {
+        if (options) {
             // Initialize some properties with the possibly provided values
             this.autoIncrementId = (!isNullOrUndefined(options.autoIncrementId)) ? options.autoIncrementId : true;
             this.softDelete = options.softDelete;
             this.db = new DbUtil(options.dbconfig);
             this.fieldMappings = this.completeFieldMappings(model, options.fieldMappings);
-            console.log(this.fieldMappings);
             this.autoFilledFields = (options.autoFilledFields) ? options.autoFilledFields : [];
             this.validFieldMapping = (options.validFieldMapping) ? options.validFieldMapping : 'valid';
         } else {
@@ -106,7 +106,7 @@ export class CRUDConstructor<T extends ICRUDModel, > {
      */
     public async create(data: T): Promise<number> {
         let properties: string[] = Array.from(this.fieldMappings.keys());
-        if(this.autoFilledFields.length > 0) {
+        if (this.autoFilledFields.length > 0) {
             // If there are auto filled fields, remove them from the inserted fields
             properties = properties.filter(property => {
                 return !this.autoFilledFields.includes(property);
@@ -147,7 +147,7 @@ export class CRUDConstructor<T extends ICRUDModel, > {
 
         try {
             const result: OkPacket = await this.db.execute(statement);
-            if(this.autoIncrementId) {
+            if (this.autoIncrementId) {
                 return result.insertId;
             } else {
                 return data['id'];
@@ -170,7 +170,7 @@ export class CRUDConstructor<T extends ICRUDModel, > {
         let statement: string = `SELECT ${fields} FROM ${this.dbTable} WHERE ${this.fieldMappings.get('id').name} = ${id}`;
 
         // Add check for validity if the objects are soft-deleted
-        if(this.softDelete) {
+        if (this.softDelete) {
             statement += ` AND ${this.validFieldMapping} = 1`;
         }
 
@@ -178,13 +178,13 @@ export class CRUDConstructor<T extends ICRUDModel, > {
 
         const rows: RowDataPacket[] = await this.db.query(statement);
 
-        if(rows[0]) {
+        if (rows[0]) {
             // Assign fields of the result to an empty object and return it
             const result: any = {};
             properties.forEach((property, index) => {
-                if(this.fieldMappings.get(property).type === DBFieldType.BOOLEAN) {
+                if (this.fieldMappings.get(property).type === DBFieldType.BOOLEAN) {
                     result[property] = Boolean(rows[0][fieldsArray[index]]);
-                } else if(this.fieldMappings.get(property).type === DBFieldType.TIMESTAMP) {
+                } else if (this.fieldMappings.get(property).type === DBFieldType.TIMESTAMP) {
                     result[property] = new Date(Date.parse(rows[0][fieldsArray[index]]));
                 } else {
                     result[property] = rows[0][fieldsArray[index]];
@@ -198,11 +198,11 @@ export class CRUDConstructor<T extends ICRUDModel, > {
     }
 
     /**
-     * Read object
-     * @param limit - ID of the object
+     * List objects
      * @returns Object with properties read from the DB table
+     * @param options
      */
-    public async list(limit: number): Promise<T[]> {
+    public async list(options: CRUDListOptions): Promise<T[]> {
         // Get fields to be read and add create the statement with them
         const properties: string[] = Array.from(this.fieldMappings.keys());
         const fieldsArray: string[] = properties.map(property => this.fieldMappings.get(property).name);
@@ -210,26 +210,39 @@ export class CRUDConstructor<T extends ICRUDModel, > {
         let statement: string = `SELECT ${fields} FROM ${this.dbTable}`;
 
         // Add check for validity if the objects are soft-deleted
-        if(this.softDelete) {
+        if (this.softDelete) {
             statement += ` WHERE ${this.validFieldMapping} = 1`;
         }
 
-        if(!isNullOrUndefined(limit)) {
-            statement += ` LIMIT ${limit};`;
-        } else {
-            statement += `;`;
+        // Apply options
+        if (!isNullOrUndefined(options)) {
+            if (!isNullOrUndefined(options.limit) && typeof options.limit === "number") {
+                statement += ` LIMIT ${this.db.escNumber(options.limit)}`;
+            } else if (!isNullOrUndefined(options.orderField)) {
+                if (typeof options.orderField === 'string' && this.fieldMappings.has(options.orderField)) {
+                    let orderDirection: string = 'ASC';
+                    if (!isNullOrUndefined(options.orderDirection) && options.orderDirection.toUpperCase() === 'DESC') {
+                        orderDirection = 'DESC';
+                    }
+                    statement += ` ORDER BY ${this.fieldMappings.get(options.orderField).name} ${orderDirection}`
+                } else {
+                    ErrorCodeUtil.findErrorCodeAndThrow('NO_SUCH_FIELD');
+                }
+            }
         }
+        statement += `;`;
+        console.log(statement);
 
         const rows: RowDataPacket[] = await this.db.query(statement);
 
         let result: T[] = [];
         rows.forEach(row => {
-            if(row) {
+            if (row) {
                 const rowResult: any = {};
                 properties.forEach((property, index) => {
-                    if(this.fieldMappings.get(property).type === DBFieldType.BOOLEAN) {
+                    if (this.fieldMappings.get(property).type === DBFieldType.BOOLEAN) {
                         rowResult[property] = Boolean(row[fieldsArray[index]]);
-                    } else if(this.fieldMappings.get(property).type === DBFieldType.TIMESTAMP) {
+                    } else if (this.fieldMappings.get(property).type === DBFieldType.TIMESTAMP) {
                         rowResult[property] = new Date(Date.parse(row[fieldsArray[index]]));
                     } else {
                         rowResult[property] = row[fieldsArray[index]];
@@ -282,7 +295,7 @@ export class CRUDConstructor<T extends ICRUDModel, > {
         statement += ` WHERE ${this.fieldMappings.get('id').name} = ${data.id};`;
 
         const result: OkPacket = await this.db.execute(statement);
-        if(result.affectedRows != 1) {
+        if (result.affectedRows != 1) {
             ErrorCodeUtil.findErrorCodeAndThrow('UPDATED_FAILED');
         }
         return data.id;
@@ -295,7 +308,7 @@ export class CRUDConstructor<T extends ICRUDModel, > {
      */
     public async delete(id: number): Promise<number> {
         let statement: string = '';
-        if(this.softDelete) {
+        if (this.softDelete) {
             statement = `UPDATE ${this.dbTable} SET ${this.validFieldMapping} = 0 WHERE ${this.fieldMappings.get('id').name} = ${id};`;
         } else {
             statement = `DELETE FROM ${this.dbTable} WHERE ${this.fieldMappings.get('id').name} = ${id};`;
@@ -320,13 +333,13 @@ export class CRUDConstructor<T extends ICRUDModel, > {
 
         const rows: RowDataPacket[] = await this.db.query(statement);
 
-        if(rows[0]) {
+        if (rows[0]) {
             // Assign fields of the result to an empty object and return it
             const result: any = {};
             properties.forEach((property, index) => {
-                if(this.fieldMappings.get(property).type === DBFieldType.BOOLEAN) {
+                if (this.fieldMappings.get(property).type === DBFieldType.BOOLEAN) {
                     result[property] = Boolean(rows[0][fieldsArray[index]]);
-                } else if(this.fieldMappings.get(property).type === DBFieldType.TIMESTAMP) {
+                } else if (this.fieldMappings.get(property).type === DBFieldType.TIMESTAMP) {
                     result[property] = new Date(Date.parse(rows[0][fieldsArray[index]]));
                 } else {
                     result[property] = rows[0][fieldsArray[index]];
@@ -366,7 +379,7 @@ export class CRUDConstructor<T extends ICRUDModel, > {
         });
         router.post('/list', async (req: Request, res: Response, next: NextFunction) => {
             try {
-                const data: T[] = await this.list(req.body.limit);
+                const data: T[] = await this.list(<CRUDListOptions>req.body);
                 res.status(200).send({
                     data: data
                 });
@@ -376,7 +389,7 @@ export class CRUDConstructor<T extends ICRUDModel, > {
         });
         router.get('/list', async (req: Request, res: Response, next: NextFunction) => {
             try {
-                const data: T[] = await this.list(undefined);
+                const data: T[] = await this.list({});
                 res.status(200).send({
                     data: data
                 });
@@ -404,7 +417,7 @@ export class CRUDConstructor<T extends ICRUDModel, > {
                 ErrorCodeUtil.resolveErrorOnRoute(e, res);
             }
         });
-        if(this.softDelete) {
+        if (this.softDelete) {
             router.get('/readAll/:id', async (req: Request, res: Response, next: NextFunction) => {
                 try {
                     const data: T = await this.readAll(req.params.id);

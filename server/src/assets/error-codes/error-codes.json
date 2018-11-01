@@ -43,5 +43,10 @@
     "id": 8,
     "name": "INVALID_PARAMETER",
     "text": "Invalid parameter provided"
+  },
+  {
+    "id": 9,
+    "name": "NO_SUCH_FIELD",
+    "text": "Given field doesn't exist on the CRUD Model."
   }
 ]
