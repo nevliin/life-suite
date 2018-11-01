@@ -36,14 +36,50 @@
     ]
   },
   {
+    "routeName": "fin",
+    "menuTitle": "Financials",
+    "menuEntries": [
+      {
+        "label": "Dashboard",
+        "route": [
+          "dashboard"
+        ]
+      },
+      {
+        "label": "Add",
+        "route": [
+          "add"
+        ]
+      },
+      {
+        "label": "Recent Transactions",
+        "route": [
+          "recent"
+        ]
+      },
+      {
+        "label": "Accounts",
+        "route": [
+          "accounts"
+        ]
+      }
+    ]
+  },
+  {
     "routeName": "default",
     "menuTitle": "Life Suite",
     "absolute": true,
     "menuEntries": [
       {
-        "label": "Inv",
+        "label": "INV",
         "route": [
           "inv"
+        ]
+      },
+      {
+        "label": "FIN",
+        "route": [
+          "fin"
         ]
       }
     ]

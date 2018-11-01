@@ -11,6 +11,7 @@ import {InvAddComponent} from "./inv/inv-add/inv-add.component";
 import {AuthService} from "./core/auth/auth.service";
 import {AuthLoginWrapperComponent} from "./core/auth/auth-login-wrapper/auth-login-wrapper.component";
 import {HomeDashboardComponent} from "./home/home-dashboard/home-dashboard.component";
+import {FinRecentComponent} from "./fin/fin-recent/fin-recent.component";
 
 const routes: Routes = [
     {
@@ -58,6 +59,33 @@ const routes: Routes = [
             },
             {
                 path: '', redirectTo: 'list', pathMatch: 'full'
+            }
+        ]
+    },
+    {
+        path: 'fin',
+        canActivate: [AuthService],
+        resolve: {
+            menu: CurrentMenuResolver
+        },
+        data: {
+            requiredPower: 10
+        },
+        children: [
+            {
+                path: 'dashboard', component: InvListComponent
+            },
+            {
+                path: 'add', component: InvComparisonComponent
+            },
+            {
+                path: 'recent', component: FinRecentComponent
+            },
+            {
+                path: 'accounts', component: InvExpirationsComponent
+            },
+            {
+                path: '', redirectTo: 'dashboard', pathMatch: 'full'
             }
         ]
     },

@@ -1,6 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-
 import {AppComponent} from './app.component';
 import {RouterModule} from "@angular/router";
 import {AppRouting} from "./app.routing";
@@ -16,10 +15,7 @@ import {MessageService} from "primeng/api";
 import {ToastModule} from "primeng/toast";
 import {ErrorHandlingService} from "./core/error-handling/error-handling.service";
 import {ErrorHandlingModule} from "./core/error-handling/error-handling.module";
-import { HomeDashboardComponent } from './home/home-dashboard/home-dashboard.component';
-import { MatGridListModule, MatCardModule, MatMenuModule, MatIconModule, MatButtonModule } from '@angular/material';
-import { LayoutModule } from '@angular/cdk/layout';
-import {MenuModule} from "primeng/menu";
+import {FinModule} from "./fin/fin.module";
 
 @NgModule({
     declarations: [
@@ -38,7 +34,8 @@ import {MenuModule} from "primeng/menu";
         ComponentsModule,
         HomeModule,
         ToastModule,
-        ErrorHandlingModule
+        ErrorHandlingModule,
+        FinModule
     ],
     providers: [MessageService, ErrorHandlingService],
     bootstrap: [AppComponent]

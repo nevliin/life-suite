@@ -45,21 +45,18 @@ export class InvListComponent implements OnInit {
     }
 
     async fetchEntries() {
-        try {
-            this.entries = await this.http.get('/api/inv/entry/list')
-                .pipe(map((response: { data: InvEntry[] }) => {
-                        return response.data
-                            .map((entry: InvEntry) => {
-                                entry.expirationDate = new Date(entry.expirationDate);
-                                return entry;
-                            })
-                    })
-                ).toPromise().catch((e) => {
-                    throw e
-                });
-        } catch (e) {
-            this.errorHandlingService.handleHTTPError(e);
-        }
+        this.entries = await this.http.get('/api/inv/entry/list')
+            .pipe(map((response: { data: InvEntry[] }) => {
+                    return response.data
+                        .map((entry: InvEntry) => {
+                            entry.expirationDate = new Date(entry.expirationDate);
+                            return entry;
+                        })
+                })
+            ).toPromise().catch((e) => {
+                this.errorHandlingService.handleHTTPError(e);
+                return [];
+            });
     }
 
     async eatConfirmation(id: number) {
