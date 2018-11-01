@@ -5,7 +5,7 @@ import {ErrorCodeUtil} from "../utils/error-code/error-code.util";
 import {ILoginModel} from "../utils/auth/login.model";
 import {IUpdatePasswordModel} from "../utils/auth/update-password.model";
 import {IEditRolesModel} from "../utils/auth/edit-roles.model";
-import {CRUDConstructor} from "../core/crud-constructor";
+import {CRUDConstructor} from "../core/crud/crud-constructor";
 import {RoleModel} from "../models/auth/role.model";
 import {IUserDetailsModel} from "../utils/auth/user-details.model";
 import {ValidatorUtil} from "../utils/validator/validator.util";

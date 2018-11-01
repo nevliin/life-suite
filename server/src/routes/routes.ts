@@ -1,6 +1,6 @@
 import {Application} from "express";
 import {authRouter} from "./auth-routes";
-import {CRUDConstructor} from "../core/crud-constructor";
+import {CRUDConstructor} from "../core/crud/crud-constructor";
 import {CategoryModel} from "../models/fin/category.model";
 import {AccountModel} from "../models/fin/account.model";
 import {TransactionModel} from "../models/fin/transaction.model";

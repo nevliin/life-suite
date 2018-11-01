@@ -1,6 +1,6 @@
 import {NextFunction, Request, Response, Router} from "express";
 import {ErrorCodeUtil} from "../utils/error-code/error-code.util";
-import {CRUDConstructor} from "../core/crud-constructor";
+import {CRUDConstructor} from "../core/crud/crud-constructor";
 import {EntryModel} from "../models/inv/entry.model";
 import {TargetEntryModel} from "../models/inv/target-entry.model";
 import {InvService} from "../services/inv/inv.service";

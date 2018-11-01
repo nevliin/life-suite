@@ -1,4 +1,4 @@
-import {ICRUDModel} from "../../core/crud.model";
+import {ICRUDModel} from "../../core/crud/crud.model";
 
 export class TargetEntryModel implements ICRUDModel {
     id: number = null;
