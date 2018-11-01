@@ -1,12 +1,19 @@
-<div id="center"
-     style="border: solid 1px #c8c8c8; border-radius: 3px; padding: 0.5em; width: 344px; margin: 10px auto 0px auto; background: white;">
-    <auth-login [intendedRoute]="intendedRoute" *ngIf="!verifying && !verified"></auth-login>
+<mat-card class="wrapper">
+    <div *ngIf="!verifying && !verified">
+        <auth-login [intendedRoute]="intendedRoute"></auth-login>
+    </div>
+    <div>
+        <mat-card-content  style="display: flex; justify-content: center;" *ngIf="verifying">
+            <mat-spinner></mat-spinner>
+        </mat-card-content>
+    </div>
     <div *ngIf="!verifying && verified" style="display: grid; text-align: center;">
-        <h3 style="margin: 5px;">You are already logged in!</h3>
-        <button mat-flat-button color="primary" (click)="router.navigate(['/'])">Home</button>
-        <button mat-flat-button color="primary" (click)="logOut()">Logout</button>
+        <mat-card-title>
+            You are already logged in!
+        </mat-card-title>
+        <mat-card-actions style="display: flex; justify-content: space-evenly;">
+            <button mat-flat-button color="primary" (click)="router.navigate(['/'])">Home</button>
+            <button mat-flat-button color="primary" (click)="logOut()">Logout</button>
+        </mat-card-actions>
     </div>
-    <div style="display: flex; justify-content: center;" *ngIf="verifying">
-        <mat-spinner></mat-spinner>
-    </div>
-</div>
+</mat-card>

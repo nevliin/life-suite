@@ -57,7 +57,6 @@ export class AuthLoginComponent implements OnInit {
 
     navigateIntended() {
         if(this.intendedRoute !== undefined) {
-            debugger;
             this.router.navigate(this.intendedRoute);
         } else {
             this.router.navigate(['home']);

@@ -1,14 +1,15 @@
-<h3 style="margin: 5px;">Login</h3>
-<div style="" [formGroup]="loginForm" class="ui-g ui-fluid">
-    <div class="ui-inputgroup flex-child">
-        <span class="ui-inputgroup-addon"><i class="fa fa-user"></i></span>
-        <input type="text" pInputText placeholder="Username" formControlName="username" class="ui-button-secondary">
-    </div>
-    <div class="ui-inputgroup flex-child">
-        <span class="ui-inputgroup-addon"><i class="fa fa-key"></i></span>
-        <input type="password" pInputText placeholder="********" formControlName="password">
-    </div>
-    <button pButton label="Cancel" class="flex-child" (click)="cancel()"></button>
-    <button pButton label="Login" class="flex-child" (click)="submit()"></button>
-</div>
+<mat-card-title style="text-align: center; margin-bottom: 20px;">Login</mat-card-title>
+<mat-card-content [formGroup]="loginForm" class="form-container">
+    <mat-form-field>
+        <input matInput placeholder="Username" formControlName="username" matNativeControl>
+    </mat-form-field>
+    <mat-form-field>
+        <input type="password" matInput placeholder="Password" formControlName="password" matNativeControl>
+    </mat-form-field>
+</mat-card-content>
+<mat-card-actions style="display: flex;">
+    <button mat-flat-button color="secondary" (click)="cancel()">Cancel</button>
+    <div class="fill-space"></div>
+    <button mat-flat-button color="primary" (click)="submit()">Login</button>
+</mat-card-actions>
 <p-messages [(value)]="messages" [closable]="false"></p-messages>

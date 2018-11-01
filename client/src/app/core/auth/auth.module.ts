@@ -6,7 +6,14 @@ import {RouterModule} from "@angular/router";
 import {AuthLoginWrapperComponent} from './auth-login-wrapper/auth-login-wrapper.component';
 import {ButtonModule} from "primeng/button";
 import {CheckboxModule, MessagesModule} from "primeng/primeng";
-import {MatButtonModule, MatProgressSpinnerModule} from "@angular/material";
+import {
+    MatButtonModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatProgressSpinnerModule
+} from "@angular/material";
+import {MatComponentCollectorModule} from "../mat-component-collector.module";
 
 @NgModule({
     imports: [
@@ -16,8 +23,7 @@ import {MatButtonModule, MatProgressSpinnerModule} from "@angular/material";
         ButtonModule,
         MessagesModule,
         CheckboxModule,
-        MatProgressSpinnerModule,
-        MatButtonModule
+        MatComponentCollectorModule
     ],
     declarations: [
         AuthLoginComponent,
