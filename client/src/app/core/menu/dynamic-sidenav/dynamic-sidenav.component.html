@@ -1,0 +1,57 @@
+<mat-sidenav-container class="sidenav-container" [hasBackdrop]="true" fullscreen>
+    <mat-sidenav #drawer class="sidenav" fixedInViewport="true">
+        <mat-toolbar>
+            <mat-toolbar-row>
+                <button type="button"
+                        color="primary"
+                        mat-flat-button
+                        (click)="logOut()"
+                        *ngIf="isVerified">
+
+                    Logout
+                </button>
+                <button type="button"
+                        color="primary"
+                        mat-flat-button
+                        (click)="router.navigate(['/auth', 'login']); drawer.toggle();"
+                        *ngIf="!isVerified">
+                    Login
+                </button>
+                <span class="fill-space"></span>
+                <button type="button"
+                        color="primary"
+                        mat-icon-button
+                        (click)="router.navigate(['/user', 'details']); drawer.toggle();"
+                        *ngIf="isVerified">
+                    <mat-icon aria-label="User Details">person</mat-icon>
+                </button>
+            </mat-toolbar-row>
+            <mat-toolbar-row>
+                {{menuTitle}}
+            </mat-toolbar-row>
+        </mat-toolbar>
+        <mat-nav-list>
+            <a mat-list-item *ngFor="let menuItem of menuItems" (click)="menuItem.command(); drawer.toggle()">{{menuItem.label}}</a>
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content id="main-outlet">
+        <mat-toolbar color="primary">
+            <button
+                    type="button"
+                    aria-label="Toggle sidenav"
+                    mat-icon-button
+                    (click)="drawer.toggle()">
+                <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+            </button>
+            <span class="fill-space"></span>
+            <button mat-icon-button (click)="router.navigate(['/'])">
+                <mat-icon aria-label="Home">home</mat-icon>
+            </button>
+        </mat-toolbar>
+        <div style="margin: 20px auto 0 auto; max-width: 1200px; text-align: center;">
+            <div style="text-align: left;">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>
