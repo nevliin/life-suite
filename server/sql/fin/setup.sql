@@ -47,6 +47,6 @@ CREATE TABLE fin_transaction(
   amount DECIMAL(30, 2) NOT NULL,
   note VARCHAR(255),
   planned_transaction_id INT REFERENCES fin_planned_transaction(id),
-  deactivated INT(1) NOT NULL DEFAULT 0,
+  valid INT(1) NOT NULL DEFAULT 1,
   executed_on TIMESTAMP DEFAULT NOW()
 );

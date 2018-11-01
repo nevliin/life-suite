@@ -29,8 +29,8 @@ export class Routes {
         app.use('/fin/account', accountModelCRUD.getRouter());
 
         const transactionModelCRUD: CRUDConstructor<TransactionModel> = new CRUDConstructor(new TransactionModel(), 'fin_transaction', {
-            softDelete: false,
-            autoFilledFields: ['created_on', 'deactivated'],
+            softDelete: true,
+            autoFilledFields: ['created_on'],
             autoIncrementId: true
         });
         app.use('/fin/transaction', transactionModelCRUD.getRouter());

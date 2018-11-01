@@ -7,6 +7,5 @@ export class TransactionModel implements ICRUDModel {
     amount: number = null;
     note: string = null;
     planned_transaction_id: number = null;
-    deactivated: boolean = null;
     executed_on: Date = null;
 }

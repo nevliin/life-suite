@@ -58,6 +58,7 @@ export class CRUDConstructor<T extends ICRUDModel, > {
             this.softDelete = options.softDelete;
             this.db = new DbUtil(options.dbconfig);
             this.fieldMappings = this.completeFieldMappings(model, options.fieldMappings);
+            console.log(this.fieldMappings);
             this.autoFilledFields = (options.autoFilledFields) ? options.autoFilledFields : [];
             this.validFieldMapping = (options.validFieldMapping) ? options.validFieldMapping : 'valid';
         } else {
@@ -253,7 +254,7 @@ export class CRUDConstructor<T extends ICRUDModel, > {
                 return property != 'id'
             });
         }
-        const fields: string = properties.map(property => this.fieldMappings.get(property).name).join(', ');
+
         let statement: string = `UPDATE ${this.dbTable} SET `;
 
         properties.forEach((property, index) => {
