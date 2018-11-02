@@ -11,6 +11,7 @@ import {FinAccount} from "./fin-account";
 export class FinService {
 
     accountsById: Map<number, FinAccount> | undefined;
+    accountsPromise: Promise<void>;
 
     constructor(
         readonly http: HttpClient,
@@ -37,9 +38,24 @@ export class FinService {
             });
     }
 
-    async getAccounts(): Promise<Map<number, FinAccount>> {
+    async getAccounts(): Promise<FinAccount[]> {
+        await this.getAccountsById();
+        return Array.from(this.accountsById.values());
+    }
+
+    async getAccountsById(): Promise<Map<number, FinAccount>> {
+        if(this.accountsById !== undefined) {
+            return this.accountsById;
+        }
+        if(this.accountsPromise !== undefined) {
+            await this.accountsPromise;
+            return this.accountsById;
+        }
         if (this.accountsById === undefined) {
-            console.log('getting accounts');
+            let resolveFunc: Function;
+            this.accountsPromise = new Promise(resolve => {
+                resolveFunc = resolve;
+            });
             const accounts: FinAccount[] = await this.http.get('/api/fin/account/list')
                 .pipe(map((response: { data: FinAccount[] }) => {
                         return response.data
@@ -57,12 +73,13 @@ export class FinService {
                 accountsById.set(account.id, account);
             });
             this.accountsById = accountsById;
+            resolveFunc();
         }
         return this.accountsById;
     }
 
     async getAccountById(id: number): Promise<FinAccount> {
-        await this.getAccounts();
+        await this.getAccountsById();
         return this.accountsById.get(id);
     }
 

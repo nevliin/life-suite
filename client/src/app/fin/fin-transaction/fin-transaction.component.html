@@ -1,5 +1,5 @@
-<span>{{transaction.account}} / {{finService.getAccountById(transaction.account) | async}} </span>
+<span>{{transaction.account}} / {{accountName}} </span>
 <mat-icon>arrow_forward</mat-icon>
-<span>{{transaction.contra_account}} / {{finService.getAccountById(transaction.contra_account) | async}}</span>
+<span>{{transaction.contra_account}} / {{contraAccountName}}</span>
  |
 <span>{{transaction.amount}}€</span>

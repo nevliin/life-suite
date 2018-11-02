@@ -10,13 +10,17 @@ import {FinService} from "../fin.service";
 export class FinTransactionComponent implements OnInit {
 
     @Input() transaction: FinTransaction;
+    accountName: string;
+    contraAccountName: string;
 
     constructor(
         readonly finService: FinService
     ) {
     }
 
-    ngOnInit() {
+    async ngOnInit() {
+        this.accountName = (await this.finService.getAccountById(this.transaction.account)).name;
+        this.contraAccountName = (await this.finService.getAccountById(this.transaction.contra_account)).name;
     }
 
 }
