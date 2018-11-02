@@ -12,6 +12,7 @@ import {AuthService} from "./core/auth/auth.service";
 import {AuthLoginWrapperComponent} from "./core/auth/auth-login-wrapper/auth-login-wrapper.component";
 import {HomeDashboardComponent} from "./home/home-dashboard/home-dashboard.component";
 import {FinRecentComponent} from "./fin/fin-recent/fin-recent.component";
+import {FinAddComponent} from "./fin/fin-add/fin-add.component";
 
 const routes: Routes = [
     {
@@ -76,7 +77,7 @@ const routes: Routes = [
                 path: 'dashboard', component: InvListComponent
             },
             {
-                path: 'add', component: InvComparisonComponent
+                path: 'add', component: FinAddComponent
             },
             {
                 path: 'recent', component: FinRecentComponent
