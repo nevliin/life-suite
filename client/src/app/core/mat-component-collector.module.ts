@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {
+    MatAutocompleteModule,
     MatButtonModule, MatCardModule, MatFormFieldModule,
     MatIconModule,
     MatInputModule,
@@ -21,6 +22,7 @@ import {
         MatProgressSpinnerModule,
         MatCardModule,
         MatFormFieldModule,
+        MatAutocompleteModule
     ],
     exports: [
         MatSidenavModule,
@@ -32,6 +34,7 @@ import {
         MatProgressSpinnerModule,
         MatCardModule,
         MatFormFieldModule,
+        MatAutocompleteModule
     ],
     declarations: []
 })
