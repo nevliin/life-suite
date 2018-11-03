@@ -30,7 +30,7 @@ export class Routes {
 
         const transactionModelCRUD: CRUDConstructor<TransactionModel> = new CRUDConstructor(new TransactionModel(), 'fin_transaction', {
             softDelete: true,
-            autoFilledFields: ['created_on'],
+            autoFilledFields: ['executed_on'],
             autoIncrementId: true
         });
         app.use('/fin/transaction', transactionModelCRUD.getRouter());

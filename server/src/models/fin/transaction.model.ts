@@ -6,6 +6,7 @@ export class TransactionModel implements ICRUDModel {
     contra_account: number = null;
     amount: number = null;
     note: string = null;
+    created_on: Date = null;
     planned_transaction_id: number = null;
     executed_on: Date = null;
 }
