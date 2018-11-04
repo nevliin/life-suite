@@ -29,6 +29,7 @@ export class FinService {
                     return response.data
                         .map((transaction: FinTransaction) => {
                             transaction.executed_on = new Date(transaction.executed_on);
+                            transaction.created_on = new Date(transaction.created_on);
                             return transaction;
                         })
                 })
@@ -81,6 +82,10 @@ export class FinService {
     async getAccountById(id: number): Promise<FinAccount> {
         await this.getAccountsById();
         return this.accountsById.get(id);
+    }
+
+    async createTransaction(transaction: FinTransaction): Promise<number> {
+        return ((await this.http.post('/api/fin/transaction/create/', transaction).toPromise().catch(e => {console.log(e); throw e;})) as any).id;
     }
 
 }

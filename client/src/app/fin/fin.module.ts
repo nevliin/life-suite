@@ -7,13 +7,15 @@ import {FinAccountsComponent} from './fin-accounts/fin-accounts.component';
 import {MatComponentCollectorModule} from "../core/mat-component-collector.module";
 import { FinTransactionComponent } from './fin-transaction/fin-transaction.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {ComponentsModule} from "../core/components/components.module";
 
 @NgModule({
     imports: [
         CommonModule,
         MatComponentCollectorModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        ComponentsModule
     ],
     declarations: [FinDashboardComponent, FinAddComponent, FinRecentComponent, FinAccountsComponent, FinTransactionComponent]
 })
