@@ -13,6 +13,7 @@ import {AuthLoginWrapperComponent} from "./core/auth/auth-login-wrapper/auth-log
 import {HomeDashboardComponent} from "./home/home-dashboard/home-dashboard.component";
 import {FinRecentComponent} from "./fin/fin-recent/fin-recent.component";
 import {FinAddComponent} from "./fin/fin-add/fin-add.component";
+import {FinAccountsComponent} from "./fin/fin-accounts/fin-accounts.component";
 
 const routes: Routes = [
     {
@@ -83,7 +84,7 @@ const routes: Routes = [
                 path: 'recent', component: FinRecentComponent
             },
             {
-                path: 'accounts', component: InvExpirationsComponent
+                path: 'accounts', component: FinAccountsComponent
             },
             {
                 path: '', redirectTo: 'dashboard', pathMatch: 'full'
