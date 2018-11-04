@@ -4,6 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {ErrorHandlingService} from "../core/error-handling/error-handling.service";
 import {FinTransaction} from "./fin-transaction";
 import {FinAccount} from "./fin-account";
+import {FinCategory} from "./fin-category";
 
 @Injectable({
     providedIn: 'root'
@@ -86,6 +87,10 @@ export class FinService {
 
     async createTransaction(transaction: FinTransaction): Promise<number> {
         return ((await this.http.post('/api/fin/transaction/create/', transaction).toPromise().catch(e => {console.log(e); throw e;})) as any).id;
+    }
+
+    async getCategories(): Promise<FinCategory[]> {
+        return ((await this.http.get('/api/fin/category/list').toPromise()) as any).data;
     }
 
 }
