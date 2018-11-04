@@ -1,0 +1,16 @@
+.list-container {
+    display: grid;
+    grid-template-columns: 250px 50px 250px 100px 100px;
+    grid-row-gap: 15px;
+    font-size: 120%;
+}
+
+.account-card {
+    /*background-color: #9c9c9c;*/
+    justify-self: stretch !important;
+}
+
+.transaction-list-child {
+    justify-self: center;
+    align-self: center;
+}
