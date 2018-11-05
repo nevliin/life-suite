@@ -1,0 +1,23 @@
+<h1 mat-dialog-title>Add Account</h1>
+<div mat-dialog-content [formGroup]="accountForm" style="max-width: 500px;">
+    <mat-form-field>
+        <input matInput formControlName="categoryId" placeholder="Category ID" [attr.disabled]="">
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput formControlName="parentAccountId" placeholder="Parent Account" [attr.disabled]="">
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput formControlName="accountId" placeholder="Account ID">
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput formControlName="accountName" placeholder="Account Name">
+    </mat-form-field>
+    <mat-form-field>
+        <textarea matInput formControlName="accountNote" placeholder="Note"></textarea>
+    </mat-form-field>
+</div>
+<div mat-dialog-actions style="display: flex;">
+    <span class="fill-space"></span>
+    <button mat-flat-button color="secondary" (click)="cancel()">Cancel</button>
+    <button mat-flat-button color="primary"  (click)="submit()">Submit</button>
+</div>

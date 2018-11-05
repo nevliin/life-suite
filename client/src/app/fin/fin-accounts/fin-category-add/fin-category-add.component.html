@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Add Category</h1>
+<div mat-dialog-content [formGroup]="categoryForm" style="max-width: 500px;">
+    <mat-form-field>
+        <input matInput formControlName="categoryName" placeholder="Category Name">
+    </mat-form-field>
+    <mat-slide-toggle [formControlName]="'active'">{{categoryForm.get('active').value ? 'Active' : 'Passive'}}
+    </mat-slide-toggle>
+</div>
+<div mat-dialog-actions style="display: flex;">
+    <span class="fill-space"></span>
+    <button mat-flat-button color="secondary" (click)="cancel()">Cancel</button>
+    <button mat-flat-button color="primary" (click)="submit()">Submit</button>
+</div>
