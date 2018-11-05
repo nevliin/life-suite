@@ -46,10 +46,10 @@ export class FinService {
     }
 
     async getAccountsById(): Promise<Map<number, FinAccount>> {
-        if(this.accountsById !== undefined) {
+        if (this.accountsById !== undefined) {
             return this.accountsById;
         }
-        if(this.accountsPromise !== undefined) {
+        if (this.accountsPromise !== undefined) {
             await this.accountsPromise;
             return this.accountsById;
         }
@@ -86,7 +86,31 @@ export class FinService {
     }
 
     async createTransaction(transaction: FinTransaction): Promise<number> {
-        return ((await this.http.post('/api/fin/transaction/create/', transaction).toPromise().catch(e => {console.log(e); throw e;})) as any).id;
+        return ((await this.http.post('/api/fin/transaction/create/', transaction).toPromise().catch(e => {
+            console.log(e);
+            throw e;
+        })) as any).id;
+    }
+
+    async createAccount(account: FinAccount): Promise<number> {
+        return ((await this.http.post('/api/fin/account/create/', account).toPromise().catch(e => {
+            console.log(e);
+            throw e;
+        })) as any).id;
+    }
+
+    async deleteAccount(accountId: number): Promise<number> {
+        return ((await this.http.delete('/api/fin/account/delete/' + accountId).toPromise().catch(e => {
+            console.log(e);
+            throw e;
+        })) as any).id;
+    }
+
+    async createCategory(category: FinCategory): Promise<number> {
+        return ((await this.http.post('/api/fin/category/create/', category).toPromise().catch(e => {
+            console.log(e);
+            throw e;
+        })) as any).id;
     }
 
     async getCategories(): Promise<FinCategory[]> {
