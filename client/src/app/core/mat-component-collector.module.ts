@@ -2,11 +2,11 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {
     MatAutocompleteModule,
-    MatButtonModule, MatCardModule, MatDividerModule, MatExpansionModule, MatFormFieldModule,
+    MatButtonModule, MatCardModule, MatDialogModule, MatDividerModule, MatExpansionModule, MatFormFieldModule,
     MatIconModule,
     MatInputModule,
-    MatListModule, MatProgressSpinnerModule, MatSelectModule,
-    MatSidenavModule,
+    MatListModule, MatMenuModule, MatProgressSpinnerModule, MatSelectModule,
+    MatSidenavModule, MatSlideToggleModule,
     MatToolbarModule, MatTooltipModule, MatTreeModule
 } from "@angular/material";
 
@@ -27,7 +27,10 @@ import {
         MatTooltipModule,
         MatDividerModule,
         MatExpansionModule,
-        MatTreeModule
+        MatTreeModule,
+        MatDialogModule,
+        MatSlideToggleModule,
+        MatMenuModule
     ],
     exports: [
         MatSidenavModule,
@@ -44,7 +47,10 @@ import {
         MatTooltipModule,
         MatDividerModule,
         MatExpansionModule,
-        MatTreeModule
+        MatTreeModule,
+        MatDialogModule,
+        MatSlideToggleModule,
+        MatMenuModule
     ],
     declarations: []
 })
