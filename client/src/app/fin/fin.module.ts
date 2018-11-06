@@ -10,7 +10,6 @@ import {ComponentsModule} from "../core/components/components.module";
 import {FinAccountAddComponent} from "./fin-accounts/fin-account-add/fin-account-add.component";
 import { FinCategoryAddComponent } from './fin-accounts/fin-category-add/fin-category-add.component';
 import {AlertDialogModule} from "../core/alert-dialog/alert-dialog.module";
-
 @NgModule({
     imports: [
         CommonModule,
