@@ -209,16 +209,18 @@ export class CRUDConstructor<T extends ICRUDModel, > {
         const fields: string = fieldsArray.join(', ');
         let statement: string = `SELECT ${fields} FROM ${this.dbTable}`;
 
-        // Add check for validity if the objects are soft-deleted
-        if (this.softDelete) {
-            statement += ` WHERE ${this.validFieldMapping} = 1`;
-        }
-
         // Apply options
-        if (!isNullOrUndefined(options)) {
-            if (!isNullOrUndefined(options.limit) && typeof options.limit === "number") {
-                statement += ` LIMIT ${this.db.escNumber(options.limit)}`;
-            } else if (!isNullOrUndefined(options.orderField)) {
+        if (isNullOrUndefined(options)) {
+            if (this.softDelete) {
+                // Add check for validity if the objects are soft-deleted
+                statement += ` WHERE ${this.validFieldMapping} = 1`;
+            }
+        } else {
+            if ((isNullOrUndefined(options.bypassSoftDelete) || typeof options.bypassSoftDelete !== "boolean" || !options.bypassSoftDelete) && this.softDelete) {
+                // Add check for validity if the objects are soft-deleted
+                statement += ` WHERE ${this.validFieldMapping} = 1`;
+            }
+            if (!isNullOrUndefined(options.orderField)) {
                 if (typeof options.orderField === 'string' && this.fieldMappings.has(options.orderField)) {
                     let orderDirection: string = 'ASC';
                     if (!isNullOrUndefined(options.orderDirection) && options.orderDirection.toUpperCase() === 'DESC') {
@@ -228,6 +230,9 @@ export class CRUDConstructor<T extends ICRUDModel, > {
                 } else {
                     ErrorCodeUtil.findErrorCodeAndThrow('NO_SUCH_FIELD');
                 }
+            }
+            if (!isNullOrUndefined(options.limit) && typeof options.limit === "number") {
+                statement += ` LIMIT ${this.db.escNumber(options.limit)}`;
             }
         }
         statement += `;`;
