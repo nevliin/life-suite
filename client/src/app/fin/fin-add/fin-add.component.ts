@@ -1,11 +1,11 @@
-import {Component, ElementRef, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {FinAccount} from "../fin-account";
 import {FinService} from "../fin.service";
 import {Observable} from "rxjs";
 import {map, startWith} from "rxjs/operators";
 import {TwoWayMap} from "../../core/auth/two-way-map";
-import {MatAutocompleteSelectedEvent, MatAutocompleteTrigger} from "@angular/material";
+import {MatAutocompleteTrigger} from "@angular/material";
 import {FinTransaction} from "../fin-transaction";
 import {MessageService} from "primeng/api";
 
@@ -30,8 +30,8 @@ export class FinAddComponent implements OnInit {
 
     transactionForm: FormGroup;
 
-    currencies: { value: string, viewValue: string}[] = [
-        { value: 'euro', viewValue: 'EUR'}
+    currencies: { value: string, viewValue: string }[] = [
+        {value: 'euro', viewValue: 'EUR'}
     ];
 
     constructor(
@@ -70,9 +70,20 @@ export class FinAddComponent implements OnInit {
 
     reset() {
         this.transactionForm = this.fb.group({
-            account: [null, Validators.compose([Validators.required, Validators.min(0), Validators.max(9999), Validators.pattern('[0-9]*')])],
+            account: [null, Validators.compose([
+                Validators.required,
+                Validators.min(0),
+                Validators.max(9999),
+                Validators.pattern('[0-9]*')
+            ]),
+                this.validateAccountExists.bind(this)],
             accountName: [''],
-            contraAccount: [null, Validators.compose([Validators.required, Validators.min(0), Validators.max(9999)])],
+            contraAccount: [null, Validators.compose([
+                Validators.required,
+                Validators.min(0),
+                Validators.max(9999),
+                Validators.pattern('[0-9]*')
+            ])],
             contraAccountName: [''],
             amount: [null],
             currency: ['euro'],
@@ -82,17 +93,22 @@ export class FinAddComponent implements OnInit {
     }
 
     async submit() {
-        debugger;
-        if(this.transactionForm.valid) {
+        if (this.transactionForm.valid) {
             let transaction: FinTransaction = new FinTransaction();
             transaction.account = Number.parseInt(this.transactionForm.get('account').value);
             transaction.contra_account = Number.parseInt(this.transactionForm.get('contraAccount').value);
             transaction.amount = Number.parseFloat(this.transactionForm.get('amount').value);
             transaction.created_on = this.transactionForm.get('createdOn').value;
             transaction.note = this.transactionForm.get('note').value;
-            this.messageService.add({severity: 'success', summary: 'Success', life: 3000, detail: 'Successfully created transaction #' + await this.finService.createTransaction(transaction)});
+            this.messageService.add({
+                severity: 'success',
+                summary: 'Success',
+                life: 3000,
+                detail: 'Successfully created transaction #' + await this.finService.createTransaction(transaction)
+            });
+            this.reset();
         } else {
-            this.messageService.add({severity: 'warning', summary: 'Warning', life: 3000, detail: 'Form is invalid'});
+            this.messageService.add({severity: 'warn', summary: 'Warning', life: 3000, detail: 'Form is invalid'});
         }
     }
 
@@ -111,7 +127,7 @@ export class FinAddComponent implements OnInit {
 
     private _filterByName(value: string): string[] {
         return this.accountNames.filter((accountName: string) => {
-            return accountName.toLowerCase().includes(value.toLowerCase());
+            return (accountName) ? accountName.toLowerCase().includes(value.toLowerCase()) : true;
         })
     }
 
@@ -125,25 +141,25 @@ export class FinAddComponent implements OnInit {
                 autoCompleteTrigger = this.contraAccount;
                 break;
         }
-        if($event.key === 'Backspace' && (this.transactionForm.get(formControlName).value === '' || this.transactionForm.get(formControlName).value === null) && previous !== undefined) {
+        if ($event.key === 'Backspace' && (this.transactionForm.get(formControlName).value === '' || this.transactionForm.get(formControlName).value === null) && previous !== undefined) {
             previous.focus();
-            if(autoCompleteTrigger !== undefined) {
+            if (autoCompleteTrigger !== undefined) {
                 autoCompleteTrigger.closePanel();
             }
         }
-        if($event.key === 'ArrowLeft' && previous !== undefined) {
+        if ($event.key === 'ArrowLeft' && previous !== undefined) {
             previous.focus();
-            if(autoCompleteTrigger !== undefined) {
+            if (autoCompleteTrigger !== undefined) {
                 autoCompleteTrigger.closePanel();
             }
         }
-        if($event.key === 'ArrowRight' && next !== undefined) {
+        if ($event.key === 'ArrowRight' && next !== undefined) {
             next.focus();
-            if(autoCompleteTrigger !== undefined) {
+            if (autoCompleteTrigger !== undefined) {
                 autoCompleteTrigger.closePanel();
             }
         }
-        if(
+        if (
             $event.key !== 'Backspace'
             && this.transactionForm.get(formControlName).value !== null
             && this.transactionForm.get(formControlName).value.toString().length === 4
@@ -151,7 +167,7 @@ export class FinAddComponent implements OnInit {
         ) {
             this.updateAccountName(this.transactionForm.get(formControlName).value, formControlName + 'Name');
             next.focus();
-            if(autoCompleteTrigger !== undefined) {
+            if (autoCompleteTrigger !== undefined) {
                 autoCompleteTrigger.closePanel();
             }
         }
@@ -163,6 +179,10 @@ export class FinAddComponent implements OnInit {
 
     updateAccount(value: any, formControlName: string) {
         this.transactionForm.get(formControlName).setValue(this.accountsTwoWay.revGet(value));
+    }
+
+    async validateAccountExists(control: AbstractControl): Promise<any> {
+        return (this.accountIds.includes(Number.parseInt(control.value))) ? null : { accountDoesntExist: true };
     }
 
 }
