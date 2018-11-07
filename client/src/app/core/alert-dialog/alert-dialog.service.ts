@@ -13,7 +13,6 @@ export class AlertDialogService {
     }
 
     async confirm(text: string): Promise<boolean> {
-        debugger;
         const dialogRef = this.dialogService.open(AlertDialogConfirmComponent, { data: { text: text }});
         return await dialogRef.afterClosed().toPromise();
     }
