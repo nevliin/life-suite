@@ -117,4 +117,11 @@ export class FinService {
         return ((await this.http.get('/api/fin/category/list').toPromise()) as any).data;
     }
 
+    async deleteCategory(categoryId: number): Promise<number> {
+        return ((await this.http.delete('/api/fin/category/delete/' + categoryId).toPromise().catch(e => {
+            console.log(e);
+            throw e;
+        })) as any).id;
+    }
+
 }

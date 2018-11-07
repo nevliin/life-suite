@@ -2,12 +2,24 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {
     MatAutocompleteModule,
-    MatButtonModule, MatCardModule, MatDialogModule, MatDividerModule, MatExpansionModule, MatFormFieldModule,
+    MatButtonModule,
+    MatCardModule,
+    MatCheckbox,
+    MatDialogModule,
+    MatDividerModule,
+    MatExpansionModule,
+    MatFormFieldModule,
     MatIconModule,
     MatInputModule,
-    MatListModule, MatMenuModule, MatProgressSpinnerModule, MatSelectModule,
-    MatSidenavModule, MatSlideToggleModule,
-    MatToolbarModule, MatTooltipModule, MatTreeModule
+    MatListModule,
+    MatMenuModule,
+    MatProgressSpinnerModule,
+    MatSelectModule,
+    MatSidenavModule,
+    MatSlideToggleModule,
+    MatToolbarModule,
+    MatTooltipModule,
+    MatTreeModule
 } from "@angular/material";
 
 @NgModule({

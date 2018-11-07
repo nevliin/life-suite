@@ -16,6 +16,7 @@ import {ToastModule} from "primeng/toast";
 import {ErrorHandlingService} from "./core/error-handling/error-handling.service";
 import {ErrorHandlingModule} from "./core/error-handling/error-handling.module";
 import {FinModule} from "./fin/fin.module";
+import {GrowlModule} from "primeng/growl";
 
 @NgModule({
     declarations: [
