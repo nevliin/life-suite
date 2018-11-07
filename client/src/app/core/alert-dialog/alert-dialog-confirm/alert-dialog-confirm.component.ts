@@ -13,7 +13,6 @@ export class AlertDialogConfirmComponent implements OnInit {
         public dialogRef: MatDialogRef<AlertDialogConfirmComponent>,
         @Inject(MAT_DIALOG_DATA) public data: { text: string },
     ) {
-        debugger;
         this.text = this.data.text;
     }
 
