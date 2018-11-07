@@ -1,14 +1,15 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FinCategory} from "../fin-category";
 import {FinService} from "../fin.service";
 import {FinAccount} from "../fin-account";
 import {BehaviorSubject} from "rxjs";
 import {NestedTreeControl} from "@angular/cdk/tree";
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatTreeNestedDataSource} from "@angular/material";
+import {MatDialog, MatTreeNestedDataSource} from "@angular/material";
 import {isNullOrUndefined} from "../../core/util";
 import {FinAccountAddComponent} from "./fin-account-add/fin-account-add.component";
 import {FinCategoryAddComponent} from "./fin-category-add/fin-category-add.component";
 import {AlertDialogService} from "../../core/alert-dialog/alert-dialog.service";
+import {MessageService} from "primeng/api";
 
 export class AccountNode {
     children: AccountNode[];
@@ -52,7 +53,8 @@ export class FinAccountsComponent implements OnInit {
     constructor(
         readonly finService: FinService,
         readonly dialog: MatDialog,
-        readonly alertService: AlertDialogService
+        readonly alertService: AlertDialogService,
+        readonly messageService: MessageService
     ) {
     }
 
@@ -85,9 +87,14 @@ export class FinAccountsComponent implements OnInit {
         } else {
             account.parent_account = null;
         }
-        const dialogRef = this.dialog.open(FinAccountAddComponent, {data: {account: account, existingAccounts: this.accounts.map((account: FinAccount) => account.id)}});
+        const dialogRef = this.dialog.open(FinAccountAddComponent, {
+            data: {
+                account: account,
+                existingAccounts: this.accounts.map((account: FinAccount) => account.id)
+            }
+        });
         const dialogResult: FinAccount = await dialogRef.afterClosed().toPromise();
-        if(dialogResult !== null) {
+        if (dialogResult !== null) {
             this.accounts.push(dialogResult);
             this.initAccountDatabase();
         }
@@ -95,7 +102,7 @@ export class FinAccountsComponent implements OnInit {
 
     async deleteAccount(accountId: number) {
         debugger;
-        if(await this.alertService.confirm(`You are deleting the account ${accountId}.`)) {
+        if (await this.alertService.confirm(`You are deleting the account ${accountId}.`)) {
             this.finService.deleteAccount(accountId);
             this.accounts = this.accounts.filter((account: FinAccount) => account.id !== accountId);
             this.initAccountDatabase();
@@ -104,11 +111,23 @@ export class FinAccountsComponent implements OnInit {
     }
 
     async addCategory() {
-        const dialogRef = this.dialog.open(FinCategoryAddComponent, { data: {existingCategories: this.categories.map((category: FinCategory) => category.name)}});
+        const dialogRef = this.dialog.open(FinCategoryAddComponent, {data: {existingCategories: this.categories.map((category: FinCategory) => category.name)}});
         const dialogResult: FinCategory = await dialogRef.afterClosed().toPromise();
-        if(dialogResult !== null) {
+        if (dialogResult !== null) {
             this.categories.push(dialogResult);
             this.database.set(dialogResult.id, new AccountTreeWrapper(new AccountDatabase([])));
+        }
+    }
+
+    async deleteCategory(categoryId: number) {
+        if(await this.alertService.confirm('You are deleting a category, affecting all accounts in it.')) {
+            this.messageService.add({
+                severity: 'success',
+                summary: 'Success',
+                life: 3000,
+                detail: 'Successfully deleted category #' + await this.finService.deleteCategory(categoryId)
+            });
+            this.categories = this.categories.filter((category: FinCategory) => category.id !== categoryId);
         }
     }
 

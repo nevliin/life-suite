@@ -8,3 +8,15 @@
     margin-bottom: 0;
     list-style-type: none;
 }
+
+.container {
+    max-width: 1200px;
+    min-width: 800px;
+}
+
+@media (max-width: 360px) {
+    .container {
+        max-width: 360px;
+        min-width: 360px;
+    }
+}
