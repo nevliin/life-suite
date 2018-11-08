@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS fin_constraint;
 DROP TABLE IF EXISTS fin_transaction;
 DROP TABLE IF EXISTS fin_planned_transaction;
 DROP TABLE IF EXISTS fin_account;
@@ -50,4 +51,13 @@ CREATE TABLE fin_transaction(
   created_on TIMESTAMP DEFAULT NOW(),
   valid INT(1) NOT NULL DEFAULT 1,
   executed_on TIMESTAMP DEFAULT NOW()
+);
+
+CREATE TABLE fin_constraints(
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  name VARCHAR(255) NOT NULL,
+  definition VARCHAR(21000) CHARACTER SET utf8,
+  message VARCHAR(255),
+  created_on TIMESTAMP DEFAULT NOW(),
+  valid INT(1) NOT NULL DEFAULT 1
 );

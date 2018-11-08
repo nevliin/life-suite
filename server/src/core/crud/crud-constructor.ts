@@ -153,6 +153,7 @@ export class CRUDConstructor<T extends ICRUDModel, > {
                 return data['id'];
             }
         } catch (e) {
+            console.log(e);
             ErrorCodeUtil.findErrorCodeAndThrow(e);
         }
     }
@@ -369,6 +370,7 @@ export class CRUDConstructor<T extends ICRUDModel, > {
                     id: id
                 });
             } catch (e) {
+                this.logger.debug(e);
                 ErrorCodeUtil.resolveErrorOnRoute(e, res);
             }
         });

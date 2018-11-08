@@ -7,6 +7,7 @@ import {TransactionModel} from "../models/fin/transaction.model";
 import {EntryModel} from "../models/inv/entry.model";
 import {TargetEntryModel} from "../models/inv/target-entry.model";
 import {invRouter} from "./inv-routes";
+import {ConstraintModel} from "../models/fin/constraint.model";
 
 const express = require('express');
 export const router = express.Router();
@@ -34,6 +35,13 @@ export class Routes {
             autoIncrementId: true
         });
         app.use('/fin/transaction', transactionModelCRUD.getRouter());
+
+        const constraintModelCRUD: CRUDConstructor<ConstraintModel> = new CRUDConstructor(new ConstraintModel(), 'fin_constraint', {
+            softDelete: true,
+            autoFilledFields: ['created_on'],
+            autoIncrementId: true
+        });
+        app.use('/fin/constraint', constraintModelCRUD.getRouter());
 
     }
 }
