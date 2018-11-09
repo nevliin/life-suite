@@ -1,19 +1,19 @@
-<mat-card style="max-width: 1200px;">
+<mat-card class="container">
     <mat-card-title>RECENT TRANSACTIONS</mat-card-title>
     <mat-card-content>
-        <div class="list-container">
+        <div class="list-container" (click)="openTransactionDetails()">
             <ng-container *ngFor="let transaction of recentTransactions">
                 <mat-card class="account-card transaction-list-child">
-                    {{transaction.account}} / {{transaction.accountName}}
+                    {{transaction.account}}<span class="optional"> / {{transaction.accountName}}</span>
                 </mat-card>
                 <mat-icon class="transaction-list-child">arrow_forward</mat-icon>
                 <mat-card class="account-card transaction-list-child">
-                    {{transaction.contra_account}} / {{transaction.contraAccountName}}
+                    {{transaction.contra_account}}<span class="optional"> / {{transaction.contraAccountName}}</span>
                 </mat-card>
                 <div class="transaction-list-child">
                     {{transaction.amount | currency:'EUR'}}
                 </div>
-                <div class="transaction-list-child">
+                <div class="transaction-list-child optional">
                     {{transaction.created_on | date:'yyyy-MM-dd'}}
                 </div>
             </ng-container>

@@ -1,7 +1,7 @@
 .list-container {
     display: grid;
     max-width: 1200px;
-    grid-template-columns: 37.5% 5% 37.5% 10% 10%;
+    grid-template-columns: 35% 5% 35% 10% 15%;
     grid-row-gap: 15px;
     font-size: 120%;
 }
@@ -14,4 +14,37 @@
 .transaction-list-child {
     justify-self: center;
     align-self: center;
+}
+
+.container {
+    max-width: 1200px;
+    min-width: 800px;
+}
+
+.list-container > .mat-card {
+    padding: 10px;
+}
+
+@media (max-width: 360px) {
+    .container {
+        max-width: 360px;
+        min-width: 360px;
+    }
+
+    .optional {
+        display: none;
+        width: 0;
+    }
+
+    .list-container > div:nth-child(5) {
+        display: none;
+    }
+
+    .list-container {
+        display: grid;
+        grid-template-columns: 40% 5% 40% 15%;
+        grid-row-gap: 10px;
+        font-size: 100%;
+    }
+
 }
