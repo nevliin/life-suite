@@ -11,8 +11,12 @@
                         {{category.active === true ? 'Active' : 'Passive'}}
                     </mat-panel-description>
                 </mat-expansion-panel-header>
-                <div style="display: flex; margin-bottom: 15px;">
-                    <span class="fill-space"></span>
+                <div style="display: flex; flex-wrap: wrap; margin-bottom: 15px;">
+                    <span class="fill-space optional"></span>
+                    <button mat-flat-button color="secondary" (click)="editCategory(category)">
+                        <mat-icon>edit</mat-icon>
+                        Category
+                    </button>
                     <button mat-flat-button color="secondary" (click)="deleteCategory(category.id)">
                         <mat-icon>remove</mat-icon>
                         Category
@@ -44,7 +48,7 @@
                                     <mat-icon>remove</mat-icon>
                                     Remove
                                 </button>
-                                <button mat-menu-item>
+                                <button mat-menu-item (click)="editAccount(node.account)">
                                     <mat-icon>edit</mat-icon>
                                     Edit
                                 </button>
@@ -79,7 +83,7 @@
                                         <mat-icon>remove</mat-icon>
                                         Remove
                                     </button>
-                                    <button mat-menu-item>
+                                    <button mat-menu-item (click)="editAccount(node.account)">
                                         <mat-icon>edit</mat-icon>
                                         Edit
                                     </button>

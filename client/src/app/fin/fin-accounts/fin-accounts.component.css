@@ -19,4 +19,8 @@
         max-width: 360px;
         min-width: 360px;
     }
+
+    .optional {
+        display: none;
+    }
 }

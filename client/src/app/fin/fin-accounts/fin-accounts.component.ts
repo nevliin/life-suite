@@ -89,8 +89,9 @@ export class FinAccountsComponent implements OnInit {
         }
         const dialogRef = this.dialog.open(FinAccountAddComponent, {
             data: {
-                account: account,
-                existingAccounts: this.accounts.map((account: FinAccount) => account.id)
+                existingAccounts: this.accounts.map((account: FinAccount) => account.id),
+                new: false,
+                initialData: account
             }
         });
         const dialogResult: FinAccount = await dialogRef.afterClosed().toPromise();
@@ -100,8 +101,25 @@ export class FinAccountsComponent implements OnInit {
         }
     }
 
+    async editAccount(account: FinAccount) {
+        const dialogRef = this.dialog.open(FinAccountAddComponent, {
+            data: {
+                existingAccounts: this.accounts.map((account: FinAccount) => account.id),
+                new: false,
+                initialData: account
+            }
+        });
+        const dialogResult: FinAccount = await dialogRef.afterClosed().toPromise();
+        if (dialogResult !== null) {
+            const index: number = this.accounts.findIndex((account: FinAccount) => account.id === dialogResult.id);
+            if(index != -1) {
+                this.accounts[index] = dialogResult;
+            }
+            this.initAccountDatabase();
+        }
+    }
+
     async deleteAccount(accountId: number) {
-        debugger;
         if (await this.alertService.confirm(`You are deleting the account ${accountId}.`)) {
             this.finService.deleteAccount(accountId);
             this.accounts = this.accounts.filter((account: FinAccount) => account.id !== accountId);
@@ -111,7 +129,15 @@ export class FinAccountsComponent implements OnInit {
     }
 
     async addCategory() {
-        const dialogRef = this.dialog.open(FinCategoryAddComponent, {data: {existingCategories: this.categories.map((category: FinCategory) => category.name)}});
+        const dialogRef = this.dialog.open(FinCategoryAddComponent,
+            {
+                data:
+                    {
+                        existingCategories: this.categories.map((category: FinCategory) => category.name),
+                        new: true
+                    }
+            }
+        );
         const dialogResult: FinCategory = await dialogRef.afterClosed().toPromise();
         if (dialogResult !== null) {
             this.categories.push(dialogResult);
@@ -119,8 +145,22 @@ export class FinAccountsComponent implements OnInit {
         }
     }
 
+    async editCategory(category: FinCategory) {
+        const dialogRef = this.dialog.open(FinCategoryAddComponent,
+            {
+                data:
+                    {
+                        existingCategories: this.categories.map((category: FinCategory) => category.name),
+                        new: false,
+                        oldData: category
+                    }
+            }
+        );
+        await dialogRef.afterClosed().toPromise();
+    }
+
     async deleteCategory(categoryId: number) {
-        if(await this.alertService.confirm('You are deleting a category, affecting all accounts in it.')) {
+        if (await this.alertService.confirm('You are deleting a category, affecting all accounts in it.')) {
             this.messageService.add({
                 severity: 'success',
                 summary: 'Success',

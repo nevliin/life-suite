@@ -13,6 +13,8 @@ import {FinCategory} from "../../fin-category";
 })
 export class FinCategoryAddComponent implements OnInit {
 
+    title: string = 'Add';
+
     categoryForm: FormGroup = this.fb.group({
         categoryName: ['', Validators.required],
         active: [true]
@@ -20,12 +22,19 @@ export class FinCategoryAddComponent implements OnInit {
 
     constructor(
         public dialogRef: MatDialogRef<FinCategoryAddComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: { existingCategories: string[] },
+        @Inject(MAT_DIALOG_DATA) public data: { existingCategories: string[], new?: boolean, oldData?: FinCategory },
         readonly fb: FormBuilder,
         readonly finService: FinService,
         readonly messageService: MessageService,
         readonly errorHandlingService: ErrorHandlingService
     ) {
+        if(!data.new) {
+            this.title = 'Edit';
+        }
+        if(!data.new && data.oldData) {
+            this.categoryForm.get('categoryName').setValue(data.oldData.name);
+            this.categoryForm.get('active').setValue(data.oldData.active);
+        }
     }
 
     ngOnInit() {
@@ -37,18 +46,25 @@ export class FinCategoryAddComponent implements OnInit {
 
     async submit() {
         if (this.categoryForm.valid) {
-            const category: FinCategory = new FinCategory();
+            let category: FinCategory;
+            if(!this.data.new && this.data.oldData) {
+                category = this.data.oldData;
+            } else {
+                category = new FinCategory();
+            }
             category.name = this.categoryForm.get('categoryName').value;
             category.active = this.categoryForm.get('active').value;
-            const categoryId: number = await this.finService.createCategory(category);
-            category.id = categoryId;
+            if(this.data.new) {
+                category.id = await this.finService.createCategory(category);
+            } else {
+                await this.finService.updateCategory(category);
+            }
             try {
                 this.messageService.add({
                     life: 3000,
                     summary: 'Success',
-                    detail: `Category ${category.name} successfully created.`,
-                    severity: '' +
-                        ''
+                    detail: `Category '${category.name}' successfully ${(this.data.new) ? 'created' : 'updated'}.`,
+                    severity: 'success'
                 });
                 this.dialogRef.close(category);
             } catch(e) {

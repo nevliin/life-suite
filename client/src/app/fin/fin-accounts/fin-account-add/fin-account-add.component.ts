@@ -12,25 +12,36 @@ import {ErrorHandlingService} from "../../../core/error-handling/error-handling.
 })
 export class FinAccountAddComponent implements OnInit {
 
+    title: string = 'Add';
+
     accountForm: FormGroup = this.fb.group({
         categoryId: [],
         parentAccountId: [],
-        accountId: [null, Validators.compose([Validators.required, Validators.pattern('[0-9]{4}')])],
+        accountId: [null, Validators.compose([Validators.required, Validators.pattern('[0-9]{1,4}')])],
         accountName: ['', Validators.required],
         accountNote: ['']
     });
 
     constructor(
         public dialogRef: MatDialogRef<FinAccountAddComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: { account: FinAccount, existingAccounts: number[] },
+        @Inject(MAT_DIALOG_DATA) public data: { existingAccounts: number[], new: boolean, initialData: FinAccount },
         readonly fb: FormBuilder,
         readonly finService: FinService,
         readonly messageService: MessageService,
         readonly errorHandlingService: ErrorHandlingService
     ) {
-        this.accountForm.get('categoryId').setValue(this.data.account.category_id);
-        this.accountForm.get('parentAccountId').setValue(this.data.account.parent_account);
-        this.accountForm.get('accountId').setValue(this.data.account.parent_account);
+        if (!this.data.new) {
+            this.title = 'Edit';
+            this.accountForm.get('categoryId').setValue(this.data.initialData.category_id);
+            this.accountForm.get('parentAccountId').setValue(this.data.initialData.parent_account);
+            this.accountForm.get('accountId').setValue(this.data.initialData.id);
+            this.accountForm.get('accountName').setValue(this.data.initialData.name);
+            this.accountForm.get('accountNote').setValue(this.data.initialData.note);
+        } else {
+            this.accountForm.get('categoryId').setValue(this.data.initialData.category_id);
+            this.accountForm.get('parentAccountId').setValue(this.data.initialData.parent_account);
+            this.accountForm.get('accountId').setValue(this.data.initialData.parent_account);
+        }
     }
 
     ngOnInit() {
@@ -53,11 +64,11 @@ export class FinAccountAddComponent implements OnInit {
                 this.messageService.add({
                     life: 3000,
                     summary: 'Success',
-                    detail: `Category ${account.id} / ${account} successfully created.`,
+                    detail: `Account '${account.id} / ${account.name}' successfully ${(this.data.new) ? 'created' : 'updated'}.`,
                     severity: 'success'
                 });
                 this.dialogRef.close(account);
-            } catch(e) {
+            } catch (e) {
                 this.errorHandlingService.handleHTTPError(e);
             }
         } else {
