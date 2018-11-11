@@ -27,6 +27,10 @@ export class FinRecentComponent implements OnInit {
         }
     }
 
+    async openTransactionDetails(transactionId: number) {
+
+    }
+
 }
 
 class FinTransactionDisplay extends FinTransaction {

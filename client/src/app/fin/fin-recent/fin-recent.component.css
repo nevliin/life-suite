@@ -42,7 +42,7 @@
 
     .list-container {
         display: grid;
-        grid-template-columns: 40% 5% 40% 15%;
+        grid-template-columns: 35% 5% 35% 25%;
         grid-row-gap: 10px;
         font-size: 100%;
     }
