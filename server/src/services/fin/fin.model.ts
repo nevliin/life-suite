@@ -15,5 +15,18 @@ export class CategoryDeleteModel {
     id: number;
 }
 
+export class AccountTransactionsRequest {
+    accountId: number;
+    from?: Date;
+    to?: Date;
+    limit?: number;
+}
+
+export class CategoryTotalRequest {
+    categoryId: number;
+    from?: string;
+    to?: string;
+}
+
 
 

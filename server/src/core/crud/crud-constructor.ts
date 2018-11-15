@@ -291,7 +291,7 @@ export class CRUDConstructor<T extends ICRUDModel, > {
                     const value: number = data[property] ? 1 : 0;
                     statement += `${value}`;
                 } else {
-                    this.logger.debug(`Invalid value '${data[property]}' provided for type boolean.`, 'create');
+                    this.logger.debug(`Invalid value '${data[property]}' provided for type boolean.`, 'update');
                     ErrorCodeUtil.findErrorCodeAndThrow('INVALID_DATA');
                 }
             } else {

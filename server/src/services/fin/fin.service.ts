@@ -1,6 +1,10 @@
 import {OkPacket, RowDataPacket} from "mysql";
 import {DbUtil} from "../../utils/db/db.util";
-import {CategoryAddModel, CategoryUpdateModel} from "./category.model";
+import {AccountTransactionsRequest, CategoryTotalRequest} from "./fin.model";
+import {AccountModel} from "../../models/fin/account.model";
+import {TransactionModel} from "../../models/fin/transaction.model";
+import {ErrorCodeUtil} from "../../utils/error-code/error-code.util";
+import {isNullOrUndefined} from "../../utils/util";
 
 export class FinService {
 
@@ -10,25 +14,36 @@ export class FinService {
         this.db = new DbUtil();
     }
 
-    /**
-     * Add new category for accounts; returns the ID assigned to the category
-     * @param categoryAddModel
-     */
-    async addCategory(categoryAddModel: CategoryAddModel): Promise<number> {
-        const result: OkPacket = await this.db.execute(`INSERT INTO fin_category(name, active) VALUES('${this.db.esc(categoryAddModel.name)}', ${Number(categoryAddModel.active)});`);
-        return result.insertId;
+    async getAccountTransactions(reqParams: AccountTransactionsRequest): Promise<TransactionModel[]> {
+        let statement: string =
+            `SELECT (id, account, contra_account, amount, note, created_on, planned_transaction_id, executed_on) 
+            FROM fin_transaction WHERE account = ${this.db.escNumber(reqParams.accountId)} OR contra_account = ${this.db.escNumber(reqParams.accountId)};`
+
+        return [];
     }
 
-    /**
-     * Update an existing category for accounts, identified by the unique ID; returns the ID assigned to the category
-     * @param categoryUpdateModel
-     */
-    async updateCategory(categoryUpdateModel: CategoryUpdateModel): Promise<number> {
-        const result: OkPacket = await this.db.execute(
-            `UPDATE fin_category
-            SET name = '${this.db.esc(categoryUpdateModel.name)}', active = ${Number(categoryUpdateModel.active)} 
-            WHERE id = ${categoryUpdateModel.id});`);
-        return result.insertId;
-    }
+    async getCategoryTotal(reqParams: CategoryTotalRequest): Promise<number> {
+        if(Number.isNaN(reqParams.categoryId)) {
+            ErrorCodeUtil.findErrorCodeAndThrow('INVALID_PARAMETER');
+        }
+        const categoryId: number = reqParams.categoryId;
+        const from: Date = reqParams.from ? new Date(reqParams.from) : new Date();
+        const to: Date = reqParams.to ?  new Date(reqParams.to) : new Date();
+        if(from.getTime() >= to.getTime()) {
+            ErrorCodeUtil.findErrorCodeAndThrow('INVALID_PARAMETER');
+        }
 
+        let statement: string = `SELECT active FROM fin_category WHERE id = ${this.db.escNumber(categoryId)};`;
+        const result: RowDataPacket[] = await this.db.query(statement);
+        if(result.length === 1 && !isNullOrUndefined(result[0])) {
+            const otherClauses: string = `AND valid = 1 AND executed_on >= '${this.db.esc(from.toISOString().slice(0, 19).replace('T', ' '))}' AND executed_on <= '${this.db.esc(to.toISOString().slice(0, 19).replace('T', ' '))}'`;
+            const sum1: string = `SELECT sum(amount) FROM fin_transaction WHERE account IN (SELECT id FROM fin_account WHERE category_id = ${this.db.escNumber(categoryId)}) ${otherClauses}`;
+            const sum2: string = `SELECT sum(amount) FROM fin_transaction WHERE contra_account IN (SELECT id FROM fin_account WHERE category_id = ${this.db.escNumber(categoryId)}) ${otherClauses}`;
+            let statement2: string = `SELECT COALESCE((${result[0].active ? sum1 : sum2}), 0) - COALESCE((${result[0].active ? sum1 : sum1}), 0) AS amount`;
+            console.log(statement2);
+            const result2: RowDataPacket[] = await this.db.query(statement2);
+            return result2[0].amount;
+        }
+
+    }
 }

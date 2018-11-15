@@ -6,6 +6,7 @@ import {AccountModel} from "../models/fin/account.model";
 import {TransactionModel} from "../models/fin/transaction.model";
 import {ConstraintModel} from "../models/fin/constraint.model";
 import {ErrorCodeUtil} from "../utils/error-code/error-code.util";
+import {AccountTransactionsRequest, CategoryTotalRequest} from "../services/fin/fin.model";
 
 const express = require('express');
 
@@ -16,16 +17,23 @@ export const init = (): Router => {
 
     finRouter.post('/getAccountTransactions', async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const result: number = await invService.getAutoFill(req.body.name);
-            if (result !== null) {
-                res.status(200).send({
-                    data: await entryModelCRUD.readAll(result)
-                });
-            } else {
-                res.status(200).send({
-                    data: null
-                });
-            }
+            const result: TransactionModel[] = await finService.getAccountTransactions(<AccountTransactionsRequest>req.body);
+            res.status(200).send({
+                data: result
+            });
+        } catch (e) {
+            ErrorCodeUtil.resolveErrorOnRoute(e, res);
+        }
+    });
+
+    finRouter.post('/getCategoryTotal', async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const amount: number = await finService.getCategoryTotal(<CategoryTotalRequest>req.body);
+            res.status(200).send({
+                data: {
+                    amount
+                }
+            });
         } catch (e) {
             ErrorCodeUtil.resolveErrorOnRoute(e, res);
         }
