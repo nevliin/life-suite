@@ -2,7 +2,6 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
 import {RouterModule} from "@angular/router";
-import {AppRouting} from "./app.routing";
 import {HttpClientModule} from "@angular/common/http";
 import {AuthModule} from "./core/auth/auth.module";
 import {InvModule} from "./inv/inv.module";
@@ -17,6 +16,7 @@ import {ErrorHandlingService} from "./core/error-handling/error-handling.service
 import {ErrorHandlingModule} from "./core/error-handling/error-handling.module";
 import {FinModule} from "./fin/fin.module";
 import {GrowlModule} from "primeng/growl";
+import {AppRouting} from "./app.routing";
 
 @NgModule({
     declarations: [

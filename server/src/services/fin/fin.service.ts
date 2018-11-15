@@ -36,7 +36,7 @@ export class FinService {
         let statement: string = `SELECT active FROM fin_category WHERE id = ${this.db.escNumber(categoryId)};`;
         const result: RowDataPacket[] = await this.db.query(statement);
         if(result.length === 1 && !isNullOrUndefined(result[0])) {
-            const otherClauses: string = `AND valid = 1 AND executed_on >= '${this.db.esc(from.toISOString().slice(0, 19).replace('T', ' '))}' AND executed_on <= '${this.db.esc(to.toISOString().slice(0, 19).replace('T', ' '))}'`;
+            const otherClauses: string = `AND valid = 1 AND created_on >= '${this.db.esc(from.toISOString().slice(0, 19).replace('T', ' '))}' AND created_on <= '${this.db.esc(to.toISOString().slice(0, 19).replace('T', ' '))}'`;
             const sum1: string = `SELECT sum(amount) FROM fin_transaction WHERE account IN (SELECT id FROM fin_account WHERE category_id = ${this.db.escNumber(categoryId)}) ${otherClauses}`;
             const sum2: string = `SELECT sum(amount) FROM fin_transaction WHERE contra_account IN (SELECT id FROM fin_account WHERE category_id = ${this.db.escNumber(categoryId)}) ${otherClauses}`;
             let statement2: string = `SELECT COALESCE((${result[0].active ? sum1 : sum2}), 0) - COALESCE((${result[0].active ? sum1 : sum1}), 0) AS amount`;

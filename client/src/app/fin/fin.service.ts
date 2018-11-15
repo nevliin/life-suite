@@ -1,10 +1,12 @@
 import {Injectable} from '@angular/core';
-import {map} from "rxjs/operators";
+import {map, tap} from "rxjs/operators";
 import {HttpClient} from "@angular/common/http";
 import {ErrorHandlingService} from "../core/error-handling/error-handling.service";
 import {FinTransaction} from "./fin-transaction";
 import {FinAccount} from "./fin-account";
 import {FinCategory} from "./fin-category";
+
+const API_ROOT: string = '/api/fin/';
 
 @Injectable({
     providedIn: 'root'
@@ -21,7 +23,7 @@ export class FinService {
     }
 
     async getRecentTransactions(): Promise<FinTransaction[]> {
-        return await this.http.post('/api/fin/transaction/list', {
+        return await this.http.post(API_ROOT + 'transaction/list', {
             limit: 50,
             orderField: "executed_on",
             orderDirection: "desc"
@@ -40,25 +42,38 @@ export class FinService {
             });
     }
 
+    async getTransaction(transactionId: number): Promise<FinTransaction> {
+        return await this.http.get(API_ROOT + 'transaction/read/' + transactionId)
+            .pipe(map((response: { data: FinTransaction }) => {
+                    response.data.created_on = new Date(response.data.created_on);
+                    response.data.executed_on = new Date(response.data.executed_on);
+                    return response.data!;
+                }
+            )).toPromise().catch((e) => {
+                this.errorHandlingService.handleHTTPError(e);
+                return new FinTransaction();
+            })
+    }
+
     async getAccounts(): Promise<FinAccount[]> {
         await this.getAccountsById();
         return Array.from(this.accountsById.values());
     }
 
-    async getAccountsById(): Promise<Map<number, FinAccount>> {
-        if (this.accountsById !== undefined) {
+    async getAccountsById(forceReload?: boolean): Promise<Map<number, FinAccount>> {
+        if (this.accountsById !== undefined && !forceReload) {
             return this.accountsById;
         }
-        if (this.accountsPromise !== undefined) {
+        if (this.accountsPromise !== undefined && !forceReload) {
             await this.accountsPromise;
             return this.accountsById;
         }
-        if (this.accountsById === undefined) {
+        if (this.accountsById === undefined || forceReload) {
             let resolveFunc: Function;
             this.accountsPromise = new Promise(resolve => {
                 resolveFunc = resolve;
             });
-            const accounts: FinAccount[] = await this.http.get('/api/fin/account/list')
+            const accounts: FinAccount[] = await this.http.get(API_ROOT + 'account/list')
                 .pipe(map((response: { data: FinAccount[] }) => {
                         return response.data
                             .map((account: FinAccount) => {
@@ -86,39 +101,53 @@ export class FinService {
     }
 
     async createTransaction(transaction: FinTransaction): Promise<number> {
-        return ((await this.http.post('/api/fin/transaction/create/', transaction).toPromise().catch(e => {
+        return ((await this.http.post(API_ROOT + 'transaction/create/', transaction).toPromise().catch(e => {
             console.log(e);
             throw e;
         })) as any).id;
     }
 
     async createAccount(account: FinAccount): Promise<number> {
-        return ((await this.http.post('/api/fin/account/create/', account).toPromise().catch(e => {
+        return ((await this.http.post(API_ROOT + 'account/create/', account).pipe(tap(() => this.getAccountsById(true))).toPromise().catch(e => {
+            console.log(e);
+            throw e;
+        })) as any).id;
+    }
+
+    async updateAccount(account: FinAccount): Promise<number> {
+        return ((await this.http.put(API_ROOT + 'account/update/', account).pipe(tap(() => this.getAccountsById(true))).toPromise().catch(e => {
             console.log(e);
             throw e;
         })) as any).id;
     }
 
     async deleteAccount(accountId: number): Promise<number> {
-        return ((await this.http.delete('/api/fin/account/delete/' + accountId).toPromise().catch(e => {
+        return ((await this.http.delete(API_ROOT + 'account/delete/' + accountId).pipe(tap(() => this.getAccountsById(true))).toPromise().catch(e => {
             console.log(e);
             throw e;
         })) as any).id;
     }
 
     async createCategory(category: FinCategory): Promise<number> {
-        return ((await this.http.post('/api/fin/category/create/', category).toPromise().catch(e => {
+        return ((await this.http.post(API_ROOT + 'category/create/', category).toPromise().catch(e => {
             console.log(e);
             throw e;
         })) as any).id;
     }
 
     async getCategories(): Promise<FinCategory[]> {
-        return ((await this.http.get('/api/fin/category/list').toPromise()) as any).data;
+        return ((await this.http.get(API_ROOT + 'category/list').toPromise()) as any).data;
+    }
+
+    async updateCategory(category: FinCategory): Promise<number> {
+        return ((await this.http.put(API_ROOT + 'category/update/', category).toPromise().catch(e => {
+            console.log(e);
+            throw e;
+        })) as any).id;
     }
 
     async deleteCategory(categoryId: number): Promise<number> {
-        return ((await this.http.delete('/api/fin/category/delete/' + categoryId).toPromise().catch(e => {
+        return ((await this.http.delete(API_ROOT + 'category/delete/' + categoryId).pipe(tap(() => this.getAccountsById(true))).toPromise().catch(e => {
             console.log(e);
             throw e;
         })) as any).id;

@@ -4,7 +4,6 @@ import {
     MatAutocompleteModule,
     MatButtonModule,
     MatCardModule,
-    MatCheckbox,
     MatDialogModule,
     MatDividerModule,
     MatExpansionModule,
@@ -15,7 +14,7 @@ import {
     MatMenuModule,
     MatProgressSpinnerModule,
     MatSelectModule,
-    MatSidenavModule,
+    MatSidenavModule, MatSliderModule,
     MatSlideToggleModule,
     MatToolbarModule,
     MatTooltipModule,
@@ -42,7 +41,8 @@ import {
         MatTreeModule,
         MatDialogModule,
         MatSlideToggleModule,
-        MatMenuModule
+        MatMenuModule,
+        MatSliderModule
     ],
     exports: [
         MatSidenavModule,
@@ -62,7 +62,8 @@ import {
         MatTreeModule,
         MatDialogModule,
         MatSlideToggleModule,
-        MatMenuModule
+        MatMenuModule,
+        MatSliderModule
     ],
     declarations: []
 })
