@@ -28,7 +28,27 @@ export class FinAddComponent implements OnInit {
     filteredContraAccountOptions: Observable<number[]>;
     filteredContraAccountNameOptions: Observable<string[]>;
 
-    transactionForm: FormGroup;
+    transactionForm: FormGroup = this.fb.group({
+        account: [null, Validators.compose([
+            Validators.required,
+            Validators.min(0),
+            Validators.max(9999),
+            Validators.pattern('[0-9]*')
+        ]),
+            this.validateAccountExists.bind(this)],
+        accountName: [''],
+        contraAccount: [null, Validators.compose([
+            Validators.required,
+            Validators.min(0),
+            Validators.max(9999),
+            Validators.pattern('[0-9]*')
+        ])],
+        contraAccountName: [''],
+        amount: [null],
+        currency: ['euro'],
+        createdOn: [new Date().toISOString().split('T')[0], Validators.required],
+        note: ['', Validators.maxLength(255)]
+    });
 
     currencies: { value: string, viewValue: string }[] = [
         {value: 'euro', viewValue: 'EUR'}
@@ -42,14 +62,21 @@ export class FinAddComponent implements OnInit {
     }
 
     async ngOnInit() {
-        this.reset();
-
         const tempMap: Map<number, string> = new Map();
         (await this.finService.getAccounts()).forEach((value: FinAccount) => tempMap.set(value.id, value.name));
         this.accountsTwoWay = new TwoWayMap(tempMap);
         this.accountIds = Array.from(this.accountsTwoWay.map.keys());
         this.accountNames = Array.from(this.accountsTwoWay.reverseMap.keys());
+        this.setUpAutoComplete();
+    }
 
+    reset() {
+        this.transactionForm.reset();
+        this.transactionForm.get('currency').setValue('euro');
+        this.transactionForm.get('createdOn').setValue(new Date().toISOString().split('T')[0]);
+    }
+
+    setUpAutoComplete() {
         this.filteredAccountOptions = this.transactionForm.get('account').valueChanges.pipe(
             startWith(''),
             map((value: number) => this._filterById(value))
@@ -66,30 +93,6 @@ export class FinAddComponent implements OnInit {
             startWith(''),
             map(value => this._filterByName(value))
         );
-    }
-
-    reset() {
-        this.transactionForm = this.fb.group({
-            account: [null, Validators.compose([
-                Validators.required,
-                Validators.min(0),
-                Validators.max(9999),
-                Validators.pattern('[0-9]*')
-            ]),
-                this.validateAccountExists.bind(this)],
-            accountName: [''],
-            contraAccount: [null, Validators.compose([
-                Validators.required,
-                Validators.min(0),
-                Validators.max(9999),
-                Validators.pattern('[0-9]*')
-            ])],
-            contraAccountName: [''],
-            amount: [null],
-            currency: ['euro'],
-            createdOn: [new Date().toISOString().split('T')[0], Validators.required],
-            note: ['', Validators.maxLength(255)]
-        });
     }
 
     async submit() {
@@ -182,7 +185,7 @@ export class FinAddComponent implements OnInit {
     }
 
     async validateAccountExists(control: AbstractControl): Promise<any> {
-        return (this.accountIds.includes(Number.parseInt(control.value))) ? null : { accountDoesntExist: true };
+        return (this.accountIds.includes(Number.parseInt(control.value))) ? null : {accountDoesntExist: true};
     }
 
 }
