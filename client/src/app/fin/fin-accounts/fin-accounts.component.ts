@@ -66,9 +66,12 @@ export class FinAccountsComponent implements OnInit {
 
     initAccountDatabase() {
         this.categories.forEach((category: FinCategory) => {
-            const categoryAccounts: FinAccount[] = this.accounts.filter((account: FinAccount) => account.category_id === category.id);
+            const categoryAccounts: FinAccount[] = this.accounts
+                .filter((account: FinAccount) => account.category_id === category.id)
+                .sort((a: FinAccount, b: FinAccount) => a.id - b.id);
             this.database.set(category.id, new AccountTreeWrapper(new AccountDatabase(categoryAccounts)));
         });
+        debugger;
     }
 
     hasNestedChild(_: number, nodeData: AccountNode): boolean {
@@ -90,7 +93,7 @@ export class FinAccountsComponent implements OnInit {
         const dialogRef = this.dialog.open(FinAccountAddComponent, {
             data: {
                 existingAccounts: this.accounts.map((account: FinAccount) => account.id),
-                new: false,
+                new: true,
                 initialData: account
             }
         });

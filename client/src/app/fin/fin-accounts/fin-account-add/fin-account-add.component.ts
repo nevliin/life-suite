@@ -52,11 +52,13 @@ export class FinAccountAddComponent implements OnInit {
     }
 
     async submit() {
-        debugger;
         if (this.accountForm.valid) {
             const account: FinAccount = new FinAccount();
             account.category_id = Number.parseInt(this.accountForm.get('categoryId').value);
             account.parent_account = Number.parseInt(this.accountForm.get('parentAccountId').value);
+            if(Number.isNaN(account.parent_account)) {
+                account.parent_account = null;
+            }
             account.id = Number.parseInt(this.accountForm.get('accountId').value);
             account.name = this.accountForm.get('accountName').value;
             account.note = this.accountForm.get('accountNote').value;
