@@ -52,6 +52,7 @@ export class FinAccountAddComponent implements OnInit {
     }
 
     async submit() {
+        debugger;
         if (this.accountForm.valid) {
             const account: FinAccount = new FinAccount();
             account.category_id = Number.parseInt(this.accountForm.get('categoryId').value);
@@ -59,8 +60,13 @@ export class FinAccountAddComponent implements OnInit {
             account.id = Number.parseInt(this.accountForm.get('accountId').value);
             account.name = this.accountForm.get('accountName').value;
             account.note = this.accountForm.get('accountNote').value;
-            await this.finService.createAccount(account);
+            account.deactivated = false;
             try {
+                if (this.data.new) {
+                    await this.finService.createAccount(account);
+                } else {
+                    await this.finService.updateAccount(account);
+                }
                 this.messageService.add({
                     life: 3000,
                     summary: 'Success',
