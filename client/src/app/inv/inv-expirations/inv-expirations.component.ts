@@ -4,6 +4,7 @@ import {InvEntry} from "../inv-entry";
 import {HttpClient} from "@angular/common/http";
 import {FormControl, FormGroup} from "@angular/forms";
 import {ErrorHandlingService} from "../../core/error-handling/error-handling.service";
+import {InvService} from "../inv.service";
 
 @Component({
     selector: 'app-inv-expirations',
@@ -21,7 +22,7 @@ export class InvExpirationsComponent implements OnInit {
     nextExpiringEntries: InvEntry[] = [];
 
     constructor(
-        readonly http: HttpClient,
+        readonly invService: InvService,
         readonly errorHandlingService: ErrorHandlingService
     ) {
     }
@@ -32,15 +33,7 @@ export class InvExpirationsComponent implements OnInit {
 
     async fetchEntries() {
         try {
-            this.entries = (await this.http.get('/api/inv/entry/list')
-                .pipe(map((response: { data: InvEntry[] }) => {
-                        return response.data
-                            .map((entry: InvEntry) => {
-                                entry.expirationDate = new Date(entry.expirationDate);
-                                return entry;
-                            })
-                    })
-                ).toPromise()).sort((entry1, entry2) => entry1.expirationDate.getTime() - entry2.expirationDate.getTime());
+            this.entries = (await this.invService.getEntries()).sort((entry1, entry2) => entry1.expirationDate.getTime() - entry2.expirationDate.getTime());
             this.expiredEntries = this.entries.filter(entry => entry.expirationDate.getTime() < (new Date()).getTime());
             this.findNextExpirations();
         } catch (e) {
@@ -58,7 +51,7 @@ export class InvExpirationsComponent implements OnInit {
     }
 
     async eatConfirmation(id: number) {
-        await this.http.delete('/api/inv/entry/delete/' + id).toPromise();
+        await this.invService.deleteEntry(id);
         const index: number = this.entries.findIndex((entry: InvEntry) => entry.id === id);
         this.entries.splice(index, 1);
         this.fetchEntries();

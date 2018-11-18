@@ -3,6 +3,7 @@ import {map} from "rxjs/operators";
 import {InvTargetEntry} from "../inv-target-entry";
 import {HttpClient} from "@angular/common/http";
 import {ErrorHandlingService} from "../../core/error-handling/error-handling.service";
+import {InvService} from "../inv.service";
 
 @Component({
     selector: 'app-inv-target',
@@ -14,7 +15,7 @@ export class InvTargetComponent implements OnInit {
     targetEntries: InvTargetEntry[] = [];
 
     constructor(
-        readonly http: HttpClient,
+        readonly invService: InvService,
         readonly errorHandlingService: ErrorHandlingService
     ) {
     }
@@ -25,9 +26,7 @@ export class InvTargetComponent implements OnInit {
 
     async fetchEntries() {
         try {
-            this.targetEntries = await this.http.get('/api/inv/targetEntry/list')
-                .pipe(map((response: { data: InvTargetEntry[] }) => response.data)
-                ).toPromise();
+            this.targetEntries = await this.invService.getTargetEntries();
         } catch (e) {
             this.errorHandlingService.handleHTTPError(e);
         }

@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {CompareEntry} from "../compare-entry";
 import {HttpClient} from "@angular/common/http";
 import {ErrorHandlingService} from "../../core/error-handling/error-handling.service";
+import {InvService} from "../inv.service";
 
 @Component({
     selector: 'app-inv-comparison',
@@ -13,14 +14,14 @@ export class InvComparisonComponent implements OnInit {
     comparison: CompareEntry[];
 
     constructor(
-        readonly http: HttpClient,
+        readonly invService: InvService,
         readonly errorHandlingService: ErrorHandlingService
     ) {
     }
 
     async ngOnInit() {
         try {
-            this.comparison = ((await this.http.get('/api/inv/comparison').toPromise()) as any).comparison;
+            this.comparison = await this.invService.getComparison();
             this.comparison = this.comparison.filter(compareEntry => compareEntry.amount != 0);
         } catch (e) {
             this.errorHandlingService.handleHTTPError(e);

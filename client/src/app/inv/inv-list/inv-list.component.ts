@@ -2,9 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {SelectItem} from "primeng/api";
 import {FormControl, FormGroup} from "@angular/forms";
 import {InvEntry} from "../inv-entry";
-import {HttpClient} from "@angular/common/http";
-import {map} from "rxjs/operators";
 import {ErrorHandlingService} from "../../core/error-handling/error-handling.service";
+import {InvService} from "../inv.service";
 
 @Component({
     selector: 'app-inv-list',
@@ -35,7 +34,7 @@ export class InvListComponent implements OnInit {
     entries: InvEntry[];
 
     constructor(
-        readonly http: HttpClient,
+        readonly invService: InvService,
         readonly errorHandlingService: ErrorHandlingService
     ) {
     }
@@ -45,22 +44,14 @@ export class InvListComponent implements OnInit {
     }
 
     async fetchEntries() {
-        this.entries = await this.http.get('/api/inv/entry/list')
-            .pipe(map((response: { data: InvEntry[] }) => {
-                    return response.data
-                        .map((entry: InvEntry) => {
-                            entry.expirationDate = new Date(entry.expirationDate);
-                            return entry;
-                        })
-                })
-            ).toPromise().catch((e) => {
-                this.errorHandlingService.handleHTTPError(e);
-                return [];
-            });
+        this.entries = await this.invService.getEntries().catch((e) => {
+            this.errorHandlingService.handleHTTPError(e);
+            return [];
+        });
     }
 
     async eatConfirmation(id: number) {
-        await this.http.delete('/api/inv/entry/delete/' + id).toPromise();
+        await this.invService.deleteEntry(id);
         const index: number = this.entries.findIndex((entry: InvEntry) => entry.id === id);
         this.entries.splice(index, 1);
         this.fetchEntries();
