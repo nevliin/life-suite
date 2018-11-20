@@ -24,7 +24,6 @@ export class AdTileComponent implements OnInit {
         let viewContainerRef = this.adHost.viewContainerRef;
         viewContainerRef.clear();
 
-        debugger;
         viewContainerRef.createComponent(componentFactory);
     }
 

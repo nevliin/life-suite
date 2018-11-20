@@ -1,6 +1,6 @@
 <mat-list>
-    <mat-list-item *ngFor="let entry of nextExpiringEntries">
-        <div style="display: flex;">
+    <mat-list-item *ngFor="let entry of nextExpiringEntries" style="width: 100%;">
+        <div style="display: flex; width: 100%;">
             <h3>{{entry.name}}</h3>
             <div class="fill-space"></div>
             <p>{{entry.expirationDate.toLocaleDateString()}}</p>

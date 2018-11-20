@@ -25,17 +25,16 @@ export class TileInvExpirationsComponent implements OnInit {
     async fetchEntries() {
         try {
             this.findNextExpirations((await this.invService.getEntries()).sort((entry1, entry2) => entry1.expirationDate.getTime() - entry2.expirationDate.getTime()));
-            debugger;
         } catch (e) {
             this.errorHandlingService.handleHTTPError(e);
         }
     }
 
     findNextExpirations(entries: InvEntry[]) {
-        this.nextExpiringEntries = entries;
-        /*this.nextExpiringEntries = entries
+        this.nextExpiringEntries = entries
             .filter((entry: InvEntry) => entry.expirationDate.getTime() > (new Date()).getTime())
-            .sort((a: InvEntry, b: InvEntry) => a.expirationDate.getTime() - b.expirationDate.getTime());*/
+            .sort((a: InvEntry, b: InvEntry) => a.expirationDate.getTime() - b.expirationDate.getTime())
+            .slice(0, 3);
     }
 
 }
