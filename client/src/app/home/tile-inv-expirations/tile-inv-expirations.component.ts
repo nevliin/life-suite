@@ -34,7 +34,7 @@ export class TileInvExpirationsComponent implements OnInit {
         this.nextExpiringEntries = entries
             .filter((entry: InvEntry) => entry.expirationDate.getTime() > (new Date()).getTime())
             .sort((a: InvEntry, b: InvEntry) => a.expirationDate.getTime() - b.expirationDate.getTime())
-            .slice(0, 3);
+            .slice(0, 4);
     }
 
 }

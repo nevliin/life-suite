@@ -1,10 +1,10 @@
 <div class="grid-container">
     <h1 class="mat-h1">Life Suite</h1>
-    <mat-grid-list cols="3" rowHeight="1:1">
+    <mat-grid-list [cols]="cols | async" rowHeight="1:1" gutterSize="16px">
         <mat-grid-tile *ngFor="let tile of tiles" [colspan]="1" [rowspan]="tile.rowspan">
             <mat-card class="dashboard-tile">
                 <mat-card-header>
-                    <mat-card-title>
+                    <mat-card-title class="dashboard-tile-title">
                         {{tile.title}}
                         <button mat-icon-button class="more-button" aria-label="Toggle menu">
                             <mat-icon>more_vert</mat-icon>

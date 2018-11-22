@@ -7,6 +7,7 @@ import { TileInvExpirationsComponent } from './tile-inv-expirations/tile-inv-exp
 import { AdTileComponent } from './ad-tile/ad-tile.component';
 import { AdDirective } from './ad-tile/ad.directive';
 import {MatComponentCollectorModule} from "../core/mat-component-collector.module";
+import { TileFinFiguresComponent } from './tile-fin-figures/tile-fin-figures.component';
 
 @NgModule({
     imports: [
@@ -19,8 +20,8 @@ import {MatComponentCollectorModule} from "../core/mat-component-collector.modul
         LayoutModule,
         MatComponentCollectorModule
     ],
-    declarations: [HomeDashboardComponent, TileInvExpirationsComponent, AdTileComponent, AdDirective],
-    entryComponents: [TileInvExpirationsComponent]
+    declarations: [HomeDashboardComponent, TileInvExpirationsComponent, AdTileComponent, AdDirective, TileFinFiguresComponent],
+    entryComponents: [TileInvExpirationsComponent, TileFinFiguresComponent]
 })
 export class HomeModule {
 }
