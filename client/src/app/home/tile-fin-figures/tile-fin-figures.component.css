@@ -1,0 +1,21 @@
+.fin-figures-grid {
+    display: grid;
+    height: 100%;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 50% 50%;
+}
+
+.fin-figures-grid-tile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.figure {
+    text-align: center;
+}
+
+.subtitle {
+    font-style: italic;
+    margin-top: 4px;
+}
