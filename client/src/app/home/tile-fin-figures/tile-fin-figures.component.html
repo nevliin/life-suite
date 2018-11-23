@@ -1,23 +1,30 @@
 <div class="fin-figures-grid">
     <div class="fin-figures-grid-tile">
         <div class="figure">
-            <h1 style="color: #bf4040">{{expenses}}</h1>
+            <h1 [ngClass]="{ negative: expenses < 0, positive: expenses > 0, neutral: expenses === 0}">{{expenses}}</h1>
             <mat-divider [inset]="true"></mat-divider>
             <p class="subtitle">Expenses</p>
         </div>
     </div>
     <div class="fin-figures-grid-tile">
         <div class="figure">
-            <h1 style="color: #7fcc66">{{revenue}}</h1>
+            <h1 [ngClass]="{ negative: revenue < 0, positive: revenue > 0, neutral: revenue === 0}">{{revenue}}</h1>
             <mat-divider [inset]="true"></mat-divider>
             <p class="subtitle">Revenue</p>
         </div>
     </div>
     <div class="fin-figures-grid-tile">
         <div class="figure">
-            <h1>{{profit}}</h1>
+            <h1 [ngClass]="{ negative: profit < 0, positive: profit > 0, neutral: profit === 0}">{{profit}}</h1>
             <mat-divider [inset]="true"></mat-divider>
             <p class="subtitle">Profit</p>
+        </div>
+    </div>
+    <div class="fin-figures-grid-tile">
+        <div class="figure">
+            <h1>{{totalTransactionAmount}}</h1>
+            <mat-divider [inset]="true"></mat-divider>
+            <p class="subtitle">Total</p>
         </div>
     </div>
 </div>

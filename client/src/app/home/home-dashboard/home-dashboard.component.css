@@ -8,8 +8,9 @@
     right: 10px;
 }
 
-.dashboard-card-content {
+.dashboard-tile-content {
     text-align: center;
+    height: auto;
 }
 
 :host {

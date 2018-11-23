@@ -19,3 +19,15 @@
     font-style: italic;
     margin-top: 4px;
 }
+
+.negative {
+    color: #bf4040
+}
+
+.positive {
+    color: #7fcc66
+}
+
+.neutral {
+    color: black;
+}

@@ -15,8 +15,8 @@ import {ToastModule} from "primeng/toast";
 import {ErrorHandlingService} from "./core/error-handling/error-handling.service";
 import {ErrorHandlingModule} from "./core/error-handling/error-handling.module";
 import {FinModule} from "./fin/fin.module";
-import {GrowlModule} from "primeng/growl";
 import {AppRouting} from "./app.routing";
+import {FlexLayoutModule} from "@angular/flex-layout";
 
 @NgModule({
     declarations: [
@@ -36,7 +36,8 @@ import {AppRouting} from "./app.routing";
         HomeModule,
         ToastModule,
         ErrorHandlingModule,
-        FinModule
+        FinModule,
+        FlexLayoutModule
     ],
     providers: [MessageService, ErrorHandlingService],
     bootstrap: [AppComponent]

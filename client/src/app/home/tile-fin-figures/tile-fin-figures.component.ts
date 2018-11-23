@@ -11,9 +11,10 @@ const revenueCategoryId: number = 6;
 })
 export class TileFinFiguresComponent implements OnInit {
 
-    private expenses: number = 0;
-    private revenue: number = 0;
-    private profit: number = 0;
+    expenses: number = 0;
+    revenue: number = 0;
+    profit: number = 0;
+    totalTransactionAmount: number = 0;
 
     constructor(
         readonly finService: FinService
@@ -24,6 +25,7 @@ export class TileFinFiguresComponent implements OnInit {
         this.expenses = await this.finService.getCategoryTotal(expensesCategoryId, new Date((new Date()).getFullYear(), (new Date()).getMonth(), 1));
         this.revenue = await this.finService.getCategoryTotal(revenueCategoryId, new Date((new Date()).getFullYear(), (new Date()).getMonth(), 1));
         this.profit = this.revenue - this.expenses;
+        this.totalTransactionAmount = await this.finService.getAllTransactionsAmount(new Date((new Date()).getFullYear(), (new Date()).getMonth(), 1));
     }
 
 }

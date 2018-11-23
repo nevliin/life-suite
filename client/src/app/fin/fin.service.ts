@@ -22,6 +22,27 @@ export class FinService {
     ) {
     }
 
+    async getCategoryTotal(categoryId: number, from?: Date, to?: Date): Promise<number> {
+        return await this.http.post(API_ROOT + 'getCategoryTotal', {
+            categoryId: categoryId,
+            from: from,
+            to: to
+        }).pipe(map((res: any) => res.data.amount)).toPromise().catch((e) => {
+            this.errorHandlingService.handleHTTPError(e);
+            return [];
+        });
+    }
+
+    async getAllTransactionsAmount(from?: Date, to?: Date): Promise<number> {
+        return await this.http.post(API_ROOT + 'getAllTransactionsAmount', {
+            from: from,
+            to: to
+        }).pipe(map((res: any) => res.data.amount)).toPromise().catch((e) => {
+            this.errorHandlingService.handleHTTPError(e);
+            return [];
+        });
+    }
+
     async getRecentTransactions(): Promise<FinTransaction[]> {
         return await this.http.post(API_ROOT + 'transaction/list', {
             limit: 50,
