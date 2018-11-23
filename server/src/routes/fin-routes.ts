@@ -6,7 +6,11 @@ import {AccountModel} from "../models/fin/account.model";
 import {TransactionModel} from "../models/fin/transaction.model";
 import {ConstraintModel} from "../models/fin/constraint.model";
 import {ErrorCodeUtil} from "../utils/error-code/error-code.util";
-import {AccountTransactionsRequest, CategoryTotalRequest} from "../services/fin/fin.model";
+import {
+    AccountTransactionsRequest,
+    AllTransactionsAmountRequest,
+    CategoryTotalRequest
+} from "../services/fin/fin.model";
 
 const express = require('express');
 
@@ -29,6 +33,19 @@ export const init = (): Router => {
     finRouter.post('/getCategoryTotal', async (req: Request, res: Response, next: NextFunction) => {
         try {
             const amount: number = await finService.getCategoryTotal(<CategoryTotalRequest>req.body);
+            res.status(200).send({
+                data: {
+                    amount
+                }
+            });
+        } catch (e) {
+            ErrorCodeUtil.resolveErrorOnRoute(e, res);
+        }
+    });
+
+    finRouter.post('/getAllTransactionsAmount', async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const amount: number = await finService.getAllTransactionsAmount(<AllTransactionsAmountRequest>req.body);
             res.status(200).send({
                 data: {
                     amount

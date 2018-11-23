@@ -28,5 +28,10 @@ export class CategoryTotalRequest {
     to?: string;
 }
 
+export class AllTransactionsAmountRequest {
+    from?: string;
+    to?: string;
+}
+
 
 

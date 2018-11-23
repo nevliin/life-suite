@@ -1,6 +1,6 @@
 import {OkPacket, RowDataPacket} from "mysql";
 import {DbUtil} from "../../utils/db/db.util";
-import {AccountTransactionsRequest, CategoryTotalRequest} from "./fin.model";
+import {AccountTransactionsRequest, AllTransactionsAmountRequest, CategoryTotalRequest} from "./fin.model";
 import {AccountModel} from "../../models/fin/account.model";
 import {TransactionModel} from "../../models/fin/transaction.model";
 import {ErrorCodeUtil} from "../../utils/error-code/error-code.util";
@@ -20,6 +20,21 @@ export class FinService {
             FROM fin_transaction WHERE account = ${this.db.escNumber(reqParams.accountId)} OR contra_account = ${this.db.escNumber(reqParams.accountId)};`
 
         return [];
+    }
+
+    async getAllTransactionsAmount(reqParams: AllTransactionsAmountRequest) {
+        let statement: string = `SELECT SUM(amount) AS amount FROM fin_transaction WHERE valid = 1 `;
+        if(reqParams.from && reqParams.to) {
+            statement += `AND created_on > '${this.db.esc(reqParams.from)}' AND created_on < '${this.db.esc(reqParams.to)}'`;
+        } else if (reqParams.from) {
+            statement += `AND created_on > '${this.db.esc(reqParams.from)}'`;
+        } else if (reqParams.to) {
+            statement += `AND created_on < '${this.db.esc(reqParams.to)}'`;
+        }
+        statement += ';';
+        const result: RowDataPacket[] = await this.db.query(statement);
+        return result[0].amount;
+
     }
 
     async getCategoryTotal(reqParams: CategoryTotalRequest): Promise<number> {
