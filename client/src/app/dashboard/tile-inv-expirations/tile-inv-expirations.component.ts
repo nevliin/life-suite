@@ -2,14 +2,14 @@ import {Component, EventEmitter, OnInit} from '@angular/core';
 import {InvEntry} from "../../inv/inv-entry";
 import {InvService} from "../../inv/inv.service";
 import {ErrorHandlingService} from "../../core/error-handling/error-handling.service";
-import {ITileComponent} from "../ad-tile/itile-component";
+import {OnTileLoadingDone} from "../tile-container/on-tile-loading-done";
 
 @Component({
     selector: 'tile-inv-expirations',
     templateUrl: './tile-inv-expirations.component.html',
     styleUrls: ['./tile-inv-expirations.component.css']
 })
-export class TileInvExpirationsComponent implements OnInit, ITileComponent {
+export class TileInvExpirationsComponent implements OnInit, OnTileLoadingDone {
 
     nextExpiringEntries: InvEntry[] = [];
     loadingDone: EventEmitter<boolean> = new EventEmitter();

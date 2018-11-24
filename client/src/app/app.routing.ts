@@ -10,7 +10,7 @@ import {InvExpirationsComponent} from "./inv/inv-expirations/inv-expirations.com
 import {InvAddComponent} from "./inv/inv-add/inv-add.component";
 import {AuthService} from "./core/auth/auth.service";
 import {AuthLoginWrapperComponent} from "./core/auth/auth-login-wrapper/auth-login-wrapper.component";
-import {HomeDashboardComponent} from "./home/home-dashboard/home-dashboard.component";
+import {DashboardComponent} from "./home/dashboard/dashboard.component";
 import {FinRecentComponent} from "./fin/fin-recent/fin-recent.component";
 import {FinAddComponent} from "./fin/fin-add/fin-add.component";
 import {FinAccountsComponent} from "./fin/fin-accounts/fin-accounts.component";
@@ -21,7 +21,7 @@ const routes: Routes = [
         resolve: {
             menu: CurrentMenuResolver
         },
-        component: HomeDashboardComponent
+        component: DashboardComponent
     },
     {
         path: 'auth',

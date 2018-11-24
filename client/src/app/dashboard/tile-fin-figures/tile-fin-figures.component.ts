@@ -1,6 +1,6 @@
 import {Component, EventEmitter, OnInit} from '@angular/core';
 import {FinService} from "../../fin/fin.service";
-import {ITileComponent} from "../ad-tile/itile-component";
+import {OnTileLoadingDone} from "../tile-container/on-tile-loading-done";
 
 const expensesCategoryId: number = 3;
 const revenueCategoryId: number = 6;
@@ -10,7 +10,7 @@ const revenueCategoryId: number = 6;
     templateUrl: './tile-fin-figures.component.html',
     styleUrls: ['./tile-fin-figures.component.css']
 })
-export class TileFinFiguresComponent implements OnInit, ITileComponent {
+export class TileFinFiguresComponent implements OnInit, OnTileLoadingDone {
 
     expenses: number = 0;
     revenue: number = 0;

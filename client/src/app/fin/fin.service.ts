@@ -35,7 +35,7 @@ export class FinService {
 
     async getAllTransactionsAmount(from?: Date, to?: Date): Promise<number> {
         return await this.http.post(API_ROOT + 'getAllTransactionsAmount', {
-            from: from,
+            from: from.toLocaleString('UTC'),
             to: to
         }).pipe(map((res: any) => res.data.amount)).toPromise().catch((e) => {
             this.errorHandlingService.handleHTTPError(e);

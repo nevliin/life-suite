@@ -7,11 +7,11 @@ import {Observable} from "rxjs";
 import {TileFinFiguresComponent} from "../tile-fin-figures/tile-fin-figures.component";
 
 @Component({
-    selector: 'app-home-dashboard',
-    templateUrl: './home-dashboard.component.html',
-    styleUrls: ['./home-dashboard.component.css'],
+    selector: 'dashboard',
+    templateUrl: './dashboard.component.html',
+    styleUrls: ['./dashboard.component.css'],
 })
-export class HomeDashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit {
     public cols: Observable<number>;
 
     /** Based on the screen size, switch from standard to one column per row */
