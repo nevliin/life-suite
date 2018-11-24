@@ -1,16 +1,18 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit} from '@angular/core';
 import {InvEntry} from "../../inv/inv-entry";
 import {InvService} from "../../inv/inv.service";
 import {ErrorHandlingService} from "../../core/error-handling/error-handling.service";
+import {ITileComponent} from "../ad-tile/itile-component";
 
 @Component({
     selector: 'tile-inv-expirations',
     templateUrl: './tile-inv-expirations.component.html',
     styleUrls: ['./tile-inv-expirations.component.css']
 })
-export class TileInvExpirationsComponent implements OnInit {
+export class TileInvExpirationsComponent implements OnInit, ITileComponent {
 
     nextExpiringEntries: InvEntry[] = [];
+    loadingDone: EventEmitter<boolean> = new EventEmitter();
 
     constructor(
         readonly invService: InvService,
@@ -18,8 +20,8 @@ export class TileInvExpirationsComponent implements OnInit {
     ) {
     }
 
-    async ngOnInit() {
-        await this.fetchEntries();
+    ngOnInit() {
+        this.fetchEntries();
     }
 
     async fetchEntries() {
@@ -28,6 +30,7 @@ export class TileInvExpirationsComponent implements OnInit {
         } catch (e) {
             this.errorHandlingService.handleHTTPError(e);
         }
+        this.loadingDone.emit(true);
     }
 
     findNextExpirations(entries: InvEntry[]) {

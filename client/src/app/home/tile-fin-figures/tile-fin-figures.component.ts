@@ -1,5 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit} from '@angular/core';
 import {FinService} from "../../fin/fin.service";
+import {ITileComponent} from "../ad-tile/itile-component";
 
 const expensesCategoryId: number = 3;
 const revenueCategoryId: number = 6;
@@ -9,12 +10,13 @@ const revenueCategoryId: number = 6;
     templateUrl: './tile-fin-figures.component.html',
     styleUrls: ['./tile-fin-figures.component.css']
 })
-export class TileFinFiguresComponent implements OnInit {
+export class TileFinFiguresComponent implements OnInit, ITileComponent {
 
     expenses: number = 0;
     revenue: number = 0;
     profit: number = 0;
     totalTransactionAmount: number = 0;
+    loadingDone: EventEmitter<boolean> = new EventEmitter();
 
     constructor(
         readonly finService: FinService
@@ -22,10 +24,19 @@ export class TileFinFiguresComponent implements OnInit {
     }
 
     async ngOnInit() {
-        this.expenses = await this.finService.getCategoryTotal(expensesCategoryId, new Date((new Date()).getFullYear(), (new Date()).getMonth(), 1));
-        this.revenue = await this.finService.getCategoryTotal(revenueCategoryId, new Date((new Date()).getFullYear(), (new Date()).getMonth(), 1));
-        this.profit = this.revenue - this.expenses;
-        this.totalTransactionAmount = await this.finService.getAllTransactionsAmount(new Date((new Date()).getFullYear(), (new Date()).getMonth(), 1));
+        await Promise.all([
+            Promise.all(
+                [
+                    this.finService.getCategoryTotal(expensesCategoryId, new Date((new Date()).getFullYear(), (new Date()).getMonth(), 1))
+                        .then((value) => this.expenses = value),
+                    this.finService.getCategoryTotal(revenueCategoryId, new Date((new Date()).getFullYear(), (new Date()).getMonth(), 1))
+                        .then((value) => this.revenue = value)
+                ]
+            ).then(() => this.profit = this.revenue - this.expenses),
+            this.finService.getAllTransactionsAmount(new Date((new Date()).getFullYear(), (new Date()).getMonth(), 1))
+                .then((value) => this.totalTransactionAmount = value)
+        ]);
+        this.loadingDone.emit(true);
     }
 
 }

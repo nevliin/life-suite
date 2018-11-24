@@ -49,8 +49,6 @@ export class HomeDashboardComponent implements OnInit {
             }
         });
         this.cols = this.observableMedia.asObservable().pipe(map(change => {
-                console.log(change);
-                console.log(grid.get(change.mqAlias));
                 return grid.get(change.mqAlias);
             }),
             startWith(start));
