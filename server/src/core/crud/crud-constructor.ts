@@ -153,7 +153,7 @@ export class CRUDConstructor<T extends ICRUDModel, > {
                 return data['id'];
             }
         } catch (e) {
-            console.log(e);
+            this.logger.error(e);
             ErrorCodeUtil.findErrorCodeAndThrow(e);
         }
     }
@@ -237,7 +237,6 @@ export class CRUDConstructor<T extends ICRUDModel, > {
             }
         }
         statement += `;`;
-        console.log(statement);
 
         const rows: RowDataPacket[] = await this.db.query(statement);
 
@@ -264,11 +263,16 @@ export class CRUDConstructor<T extends ICRUDModel, > {
     /**
      * Update object
      * @param data - Object to be written to the DB table
+     * @param oldId
      * @returns Object ID
      */
-    public async update(data: T): Promise<number> {
+    public async update(data: T, oldId?: number): Promise<number> {
+        console.log(data); console.log(oldId);
+        if(oldId === null || oldId === data.id) {
+            oldId = undefined;
+        }
         let properties: string[] = Array.from(this.fieldMappings.keys());
-        if (this.autoIncrementId) {
+        if (this.autoIncrementId && !oldId) {
             properties = properties.filter(property => {
                 return property != 'id'
             });
@@ -298,7 +302,8 @@ export class CRUDConstructor<T extends ICRUDModel, > {
                 statement += `${Number(data[property])}`;
             }
         });
-        statement += ` WHERE ${this.fieldMappings.get('id').name} = ${data.id};`;
+        statement += ` WHERE ${this.fieldMappings.get('id').name} = ${this.db.escNumber((oldId) ? oldId : data.id)};`;
+        console.log(statement);
 
         const result: OkPacket = await this.db.execute(statement);
         if (result.affectedRows != 1) {
@@ -406,7 +411,7 @@ export class CRUDConstructor<T extends ICRUDModel, > {
         });
         router.put('/update', async (req: Request, res: Response, next: NextFunction) => {
             try {
-                const id: number = await this.update(req.body);
+                const id: number = await this.update(req.body.data, req.body.oldId);
                 res.status(200).send({
                     id: id
                 });
