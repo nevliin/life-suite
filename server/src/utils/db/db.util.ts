@@ -3,68 +3,42 @@ import {OkPacket, Pool} from "mysql";
 import {QueryError, RowDataPacket} from 'mysql';
 import {IDBConfig, IServerConfig} from "../../assets/config/server-config.model";
 
-const config: IServerConfig = require('../../assets/config/server-config.json');
+export interface DBResultBase {
+    affectedRows: number;
+    changedRows: number;
+    insertId: number;
+}
+
+export interface DBQueryResult extends DBResultBase {
+    rows: any[];
+}
+
+export interface DBExecuteResult extends DBResultBase {
+}
 
 /**
- * Utility for interacting with a MySQL database
+ * Utility for interacting with a SQL database
  */
-export class DbUtil {
-
-    private pool: Pool;
-
+export abstract class DbUtil {
     /**
      * Create the db pool; uses database credentials from configs if none are provided
      * @param dbconfig
      */
-    constructor(dbconfig?: IDBConfig) {
-        if (dbconfig) {
-            this.pool = mysql.createPool({
-                host: dbconfig.host,
-                user: dbconfig.user,
-                password: dbconfig.password,
-                database: dbconfig.database,
-                port: 3306
-            });
-        } else {
-            this.pool = mysql.createPool({
-                host: config.db.host,
-                user: config.db.user,
-                password: config.db.password,
-                database: config.db.database,
-                port: 3306
-            });
-        }
-    }
+    constructor(dbconfig?: IDBConfig) {};
 
     /**
      * Execute a query
      * @param query
+     * @param values
      */
-    async query(query: string): Promise<RowDataPacket[]> {
-        return new Promise<RowDataPacket[]>(((resolve, reject) => {
-            this.pool.query(query, (err: QueryError, rows: RowDataPacket[]) => {
-                if (err) {
-                    reject(err);
-                }
-                resolve(rows);
-            });
-        }));
-    }
+    abstract query(query: string, values?: any[]): Promise<DBQueryResult>;
 
     /**
      * Execute an insertion
      * @param query
+     * @param values
      */
-    async execute(query: string): Promise<OkPacket> {
-        return new Promise<OkPacket>(((resolve, reject) => {
-            this.pool.query(query, (err: QueryError, result: OkPacket) => {
-                if (err) {
-                    reject(err);
-                }
-                resolve(result);
-            });
-        }));
-    }
+    abstract execute(query: string, values?: any[]): Promise<DBExecuteResult>;
 
     /**
      * Escape a string to make it safe for the usage in a SQL query
