@@ -9,7 +9,7 @@ import {CoreModule} from "./core/core.module";
 import {DynamicMenuModule} from "./core/menu/dynamic-menu.module";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ComponentsModule} from "./core/components/components.module";
-import {DashboardModule} from "./home/dashboard.module";
+import {DashboardModule} from "./dashboard/dashboard.module";
 import {MessageService} from "primeng/api";
 import {ToastModule} from "primeng/toast";
 import {ErrorHandlingService} from "./core/error-handling/error-handling.service";

@@ -4,6 +4,5 @@ export class FinAccount {
     note: string;
     parent_account: number;
     category_id: number;
-    deactivated: boolean;
     created_on: Date;
 }

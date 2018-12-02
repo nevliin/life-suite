@@ -4,19 +4,24 @@
     <bookmark url="file://$PROJECT_DIR$/client/src/app/fin/fin-accounts/fin-accounts.component.html" line="71" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e1fb510a-f0b7-420f-b0c1-da12d8e0f58c" name="Default Changelist" comment="style(fin-recent): improved mobile view">
+    <list default="true" id="e1fb510a-f0b7-420f-b0c1-da12d8e0f58c" name="Default Changelist" comment="refactor(">
+      <change afterPath="$PROJECT_DIR$/server/sql/fin/setup-pg.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/proxy.conf.dev.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/proxy.conf.dev.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/app.module.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/app/app.routing.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/app.routing.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/app/core/error-handling/error-handling.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/core/error-handling/error-handling.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/app/core/error-handling/page-not-found/page-not-found.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/core/error-handling/page-not-found/page-not-found.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/app/core/mat-component-collector.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/core/mat-component-collector.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/core/auth/auth-login/auth-login.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/core/auth/auth-login/auth-login.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/dashboard/tile-container/tile-container.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/dashboard/tile-container/tile-container.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/dashboard/tile-fin-figures/tile-fin-figures.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/dashboard/tile-fin-figures/tile-fin-figures.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/fin/fin-account.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/fin/fin-account.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/app/fin/fin-accounts/fin-account-add/fin-account-add.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/fin/fin-accounts/fin-account-add/fin-account-add.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/app/fin/fin-accounts/fin-accounts.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/fin/fin-accounts/fin-accounts.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/app/fin/fin-add/fin-add.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/fin/fin-add/fin-add.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/app/fin/fin-add/fin-add.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/fin/fin-add/fin-add.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/app/fin/fin.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/fin/fin.module.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/app/fin/fin.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/fin/fin.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/sql/fin/setup.sql" beforeDir="false" afterPath="$PROJECT_DIR$/server/sql/fin/setup-my.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/models/fin/account.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/models/fin/account.model.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/routes/fin-routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/routes/fin-routes.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/services/fin/fin.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/services/fin/fin.service.ts" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -28,234 +33,13 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FUSProjectUsageTrigger">
-    <session id="-1581316558">
-      <usages-collector id="statistics.lifecycle.project">
-        <counts>
-          <entry key="project.closed" value="3" />
-          <entry key="project.open.time.15" value="1" />
-          <entry key="project.open.time.20" value="2" />
-          <entry key="project.open.time.8" value="1" />
-          <entry key="project.opened" value="4" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.open">
-        <counts>
-          <entry key="gitignore" value="3" />
-          <entry key="js" value="1" />
-          <entry key="json" value="7" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.open">
-        <counts>
-          <entry key="JSON" value="7" />
-          <entry key="JavaScript" value="1" />
-          <entry key="PLAIN_TEXT" value="3" />
-        </counts>
-      </usages-collector>
-    </session>
-    <session id="-1782127085">
-      <usages-collector id="statistics.lifecycle.project">
-        <counts>
-          <entry key="project.closed" value="2" />
-          <entry key="project.open.time.19" value="2" />
-          <entry key="project.open.time.22" value="1" />
-          <entry key="project.open.time.3" value="1" />
-          <entry key="project.open.time.64" value="1" />
-          <entry key="project.opened" value="5" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.open">
-        <counts>
-          <entry key="js" value="3" />
-          <entry key="json" value="4" />
-          <entry key="sql" value="9" />
-          <entry key="ts" value="24" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.open">
-        <counts>
-          <entry key="JSON" value="3" />
-          <entry key="JavaScript" value="3" />
-          <entry key="SQL" value="9" />
-          <entry key="TypeScript" value="24" />
-          <entry key="tsconfig" value="1" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.js.language.service.starts">
-        <counts>
-          <entry key="TypeScriptServerServiceImpl" value="5" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.edit">
-        <counts>
-          <entry key="json" value="135" />
-          <entry key="sql" value="138" />
-          <entry key="ts" value="3778" />
-          <entry key="txt" value="217" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.edit">
-        <counts>
-          <entry key="JSON" value="135" />
-          <entry key="PLAIN_TEXT" value="217" />
-          <entry key="SQL" value="138" />
-          <entry key="TypeScript" value="3778" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.vcs.git.usages">
-        <counts>
-          <entry key="git.branch.create.new" value="1" />
-        </counts>
-      </usages-collector>
-    </session>
-    <session id="602190625">
-      <usages-collector id="statistics.lifecycle.project">
-        <counts>
-          <entry key="project.closed" value="44" />
-          <entry key="project.open.time.1" value="1" />
-          <entry key="project.open.time.10" value="2" />
-          <entry key="project.open.time.11" value="1" />
-          <entry key="project.open.time.12" value="4" />
-          <entry key="project.open.time.13" value="5" />
-          <entry key="project.open.time.14" value="6" />
-          <entry key="project.open.time.15" value="5" />
-          <entry key="project.open.time.16" value="4" />
-          <entry key="project.open.time.18" value="2" />
-          <entry key="project.open.time.19" value="3" />
-          <entry key="project.open.time.20" value="2" />
-          <entry key="project.open.time.21" value="3" />
-          <entry key="project.open.time.22" value="1" />
-          <entry key="project.open.time.23" value="1" />
-          <entry key="project.open.time.25" value="1" />
-          <entry key="project.open.time.26" value="1" />
-          <entry key="project.open.time.33" value="1" />
-          <entry key="project.open.time.34" value="1" />
-          <entry key="project.open.time.35" value="1" />
-          <entry key="project.open.time.5" value="1" />
-          <entry key="project.open.time.7" value="2" />
-          <entry key="project.open.time.8" value="3" />
-          <entry key="project.opened" value="51" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.open">
-        <counts>
-          <entry key="css" value="123" />
-          <entry key="gif" value="3" />
-          <entry key="gitignore" value="11" />
-          <entry key="htaccess" value="1" />
-          <entry key="htacess" value="1" />
-          <entry key="html" value="161" />
-          <entry key="ico" value="10" />
-          <entry key="js" value="80" />
-          <entry key="json" value="146" />
-          <entry key="md" value="1" />
-          <entry key="png" value="2" />
-          <entry key="resolver" value="1" />
-          <entry key="scss" value="10" />
-          <entry key="sql" value="23" />
-          <entry key="svg" value="3" />
-          <entry key="ts" value="620" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.open">
-        <counts>
-          <entry key="CSS" value="123" />
-          <entry key="DBN-SQL" value="23" />
-          <entry key="HTML" value="161" />
-          <entry key="Image" value="15" />
-          <entry key="JSON" value="142" />
-          <entry key="JavaScript" value="80" />
-          <entry key="PLAIN_TEXT" value="13" />
-          <entry key="SCSS" value="10" />
-          <entry key="SVG" value="3" />
-          <entry key="TypeScript" value="621" />
-          <entry key="htaccess" value="1" />
-          <entry key="tsconfig" value="4" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.js.language.service.starts">
-        <counts>
-          <entry key="Angular2LanguageService" value="45" />
-          <entry key="TypeScriptServerServiceImpl" value="1" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.edit">
-        <counts>
-          <entry key="css" value="1452" />
-          <entry key="gitignore" value="30" />
-          <entry key="html" value="9992" />
-          <entry key="js" value="353" />
-          <entry key="json" value="1875" />
-          <entry key="scss" value="184" />
-          <entry key="sql" value="436" />
-          <entry key="ts" value="41842" />
-          <entry key="txt" value="6561" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.edit">
-        <counts>
-          <entry key="CSS" value="1452" />
-          <entry key="DBN-SQL" value="436" />
-          <entry key="HTML" value="9988" />
-          <entry key="JSON" value="1875" />
-          <entry key="JavaScript" value="357" />
-          <entry key="PLAIN_TEXT" value="6591" />
-          <entry key="SCSS" value="184" />
-          <entry key="TypeScript" value="41842" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.vcs.git.usages">
-        <counts>
-          <entry key="git.branch.checkout.local" value="3" />
-          <entry key="git.branch.create.new" value="1" />
-        </counts>
-      </usages-collector>
-    </session>
-  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/src/app/fin/fin-add/fin-add.component.ts">
+        <entry file="file://$PROJECT_DIR$/client/src/app/fin/fin-account.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="71" selection-start-line="71" selection-end-line="71" />
-              <folding>
-                <element signature="e#0#59#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/src/app/fin/fin.service.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-376">
-              <caret line="70" column="61" selection-start-line="70" selection-start-column="61" selection-end-line="70" selection-end-column="61" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/src/app/fin/fin-accounts/fin-accounts.component.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="127">
-              <caret line="68" column="64" selection-start-line="68" selection-start-column="64" selection-end-line="68" selection-end-column="64" />
-              <folding>
-                <element signature="e#0#48#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/server/src/services/fin/fin.service.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="164">
-              <caret line="32" column="60" selection-start-line="32" selection-start-column="60" selection-end-line="32" selection-end-column="60" />
-              <folding>
-                <element signature="e#0#46#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="85">
+              <caret line="5" column="24" selection-start-line="5" selection-start-column="24" selection-end-line="5" selection-end-column="24" />
             </state>
           </provider>
         </entry>
@@ -263,20 +47,57 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server/src/routes/fin-routes.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="26" column="7" selection-start-line="26" selection-start-column="7" selection-end-line="26" selection-end-column="7" />
+            <state relative-caret-position="119">
+              <caret line="7" column="23" selection-start-line="7" selection-start-column="23" selection-end-line="7" selection-end-column="23" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/src/app/fin/fin-accounts/fin-account-add/fin-account-add.component.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1088">
+              <caret line="70" column="52" selection-start-line="70" selection-start-column="52" selection-end-line="70" selection-end-column="52" />
               <folding>
-                <element signature="e#0#64#0" expanded="true" />
+                <element signature="e#0#56#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server/src/assets/error-codes/error-codes.json">
+        <entry file="file://$PROJECT_DIR$/client/.editorconfig">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/server/sql/fin/setup-my.sql">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="43" column="30" selection-start-line="43" selection-start-column="13" selection-end-line="43" selection-end-column="30" />
+            <state relative-caret-position="187">
+              <caret line="11" selection-end-line="63" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/server/sql/fin/setup-pg.sql">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="374">
+              <caret line="54" lean-forward="true" selection-start-line="54" selection-end-line="54" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/server/tsconfig.json">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="68">
+              <caret line="4" selection-start-line="4" selection-end-line="4" />
             </state>
           </provider>
         </entry>
@@ -284,8 +105,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server/src/core/crud/crud-constructor.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="229">
-              <caret line="131" column="75" selection-start-line="131" selection-start-column="75" selection-end-line="131" selection-end-column="75" />
+            <state relative-caret-position="4641">
+              <caret line="281" selection-start-line="281" selection-end-line="281" />
               <folding>
                 <element signature="e#0#66#0" expanded="true" />
               </folding>
@@ -294,31 +115,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server/src/services/fin/fin.model.ts">
+        <entry file="file://$PROJECT_DIR$/server/src/utils/error-code/error-code.util.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="280">
-              <caret line="26" column="4" selection-start-line="26" selection-start-column="4" selection-end-line="26" selection-end-column="4" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server/dist/services/fin/fin.service.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="203">
-              <caret line="19" column="38" selection-start-line="19" selection-start-column="38" selection-end-line="19" selection-end-column="38" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/src/app/fin/fin-accounts/fin-account-add/fin-account-add.component.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="229">
-              <caret line="59" column="46" selection-start-line="59" selection-start-column="46" selection-end-line="59" selection-end-column="46" />
-              <folding>
-                <element signature="e#0#56#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="323">
+              <caret line="21" column="72" selection-start-line="21" selection-start-column="72" selection-end-line="21" selection-end-column="72" />
             </state>
           </provider>
         </entry>
@@ -338,7 +138,6 @@
       <find>insert</find>
       <find>'valid'</find>
       <find>console</find>
-      <find>console.log</find>
       <find>outdir</find>
       <find>inventory_target</find>
       <find>execute</find>
@@ -351,15 +150,28 @@
       <find>nevliin</find>
       <find>accountsPromise</find>
       <find>timestamp</find>
+      <find>toLowerCase</find>
+      <find>FAVicon</find>
+      <find>home</find>
+      <find>AuthService</find>
+      <find>HttpClient</find>
+      <find>error</find>
+      <find>console.log</find>
+      <find>findErr</find>
+      <find>update</find>
+      <find>AUTO_INCREMENT</find>
     </findStrings>
     <replaceStrings>
       <replace>inv_target_entry</replace>
       <replace>authCookieName</replace>
+      <replace>dashboard</replace>
     </replaceStrings>
     <dirStrings>
       <dir>O:\Github\life-suite</dir>
-      <dir>O:\Github\life-suite\client\src</dir>
       <dir>O:\Github\life-suite\server\src</dir>
+      <dir>O:\Github\life-suite\client\src</dir>
+      <dir>O:\Github\life-suite\client\src\app</dir>
+      <dir>O:\Github\life-suite\client\src\app\core\auth</dir>
     </dirStrings>
   </component>
   <component name="Git.Settings">
@@ -373,78 +185,65 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/server/src/models/fin/transaction.model.ts" />
-        <option value="$PROJECT_DIR$/client/src/app/fin/fin-transaction.ts" />
-        <option value="$PROJECT_DIR$/client/src/app/core/menu/dynamic-sidenav/dynamic-sidenav.component.html" />
-        <option value="$PROJECT_DIR$/client/src/app/home/home-dashboard/home-dashboard.component.html" />
-        <option value="$PROJECT_DIR$/client/src/app/home/home-dashboard/home-dashboard.component.css" />
-        <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/client/src/app/fin/fin-account-add/fin-account-add.component.ts" />
-        <option value="$PROJECT_DIR$/client/src/app/fin/fin-account-add/fin-account-add.component.html" />
-        <option value="$PROJECT_DIR$/client/src/app/fin/fin-accounts/fin-account-add.component.html" />
-        <option value="$PROJECT_DIR$/client/src/app/fin/fin-accounts/fin-category-add.component.html" />
-        <option value="$PROJECT_DIR$/client/src/app/core/alert-dialog/alert-dialog-confirm/alert-dialog-confirm.component.html" />
-        <option value="$PROJECT_DIR$/server/src/core/crud/crud-list-options.ts" />
-        <option value="$PROJECT_DIR$/client/src/app/app.component.html" />
-        <option value="$PROJECT_DIR$/client/src/app/fin/account-validator.directive.ts" />
-        <option value="$PROJECT_DIR$/client/proxy.conf.dev.json" />
-        <option value="$PROJECT_DIR$/client/proxy.conf.json" />
-        <option value="$PROJECT_DIR$/client/package.json" />
-        <option value="$PROJECT_DIR$/client/src/app/core/mat-component-collector.module.ts" />
-        <option value="$PROJECT_DIR$/client/src/app/core/alert-dialog/alert-dialog-confirm/alert-dialog-confirm.component.ts" />
-        <option value="$PROJECT_DIR$/client/src/app/core/alert-dialog/alert-dialog.service.ts" />
-        <option value="$PROJECT_DIR$/server/src/models/fin/constraint.model.ts" />
-        <option value="$PROJECT_DIR$/server/sql/fin/setup.sql" />
-        <option value="$PROJECT_DIR$/client/src/app/fin/fin-recent/fin-recent.component.css" />
-        <option value="$PROJECT_DIR$/client/src/app/fin/fin-recent/fin-recent.component.html" />
-        <option value="$PROJECT_DIR$/client/src/app/fin/fin-recent/fin-recent.component.ts" />
-        <option value="$PROJECT_DIR$/client/src/app/fin/fin-add/fin-add.component.html" />
-        <option value="$PROJECT_DIR$/client/src/app/fin/fin-accounts/fin-category-add/fin-category-add.component.html" />
-        <option value="$PROJECT_DIR$/client/src/app/fin/fin-accounts/fin-category-add/fin-category-add.component.ts" />
-        <option value="$PROJECT_DIR$/client/src/app/fin/fin-accounts/fin-account-add/fin-account-add.component.html" />
-        <option value="$PROJECT_DIR$/client/src/app/fin/fin-accounts/fin-accounts.component.css" />
-        <option value="$PROJECT_DIR$/client/src/app/fin/fin-accounts/fin-accounts.component.html" />
-        <option value="$PROJECT_DIR$/server/src/routes/routes.ts" />
-        <option value="$PROJECT_DIR$/server/src/services/fin/account-add.model.ts" />
-        <option value="$PROJECT_DIR$/client/src/styles.scss" />
-        <option value="$PROJECT_DIR$/client/src/styles.css" />
-        <option value="$PROJECT_DIR$/client/src/app/app.routing.ts" />
-        <option value="$PROJECT_DIR$/client/src/app/core/error-handling/page-not-found/page-not-found.component.html" />
-        <option value="$PROJECT_DIR$/client/src/app/core/menu/dynamic-menu.module.ts" />
+        <option value="$PROJECT_DIR$/client/src/app/inv/inv-comparison/inv-comparison.component.ts" />
+        <option value="$PROJECT_DIR$/client/src/app/inv/inv-add/inv-add.component.ts" />
+        <option value="$PROJECT_DIR$/client/src/app/inv/inv.service.ts" />
         <option value="$PROJECT_DIR$/client/src/app/core/alert-dialog/alert-dialog.module.ts" />
-        <option value="$PROJECT_DIR$/client/src/app/core/auth/auth.module.ts" />
-        <option value="$PROJECT_DIR$/client/src/app/core/error-handling/error-handling.module.ts" />
-        <option value="$PROJECT_DIR$/client/src/app/fin/fin.module.ts" />
-        <option value="$PROJECT_DIR$/client/src/app/app.module.ts" />
-        <option value="$PROJECT_DIR$/server/src/core/crud/crud-constructor.ts" />
+        <option value="$PROJECT_DIR$/client/src/app/core/alert-dialog/alert-dialog-confirm/alert-dialog-confirm.component.html" />
+        <option value="$PROJECT_DIR$/client/src/app/home/ad-tile.ts" />
+        <option value="$PROJECT_DIR$/client/src/app/home/tile.ts" />
         <option value="$PROJECT_DIR$/client/src/app/fin/fin-add/fin-add.component.ts" />
-        <option value="$PROJECT_DIR$/client/src/app/fin/fin.service.ts" />
-        <option value="$PROJECT_DIR$/client/src/app/fin/fin-accounts/fin-account-add/fin-account-add.component.ts" />
-        <option value="$PROJECT_DIR$/client/src/app/fin/fin-accounts/fin-accounts.component.ts" />
-        <option value="$PROJECT_DIR$/server/src/routes/fin-routes.ts" />
+        <option value="$PROJECT_DIR$/client/src/app/home/tile-inv-expirations/tile-inv-expirations.component.html" />
+        <option value="$PROJECT_DIR$/client/src/styles.scss" />
+        <option value="$PROJECT_DIR$/client/src/app/home/home-dashboard/home-dashboard.component.html" />
+        <option value="$PROJECT_DIR$/client/src/app/home/tile-fin-figures/tile-fin-figures.component.css" />
         <option value="$PROJECT_DIR$/server/src/services/fin/fin.model.ts" />
+        <option value="$PROJECT_DIR$/client/src/app/home/tile-fin-figures/tile-fin-figures.component.html" />
+        <option value="$PROJECT_DIR$/client/src/app/home/home-dashboard/home-dashboard.component.css" />
+        <option value="$PROJECT_DIR$/client/src/app/home/ad-tile/storage.directive.ts" />
+        <option value="$PROJECT_DIR$/client/src/app/home/ad-tile/itile-component.ts" />
+        <option value="$PROJECT_DIR$/client/src/app/home/tile-inv-expirations/tile-inv-expirations.component.ts" />
+        <option value="$PROJECT_DIR$/client/src/app/home/ad-tile/ad-tile.component.html" />
+        <option value="$PROJECT_DIR$/client/src/app/home/ad-tile/ad-tile.component.css" />
+        <option value="$PROJECT_DIR$/client/src/app/home/tile-fin-figures/tile-fin-figures.component.ts" />
+        <option value="$PROJECT_DIR$/client/src/app/home/home.module.ts" />
+        <option value="$PROJECT_DIR$/client/src/app/home/dashboard.module.ts" />
+        <option value="$PROJECT_DIR$/client/src/app/home/home-dashboard/home-dashboard.component.ts" />
+        <option value="$PROJECT_DIR$/client/src/app/home/home-dashboard/dashboard.component.ts" />
+        <option value="$PROJECT_DIR$/client/src/app/home/ad-tile/ad-tile.component.ts" />
+        <option value="$PROJECT_DIR$/client/src/app/home/ad-tile/tile-container.component.ts" />
+        <option value="$PROJECT_DIR$/client/src/app/home/ad-tile/ad.directive.ts" />
+        <option value="$PROJECT_DIR$/client/src/app/home/ad-tile/tile.directive.ts" />
+        <option value="$PROJECT_DIR$/client/src/app/home/ad-tile/tile-container.component.html" />
+        <option value="$PROJECT_DIR$/client/src/app/home/tile-container/itile-component.ts" />
+        <option value="$PROJECT_DIR$/client/src/app/home/tile-container/on-tile-loading-done.ts" />
+        <option value="$PROJECT_DIR$/client/src/app/home/dashboard/dashboard.component.html" />
+        <option value="$PROJECT_DIR$/client/src/app/home/tile-container/tile-container.component.ts" />
+        <option value="$PROJECT_DIR$/client/src/app/app.routing.ts" />
+        <option value="$PROJECT_DIR$/client/src/app/dashboard/tile-container/tile-container.component.ts" />
+        <option value="$PROJECT_DIR$/client/package.json" />
+        <option value="$PROJECT_DIR$/client/proxy.conf.dev.json" />
         <option value="$PROJECT_DIR$/server/src/services/fin/fin.service.ts" />
+        <option value="$PROJECT_DIR$/client/src/app/dashboard/tile-fin-figures/tile-fin-figures.component.html" />
+        <option value="$PROJECT_DIR$/server/src/routes/fin-routes.ts" />
+        <option value="$PROJECT_DIR$/client/src/app/fin/fin-accounts/fin-accounts.component.ts" />
+        <option value="$PROJECT_DIR$/client/src/app/fin/fin-account.ts" />
+        <option value="$PROJECT_DIR$/server/src/models/fin/account.model.ts" />
+        <option value="$PROJECT_DIR$/client/src/app/app.module.ts" />
+        <option value="$PROJECT_DIR$/client/src/app/core/auth/auth-login/auth-login.component.ts" />
+        <option value="$PROJECT_DIR$/client/src/app/fin/fin-accounts/fin-account-add/fin-account-add.component.ts" />
+        <option value="$PROJECT_DIR$/client/src/app/fin/fin.service.ts" />
+        <option value="$PROJECT_DIR$/server/src/core/crud/crud-constructor.ts" />
+        <option value="$PROJECT_DIR$/server/sql/fin/setup.sql" />
+        <option value="$PROJECT_DIR$/server/sql/fin/setup-pg.sql" />
       </list>
     </option>
   </component>
-  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
-  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
-  <component name="JsGulpfileManager">
-    <detection-done>true</detection-done>
-    <sorting>DEFINITION_ORDER</sorting>
-  </component>
-  <component name="NodeModulesDirectoryManager">
-    <handled-path value="$PROJECT_DIR$/client/node_modules" />
-    <handled-path value="$PROJECT_DIR$/node_modules" />
-    <handled-path value="$PROJECT_DIR$/server/node_modules" />
-  </component>
-  <component name="NodePackageJsonFileManager">
-    <packageJsonPaths>
-      <path value="$PROJECT_DIR$/build/server/package.json" />
-      <path value="$PROJECT_DIR$/client/package.json" />
-      <path value="$PROJECT_DIR$/package.json" />
-      <path value="$PROJECT_DIR$/server/package.json" />
-    </packageJsonPaths>
+  <component name="JsFlowSettings">
+    <service-enabled>true</service-enabled>
+    <exe-path />
+    <other-services-enabled>true</other-services-enabled>
+    <auto-save>true</auto-save>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-8" />
@@ -458,7 +257,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -495,14 +293,6 @@
               <item name="client" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="core" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="life-suite" type="b2602c69:ProjectViewProjectNode" />
-              <item name="life-suite" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
               <item name="fin" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -527,35 +317,76 @@
             <path>
               <item name="life-suite" type="b2602c69:ProjectViewProjectNode" />
               <item name="life-suite" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="fin" type="462c0819:PsiDirectoryNode" />
-              <item name="fin-add" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="life-suite" type="b2602c69:ProjectViewProjectNode" />
-              <item name="life-suite" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="life-suite" type="b2602c69:ProjectViewProjectNode" />
-              <item name="life-suite" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="styles.scss" type="620a8d5e:NestingTreeNode" />
+              <item name="server" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="life-suite" type="b2602c69:ProjectViewProjectNode" />
               <item name="life-suite" type="462c0819:PsiDirectoryNode" />
               <item name="server" type="462c0819:PsiDirectoryNode" />
+              <item name="sql" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="life-suite" type="b2602c69:ProjectViewProjectNode" />
+              <item name="life-suite" type="462c0819:PsiDirectoryNode" />
+              <item name="server" type="462c0819:PsiDirectoryNode" />
+              <item name="sql" type="462c0819:PsiDirectoryNode" />
+              <item name="fin" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="life-suite" type="b2602c69:ProjectViewProjectNode" />
+              <item name="life-suite" type="462c0819:PsiDirectoryNode" />
+              <item name="server" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="life-suite" type="b2602c69:ProjectViewProjectNode" />
+              <item name="life-suite" type="462c0819:PsiDirectoryNode" />
+              <item name="server" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="life-suite" type="b2602c69:ProjectViewProjectNode" />
+              <item name="life-suite" type="462c0819:PsiDirectoryNode" />
+              <item name="server" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+              <item name="crud" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="life-suite" type="b2602c69:ProjectViewProjectNode" />
+              <item name="life-suite" type="462c0819:PsiDirectoryNode" />
+              <item name="server" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="models" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="life-suite" type="b2602c69:ProjectViewProjectNode" />
+              <item name="life-suite" type="462c0819:PsiDirectoryNode" />
+              <item name="server" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="routes" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="life-suite" type="b2602c69:ProjectViewProjectNode" />
+              <item name="life-suite" type="462c0819:PsiDirectoryNode" />
+              <item name="server" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="services" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="life-suite" type="b2602c69:ProjectViewProjectNode" />
+              <item name="life-suite" type="462c0819:PsiDirectoryNode" />
+              <item name="server" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="services" type="462c0819:PsiDirectoryNode" />
+              <item name="fin" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -565,23 +396,23 @@
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_interpreter_path" value="node" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="preferences.sourceCode" />
-    <property name="ts.external.directory.path" value="O:\Github\life-suite\client\node_modules\typescript\lib" />
+    <property name="settings.editor.selected.configurable" value="configurable.group.editor" />
+    <property name="ts.external.directory.path" value="O:\Github\life-suite\server\node_modules\typescript\lib" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="O:\Github\life-suite\server\sql\fin" />
+      <recent name="O:\Github\life-suite\client\src\app\home\ad-tile" />
+      <recent name="O:\Github\life-suite\client\src\app\core\error-handling" />
+      <recent name="O:\Github\life-suite\client\src\app" />
+      <recent name="O:\Github\life-suite\client\src\app\core" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="O:\Github\life-suite\client\src\app\core\alert-dialog" />
       <recent name="O:\Github\life-suite\client\src\app\fin\fin-accounts\fin-category-add" />
       <recent name="O:\Github\life-suite\client\src\app\fin\fin-accounts\fin-account-add" />
       <recent name="O:\Github\life-suite\client\src\app\fin\fin-accounts" />
       <recent name="O:\Github\life-suite\server\src\core\crud" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="O:\Github\life-suite\client\src\app\core\error-handling" />
-      <recent name="O:\Github\life-suite\client\src\app" />
-      <recent name="O:\Github\life-suite\client\src\app\core" />
-      <recent name="O:\Github\life-suite\client\src\assets" />
-      <recent name="O:\Github\life-suite\server\src\models\fin" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -596,8 +427,8 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="npm.server:start:dev">
-    <configuration name="build" type="js.build_tools.npm" factoryName="npm" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="npm.build">
+    <configuration name="build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/client/package.json" />
       <command value="run" />
       <scripts>
@@ -607,17 +438,17 @@
       <envs />
       <method v="2" />
     </configuration>
-    <configuration name="client:start" type="js.build_tools.npm" factoryName="npm" temporary="true" nameIsGenerated="true">
+    <configuration name="client:start:dev-local" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/client/package.json" />
       <command value="run" />
       <scripts>
-        <script value="client:start" />
+        <script value="client:start:dev-local" />
       </scripts>
       <node-interpreter value="project" />
       <envs />
       <method v="2" />
     </configuration>
-    <configuration name="client:start:dev-remote" type="js.build_tools.npm" factoryName="npm" temporary="true" nameIsGenerated="true">
+    <configuration name="client:start:dev-remote" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/client/package.json" />
       <command value="run" />
       <scripts>
@@ -627,7 +458,7 @@
       <envs />
       <method v="2" />
     </configuration>
-    <configuration name="server:build:prod" type="js.build_tools.npm" factoryName="npm" temporary="true" nameIsGenerated="true">
+    <configuration name="server:build:prod" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/server/package.json" />
       <command value="run" />
       <scripts>
@@ -637,7 +468,7 @@
       <envs />
       <method v="2" />
     </configuration>
-    <configuration name="server:start:dev" type="js.build_tools.npm" factoryName="npm" temporary="true" nameIsGenerated="true">
+    <configuration name="server:start:dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/server/package.json" />
       <command value="run" />
       <scripts>
@@ -651,16 +482,16 @@
       <item itemvalue="npm.server:build:prod" />
       <item itemvalue="npm.server:start:dev" />
       <item itemvalue="npm.build" />
-      <item itemvalue="npm.client:start" />
       <item itemvalue="npm.client:start:dev-remote" />
+      <item itemvalue="npm.client:start:dev-local" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.server:start:dev" />
-        <item itemvalue="npm.client:start:dev-remote" />
         <item itemvalue="npm.build" />
         <item itemvalue="npm.server:build:prod" />
-        <item itemvalue="npm.client:start" />
+        <item itemvalue="npm.server:start:dev" />
+        <item itemvalue="npm.client:start:dev-local" />
+        <item itemvalue="npm.client:start:dev-remote" />
       </list>
     </recent_temporary>
   </component>
@@ -733,119 +564,24 @@
       <workItem from="1541960699098" duration="4291000" />
       <workItem from="1542047086434" duration="6380000" />
       <workItem from="1542136865898" duration="7661000" />
-      <workItem from="1542306464882" duration="8840000" />
-    </task>
-    <task id="LOCAL-00087" summary="Updated route permissions">
-      <created>1540734296857</created>
-      <option name="number" value="00087" />
-      <option name="presentableId" value="LOCAL-00087" />
-      <option name="project" value="LOCAL" />
-      <updated>1540734296857</updated>
-    </task>
-    <task id="LOCAL-00088" summary="Return invalid credentials error if user doesn't exist">
-      <created>1540734317706</created>
-      <option name="number" value="00088" />
-      <option name="presentableId" value="LOCAL-00088" />
-      <option name="project" value="LOCAL" />
-      <updated>1540734317706</updated>
-    </task>
-    <task id="LOCAL-00089" summary="Added '/verify' to open routes">
-      <created>1540742450088</created>
-      <option name="number" value="00089" />
-      <option name="presentableId" value="LOCAL-00089" />
-      <option name="project" value="LOCAL" />
-      <updated>1540742450088</updated>
-    </task>
-    <task id="LOCAL-00090" summary="Added HTTP error handling">
-      <created>1540765204702</created>
-      <option name="number" value="00090" />
-      <option name="presentableId" value="LOCAL-00090" />
-      <option name="project" value="LOCAL" />
-      <updated>1540765204703</updated>
-    </task>
-    <task id="LOCAL-00091" summary="Added ErrorHandlingService; functionality for display errors returned over http">
-      <created>1540765250489</created>
-      <option name="number" value="00091" />
-      <option name="presentableId" value="LOCAL-00091" />
-      <option name="project" value="LOCAL" />
-      <updated>1540765250489</updated>
-    </task>
-    <task id="LOCAL-00092" summary="Added http error handling">
-      <created>1540838261913</created>
-      <option name="number" value="00092" />
-      <option name="presentableId" value="LOCAL-00092" />
-      <option name="project" value="LOCAL" />
-      <updated>1540838261914</updated>
-    </task>
-    <task id="LOCAL-00093" summary="Fixed maxAge on cookie">
-      <created>1541013081650</created>
-      <option name="number" value="00093" />
-      <option name="presentableId" value="LOCAL-00093" />
-      <option name="project" value="LOCAL" />
-      <updated>1541013081651</updated>
-    </task>
-    <task id="LOCAL-00094" summary="Fixed maxAge again">
-      <created>1541014613379</created>
-      <option name="number" value="00094" />
-      <option name="presentableId" value="LOCAL-00094" />
-      <option name="project" value="LOCAL" />
-      <updated>1541014613379</updated>
-    </task>
-    <task id="LOCAL-00095" summary="Secure-Attribute on cookies breaks everything :(">
-      <created>1541016404011</created>
-      <option name="number" value="00095" />
-      <option name="presentableId" value="LOCAL-00095" />
-      <option name="project" value="LOCAL" />
-      <updated>1541016404011</updated>
-    </task>
-    <task id="LOCAL-00096" summary="Switched sidenav, toolbar and parts of auth to angular-material; added intendedRoute to AuthLogin">
-      <created>1541023332586</created>
-      <option name="number" value="00096" />
-      <option name="presentableId" value="LOCAL-00096" />
-      <option name="project" value="LOCAL" />
-      <updated>1541023332586</updated>
-    </task>
-    <task id="LOCAL-00097" summary="Removed 'deactivated' property from transactions, replaced with soft deletes">
-      <created>1541101026562</created>
-      <option name="number" value="00097" />
-      <option name="presentableId" value="LOCAL-00097" />
-      <option name="project" value="LOCAL" />
-      <updated>1541101026562</updated>
-    </task>
-    <task id="LOCAL-00098" summary="Added options to CRUD's '/list' to control the order of the list">
-      <created>1541113370207</created>
-      <option name="number" value="00098" />
-      <option name="presentableId" value="LOCAL-00098" />
-      <option name="project" value="LOCAL" />
-      <updated>1541113370207</updated>
-    </task>
-    <task id="LOCAL-00099" summary="Minor changes">
-      <created>1541113403569</created>
-      <option name="number" value="00099" />
-      <option name="presentableId" value="LOCAL-00099" />
-      <option name="project" value="LOCAL" />
-      <updated>1541113403569</updated>
-    </task>
-    <task id="LOCAL-00100" summary="Added FIN with basic components">
-      <created>1541116423799</created>
-      <option name="number" value="00100" />
-      <option name="presentableId" value="LOCAL-00100" />
-      <option name="project" value="LOCAL" />
-      <updated>1541116423800</updated>
-    </task>
-    <task id="LOCAL-00101" summary="Added CollectorModule to bundle all MatModules">
-      <created>1541116459933</created>
-      <option name="number" value="00101" />
-      <option name="presentableId" value="LOCAL-00101" />
-      <option name="project" value="LOCAL" />
-      <updated>1541116459933</updated>
-    </task>
-    <task id="LOCAL-00102" summary="Remade auth components with angular material">
-      <created>1541116500211</created>
-      <option name="number" value="00102" />
-      <option name="presentableId" value="LOCAL-00102" />
-      <option name="project" value="LOCAL" />
-      <updated>1541116500212</updated>
+      <workItem from="1542306464882" duration="8988000" />
+      <workItem from="1542401130031" duration="20000" />
+      <workItem from="1542457037639" duration="993000" />
+      <workItem from="1542471539798" duration="5299000" />
+      <workItem from="1542533719729" duration="6498000" />
+      <workItem from="1542571203291" duration="898000" />
+      <workItem from="1542661034924" duration="2994000" />
+      <workItem from="1542748890985" duration="2574000" />
+      <workItem from="1542920832123" duration="4821000" />
+      <workItem from="1543011649164" duration="4741000" />
+      <workItem from="1543059515081" duration="1536000" />
+      <workItem from="1543063534071" duration="6477000" />
+      <workItem from="1543070238347" duration="5968000" />
+      <workItem from="1543076843664" duration="4380000" />
+      <workItem from="1543524121186" duration="4827000" />
+      <workItem from="1543530644882" duration="604000" />
+      <workItem from="1543604107251" duration="1200000" />
+      <workItem from="1543746478051" duration="832000" />
     </task>
     <task id="LOCAL-00103" summary="Remade sidenav with angular material">
       <created>1541116541292</created>
@@ -1078,11 +814,123 @@
       <option name="project" value="LOCAL" />
       <updated>1542316958817</updated>
     </task>
-    <option name="localTasksCounter" value="136" />
+    <task id="LOCAL-00136" summary="fix(fin:accounts): new accounts are displayed correctly, accounts can be edited, account list in service gets updated">
+      <created>1542317180621</created>
+      <option name="number" value="00136" />
+      <option name="presentableId" value="LOCAL-00136" />
+      <option name="project" value="LOCAL" />
+      <updated>1542317180621</updated>
+    </task>
+    <task id="LOCAL-00137" summary="fix(fin:add-transaction): default values still set after reset">
+      <created>1542317215360</created>
+      <option name="number" value="00137" />
+      <option name="presentableId" value="LOCAL-00137" />
+      <option name="project" value="LOCAL" />
+      <updated>1542317215360</updated>
+    </task>
+    <task id="LOCAL-00138" summary="minor">
+      <created>1542317233032</created>
+      <option name="number" value="00138" />
+      <option name="presentableId" value="LOCAL-00138" />
+      <option name="project" value="LOCAL" />
+      <updated>1542317233032</updated>
+    </task>
+    <task id="LOCAL-00139" summary="refactor(inv): moved all http calls to service">
+      <created>1542499269765</created>
+      <option name="number" value="00139" />
+      <option name="presentableId" value="LOCAL-00139" />
+      <option name="project" value="LOCAL" />
+      <updated>1542499269765</updated>
+    </task>
+    <task id="LOCAL-00140" summary="feat(dashboard): setup for displaying generic components in mat-grid-list">
+      <created>1542666314265</created>
+      <option name="number" value="00140" />
+      <option name="presentableId" value="LOCAL-00140" />
+      <option name="project" value="LOCAL" />
+      <updated>1542666314265</updated>
+    </task>
+    <task id="LOCAL-00141" summary="fix(fin-add): filtering now works with null value">
+      <created>1542751475768</created>
+      <option name="number" value="00141" />
+      <option name="presentableId" value="LOCAL-00141" />
+      <option name="project" value="LOCAL" />
+      <updated>1542751475768</updated>
+    </task>
+    <task id="LOCAL-00142" summary="style(home-dashboard): various css changes">
+      <created>1542751505105</created>
+      <option name="number" value="00142" />
+      <option name="presentableId" value="LOCAL-00142" />
+      <option name="project" value="LOCAL" />
+      <updated>1542751505105</updated>
+    </task>
+    <task id="LOCAL-00143" summary="fix(fin-home): added wrapping for dashboard and correct spacing around and inside the cards">
+      <created>1542925381476</created>
+      <option name="number" value="00143" />
+      <option name="presentableId" value="LOCAL-00143" />
+      <option name="project" value="LOCAL" />
+      <updated>1542925381476</updated>
+    </task>
+    <task id="LOCAL-00144" summary="feature(fin-figures): added tile displaying monthly financial figures">
+      <created>1542925429136</created>
+      <option name="number" value="00144" />
+      <option name="presentableId" value="LOCAL-00144" />
+      <option name="project" value="LOCAL" />
+      <updated>1542925429136</updated>
+    </task>
+    <task id="LOCAL-00145" summary="feat(fin-allTransactionsAmount): added /fin/getAllTransactionsAmount to get the amount of transactions for timeframe">
+      <created>1543016109317</created>
+      <option name="number" value="00145" />
+      <option name="presentableId" value="LOCAL-00145" />
+      <option name="project" value="LOCAL" />
+      <updated>1543016109317</updated>
+    </task>
+    <task id="LOCAL-00146" summary="feat(tile-fin-figures): added amount of all transactions of the current month">
+      <created>1543016160775</created>
+      <option name="number" value="00146" />
+      <option name="presentableId" value="LOCAL-00146" />
+      <option name="project" value="LOCAL" />
+      <updated>1543016160775</updated>
+    </task>
+    <task id="LOCAL-00147" summary="feat(home-dashboard): added loading spinner to tiles">
+      <created>1543068823253</created>
+      <option name="number" value="00147" />
+      <option name="presentableId" value="LOCAL-00147" />
+      <option name="project" value="LOCAL" />
+      <updated>1543068823259</updated>
+    </task>
+    <task id="LOCAL-00148" summary="refactor(dashboard): renamed home to dashboard and various components, directives and interfaces for clarity">
+      <created>1543070338115</created>
+      <option name="number" value="00148" />
+      <option name="presentableId" value="LOCAL-00148" />
+      <option name="project" value="LOCAL" />
+      <updated>1543070338119</updated>
+    </task>
+    <task id="LOCAL-00149" summary="minor">
+      <created>1543070404365</created>
+      <option name="number" value="00149" />
+      <option name="presentableId" value="LOCAL-00149" />
+      <option name="project" value="LOCAL" />
+      <updated>1543070404365</updated>
+    </task>
+    <task id="LOCAL-00150" summary="Added cascading of account id updates">
+      <created>1543530458060</created>
+      <option name="number" value="00150" />
+      <option name="presentableId" value="LOCAL-00150" />
+      <option name="project" value="LOCAL" />
+      <updated>1543530458060</updated>
+    </task>
+    <task id="LOCAL-00151" summary="feat(crud-constructor): allow updating id on route /update">
+      <created>1543530522822</created>
+      <option name="number" value="00151" />
+      <option name="presentableId" value="LOCAL-00151" />
+      <option name="project" value="LOCAL" />
+      <updated>1543530522822</updated>
+    </task>
+    <option name="localTasksCounter" value="152" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="352815000" />
+    <option name="totallyTimeSpent" value="407625000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1097,24 +945,24 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.21654373" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1743941" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info id="DB Browser" order="3" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32925472" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49894625" weight="0.3288889" />
       <window_info anchor="bottom" id="Debug" order="2" sideWeight="0.49786323" weight="0.3971079" />
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="5" sideWeight="0.49841937" weight="0.3286334" />
       <window_info anchor="bottom" id="Docker" order="6" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.49894625" weight="0.32925472" />
-      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.4963119" weight="0.32814237" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5126449" side_tool="true" visible="true" weight="0.40823138" />
+      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.49841937" weight="0.32925472" />
+      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49420443" weight="0.32777777" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5110643" side_tool="true" visible="true" />
       <window_info anchor="bottom" id="DB Execution Console" order="10" />
-      <window_info anchor="bottom" id="File Transfer" order="11" sideWeight="0.49309245" visible="true" weight="0.33147943" />
-      <window_info anchor="bottom" id="TypeScript" order="12" sideWeight="0.49894625" weight="0.21802002" />
-      <window_info active="true" anchor="bottom" id="Run" order="13" sideWeight="0.4873551" visible="true" weight="0.40823138" />
+      <window_info active="true" anchor="bottom" id="File Transfer" order="11" sideWeight="0.4889357" visible="true" />
+      <window_info anchor="bottom" id="Run" order="12" sideWeight="0.4768177" weight="0.23333333" />
+      <window_info anchor="bottom" id="TypeScript" order="13" sideWeight="0.4915701" weight="0.21777777" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -1149,32 +997,13 @@
   <component name="UnknownFeatures">
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.sql" />
   </component>
-  <component name="VcsContentAnnotationSettings">
-    <option name="myLimit" value="2678400000" />
-  </component>
   <component name="VcsManagerConfiguration">
     <ignored-roots>
       <path value="$PROJECT_DIR$/client" />
       <path value="$PROJECT_DIR$/client/playground-client" />
       <path value="$PROJECT_DIR$/server" />
     </ignored-roots>
-    <MESSAGE value="Completed FinAddComponent" />
-    <MESSAGE value="Added MatSelect and MatTooltip" />
-    <MESSAGE value="Styled transactions with grid" />
-    <MESSAGE value="Completed display of accounts in tree, ordered by category" />
-    <MESSAGE value="Added getCategories()" />
-    <MESSAGE value="Added default value for timestamp because... MySQL" />
-    <MESSAGE value="Minor changes" />
-    <MESSAGE value="Added AlertDialogModule for generic dialogs like confirmation" />
-    <MESSAGE value="Added deleting accounts; moved options to dropdown menu" />
-    <MESSAGE value="Added deleteAccount() functionality" />
-    <MESSAGE value="Merged branch material-ui into master" />
-    <MESSAGE value="fix(crud-constructor): limit and order now work together" />
-    <MESSAGE value="feat(crud-constructor): option for bypassing soft deletes on list" />
-    <MESSAGE value="feat(fin-transaction): more validation and feedback on submit" />
-    <MESSAGE value="refactor(alert-dialog): removed debugger" />
     <MESSAGE value="feat(fin-accounts): added button with confirmation for deleting categories" />
-    <MESSAGE value="minor" />
     <MESSAGE value="Added fin constraint at /fin/constraint and in db" />
     <MESSAGE value="refactor(fin-recent): improved mobile display by hiding date" />
     <MESSAGE value="style(fin-recent): improved mobile view" />
@@ -1183,375 +1012,335 @@
     <MESSAGE value="refactor(fin-routes): moved fin routes to own file" />
     <MESSAGE value="fix(fin-accounts): added field deactivated to create/update request" />
     <MESSAGE value="feat(fin:category-total): added route for getting sum of transactions on category" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(fin:category-total): added route for getting sum of transactions on category" />
+    <MESSAGE value="fix(fin:accounts): new accounts are displayed correctly, accounts can be edited, account list in service gets updated" />
+    <MESSAGE value="fix(fin:add-transaction): default values still set after reset" />
+    <MESSAGE value="refactor(inv): moved all http calls to service" />
+    <MESSAGE value="feat(dashboard): setup for displaying generic components in mat-grid-list" />
+    <MESSAGE value="fix(fin-add): filtering now works with null value" />
+    <MESSAGE value="style(home-dashboard): various css changes" />
+    <MESSAGE value="fix(fin-home): added wrapping for dashboard and correct spacing around and inside the cards" />
+    <MESSAGE value="feature(fin-figures): added tile displaying monthly financial figures" />
+    <MESSAGE value="feat(fin-allTransactionsAmount): added /fin/getAllTransactionsAmount to get the amount of transactions for timeframe" />
+    <MESSAGE value="feat(tile-fin-figures): added amount of all transactions of the current month" />
+    <MESSAGE value="feat(home-dashboard): added loading spinner to tiles" />
+    <MESSAGE value="refactor(dashboard): renamed home to dashboard and various components, directives and interfaces for clarity" />
+    <MESSAGE value="commit" />
+    <MESSAGE value="minor" />
+    <MESSAGE value="Added cascading of account id updates" />
+    <MESSAGE value="feat(crud-constructor): allow updating id on route /update" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(crud-constructor): allow updating id on route /update" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/client/src/app/core/auth/auth.module.ts</url>
+          <line>25</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/client/src/app/fin/fin-accounts/fin-category-add/fin-category-add.component.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="6" selection-start-line="12" selection-start-column="6" selection-end-line="12" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/src/services/test.service.ts">
+    <entry file="file://$PROJECT_DIR$/client/src/app/home/tile-container/on-tile-loading-done.ts" />
+    <entry file="file://$PROJECT_DIR$/client/src/app/home/tile-fin-figures/tile-fin-figures.component.html" />
+    <entry file="file://$PROJECT_DIR$/client/src/app/home/tile-fin-figures/tile-fin-figures.component.ts" />
+    <entry file="file://$PROJECT_DIR$/client/src/app/home/tile-inv-expirations/tile-inv-expirations.component.ts" />
+    <entry file="file://$PROJECT_DIR$/client/src/app/home/tile-container/tile.directive.ts" />
+    <entry file="file://$PROJECT_DIR$/client/src/app/home/tile-container/tile-container.component.html" />
+    <entry file="file://$PROJECT_DIR$/client/src/app/home/dashboard.module.ts" />
+    <entry file="file://$PROJECT_DIR$/client/src/app/home/dashboard/dashboard.component.ts" />
+    <entry file="file://$PROJECT_DIR$/client/src/app/home/tile-container/tile-container.component.ts" />
+    <entry file="file://$PROJECT_DIR$/client/src/app/home/dashboard/dashboard.component.html" />
+    <entry file="file://$PROJECT_DIR$/.htaccess">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/src/services/fin/account-add.model.ts" />
-    <entry file="file://$PROJECT_DIR$/server/src/models/fin/transaction.model.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="14" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/src/services/inv/inv.service.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
-          <caret line="38" column="9" selection-start-line="38" selection-start-column="9" selection-end-line="38" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/src/routes/auth-routes.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="32" column="53" selection-start-line="32" selection-start-column="53" selection-end-line="32" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/src/routes/routes.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="7" column="18" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
-          <folding>
-            <element signature="e#0#36#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/src/routes/inv-routes.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="595">
-          <caret line="41" selection-start-line="41" selection-end-line="56" selection-end-column="7" />
-          <folding>
-            <element signature="e#0#64#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/app.component.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" selection-start-line="1" selection-end-line="1" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="723">
-          <caret line="46" column="38" selection-start-line="46" selection-start-column="38" selection-end-line="46" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/test.ts">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/core/menu/dynamic-sidenav/dynamic-sidenav.component.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="10" selection-end-line="16" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/assets/404.gif">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../nevliin.github.io/src/app/app.routing.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="30" column="25" lean-forward="true" selection-start-line="30" selection-start-column="25" selection-end-line="30" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/fin/fin-add/fin-add.component.css">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/core/menu/dynamic-sidenav/dynamic-sidenav.component.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="21" column="39" selection-start-line="21" selection-start-column="39" selection-end-line="21" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/core/menu/dynamic-sidenav/dynamic-sidenav.component.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="18" column="22" selection-start-line="18" selection-start-column="22" selection-end-line="18" selection-end-column="22" />
-          <folding>
-            <element signature="e#0#40#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/fin/fin-accounts/fin-category-add/fin-category-add.component.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1088">
-          <caret line="71" column="13" selection-start-line="71" selection-start-column="13" selection-end-line="71" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/fin/fin-accounts/fin-accounts.component.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="25" selection-start-line="18" selection-start-column="25" selection-end-line="18" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/styles.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="36" selection-start-line="11" selection-start-column="36" selection-end-line="11" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/styles.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" selection-start-line="8" selection-end-line="14" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/fin/fin-accounts/fin-account-add/fin-account-add.component.html">
+    <entry file="file://$PROJECT_DIR$/client/src/app/dashboard/dashboard.module.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state>
-          <caret column="28" selection-start-column="23" selection-end-column="28" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/core/error-handling/error-handling.service.ts">
+    <entry file="file://$PROJECT_DIR$/client/src/app/dashboard/tile-container/tile-container.component.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="18" column="1" lean-forward="true" selection-start-line="18" selection-start-column="1" selection-end-line="18" selection-end-column="1" />
+        <state relative-caret-position="51">
+          <caret line="3" column="5" selection-start-line="3" selection-start-column="5" selection-end-line="3" selection-end-column="5" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../nevliin.github.io/node_modules/@angular/core/src/render3/ng_dev_mode.d.ts">
+    <entry file="file://$PROJECT_DIR$/client/src/app/dashboard/tile-container/tile-container.component.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="10" selection-start-line="8" selection-start-column="10" selection-end-line="8" selection-end-column="10" />
+        <state relative-caret-position="493">
+          <caret line="29" column="28" selection-start-line="29" selection-start-column="28" selection-end-line="29" selection-end-column="28" />
+          <folding>
+            <element signature="e#0#142#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/core/mat-component-collector.module.ts">
+    <entry file="file://$PROJECT_DIR$/client/proxy.conf.json">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/core/error-handling/page-not-found/page-not-found.component.ts">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/core/error-handling/page-not-found/page-not-found.component.html">
+    <entry file="file://$PROJECT_DIR$/client/proxy.conf.dev.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
           <caret line="9" selection-start-line="9" selection-end-line="9" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/core/menu/dynamic-menu.module.ts">
+    <entry file="file://$PROJECT_DIR$/client/src/app/dashboard/tile-fin-figures/tile-fin-figures.component.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="35" selection-start-line="6" selection-start-column="35" selection-end-line="6" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/core/alert-dialog/alert-dialog.module.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="35" selection-start-line="4" selection-start-column="35" selection-end-line="4" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/core/auth/auth.module.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="15" column="35" selection-start-line="15" selection-start-column="35" selection-end-line="15" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/core/error-handling/error-handling.module.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="21" selection-start-line="11" selection-start-column="21" selection-end-line="11" selection-end-column="21" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/app.module.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="29" column="18" selection-start-line="29" selection-start-column="18" selection-end-line="29" selection-end-column="18" />
-          <folding>
-            <element signature="e#0#56#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/app.routing.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" selection-start-line="16" selection-end-line="16" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/src/models/fin/category.model.ts">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/src/models/fin/account.model.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="28" lean-forward="true" selection-start-line="9" selection-start-column="28" selection-end-line="9" selection-end-column="28" />
+        <state relative-caret-position="374">
+          <caret line="22" column="39" selection-start-line="22" selection-start-column="39" selection-end-line="22" selection-end-column="39" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/server/src/core/crud/crud-list-options.ts">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/fin/fin-account.ts">
+    <entry file="file://$PROJECT_DIR$/server/sql/fin/initialdata.sql">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="10" selection-start-line="6" selection-start-column="10" selection-end-line="6" selection-end-column="10" />
+        <state relative-caret-position="170">
+          <caret line="10" column="28" selection-start-line="10" selection-start-column="28" selection-end-line="10" selection-end-column="28" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/fin/fin-add/fin-add.component.html">
+    <entry file="file://$PROJECT_DIR$/server/src/routes/inv-routes.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="303">
-          <caret line="69" column="53" lean-forward="true" selection-start-line="69" selection-start-column="53" selection-end-line="69" selection-end-column="53" />
-          <folding>
-            <element signature="n#style#0;n#mat-card#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#mat-form-field#0;n#div#0;n#div#0;n#mat-card-content#0;n#mat-card#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/fin/fin.module.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="21" selection-start-line="15" selection-start-column="21" selection-end-line="15" selection-end-column="21" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/node_modules/typescript/lib/lib.es5.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="169">
-          <caret line="301" column="4" selection-start-line="301" selection-start-column="4" selection-end-line="301" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/fin/fin-accounts/fin-accounts.component.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="22" column="29" selection-start-line="22" selection-start-column="29" selection-end-line="22" selection-end-column="29" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#mat-card-content#0;n#mat-card#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#mat-expansion-panel#0;n#div#0;n#mat-card-content#0;n#mat-card#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#mat-expansion-panel#0;n#div#0;n#mat-card-content#0;n#mat-card#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#li#0;n#mat-tree-node#0;n#mat-tree#0;n#mat-expansion-panel#0;n#div#0;n#mat-card-content#0;n#mat-card#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#mat-card-actions#0;n#mat-card#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/fin/fin-add/fin-add.component.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="71" selection-start-line="71" selection-end-line="71" />
-          <folding>
-            <element signature="e#0#59#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/fin/fin.service.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-376">
-          <caret line="70" column="61" selection-start-line="70" selection-start-column="61" selection-end-line="70" selection-end-column="61" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/fin/fin-accounts/fin-account-add/fin-account-add.component.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="229">
-          <caret line="59" column="46" selection-start-line="59" selection-start-column="46" selection-end-line="59" selection-end-column="46" />
-          <folding>
-            <element signature="e#0#56#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/app/fin/fin-accounts/fin-accounts.component.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="127">
-          <caret line="68" column="64" selection-start-line="68" selection-start-column="64" selection-end-line="68" selection-end-column="64" />
-          <folding>
-            <element signature="e#0#48#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/src/assets/error-codes/error-codes.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="43" column="30" selection-start-line="43" selection-start-column="13" selection-end-line="43" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/src/routes/fin-routes.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="26" column="7" selection-start-line="26" selection-start-column="7" selection-end-line="26" selection-end-column="7" />
+        <state relative-caret-position="-480">
           <folding>
             <element signature="e#0#64#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/dist/services/fin/fin.service.js">
+    <entry file="file://$PROJECT_DIR$/client/src/app/fin/fin-accounts/fin-accounts.component.css">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/src/models/fin/account.model.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="203">
-          <caret line="19" column="38" selection-start-line="19" selection-start-column="38" selection-end-line="19" selection-end-column="38" />
+        <state relative-caret-position="153">
+          <caret line="9" column="1" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/server/src/services/fin/fin.model.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="26" column="4" selection-start-line="26" selection-start-column="4" selection-end-line="26" selection-end-column="4" />
+        <state relative-caret-position="306">
+          <caret line="18" column="22" selection-start-line="18" selection-start-column="22" selection-end-line="18" selection-end-column="22" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/src/core/crud/crud-constructor.ts">
+    <entry file="file://$PROJECT_DIR$/server/src/models/fin/category.model.ts">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/src/models/fin/constraint.model.ts">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/fin/fin-accounts/fin-accounts.component.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="229">
-          <caret line="131" column="75" selection-start-line="131" selection-start-column="75" selection-end-line="131" selection-end-column="75" />
+        <state relative-caret-position="935">
+          <caret line="66" column="25" selection-start-line="66" selection-start-column="25" selection-end-line="66" selection-end-column="25" />
           <folding>
-            <element signature="e#0#66#0" expanded="true" />
+            <element signature="e#0#48#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/fin/fin-category.ts">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="18" selection-start-line="12" selection-start-column="18" selection-end-line="12" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/core/core.module.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/app.routing.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="34" column="6" selection-start-line="34" selection-start-column="6" selection-end-line="34" selection-end-column="6" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/core/auth/jwt-payload.ts">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/inv/inv.service.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="15" column="23" selection-start-line="15" selection-start-column="23" selection-end-line="15" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/core/auth/auth-login/auth-login.component.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="n#style#0;n#mat-card-title#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/app.module.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="39" column="24" selection-start-line="39" selection-start-column="24" selection-end-line="39" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#56#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/core/auth/auth.module.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/core/auth/auth.service.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/core/error-handling/error-handling.service.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/core/error-handling/error-handling.module.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/core/auth/auth-login/auth-login.component.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="884">
+          <caret line="57" column="46" selection-start-line="57" selection-start-column="46" selection-end-line="57" selection-end-column="46" />
+          <folding>
+            <element signature="e#0#55#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/fin/fin.service.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2567">
+          <caret line="157" selection-start-line="157" selection-end-line="157" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/server/src/services/fin/fin.service.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="164">
-          <caret line="32" column="60" selection-start-line="32" selection-start-column="60" selection-end-line="32" selection-end-column="60" />
+        <state relative-caret-position="187">
+          <caret line="17" column="31" selection-start-line="17" selection-start-column="31" selection-end-line="17" selection-end-column="31" />
           <folding>
             <element signature="e#0#46#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/fin/fin-accounts/fin-account-add/fin-account-add.component.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1088">
+          <caret line="70" column="52" selection-start-line="70" selection-start-column="52" selection-end-line="70" selection-end-column="52" />
+          <folding>
+            <element signature="e#0#56#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/.editorconfig">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/src/core/crud/crud-constructor.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4641">
+          <caret line="281" selection-start-line="281" selection-end-line="281" />
+          <folding>
+            <element signature="e#0#66#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/src/utils/error-code/error-code.util.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="21" column="72" selection-start-line="21" selection-start-column="72" selection-end-line="21" selection-end-column="72" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/src/routes/fin-routes.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="23" selection-start-line="7" selection-start-column="23" selection-end-line="7" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/sql/fin/setup-my.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" selection-end-line="63" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/app/fin/fin-account.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="24" selection-start-line="5" selection-start-column="24" selection-end-line="5" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/sql/fin/setup-pg.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="54" lean-forward="true" selection-start-line="54" selection-end-line="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/tsconfig.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" selection-start-line="4" selection-end-line="4" />
         </state>
       </provider>
     </entry>

@@ -19,7 +19,7 @@ export class TileContainerComponent implements OnInit {
     @Input() tile: Type<OnTileLoadingDone>;
     @ViewChild(TileDirective) adHost: TileDirective;
 
-    private loading: boolean = true;
+    loading: boolean = true;
 
     constructor(
         private componentFactoryResolver: ComponentFactoryResolver

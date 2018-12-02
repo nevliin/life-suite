@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from "@angular/router";
-import {AuthLoginComponent} from "./core/auth/auth-login/auth-login.component";
 import {PageNotFoundComponent} from "./core/error-handling/page-not-found/page-not-found.component";
 import {InvListComponent} from "./inv/inv-list/inv-list.component";
 import {InvComparisonComponent} from "./inv/inv-comparison/inv-comparison.component";
@@ -10,7 +9,7 @@ import {InvExpirationsComponent} from "./inv/inv-expirations/inv-expirations.com
 import {InvAddComponent} from "./inv/inv-add/inv-add.component";
 import {AuthService} from "./core/auth/auth.service";
 import {AuthLoginWrapperComponent} from "./core/auth/auth-login-wrapper/auth-login-wrapper.component";
-import {DashboardComponent} from "./home/dashboard/dashboard.component";
+import {DashboardComponent} from "./dashboard/dashboard/dashboard.component";
 import {FinRecentComponent} from "./fin/fin-recent/fin-recent.component";
 import {FinAddComponent} from "./fin/fin-add/fin-add.component";
 import {FinAccountsComponent} from "./fin/fin-accounts/fin-accounts.component";

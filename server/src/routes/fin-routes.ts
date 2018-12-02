@@ -62,8 +62,8 @@ export const init = (): Router => {
     finRouter.use('/category', categoryModelCRUD.getRouter());
 
     const accountModelCRUD: CRUDConstructor<AccountModel> = new CRUDConstructor(new AccountModel(), 'fin_account', {
-        softDelete: false,
-        autoFilledFields: ['created_on', 'deactivated'],
+        softDelete: true,
+        autoFilledFields: ['created_on'],
         autoIncrementId: false
     });
     finRouter.use('/account', accountModelCRUD.getRouter());

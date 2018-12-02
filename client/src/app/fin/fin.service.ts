@@ -135,8 +135,8 @@ export class FinService {
         })) as any).id;
     }
 
-    async updateAccount(account: FinAccount): Promise<number> {
-        return ((await this.http.put(API_ROOT + 'account/update/', account).pipe(tap(() => this.getAccountsById(true))).toPromise().catch(e => {
+    async updateAccount(account: FinAccount, oldId?: number): Promise<number> {
+        return ((await this.http.put(API_ROOT + 'account/update/', { data: account, oldId: oldId }).pipe(tap(() => this.getAccountsById(true))).toPromise().catch(e => {
             console.log(e);
             throw e;
         })) as any).id;
@@ -161,7 +161,7 @@ export class FinService {
     }
 
     async updateCategory(category: FinCategory): Promise<number> {
-        return ((await this.http.put(API_ROOT + 'category/update/', category).toPromise().catch(e => {
+        return ((await this.http.put(API_ROOT + 'category/update/', { data: category}).toPromise().catch(e => {
             console.log(e);
             throw e;
         })) as any).id;

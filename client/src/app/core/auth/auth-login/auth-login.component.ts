@@ -35,7 +35,6 @@ export class AuthLoginComponent implements OnInit {
     }
 
     async submit() {
-
         this.messages = [];
         if(this.loginForm.valid) {
             try {
@@ -48,7 +47,7 @@ export class AuthLoginComponent implements OnInit {
                     this.messages.push({severity: 'error', summary: 'Warn', detail: 'Invalid credentials provided.'});
                 }
             } catch (e) {
-                this.messages.push({severity: 'error', summary: 'Error', detail: e.error.message});
+                this.messages.push({severity: 'error', summary: 'Error', detail: e.message});
             }
         } else {
             this.messages.push({severity: 'error', summary: 'Error', detail: 'Please fill all fields'});

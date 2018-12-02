@@ -71,7 +71,6 @@ export class FinAccountsComponent implements OnInit {
                 .sort((a: FinAccount, b: FinAccount) => a.id - b.id);
             this.database.set(category.id, new AccountTreeWrapper(new AccountDatabase(categoryAccounts)));
         });
-        debugger;
     }
 
     hasNestedChild(_: number, nodeData: AccountNode): boolean {

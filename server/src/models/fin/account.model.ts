@@ -6,6 +6,5 @@ export class AccountModel implements ICRUDModel {
     note: string = null;
     parent_account: number = null;
     category_id: number = null;
-    deactivated: boolean = false;
     created_on: Date = null;
 }

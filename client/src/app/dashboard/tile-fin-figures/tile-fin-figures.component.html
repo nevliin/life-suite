@@ -1,7 +1,7 @@
 <div class="fin-figures-grid">
     <div class="fin-figures-grid-tile">
         <div class="figure">
-            <h1 [ngClass]="{ negative: expenses < 0, positive: expenses > 0, neutral: expenses === 0}">{{expenses | currency:'EUR'}}</h1>
+            <h1 [ngClass]="{ negative: expenses > 0, positive: expenses < 0, neutral: expenses === 0}">{{expenses | currency:'EUR'}}</h1>
             <mat-divider [inset]="true"></mat-divider>
             <p class="subtitle">Expenses</p>
         </div>
