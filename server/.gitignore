@@ -3,5 +3,5 @@
 /config.yml
 /.tscache
 /dist
-/src/assets/config/*.json
-/sql/fin/intialdata.sql
+/src/assets/config/server-config.json
+/sql/fin/initialdata.sql
