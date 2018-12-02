@@ -22,7 +22,8 @@
     "pug": "^2.0.3",
     "mysql": "^2.16.0",
     "bcryptjs": "^2.4.3",
-    "jsonwebtoken": "^8.3.0"
+    "jsonwebtoken": "^8.3.0",
+    "pg": "~7.7.1"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
@@ -33,6 +34,7 @@
     "@types/morgan": "^1.7.35",
     "@types/mysql": "github:types/mysql",
     "@types/jsonwebtoken": "^7.2.8",
+    "@types/pg": "~7.4.11",
     "grunt": "^1.0.3",
     "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-watch": "^1.1.0",
