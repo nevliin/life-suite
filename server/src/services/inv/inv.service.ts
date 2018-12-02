@@ -1,13 +1,14 @@
-import {DbUtil} from "../../utils/db/db.util";
+import {DBQueryResult, DbUtil} from "../../utils/db/db.util";
 import {CompareEntry} from "./compare-entry";
 import {RowDataPacket} from "mysql";
+import {MySqlUtil} from "../../utils/db/mysql.util";
 
 export class InvService {
 
     db: DbUtil;
 
     constructor() {
-        this.db = new DbUtil();
+        this.db = new MySqlUtil();
     }
 
     async getComparison(): Promise<CompareEntry[]> {
@@ -21,19 +22,19 @@ export class InvService {
             WHERE inv_target_entry.name NOT IN 
                 (SELECT name FROM inv_entry WHERE valid = 1);`;
 
-        const rows: RowDataPacket[] = await this.db.query(statement);
+        const result: DBQueryResult = await this.db.query(statement);
 
-        return rows.map(row => {
+        return result.rows.map(row => {
             return new CompareEntry(row.name, row.comparison);
         });
     }
 
     async getAutoFill(name: string) {
         let statement: string = `SELECT id FROM inv_entry WHERE name LIKE '${this.db.esc(name)}';`;
-        const rows: RowDataPacket[] = await this.db.query(statement);
+        const result: DBQueryResult = await this.db.query(statement);
 
-        if(rows.length > 0) {
-            return rows[0].id;
+        if(result.rows.length > 0) {
+            return result.rows[0].id;
         } else {
             return null;
         }
@@ -41,8 +42,8 @@ export class InvService {
 
     async getNextId(): Promise<number> {
         let statement: string = 'SELECT MAX(id) AS maxid FROM inv_entry;';
-        const rows: RowDataPacket[] = await this.db.query(statement);
-        return Number.parseInt(rows[0]['maxid'])+1;
+        const result: DBQueryResult = await this.db.query(statement);
+        return Number.parseInt(result.rows[0].maxid)+1;
 
     }
 }

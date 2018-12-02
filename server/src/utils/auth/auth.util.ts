@@ -1,5 +1,5 @@
 import {IServerConfig} from "../../assets/config/server-config.model";
-import {DbUtil} from "../db/db.util";
+import {DBExecuteResult, DBQueryResult, DbUtil} from "../db/db.util";
 import {ISignUpModel} from "./signup.model";
 import {Logger, LoggingUtil} from "../logging/logging.util";
 import {OkPacket, RowDataPacket} from "mysql";
@@ -13,6 +13,7 @@ import {IUpdatePasswordModel} from "./update-password.model";
 import {isNullOrUndefined} from "../util";
 import {IEditRolesModel} from "./edit-roles.model";
 import {IUserDetailsModel} from "./user-details.model";
+import {MySqlUtil} from "../db/mysql.util";
 
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -33,7 +34,7 @@ export class AuthUtil {
      * Init dependencies and route data
      */
     static async init() {
-        this.db = new DbUtil(config.auth);
+        this.db = new MySqlUtil(config.auth);
         this.logger = LoggingUtil.getLogger('auth');
         await this.initRoutePermissions();
     }
@@ -46,7 +47,7 @@ export class AuthUtil {
         const hash: string = await bcrypt.hash(signUpModel.password, 10);
 
         try {
-            const result: OkPacket = await this.db.execute(`INSERT INTO auth_user(username, salted_hash) VALUES('${this.db.esc(signUpModel.username)}', '${hash}');`)
+            const result: DBExecuteResult = await this.db.execute(`INSERT INTO auth_user(username, salted_hash) VALUES('${this.db.esc(signUpModel.username)}', '${hash}');`);
             return result.insertId;
         } catch (e) {
             ErrorCodeUtil.findErrorCodeAndThrow(e);
@@ -60,12 +61,12 @@ export class AuthUtil {
      */
     public static async login(loginModel: ILoginModel): Promise<string> {
         try {
-            const rows: RowDataPacket[] = await this.db.query(`SELECT id, salted_hash FROM auth_user WHERE username = '${loginModel.username}';`)
-            if (rows[0] && rows[0].salted_hash && rows[0].id) {
-                if (loginModel.password && bcrypt.compareSync(loginModel.password, rows[0].salted_hash)) {
-                    const powerAndRoles: { power: number, roles: number[] } = await AuthUtil.getPowerAndRoles(rows[0].id);
+        const result: DBQueryResult = await this.db.query(`SELECT id, salted_hash FROM auth_user WHERE username = '${loginModel.username}';`);
+            if (result.rows[0] && result.rows[0].salted_hash && result.rows[0].id) {
+                if (loginModel.password && bcrypt.compareSync(loginModel.password, result.rows[0].salted_hash)) {
+                    const powerAndRoles: { power: number, roles: number[] } = await AuthUtil.getPowerAndRoles(result.rows[0].id);
                     const token: string = jwt.sign({
-                            userId: rows[0].id,
+                            userId: result.rows[0].id,
                             power: powerAndRoles.power,
                             roles: powerAndRoles.roles
                         },
@@ -74,7 +75,7 @@ export class AuthUtil {
                             expiresIn: '30d'
                         }
                     );
-                    await this.db.execute(`INSERT INTO auth_token(user_id, token) VALUES(${rows[0].id}, '${token}');`);
+                    await this.db.execute(`INSERT INTO auth_token(user_id, token) VALUES(${result.rows[0].id}, '${token}');`);
                     return token;
                 } else {
                     ErrorCodeUtil.findErrorCodeAndThrow('INVALID_CREDENTIALS');
@@ -94,13 +95,13 @@ export class AuthUtil {
     }
 
     public static async updatePassword(updatePasswordModel: IUpdatePasswordModel): Promise<number> {
-        const rows: RowDataPacket[] = await this.db.query(`SELECT id, salted_hash FROM auth_user WHERE username = '${updatePasswordModel.username}';`);
-        if (rows[0] && rows[0].salted_hash && rows[0].id) {
-            if (updatePasswordModel.oldPassword && bcrypt.compareSync(updatePasswordModel.oldPassword, rows[0].salted_hash)) {
+        const result: DBQueryResult = await this.db.query(`SELECT id, salted_hash FROM auth_user WHERE username = '${updatePasswordModel.username}';`);
+        if (result.rows[0] && result.rows[0].salted_hash && result.rows[0].id) {
+            if (updatePasswordModel.oldPassword && bcrypt.compareSync(updatePasswordModel.oldPassword, result.rows[0].salted_hash)) {
                 const hash: string = await bcrypt.hash(updatePasswordModel.newPassword, 10);
-                await this.db.execute(`UPDATE auth_user SET salted_hash='${hash}' WHERE id = ${rows[0].id};`);
-                await this.invalidateTokens(rows[0].id);
-                return rows[0].id;
+                await this.db.execute(`UPDATE auth_user SET salted_hash='${hash}' WHERE id = ${result.rows[0].id};`);
+                await this.invalidateTokens(result.rows[0].id);
+                return result.rows[0].id;
             } else {
                 ErrorCodeUtil.findErrorCodeAndThrow('INVALID_CREDENTIALS');
             }
@@ -112,10 +113,10 @@ export class AuthUtil {
     public static async verifyLogin(token: string): Promise<boolean> {
         if (!isNullOrUndefined(token)) {
             let statement: string = `SELECT valid FROM auth_token WHERE token='${token}';`;
-            const rows: RowDataPacket[] = await this.db.query(statement);
-            if (rows.length === 0) {
+            const result: DBQueryResult = await this.db.query(statement);
+            if (result.rows.length === 0) {
                 return false;
-            } else if (rows[0].valid === 1) {
+            } else if (result.rows[0].valid === 1) {
                 return true;
             }
             return false;
@@ -148,24 +149,24 @@ export class AuthUtil {
             (SELECT id, username, created_on FROM auth_user WHERE id = ${this.db.escNumber(userId)}) AS a, 
             (SELECT MAX(created_on) AS last_login FROM auth_token WHERE user_id = ${this.db.escNumber(userId)}) AS b,
             (SELECT MAX(power) AS power FROM auth_user JOIN auth_user_role ON auth_user.id = auth_user_role.user_id JOIN auth_role ON auth_user_role.role_id = auth_role.id WHERE auth_user.id = ${this.db.escNumber(userId)}) AS c;`;
-        const rows: RowDataPacket[] = await this.db.query(statement);
-        if (rows.length === 1) {
+        const result: DBQueryResult = await this.db.query(statement);
+        if (result.rows.length === 1) {
             const statement2: string = `SELECT auth_role.id 
                 FROM auth_role 
                 JOIN auth_user_role ON auth_role.id = auth_user_role.role_id 
                 JOIN auth_user ON auth_user_role.user_id = auth_user.id
                 WHERE auth_user.id = ${userId};`;
-            const rows2: RowDataPacket[] = await this.db.query(statement2);
+            const result2: DBQueryResult = await this.db.query(statement2);
             let roles: number[] = [];
-            if (rows2.length > 0) {
-                roles = rows2.map((row: RowDataPacket) => row['id']);
+            if (result2.rows.length > 0) {
+                roles = result2.rows.map((row: RowDataPacket) => row.id);
             }
             return {
-                id: rows[0]['id'],
-                name: rows[0]['username'],
-                createdOn: rows[0]['created_on'],
-                lastLogin: rows[0]['last_login'],
-                power: rows[0]['power'],
+                id: result.rows[0]['id'],
+                name: result.rows[0]['username'],
+                createdOn: result.rows[0]['created_on'],
+                lastLogin: result.rows[0]['last_login'],
+                power: result.rows[0]['power'],
                 roles: roles
             }
         } else {
@@ -208,18 +209,18 @@ export class AuthUtil {
         let power: number = 0;
         let roles: number[] = [0];
         if (userId) {
-            const rows: RowDataPacket[] = await this.db.query(
+            const result: DBQueryResult = await this.db.query(
                 `SELECT auth_user_role.role_id as id, auth_role.power as power
                     FROM auth_user_role 
                     JOIN auth_user ON auth_user.id = auth_user_role.user_id
                     JOIN auth_role ON auth_role.id = auth_user_role.role_id
                     WHERE auth_user.id = ${userId};`);
-            rows.forEach(row => {
+            result.rows.forEach(row => {
                 if (row.power > power) {
                     power = row.power;
                 }
             });
-            roles = roles.concat(rows.map(row => row.id));
+            roles = roles.concat(result.rows.map(row => row.id));
         }
         return {power: power, roles: roles};
     }
@@ -233,10 +234,10 @@ export class AuthUtil {
             const payload: IJWTPayloadModel = await jwt.verify(token, config.jwtsecret);
 
             let statement: string = `SELECT valid FROM auth_token WHERE token='${token}';`;
-            const rows: RowDataPacket[] = await this.db.query(statement);
-            if (rows.length === 0) {
+            const result: DBQueryResult = await this.db.query(statement);
+            if (result.rows.length === 0) {
                 return undefined;
-            } else if (rows[0].valid === 0) {
+            } else if (result.rows[0].valid === 0) {
                 return undefined;
             }
             return payload.userId;
@@ -309,9 +310,9 @@ export class AuthUtil {
      * Initialize the routePermissions map
      */
     public static async initRoutePermissions() {
-        let rows: RowDataPacket[] = [];
+        let rows: any[] = [];
         try {
-            rows = await this.db.query('SELECT name, id FROM auth_role;');
+            rows = (await this.db.query('SELECT name, id FROM auth_role;')).rows;
         } catch (e) {
             this.logger.error(e, 'initRoutePermissions');
         }

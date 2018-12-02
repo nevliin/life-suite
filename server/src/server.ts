@@ -10,6 +10,8 @@ import {LoggingUtil} from "./utils/logging/logging.util";
 import {DbUtil} from "./utils/db/db.util";
 import {Singletons} from "./core/singletons";
 import {AuthUtil} from "./utils/auth/auth.util";
+import {MySqlUtil} from "./utils/db/mysql.util";
+import {PgSqlUtil} from "./utils/db/pgsql.util";
 
 
 /**
@@ -22,7 +24,8 @@ export class Server {
     public app: express.Application;
 
     private loggingUtil: LoggingUtil;
-    private dbconnection: DbUtil;
+    private mySqlConnection: DbUtil;
+    private pgSqlConnection: DbUtil;
 
     /**
      * Bootstrap the application.
@@ -59,7 +62,8 @@ export class Server {
 
     public singletons()  {
         this.loggingUtil = new LoggingUtil();
-        this.dbconnection = new DbUtil();
+        this.mySqlConnection = new MySqlUtil();
+        this.mySqlConnection = new PgSqlUtil();
     }
 
     /**

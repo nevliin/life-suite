@@ -1,17 +1,18 @@
 import {OkPacket, RowDataPacket} from "mysql";
-import {DbUtil} from "../../utils/db/db.util";
+import {DBQueryResult, DbUtil} from "../../utils/db/db.util";
 import {AccountTransactionsRequest, AllTransactionsAmountRequest, CategoryTotalRequest} from "./fin.model";
 import {AccountModel} from "../../models/fin/account.model";
 import {TransactionModel} from "../../models/fin/transaction.model";
 import {ErrorCodeUtil} from "../../utils/error-code/error-code.util";
 import {isNullOrUndefined} from "../../utils/util";
+import {PgSqlUtil} from "../../utils/db/pgsql.util";
 
 export class FinService {
 
     db: DbUtil;
 
     constructor() {
-        this.db = new DbUtil();
+        this.db = new PgSqlUtil();
     }
 
     async getAccountTransactions(reqParams: AccountTransactionsRequest): Promise<TransactionModel[]> {
@@ -32,8 +33,8 @@ export class FinService {
             statement += `AND created_on < '${this.db.esc(reqParams.to)}'`;
         }
         statement += ';';
-        const result: RowDataPacket[] = await this.db.query(statement);
-        return result[0].amount;
+        const result: DBQueryResult = await this.db.query(statement);
+        return result.rows[0].amount;
 
     }
 
@@ -49,15 +50,14 @@ export class FinService {
         }
 
         let statement: string = `SELECT active FROM fin_category WHERE id = ${this.db.escNumber(categoryId)};`;
-        const result: RowDataPacket[] = await this.db.query(statement);
-        if(result.length === 1 && !isNullOrUndefined(result[0])) {
+        const result: DBQueryResult = await this.db.query(statement);
+        if(result.rows.length === 1 && !isNullOrUndefined(result.rows[0])) {
             const otherClauses: string = `AND valid = 1 AND created_on >= '${this.db.esc(from.toISOString().slice(0, 19).replace('T', ' '))}' AND created_on <= '${this.db.esc(to.toISOString().slice(0, 19).replace('T', ' '))}'`;
             const sum1: string = `SELECT sum(amount) FROM fin_transaction WHERE account IN (SELECT id FROM fin_account WHERE category_id = ${this.db.escNumber(categoryId)}) ${otherClauses}`;
             const sum2: string = `SELECT sum(amount) FROM fin_transaction WHERE contra_account IN (SELECT id FROM fin_account WHERE category_id = ${this.db.escNumber(categoryId)}) ${otherClauses}`;
-            let statement2: string = `SELECT COALESCE((${result[0].active ? sum1 : sum2}), 0) - COALESCE((${result[0].active ? sum2 : sum1}), 0) AS amount`;
-            console.log(statement2);
-            const result2: RowDataPacket[] = await this.db.query(statement2);
-            return result2[0].amount;
+            let statement2: string = `SELECT COALESCE((${result.rows[0].active ? sum1 : sum2}), 0) - COALESCE((${result.rows[0].active ? sum2 : sum1}), 0) AS amount`;
+            const result2: DBQueryResult = await this.db.query(statement2);
+            return result2.rows[0].amount;
         }
 
     }

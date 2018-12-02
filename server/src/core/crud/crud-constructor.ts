@@ -1,5 +1,5 @@
 import {IDBConfig} from "../../assets/config/server-config.model";
-import {DbUtil} from "../../utils/db/db.util";
+import {DBExecuteResult, DBQueryResult, DbUtil} from "../../utils/db/db.util";
 import {ICRUDModel} from "./crud.model";
 import {Logger, LoggingUtil} from "../../utils/logging/logging.util";
 import {ErrorCodeUtil} from "../../utils/error-code/error-code.util";
@@ -7,6 +7,8 @@ import {NextFunction, Request, Response, Router} from "express";
 import {OkPacket, RowDataPacket} from "mysql";
 import {isNullOrUndefined} from "../../utils/util";
 import {CRUDListOptions} from "./crud-list-options";
+import {MySqlUtil} from "../../utils/db/mysql.util";
+import {PgSqlUtil} from "../../utils/db/pgsql.util";
 
 const express = require('express');
 
@@ -57,15 +59,30 @@ export class CRUDConstructor<T extends ICRUDModel, > {
             // Initialize some properties with the possibly provided values
             this.autoIncrementId = (!isNullOrUndefined(options.autoIncrementId)) ? options.autoIncrementId : true;
             this.softDelete = options.softDelete;
-            this.db = new DbUtil(options.dbconfig);
+            this.db = this.mapDbTypeToClass(options.dbType, options.dbconfig);
             this.fieldMappings = this.completeFieldMappings(model, options.fieldMappings);
             this.autoFilledFields = (options.autoFilledFields) ? options.autoFilledFields : [];
             this.validFieldMapping = (options.validFieldMapping) ? options.validFieldMapping : 'valid';
         } else {
             // Initialize some necessary fields with no value from options
-            this.db = new DbUtil();
+            this.db = this.mapDbTypeToClass();
             this.fieldMappings = this.completeFieldMappings(model);
         }
+    }
+
+    mapDbTypeToClass(type?: DBType, dbconfig?: IDBConfig): DbUtil {
+        let result: DbUtil;
+        switch(type) {
+            case DBType.MYSQL:
+                result = new MySqlUtil(dbconfig);
+                break;
+            case DBType.PGSQL:
+                result = new PgSqlUtil(dbconfig);
+                break;
+            default:
+                result = new MySqlUtil(dbconfig);
+        }
+        return result;
     }
 
     /**
@@ -146,7 +163,7 @@ export class CRUDConstructor<T extends ICRUDModel, > {
         statement += ');';
 
         try {
-            const result: OkPacket = await this.db.execute(statement);
+            const result: DBExecuteResult = await this.db.execute(statement);
             if (this.autoIncrementId) {
                 return result.insertId;
             } else {
@@ -177,18 +194,18 @@ export class CRUDConstructor<T extends ICRUDModel, > {
 
         statement += ';';
 
-        const rows: RowDataPacket[] = await this.db.query(statement);
+        const result: DBQueryResult = await this.db.query(statement);
 
-        if (rows[0]) {
+        if (result.rows[0]) {
             // Assign fields of the result to an empty object and return it
             const result: any = {};
             properties.forEach((property, index) => {
                 if (this.fieldMappings.get(property).type === DBFieldType.BOOLEAN) {
-                    result[property] = Boolean(rows[0][fieldsArray[index]]);
+                    result[property] = Boolean(result.rows[0][fieldsArray[index]]);
                 } else if (this.fieldMappings.get(property).type === DBFieldType.TIMESTAMP) {
-                    result[property] = new Date(Date.parse(rows[0][fieldsArray[index]]));
+                    result[property] = new Date(Date.parse(result.rows[0][fieldsArray[index]]));
                 } else {
-                    result[property] = rows[0][fieldsArray[index]];
+                    result[property] = result.rows[0][fieldsArray[index]];
                 }
             });
             // @ts-ignore
@@ -238,10 +255,10 @@ export class CRUDConstructor<T extends ICRUDModel, > {
         }
         statement += `;`;
 
-        const rows: RowDataPacket[] = await this.db.query(statement);
+        const queryResult: DBQueryResult = await this.db.query(statement);
 
         let result: T[] = [];
-        rows.forEach(row => {
+        queryResult.rows.forEach(row => {
             if (row) {
                 const rowResult: any = {};
                 properties.forEach((property, index) => {
@@ -305,7 +322,7 @@ export class CRUDConstructor<T extends ICRUDModel, > {
         statement += ` WHERE ${this.fieldMappings.get('id').name} = ${this.db.escNumber((oldId) ? oldId : data.id)};`;
         console.log(statement);
 
-        const result: OkPacket = await this.db.execute(statement);
+        const result: DBExecuteResult = await this.db.execute(statement);
         if (result.affectedRows != 1) {
             ErrorCodeUtil.findErrorCodeAndThrow('UPDATED_FAILED');
         }
@@ -342,18 +359,18 @@ export class CRUDConstructor<T extends ICRUDModel, > {
 
         statement += ';';
 
-        const rows: RowDataPacket[] = await this.db.query(statement);
+        const result: DBQueryResult = await this.db.query(statement);
 
-        if (rows[0]) {
+        if (result.rows[0]) {
             // Assign fields of the result to an empty object and return it
             const result: any = {};
             properties.forEach((property, index) => {
                 if (this.fieldMappings.get(property).type === DBFieldType.BOOLEAN) {
-                    result[property] = Boolean(rows[0][fieldsArray[index]]);
+                    result[property] = Boolean(result.rows[0][fieldsArray[index]]);
                 } else if (this.fieldMappings.get(property).type === DBFieldType.TIMESTAMP) {
-                    result[property] = new Date(Date.parse(rows[0][fieldsArray[index]]));
+                    result[property] = new Date(Date.parse(result.rows[0][fieldsArray[index]]));
                 } else {
-                    result[property] = rows[0][fieldsArray[index]];
+                    result[property] = result.rows[0][fieldsArray[index]];
                 }
             });
             // @ts-ignore
@@ -472,10 +489,16 @@ enum DBFieldType {
  * Options for customizing the behaviour of the class
  */
 interface CRUDOptions {
+    dbType?: DBType;
     autoIncrementId?: boolean;
     softDelete?: boolean;
     autoFilledFields?: string[];
     dbconfig?: IDBConfig;
     fieldMappings?: Map<string, string>;
     validFieldMapping?: string;
+}
+
+enum DBType {
+    PGSQL = 'PGSQL',
+    MYSQL = 'MYSQL'
 }
