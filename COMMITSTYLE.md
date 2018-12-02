@@ -31,6 +31,7 @@ Must be one of the following:
 * **test**: Adding missing tests
 * **chore**: Changes to the build process or auxiliary tools and libraries such as documentation
   generation
+* **minor**: For getting the workspace clean of uncommitted changes to random files (no subject and scope needed.)
 
 ### Scope
 

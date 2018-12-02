@@ -5,11 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e1fb510a-f0b7-420f-b0c1-da12d8e0f58c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/COMMITSTYLE.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/COMMITSTYLE.md" beforeDir="false" afterPath="$PROJECT_DIR$/COMMITSTYLE.md" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -63,7 +59,7 @@
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="85">
@@ -90,12 +86,12 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/COMMITSTYLE.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="221">
-                <caret line="17" column="29" selection-start-line="17" selection-start-column="29" selection-end-line="17" selection-end-column="29" />
+              <first_editor relative-caret-position="425">
+                <caret line="33" column="95" selection-start-line="33" selection-start-column="95" selection-end-line="33" selection-end-column="95" />
               </first_editor>
               <second_editor />
             </state>
@@ -227,8 +223,8 @@
         <option value="$PROJECT_DIR$/server/sql/fin/setup.sql" />
         <option value="$PROJECT_DIR$/server/sql/fin/setup-pg.sql" />
         <option value="$PROJECT_DIR$/server/package.json" />
-        <option value="$PROJECT_DIR$/COMMITSTYLE.md" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/COMMITSTYLE.md" />
       </list>
     </option>
   </component>
@@ -456,14 +452,7 @@
       <workItem from="1543524121186" duration="4827000" />
       <workItem from="1543530644882" duration="604000" />
       <workItem from="1543604107251" duration="1200000" />
-      <workItem from="1543746478051" duration="1668000" />
-    </task>
-    <task id="LOCAL-00104" summary="Minor changes">
-      <created>1541116567973</created>
-      <option name="number" value="00104" />
-      <option name="presentableId" value="LOCAL-00104" />
-      <option name="project" value="LOCAL" />
-      <updated>1541116567973</updated>
+      <workItem from="1543746478051" duration="1802000" />
     </task>
     <task id="LOCAL-00105" summary="Added MatAutocompleteModule">
       <created>1541178528965</created>
@@ -801,11 +790,18 @@
       <option name="project" value="LOCAL" />
       <updated>1543747584631</updated>
     </task>
-    <option name="localTasksCounter" value="153" />
+    <task id="LOCAL-00153" summary="refactor(git): added kontenplan and initialdata.sql to gitignore">
+      <created>1543748299857</created>
+      <option name="number" value="00153" />
+      <option name="presentableId" value="LOCAL-00153" />
+      <option name="project" value="LOCAL" />
+      <updated>1543748299857</updated>
+    </task>
+    <option name="localTasksCounter" value="154" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="408461000" />
+    <option name="totallyTimeSpent" value="408595000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -820,7 +816,7 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1743941" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1743941" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info id="DB Browser" order="3" />
@@ -833,10 +829,10 @@
       <window_info anchor="bottom" id="Docker" order="6" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.49841937" weight="0.32925472" />
       <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49420443" weight="0.32777777" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5237092" side_tool="true" visible="true" weight="0.23333333" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.51211804" side_tool="true" visible="true" weight="0.3188889" />
       <window_info anchor="bottom" id="DB Execution Console" order="10" />
-      <window_info active="true" anchor="bottom" id="File Transfer" order="11" sideWeight="0.4889357" visible="true" />
-      <window_info anchor="bottom" id="Run" order="12" sideWeight="0.47629082" visible="true" weight="0.23333333" />
+      <window_info active="true" anchor="bottom" id="File Transfer" order="11" sideWeight="0.487882" visible="true" weight="0.3188889" />
+      <window_info anchor="bottom" id="Run" order="12" sideWeight="0.47629082" weight="0.23333333" />
       <window_info anchor="bottom" id="TypeScript" order="13" sideWeight="0.4915701" weight="0.21777777" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -878,7 +874,6 @@
       <path value="$PROJECT_DIR$/client/playground-client" />
       <path value="$PROJECT_DIR$/server" />
     </ignored-roots>
-    <MESSAGE value="Added fin constraint at /fin/constraint and in db" />
     <MESSAGE value="refactor(fin-recent): improved mobile display by hiding date" />
     <MESSAGE value="style(fin-recent): improved mobile view" />
     <MESSAGE value="refactor(fin-recent): improved mobile display and responsiveness" />
@@ -903,7 +898,8 @@
     <MESSAGE value="feat(crud-constructor): allow updating id on route /update" />
     <MESSAGE value="Updated .gitignore, made various changes" />
     <MESSAGE value="minor" />
-    <option name="LAST_COMMIT_MESSAGE" value="minor" />
+    <MESSAGE value="refactor(git): added kontenplan and initialdata.sql to gitignore" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor(git): added kontenplan and initialdata.sql to gitignore" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1223,20 +1219,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/COMMITSTYLE.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="221">
-            <caret line="17" column="29" selection-start-line="17" selection-start-column="29" selection-end-line="17" selection-end-column="29" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
           <caret line="5" column="16" lean-forward="true" selection-start-line="5" selection-start-column="16" selection-end-line="5" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/COMMITSTYLE.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="425">
+            <caret line="33" column="95" selection-start-line="33" selection-start-column="95" selection-end-line="33" selection-end-column="95" />
+          </first_editor>
+          <second_editor />
         </state>
       </provider>
     </entry>
