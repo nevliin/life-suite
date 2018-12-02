@@ -4,25 +4,12 @@
     <bookmark url="file://$PROJECT_DIR$/client/src/app/fin/fin-accounts/fin-accounts.component.html" line="71" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e1fb510a-f0b7-420f-b0c1-da12d8e0f58c" name="Default Changelist" comment="refactor(">
-      <change afterPath="$PROJECT_DIR$/server/sql/fin/setup-pg.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
+    <list default="true" id="e1fb510a-f0b7-420f-b0c1-da12d8e0f58c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/COMMITSTYLE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/proxy.conf.dev.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/proxy.conf.dev.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/app/app.routing.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/app.routing.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/app/core/auth/auth-login/auth-login.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/core/auth/auth-login/auth-login.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/app/dashboard/tile-container/tile-container.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/dashboard/tile-container/tile-container.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/app/dashboard/tile-fin-figures/tile-fin-figures.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/dashboard/tile-fin-figures/tile-fin-figures.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/app/fin/fin-account.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/fin/fin-account.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/app/fin/fin-accounts/fin-account-add/fin-account-add.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/fin/fin-accounts/fin-account-add/fin-account-add.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/app/fin/fin-accounts/fin-accounts.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/fin/fin-accounts/fin-accounts.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/app/fin/fin.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/fin/fin.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/sql/fin/setup.sql" beforeDir="false" afterPath="$PROJECT_DIR$/server/sql/fin/setup-my.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/models/fin/account.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/models/fin/account.model.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/routes/fin-routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/routes/fin-routes.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/services/fin/fin.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/services/fin/fin.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package.json" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -54,23 +41,6 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/src/app/fin/fin-accounts/fin-account-add/fin-account-add.component.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1088">
-              <caret line="70" column="52" selection-start-line="70" selection-start-column="52" selection-end-line="70" selection-end-column="52" />
-              <folding>
-                <element signature="e#0#56#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/.editorconfig">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server/sql/fin/setup-my.sql">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="187">
@@ -83,7 +53,7 @@
         <entry file="file://$PROJECT_DIR$/server/sql/fin/setup-pg.sql">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="374">
-              <caret line="54" lean-forward="true" selection-start-line="54" selection-end-line="54" />
+              <caret line="54" selection-start-line="54" selection-end-line="54" />
             </state>
           </provider>
         </entry>
@@ -96,20 +66,38 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" selection-start-line="4" selection-end-line="4" />
+            <state relative-caret-position="85">
+              <caret line="5" column="16" lean-forward="true" selection-start-line="5" selection-start-column="16" selection-end-line="5" selection-end-column="16" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server/src/core/crud/crud-constructor.ts">
+        <entry file="file://$PROJECT_DIR$/server/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4641">
-              <caret line="281" selection-start-line="281" selection-end-line="281" />
-              <folding>
-                <element signature="e#0#66#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="441">
+              <caret line="39" column="23" selection-start-line="39" selection-start-column="23" selection-end-line="39" selection-end-column="23" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/server/package-lock.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="271">
+              <caret line="3189" column="21" lean-forward="true" selection-start-line="3189" selection-start-column="21" selection-end-line="3189" selection-end-column="21" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/COMMITSTYLE.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="221">
+                <caret line="17" column="29" selection-start-line="17" selection-start-column="29" selection-end-line="17" selection-end-column="29" />
+              </first_editor>
+              <second_editor />
             </state>
           </provider>
         </entry>
@@ -160,6 +148,11 @@
       <find>findErr</find>
       <find>update</find>
       <find>AUTO_INCREMENT</find>
+      <find>flatmap-stream</find>
+      <find>event-stream</find>
+      <find>event-strea</find>
+      <find>ps-tree</find>
+      <find>pstree.remy</find>
     </findStrings>
     <replaceStrings>
       <replace>inv_target_entry</replace>
@@ -185,9 +178,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/client/src/app/inv/inv-comparison/inv-comparison.component.ts" />
-        <option value="$PROJECT_DIR$/client/src/app/inv/inv-add/inv-add.component.ts" />
-        <option value="$PROJECT_DIR$/client/src/app/inv/inv.service.ts" />
         <option value="$PROJECT_DIR$/client/src/app/core/alert-dialog/alert-dialog.module.ts" />
         <option value="$PROJECT_DIR$/client/src/app/core/alert-dialog/alert-dialog-confirm/alert-dialog-confirm.component.html" />
         <option value="$PROJECT_DIR$/client/src/app/home/ad-tile.ts" />
@@ -236,6 +226,9 @@
         <option value="$PROJECT_DIR$/server/src/core/crud/crud-constructor.ts" />
         <option value="$PROJECT_DIR$/server/sql/fin/setup.sql" />
         <option value="$PROJECT_DIR$/server/sql/fin/setup-pg.sql" />
+        <option value="$PROJECT_DIR$/server/package.json" />
+        <option value="$PROJECT_DIR$/COMMITSTYLE.md" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -263,124 +256,6 @@
             <path>
               <item name="life-suite" type="b2602c69:ProjectViewProjectNode" />
               <item name="life-suite" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="life-suite" type="b2602c69:ProjectViewProjectNode" />
-              <item name="life-suite" type="462c0819:PsiDirectoryNode" />
-              <item name="build" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="life-suite" type="b2602c69:ProjectViewProjectNode" />
-              <item name="life-suite" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="life-suite" type="b2602c69:ProjectViewProjectNode" />
-              <item name="life-suite" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="life-suite" type="b2602c69:ProjectViewProjectNode" />
-              <item name="life-suite" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="life-suite" type="b2602c69:ProjectViewProjectNode" />
-              <item name="life-suite" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="fin" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="life-suite" type="b2602c69:ProjectViewProjectNode" />
-              <item name="life-suite" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="fin" type="462c0819:PsiDirectoryNode" />
-              <item name="fin-accounts" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="life-suite" type="b2602c69:ProjectViewProjectNode" />
-              <item name="life-suite" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="fin" type="462c0819:PsiDirectoryNode" />
-              <item name="fin-accounts" type="462c0819:PsiDirectoryNode" />
-              <item name="fin-account-add" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="life-suite" type="b2602c69:ProjectViewProjectNode" />
-              <item name="life-suite" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="life-suite" type="b2602c69:ProjectViewProjectNode" />
-              <item name="life-suite" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-              <item name="sql" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="life-suite" type="b2602c69:ProjectViewProjectNode" />
-              <item name="life-suite" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-              <item name="sql" type="462c0819:PsiDirectoryNode" />
-              <item name="fin" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="life-suite" type="b2602c69:ProjectViewProjectNode" />
-              <item name="life-suite" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="life-suite" type="b2602c69:ProjectViewProjectNode" />
-              <item name="life-suite" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="core" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="life-suite" type="b2602c69:ProjectViewProjectNode" />
-              <item name="life-suite" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="core" type="462c0819:PsiDirectoryNode" />
-              <item name="crud" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="life-suite" type="b2602c69:ProjectViewProjectNode" />
-              <item name="life-suite" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="models" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="life-suite" type="b2602c69:ProjectViewProjectNode" />
-              <item name="life-suite" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="routes" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="life-suite" type="b2602c69:ProjectViewProjectNode" />
-              <item name="life-suite" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="services" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="life-suite" type="b2602c69:ProjectViewProjectNode" />
-              <item name="life-suite" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="services" type="462c0819:PsiDirectoryNode" />
-              <item name="fin" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -581,14 +456,7 @@
       <workItem from="1543524121186" duration="4827000" />
       <workItem from="1543530644882" duration="604000" />
       <workItem from="1543604107251" duration="1200000" />
-      <workItem from="1543746478051" duration="832000" />
-    </task>
-    <task id="LOCAL-00103" summary="Remade sidenav with angular material">
-      <created>1541116541292</created>
-      <option name="number" value="00103" />
-      <option name="presentableId" value="LOCAL-00103" />
-      <option name="project" value="LOCAL" />
-      <updated>1541116541292</updated>
+      <workItem from="1543746478051" duration="1668000" />
     </task>
     <task id="LOCAL-00104" summary="Minor changes">
       <created>1541116567973</created>
@@ -926,11 +794,18 @@
       <option name="project" value="LOCAL" />
       <updated>1543530522822</updated>
     </task>
-    <option name="localTasksCounter" value="152" />
+    <task id="LOCAL-00152" summary="minor">
+      <created>1543747584630</created>
+      <option name="number" value="00152" />
+      <option name="presentableId" value="LOCAL-00152" />
+      <option name="project" value="LOCAL" />
+      <updated>1543747584631</updated>
+    </task>
+    <option name="localTasksCounter" value="153" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="407625000" />
+    <option name="totallyTimeSpent" value="408461000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -958,10 +833,10 @@
       <window_info anchor="bottom" id="Docker" order="6" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.49841937" weight="0.32925472" />
       <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49420443" weight="0.32777777" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5110643" side_tool="true" visible="true" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5237092" side_tool="true" visible="true" weight="0.23333333" />
       <window_info anchor="bottom" id="DB Execution Console" order="10" />
       <window_info active="true" anchor="bottom" id="File Transfer" order="11" sideWeight="0.4889357" visible="true" />
-      <window_info anchor="bottom" id="Run" order="12" sideWeight="0.4768177" weight="0.23333333" />
+      <window_info anchor="bottom" id="Run" order="12" sideWeight="0.47629082" visible="true" weight="0.23333333" />
       <window_info anchor="bottom" id="TypeScript" order="13" sideWeight="0.4915701" weight="0.21777777" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -1003,7 +878,6 @@
       <path value="$PROJECT_DIR$/client/playground-client" />
       <path value="$PROJECT_DIR$/server" />
     </ignored-roots>
-    <MESSAGE value="feat(fin-accounts): added button with confirmation for deleting categories" />
     <MESSAGE value="Added fin constraint at /fin/constraint and in db" />
     <MESSAGE value="refactor(fin-recent): improved mobile display by hiding date" />
     <MESSAGE value="style(fin-recent): improved mobile view" />
@@ -1025,10 +899,11 @@
     <MESSAGE value="feat(home-dashboard): added loading spinner to tiles" />
     <MESSAGE value="refactor(dashboard): renamed home to dashboard and various components, directives and interfaces for clarity" />
     <MESSAGE value="commit" />
-    <MESSAGE value="minor" />
     <MESSAGE value="Added cascading of account id updates" />
     <MESSAGE value="feat(crud-constructor): allow updating id on route /update" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(crud-constructor): allow updating id on route /update" />
+    <MESSAGE value="Updated .gitignore, made various changes" />
+    <MESSAGE value="minor" />
+    <option name="LAST_COMMIT_MESSAGE" value="minor" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1046,9 +921,6 @@
     <select />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/client/src/app/home/tile-container/on-tile-loading-done.ts" />
-    <entry file="file://$PROJECT_DIR$/client/src/app/home/tile-fin-figures/tile-fin-figures.component.html" />
-    <entry file="file://$PROJECT_DIR$/client/src/app/home/tile-fin-figures/tile-fin-figures.component.ts" />
     <entry file="file://$PROJECT_DIR$/client/src/app/home/tile-inv-expirations/tile-inv-expirations.component.ts" />
     <entry file="file://$PROJECT_DIR$/client/src/app/home/tile-container/tile.directive.ts" />
     <entry file="file://$PROJECT_DIR$/client/src/app/home/tile-container/tile-container.component.html" />
@@ -1330,17 +1202,41 @@
     <entry file="file://$PROJECT_DIR$/server/sql/fin/setup-pg.sql">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
-          <caret line="54" lean-forward="true" selection-start-line="54" selection-end-line="54" />
+          <caret line="54" selection-start-line="54" selection-end-line="54" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/server/tsconfig.json">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/server/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="441">
+          <caret line="39" column="23" selection-start-line="39" selection-start-column="23" selection-end-line="39" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/package-lock.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="271">
+          <caret line="3189" column="21" lean-forward="true" selection-start-line="3189" selection-start-column="21" selection-end-line="3189" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/COMMITSTYLE.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="221">
+            <caret line="17" column="29" selection-start-line="17" selection-start-column="29" selection-end-line="17" selection-end-column="29" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" selection-start-line="4" selection-end-line="4" />
+        <state relative-caret-position="85">
+          <caret line="5" column="16" lean-forward="true" selection-start-line="5" selection-start-column="16" selection-end-line="5" selection-end-column="16" />
         </state>
       </provider>
     </entry>
