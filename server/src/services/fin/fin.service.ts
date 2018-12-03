@@ -1,7 +1,5 @@
-import {OkPacket, RowDataPacket} from "mysql";
 import {DBQueryResult, DbUtil} from "../../utils/db/db.util";
 import {AccountTransactionsRequest, AllTransactionsAmountRequest, CategoryTotalRequest} from "./fin.model";
-import {AccountModel} from "../../models/fin/account.model";
 import {TransactionModel} from "../../models/fin/transaction.model";
 import {ErrorCodeUtil} from "../../utils/error-code/error-code.util";
 import {isNullOrUndefined} from "../../utils/util";

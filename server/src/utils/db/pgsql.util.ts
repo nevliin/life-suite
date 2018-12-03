@@ -30,10 +30,10 @@ export class PgSqlUtil extends DbUtil {
             });
         } else {
             this.pool = new Pool({
-                host: config.db.host,
-                user: config.db.user,
-                password: config.db.password,
-                database: config.db.database,
+                host: config.pgsqldb.host,
+                user: config.pgsqldb.user,
+                password: config.pgsqldb.password,
+                database: config.pgsqldb.database,
                 port: 5432
             });
         }

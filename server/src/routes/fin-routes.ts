@@ -1,6 +1,6 @@
 import {NextFunction, Request, Response, Router} from "express";
 import {FinService} from "../services/fin/fin.service";
-import {CRUDConstructor} from "../core/crud/crud-constructor";
+import {CRUDConstructor, DBType} from "../core/crud/crud-constructor";
 import {CategoryModel} from "../models/fin/category.model";
 import {AccountModel} from "../models/fin/account.model";
 import {TransactionModel} from "../models/fin/transaction.model";
@@ -64,21 +64,24 @@ export const init = (): Router => {
     const accountModelCRUD: CRUDConstructor<AccountModel> = new CRUDConstructor(new AccountModel(), 'fin_account', {
         softDelete: true,
         autoFilledFields: ['created_on'],
-        autoIncrementId: false
+        autoIncrementId: false,
+        dbType: DBType.PGSQL
     });
     finRouter.use('/account', accountModelCRUD.getRouter());
 
     const transactionModelCRUD: CRUDConstructor<TransactionModel> = new CRUDConstructor(new TransactionModel(), 'fin_transaction', {
         softDelete: true,
         autoFilledFields: ['executed_on'],
-        autoIncrementId: true
+        autoIncrementId: true,
+        dbType: DBType.PGSQL
     });
     finRouter.use('/transaction', transactionModelCRUD.getRouter());
 
     const constraintModelCRUD: CRUDConstructor<ConstraintModel> = new CRUDConstructor(new ConstraintModel(), 'fin_constraint', {
         softDelete: true,
         autoFilledFields: ['created_on'],
-        autoIncrementId: true
+        autoIncrementId: true,
+        dbType: DBType.PGSQL
     });
     finRouter.use('/constraint', constraintModelCRUD.getRouter());
 

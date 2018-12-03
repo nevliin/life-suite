@@ -4,7 +4,6 @@ import {ICRUDModel} from "./crud.model";
 import {Logger, LoggingUtil} from "../../utils/logging/logging.util";
 import {ErrorCodeUtil} from "../../utils/error-code/error-code.util";
 import {NextFunction, Request, Response, Router} from "express";
-import {OkPacket, RowDataPacket} from "mysql";
 import {isNullOrUndefined} from "../../utils/util";
 import {CRUDListOptions} from "./crud-list-options";
 import {MySqlUtil} from "../../utils/db/mysql.util";
@@ -59,7 +58,7 @@ export class CRUDConstructor<T extends ICRUDModel, > {
             // Initialize some properties with the possibly provided values
             this.autoIncrementId = (!isNullOrUndefined(options.autoIncrementId)) ? options.autoIncrementId : true;
             this.softDelete = options.softDelete;
-            this.db = this.mapDbTypeToClass(options.dbType, options.dbconfig);
+            this.db = this.mapDbTypeToClass(options.dbType, options.dbConfig);
             this.fieldMappings = this.completeFieldMappings(model, options.fieldMappings);
             this.autoFilledFields = (options.autoFilledFields) ? options.autoFilledFields : [];
             this.validFieldMapping = (options.validFieldMapping) ? options.validFieldMapping : 'valid';
@@ -489,16 +488,25 @@ enum DBFieldType {
  * Options for customizing the behaviour of the class
  */
 interface CRUDOptions {
+    // DB to connect to with dbconfig, defaults to MySQL
     dbType?: DBType;
+    // config of the DB to connect to
+    dbConfig?: IDBConfig;
+
+    // the field 'id' is auto incremented
     autoIncrementId?: boolean;
-    softDelete?: boolean;
+    // list of names of fields that are auto-filled by the db and should be omitted if empty
     autoFilledFields?: string[];
-    dbconfig?: IDBConfig;
+    // mapping of object fields to DB table fields, default is the same name for both
     fieldMappings?: Map<string, string>;
+
+    // remap the field 'valid' for soft-deleting to a different DB table field
     validFieldMapping?: string;
+    // objects should be soft-deleted by setting 'valid' to 0
+    softDelete?: boolean;
 }
 
-enum DBType {
+export enum DBType {
     PGSQL = 'PGSQL',
     MYSQL = 'MYSQL'
 }

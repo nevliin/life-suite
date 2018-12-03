@@ -31,10 +31,10 @@ export class MySqlUtil extends DbUtil {
             });
         } else {
             this.pool = mysql.createPool({
-                host: config.db.host,
-                user: config.db.user,
-                password: config.db.password,
-                database: config.db.database,
+                host: config.mysqldb.host,
+                user: config.mysqldb.user,
+                password: config.mysqldb.password,
+                database: config.mysqldb.database,
                 port: 3306
             });
         }

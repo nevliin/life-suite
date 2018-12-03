@@ -1,6 +1,7 @@
 export interface IServerConfig {
     jwtsecret: string;
-    db: IDBConfig;
+    mysqldb: IDBConfig;
+    pgsqldb: IDBConfig;
     auth: IDBConfig;
 }
 
