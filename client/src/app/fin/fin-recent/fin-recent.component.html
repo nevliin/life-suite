@@ -16,6 +16,22 @@
                 <div class="transaction-list-child optional">
                     {{transaction.created_on | date:'yyyy-MM-dd'}}
                 </div>
+                <div class="transaction-list-child">
+                    <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu"
+                            aria-label="Toggle menu" style="margin-left: 20px;">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu" xPosition="before">
+                        <button mat-menu-item (click)="deleteTransaction(transaction.id).then()">
+                            <mat-icon>remove</mat-icon>
+                            Remove
+                        </button>
+                        <button mat-menu-item (click)="openTransaction(transaction.id).then()">
+                            <mat-icon>edit</mat-icon>
+                            Open
+                        </button>
+                    </mat-menu>
+                </div>
             </ng-container>
         </div>
     </mat-card-content>

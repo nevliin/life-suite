@@ -1,6 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FinService} from "../fin.service";
 import {FinTransaction} from "../fin-transaction";
+import {MessageService} from "primeng/api";
+import {AlertDialogService} from "../../core/alert-dialog/alert-dialog.service";
+import {ErrorHandlingService} from "../../core/error-handling/error-handling.service";
 
 @Component({
     selector: 'app-fin-recent',
@@ -12,7 +15,8 @@ export class FinRecentComponent implements OnInit {
     recentTransactions: FinTransactionDisplay[] = [];
 
     constructor(
-        readonly finService: FinService
+        readonly finService: FinService,
+        readonly errorHandlingService: ErrorHandlingService
     ) {
     }
 
@@ -25,6 +29,23 @@ export class FinRecentComponent implements OnInit {
                 (await this.finService.getAccountById(transaction.contra_account)).name)
             );
         }
+        this.recentTransactions.sort((a: FinTransactionDisplay, b: FinTransactionDisplay) => b.created_on.getTime() - a.created_on.getTime());
+    }
+
+    async deleteTransaction(id: number) {
+        try {
+            await this.finService.deleteTransaction(id);
+            const index: number = this.recentTransactions.findIndex((value: FinTransactionDisplay) => value.id === id);
+            if(index != -1) {
+                this.recentTransactions.splice(index, 1);
+            }
+        } catch (e) {
+            this.errorHandlingService.handleHTTPError(e);
+        }
+    }
+
+    async openTransaction(id: number) {
+
     }
 
     async openTransactionDetails(transactionId: number) {

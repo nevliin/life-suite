@@ -1,7 +1,7 @@
 .list-container {
     display: grid;
     max-width: 1200px;
-    grid-template-columns: 35% 5% 35% 10% 15%;
+    grid-template-columns: 32.5% 5% 32.5% 10% 15% 5%;
     grid-row-gap: 15px;
     font-size: 120%;
 }
@@ -42,7 +42,7 @@
 
     .list-container {
         display: grid;
-        grid-template-columns: 35% 5% 35% 25%;
+        grid-template-columns: 30% 5% 30% 25% 10%;
         grid-row-gap: 10px;
         font-size: 100%;
     }

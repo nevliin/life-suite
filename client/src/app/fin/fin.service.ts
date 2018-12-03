@@ -128,6 +128,13 @@ export class FinService {
         })) as any).id;
     }
 
+    async deleteTransaction(transactionId: number): Promise<number> {
+        return ((await this.http.delete(API_ROOT + 'transaction/delete/' + transactionId).toPromise().catch(e => {
+            console.log(e);
+            throw e;
+        })) as any).id;
+    }
+
     async createAccount(account: FinAccount): Promise<number> {
         return ((await this.http.post(API_ROOT + 'account/create/', account).pipe(tap(() => this.getAccountsById(true))).toPromise().catch(e => {
             console.log(e);
