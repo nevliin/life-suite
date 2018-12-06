@@ -8,17 +8,16 @@ WITH RECURSIVE
        FROM fin_account e
               INNER JOIN accounts s ON s.id = e.parent_account
      ),
-     constants (account_id, min_date, max_date) AS (
-       VALUES (4000,
-               to_timestamp('2018-12-01 00:00:00.000', 'YYYY-MM-DD HH24:MI:SS.MS'),
-               to_timestamp('2019-01-01 00:00:00.000', 'YYYY-MM-DD HH24:MI:SS.MS'))
+     constants (account_id, interval_year) AS (
+       VALUES (1800,
+               date_trunc('year', to_timestamp('2018-06-01 00:00:00.000', 'YYYY-MM-DD HH24:MI:SS.MS')))
      )
 SELECT ((
           SELECT COALESCE(SUM(amount), 0) as balance
           FROM fin_transaction
           WHERE fin_transaction.valid = 1
-            AND fin_transaction.created_on > (SELECT min_date FROM constants)
-            AND fin_transaction.created_on < (SELECT max_date FROM constants)
+            AND fin_transaction.created_on > ((SELECT interval_year FROM constants) + interval '3 hours')
+            AND fin_transaction.created_on < ((SELECT interval_year FROM constants) + interval '1 year' - interval '3 hours')
             AND (CASE
                    WHEN (
                           SELECT active
@@ -36,8 +35,8 @@ SELECT ((
           SELECT COALESCE(SUM(amount), 0) as balance
           FROM fin_transaction
           WHERE fin_transaction.valid = 1
-            AND fin_transaction.created_on > (SELECT min_date FROM constants)
-            AND fin_transaction.created_on < (SELECT max_date FROM constants)
+            AND fin_transaction.created_on > ((SELECT interval_year FROM constants) + interval '3 hours')
+            AND fin_transaction.created_on < ((SELECT interval_year FROM constants) + interval '1 year' - interval '3 hours')
             AND (CASE
                    WHEN (
                           SELECT active

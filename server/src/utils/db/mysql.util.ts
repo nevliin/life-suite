@@ -50,8 +50,9 @@ export class MySqlUtil extends DbUtil {
                 if (err) {
                     this.logger.error(err, 'query');
                     reject(err);
+                } else {
+                    resolve(this.rowDataPacketToDBQueryResult(rows));
                 }
-                resolve(this.rowDataPacketToDBQueryResult(rows));
             });
         }));
     }
@@ -75,8 +76,9 @@ export class MySqlUtil extends DbUtil {
                 if (err) {
                     this.logger.error(err, 'execute');
                     reject(err);
+                } else {
+                    resolve(this.okPacketToDBExecuteResult(result));
                 }
-                resolve(this.okPacketToDBExecuteResult(result));
             });
         }));
     }

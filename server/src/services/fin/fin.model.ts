@@ -33,5 +33,10 @@ export class AllTransactionsAmountRequest {
     to?: string;
 }
 
+export class AccountBalanceRequest {
+    accountId: string;
+    year?: string;
+}
+
 
 

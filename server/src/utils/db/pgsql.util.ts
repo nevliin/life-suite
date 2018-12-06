@@ -37,6 +37,17 @@ export class PgSqlUtil extends DbUtil {
                 port: 5432
             });
         }
+        this.testConnection().then();
+    }
+
+    async testConnection() {
+        try {
+            const client = await this.pool.connect();
+            await client.query("SELECT NOW()");
+            client.release();
+        } catch (e) {
+            this.logger.warn('Connection to PostgreSQL DB failed because ' + e.message, 'testConnection');
+        }
     }
 
     /**
@@ -50,8 +61,9 @@ export class PgSqlUtil extends DbUtil {
                 if (err) {
                     this.logger.error(err, 'query');
                     reject(err);
+                } else {
+                    resolve(this.queryResultToDBQueryResult(result));
                 }
-                resolve(this.queryResultToDBQueryResult(result));
             });
         }));
     }
@@ -76,8 +88,9 @@ export class PgSqlUtil extends DbUtil {
                 if (err) {
                     this.logger.error(err, 'execute');
                     reject(err);
+                } else {
+                    resolve(this.queryResultToDBExecuteResult(result));
                 }
-                resolve(this.queryResultToDBExecuteResult(result));
             });
         }));
     }
@@ -86,7 +99,7 @@ export class PgSqlUtil extends DbUtil {
         return {
             affectedRows: result.rows.length,
             changedRows: result.rows.length,
-            insertId: result.rows[0].id
+            insertId: (result.rows[0]) ? result.rows[0].id : null
         }
     }
 

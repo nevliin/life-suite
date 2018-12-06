@@ -216,6 +216,7 @@ export class CRUDConstructor<T extends ICRUDModel, > {
 
     /**
      * List objects
+     * List objects
      * @returns Object with properties read from the DB table
      * @param options
      */
@@ -283,7 +284,6 @@ export class CRUDConstructor<T extends ICRUDModel, > {
      * @returns Object ID
      */
     public async update(data: T, oldId?: number): Promise<number> {
-        console.log(data); console.log(oldId);
         if(oldId === null || oldId === data.id) {
             oldId = undefined;
         }
@@ -319,7 +319,6 @@ export class CRUDConstructor<T extends ICRUDModel, > {
             }
         });
         statement += ` WHERE ${this.fieldMappings.get('id').name} = ${this.db.escNumber((oldId) ? oldId : data.id)};`;
-        console.log(statement);
 
         const result: DBExecuteResult = await this.db.execute(statement);
         if (result.affectedRows != 1) {
