@@ -1,7 +1,7 @@
 import {Application} from "express";
-import {authRouter} from "./auth-routes";
-import {invRouter} from "./inv-routes";
-import {finRouter} from "./fin-routes";
+import {authRouter} from "./auth/auth.routing";
+import {invRouter} from "./inv/inv.routing";
+import {finRouter} from "./fin/fin.routing";
 
 const express = require('express');
 

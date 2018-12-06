@@ -1,7 +1,6 @@
-import {DBQueryResult, DbUtil} from "../../utils/db/db.util";
-import {CompareEntry} from "./compare-entry";
-import {RowDataPacket} from "mysql";
-import {MySqlUtil} from "../../utils/db/mysql.util";
+import {DBQueryResult, DbUtil} from "../utils/db/db.util";
+import {CompareEntryModel} from "./model/compare-entry.model";
+import {MySqlUtil} from "../utils/db/mysql.util";
 
 export class InvService {
 
@@ -11,7 +10,7 @@ export class InvService {
         this.db = new MySqlUtil();
     }
 
-    async getComparison(): Promise<CompareEntry[]> {
+    async getComparison(): Promise<CompareEntryModel[]> {
         let statement: string = `SELECT inv_entry.name,(COUNT(*)-amount) AS 'comparison' 
             FROM inv_entry JOIN inv_target_entry USING(name) 
             WHERE valid = 1 
@@ -25,7 +24,7 @@ export class InvService {
         const result: DBQueryResult = await this.db.query(statement);
 
         return result.rows.map(row => {
-            return new CompareEntry(row.name, row.comparison);
+            return new CompareEntryModel(row.name, row.comparison);
         });
     }
 

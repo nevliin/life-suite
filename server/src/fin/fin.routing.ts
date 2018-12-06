@@ -1,17 +1,17 @@
 import {NextFunction, Request, Response, Router} from "express";
-import {FinService} from "../services/fin/fin.service";
+import {FinService} from "./fin.service";
 import {CRUDConstructor, DBType} from "../core/crud/crud-constructor";
-import {CategoryModel} from "../models/fin/category.model";
-import {AccountModel} from "../models/fin/account.model";
-import {TransactionModel} from "../models/fin/transaction.model";
-import {ConstraintModel} from "../models/fin/constraint.model";
+import {CategoryModel} from "./model/category.model";
+import {AccountModel} from "./model/account.model";
+import {TransactionModel} from "./model/transaction.model";
+import {ConstraintModel} from "./model/constraint.model";
 import {ErrorCodeUtil} from "../utils/error-code/error-code.util";
 import {
     AccountBalanceRequest,
     AccountTransactionsRequest,
     AllTransactionsAmountRequest,
     CategoryTotalRequest
-} from "../services/fin/fin.model";
+} from "./model/fin.model";
 
 const express = require('express');
 

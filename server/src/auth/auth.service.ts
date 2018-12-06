@@ -1,30 +1,30 @@
-import {IServerConfig} from "../../assets/config/server-config.model";
-import {DBExecuteResult, DBQueryResult, DbUtil} from "../db/db.util";
-import {ISignUpModel} from "./signup.model";
-import {Logger, LoggingUtil} from "../logging/logging.util";
+import {IServerConfig} from "../assets/config/server-config.model";
+import {DBExecuteResult, DBQueryResult, DbUtil} from "../utils/db/db.util";
+import {ISignUpModel} from "./model/signup.model";
+import {Logger, LoggingUtil} from "../utils/logging/logging.util";
 import {OkPacket, RowDataPacket} from "mysql";
-import {ErrorCodeUtil} from "../error-code/error-code.util";
-import {ILoginModel} from "./login.model";
-import {IJWTPayloadModel} from "./jwt-payload.model";
-import {IRoutePermission} from "../../assets/route-permissions/route-permissions";
-import {RouteWithPermissionsModel} from "./route-with-permissions.model";
+import {ErrorCodeUtil} from "../utils/error-code/error-code.util";
+import {ILoginModel} from "./model/login.model";
+import {IJWTPayloadModel} from "./model/jwt-payload.model";
+import {IRoutePermission} from "../assets/route-permissions/route-permissions";
+import {RouteWithPermissionsModel} from "./model/route-with-permissions.model";
 import {NextFunction, Request, Response} from "express";
-import {IUpdatePasswordModel} from "./update-password.model";
-import {isNullOrUndefined} from "../util";
-import {IEditRolesModel} from "./edit-roles.model";
-import {IUserDetailsModel} from "./user-details.model";
-import {MySqlUtil} from "../db/mysql.util";
+import {IUpdatePasswordModel} from "./model/update-password.model";
+import {isNullOrUndefined} from "../utils/util";
+import {IEditRolesModel} from "./model/edit-roles.model";
+import {IUserDetailsModel} from "./model/user-details.model";
+import {MySqlUtil} from "../utils/db/mysql.util";
 
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const config: IServerConfig = require('../../assets/config/server-config.json');
-const routePermissions: IRoutePermission = require('../../assets/route-permissions/route-permissions.json');
+const config: IServerConfig = require('../assets/config/server-config.json');
+const routePermissions: IRoutePermission = require('../assets/route-permissions/route-permissions.json');
 
 /**
  * Utility class for user authentication and route guarding
  */
-export class AuthUtil {
+export class AuthService {
 
     static db: DbUtil;
     static logger: Logger;
@@ -64,7 +64,7 @@ export class AuthUtil {
         const result: DBQueryResult = await this.db.query(`SELECT id, salted_hash FROM auth_user WHERE username = '${loginModel.username}';`);
             if (result.rows[0] && result.rows[0].salted_hash && result.rows[0].id) {
                 if (loginModel.password && bcrypt.compareSync(loginModel.password, result.rows[0].salted_hash)) {
-                    const powerAndRoles: { power: number, roles: number[] } = await AuthUtil.getPowerAndRoles(result.rows[0].id);
+                    const powerAndRoles: { power: number, roles: number[] } = await AuthService.getPowerAndRoles(result.rows[0].id);
                     const token: string = jwt.sign({
                             userId: result.rows[0].id,
                             power: powerAndRoles.power,
@@ -185,16 +185,16 @@ export class AuthUtil {
     static routeGuard = async function (req: Request, res: Response, next: NextFunction) {
         try {
             if (req.cookies.auth_token) {
-                const userId: number = await AuthUtil.verifyToken(req.cookies.auth_token);
-                const route: RouteWithPermissionsModel = AuthUtil.isRouteGuarded(req.path);
-                if (await AuthUtil.verifyRoutePermission(route, userId)) {
+                const userId: number = await AuthService.verifyToken(req.cookies.auth_token);
+                const route: RouteWithPermissionsModel = AuthService.isRouteGuarded(req.path);
+                if (await AuthService.verifyRoutePermission(route, userId)) {
                     next();
                 } else {
                     ErrorCodeUtil.resolveErrorOnRoute(ErrorCodeUtil.findErrorCode('ACC_DENIED'), res);
                 }
             } else {
-                const route: RouteWithPermissionsModel = AuthUtil.isRouteGuarded(req.path);
-                if (await AuthUtil.verifyRoutePermission(route, null)) {
+                const route: RouteWithPermissionsModel = AuthService.isRouteGuarded(req.path);
+                if (await AuthService.verifyRoutePermission(route, null)) {
                     next();
                 } else {
                     ErrorCodeUtil.resolveErrorOnRoute(ErrorCodeUtil.findErrorCode('ACC_DENIED'), res);
@@ -289,7 +289,7 @@ export class AuthUtil {
             return true;
         }
         try {
-            const result: { power: number, roles: number[] } = await AuthUtil.getPowerAndRoles(userId);
+            const result: { power: number, roles: number[] } = await AuthService.getPowerAndRoles(userId);
             const power: number = result.power;
             const roles: number[] = result.roles;
             if (route.requiredPower <= power) {

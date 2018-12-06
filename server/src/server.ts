@@ -5,13 +5,13 @@ import * as logger from "morgan";
 import * as path from "path";
 import errorHandler = require("errorhandler");
 import methodOverride = require("method-override");
-import {Routes} from "./routes/routes";
+import {Routes} from "./routes";
 import {LoggingUtil} from "./utils/logging/logging.util";
 import {DbUtil} from "./utils/db/db.util";
 import {Singletons} from "./core/singletons";
-import {AuthUtil} from "./utils/auth/auth.util";
 import {MySqlUtil} from "./utils/db/mysql.util";
 import {PgSqlUtil} from "./utils/db/pgsql.util";
+import {AuthService} from "./auth/auth.service";
 
 
 /**
@@ -102,7 +102,7 @@ export class Server {
         //error handling
         this.app.use(errorHandler());
 
-        this.app.use(AuthUtil.routeGuard);
+        this.app.use(AuthService.routeGuard);
     }
 
     /**

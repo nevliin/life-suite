@@ -1,4 +1,4 @@
-export class CompareEntry {
+export class CompareEntryModel {
     name: string;
     amount: number;
 

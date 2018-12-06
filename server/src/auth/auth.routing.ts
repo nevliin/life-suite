@@ -1,13 +1,13 @@
 import {NextFunction, Request, Response, Router} from "express";
-import {AuthUtil} from "../utils/auth/auth.util";
-import {ISignUpModel} from "../utils/auth/signup.model";
+import {AuthService} from "./auth.service";
+import {ISignUpModel} from "./model/signup.model";
 import {ErrorCodeUtil} from "../utils/error-code/error-code.util";
-import {ILoginModel} from "../utils/auth/login.model";
-import {IUpdatePasswordModel} from "../utils/auth/update-password.model";
-import {IEditRolesModel} from "../utils/auth/edit-roles.model";
+import {ILoginModel} from "./model/login.model";
+import {IUpdatePasswordModel} from "./model/update-password.model";
+import {IEditRolesModel} from "./model/edit-roles.model";
 import {CRUDConstructor} from "../core/crud/crud-constructor";
-import {RoleModel} from "../models/auth/role.model";
-import {IUserDetailsModel} from "../utils/auth/user-details.model";
+import {RoleModel} from "./model/role.model";
+import {IUserDetailsModel} from "./model/user-details.model";
 import {ValidatorUtil} from "../utils/validator/validator.util";
 
 const express = require('express');
@@ -18,7 +18,7 @@ export const init = (): Router => {
     const authRouter = express.Router();
     authRouter.post('/signup', async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const userId: number = await AuthUtil.signUp((<ISignUpModel>req.body));
+            const userId: number = await AuthService.signUp((<ISignUpModel>req.body));
             res.status(200).send({
                 userId: userId
             })
@@ -29,7 +29,7 @@ export const init = (): Router => {
 
     authRouter.post('/login', async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const token: string = await AuthUtil.login(<ILoginModel>req.body);
+            const token: string = await AuthService.login(<ILoginModel>req.body);
             if ((<ILoginModel>req.body).rememberMe) {
                 res.cookie(authCookieName, token, {maxAge: 30*24*60*60*1000}).status(200).send({
                     success: true
@@ -46,7 +46,7 @@ export const init = (): Router => {
 
     authRouter.get('/logout', async (req: Request, res: Response, next: NextFunction) => {
         try {
-            await AuthUtil.logOut(req.cookies[authCookieName]);
+            await AuthService.logOut(req.cookies[authCookieName]);
             res.cookie(authCookieName, '', {expires: new Date()});
             res.status(200).send({
                 success: true
@@ -58,7 +58,7 @@ export const init = (): Router => {
 
     authRouter.get('/verify', async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const result: boolean = await AuthUtil.verifyLogin(req.cookies[authCookieName]);
+            const result: boolean = await AuthService.verifyLogin(req.cookies[authCookieName]);
             res.status(200).send({
                 valid: result
             })
@@ -69,7 +69,7 @@ export const init = (): Router => {
 
     authRouter.post('/updatePassword', async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const userId: number = await AuthUtil.updatePassword(<IUpdatePasswordModel>req.body);
+            const userId: number = await AuthService.updatePassword(<IUpdatePasswordModel>req.body);
             res.status(200).send({
                 userId: userId
             });
@@ -80,7 +80,7 @@ export const init = (): Router => {
 
     authRouter.post('/editRoles', async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const success: boolean = await AuthUtil.editRoles(<IEditRolesModel>req.body);
+            const success: boolean = await AuthService.editRoles(<IEditRolesModel>req.body);
             res.status(200).send({
                 success: success
             });
@@ -92,7 +92,7 @@ export const init = (): Router => {
     authRouter.get('/userDetails/:userId', async (req: Request, res: Response, next: NextFunction) => {
         try {
             ValidatorUtil.valNum(req.params.userId);
-            const userDetails: IUserDetailsModel = await AuthUtil.getUserDetails(req.params.userId);
+            const userDetails: IUserDetailsModel = await AuthService.getUserDetails(req.params.userId);
             res.status(200).send({
                 userDetails: userDetails
             });

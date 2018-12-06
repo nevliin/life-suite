@@ -1,14 +1,14 @@
-import {DBQueryResult, DbUtil} from "../../utils/db/db.util";
+import {DBQueryResult, DbUtil} from "../utils/db/db.util";
 import {
     AccountBalanceRequest,
     AccountTransactionsRequest,
     AllTransactionsAmountRequest,
     CategoryTotalRequest
-} from "./fin.model";
-import {TransactionModel} from "../../models/fin/transaction.model";
-import {ErrorCodeUtil} from "../../utils/error-code/error-code.util";
-import {isNullOrUndefined} from "../../utils/util";
-import {PgSqlUtil} from "../../utils/db/pgsql.util";
+} from "./model/fin.model";
+import {TransactionModel} from "./model/transaction.model";
+import {ErrorCodeUtil} from "../utils/error-code/error-code.util";
+import {isNullOrUndefined} from "../utils/util";
+import {PgSqlUtil} from "../utils/db/pgsql.util";
 
 export class FinService {
 

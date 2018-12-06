@@ -1,10 +1,10 @@
 import {NextFunction, Request, Response, Router} from "express";
 import {ErrorCodeUtil} from "../utils/error-code/error-code.util";
 import {CRUDConstructor} from "../core/crud/crud-constructor";
-import {EntryModel} from "../models/inv/entry.model";
-import {TargetEntryModel} from "../models/inv/target-entry.model";
-import {InvService} from "../services/inv/inv.service";
-import {CompareEntry} from "../services/inv/compare-entry";
+import {EntryModel} from "./model/entry.model";
+import {TargetEntryModel} from "./model/target-entry.model";
+import {InvService} from "./inv.service";
+import {CompareEntryModel} from "./model/compare-entry.model";
 
 const express = require('express');
 
@@ -30,7 +30,7 @@ export const init = (): Router => {
 
     invRouter.get('/comparison', async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const result: CompareEntry[] = await invService.getComparison();
+            const result: CompareEntryModel[] = await invService.getComparison();
             res.status(200).send({
                 comparison: result
             });
