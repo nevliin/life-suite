@@ -20,9 +20,9 @@ export const init = (): Router => {
 
     const finService: FinService = new FinService();
 
-    finRouter.post('/getAccountTransactions', async (req: Request, res: Response, next: NextFunction) => {
+    finRouter.get('/transactionsByAccount', async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const result: TransactionModel[] = await finService.getAccountTransactions(<AccountTransactionsRequest>req.body);
+            const result: TransactionModel[] = await finService.getAccountTransactions(<AccountTransactionsRequest>req.query);
             res.status(200).send({
                 data: result
             });

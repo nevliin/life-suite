@@ -88,11 +88,40 @@ export class FinService {
     }
 
     async getAccountTransactions(reqParams: AccountTransactionsRequest): Promise<TransactionModel[]> {
-        let statement: string =
-            `SELECT (id, account, contra_account, amount, note, created_on, planned_transaction_id, executed_on) 
-            FROM fin_transaction WHERE account = ${this.db.escNumber(reqParams.accountId)} OR contra_account = ${this.db.escNumber(reqParams.accountId)};`
+        if (FinService.validAccountId(reqParams.accountId)) {
+            let statement: string =
+                `WITH RECURSIVE
+                     accounts AS (
+                       SELECT id
+                       FROM fin_account
+                       WHERE id = ${this.db.escNumber(Number.parseInt(reqParams.accountId))}
+                       UNION
+                       SELECT e.id
+                       FROM fin_account e
+                              INNER JOIN accounts s ON s.id = e.parent_account
+                     )
+                SELECT *
+                FROM fin_transaction
+                WHERE valid = 1
+                  AND (account IN (SELECT id FROM accounts)
+                         OR
+                       contra_account IN (SELECT id FROM accounts))`;
+            if(reqParams.from) {
+                statement += ` AND fin_transaction.created_on > to_timestamp('${this.db.esc(reqParams.from)}', 'YYYY-MM-DD HH24:MI:SS.MS')`;
+            }
+            if(reqParams.to) {
+                statement += ` AND fin_transaction.created_on < to_timestamp('${this.db.esc(reqParams.to)}', 'YYYY-MM-DD HH24:MI:SS.MS')`;
+            }
+            if(reqParams.limit && Number.isInteger(Number.parseInt(reqParams.limit))) {
+                statement += ` LIMIT ${this.db.escNumber(Number.parseInt(reqParams.limit))}`;
+            }
+            statement += `;`;
 
-        return [];
+            const result: DBQueryResult = await this.db.query(statement);
+            return result.rows;
+        } else {
+            ErrorCodeUtil.findErrorCodeAndThrow('INVALID_PARAMETER');
+        }
     }
 
     async getAllTransactionsAmount(reqParams: AllTransactionsAmountRequest) {
@@ -133,4 +162,12 @@ export class FinService {
         }
 
     }
+
+    static validAccountId(accountId: string | number): boolean {
+        if (isNullOrUndefined(accountId)) {
+            return false;
+        }
+        return true;
+    }
+
 }
