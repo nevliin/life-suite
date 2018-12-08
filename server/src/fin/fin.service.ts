@@ -9,6 +9,7 @@ import {TransactionModel} from "./model/transaction.model";
 import {ErrorCodeUtil} from "../utils/error-code/error-code.util";
 import {isNullOrUndefined} from "../utils/util";
 import {PgSqlUtil} from "../utils/db/pgsql.util";
+import {AccountModel} from "./model/account.model";
 
 export class FinService {
 
@@ -160,7 +161,32 @@ export class FinService {
             const result2: DBQueryResult = await this.db.query(statement2);
             return result2.rows[0].amount;
         }
+    }
 
+    async getRecentlyUsedAccount(): Promise<AccountModel[]> {
+        const statement = `WITH account_ids AS (
+              (SELECT account, created_on
+               FROM fin_transaction f_t1
+               ORDER BY created_on DESC)
+              UNION
+              (SELECT contra_account AS account, created_on
+               FROM fin_transaction f_t1
+               ORDER BY created_on DESC)),
+                 distinct_ids AS (
+                   SELECT account, created_on
+                   FROM account_ids
+                   WHERE created_on =
+                         (SELECT MAX(created_on)
+                          FROM account_ids AS account_ids_2
+                          WHERE account_ids_2.account = account_ids.account)
+                   ORDER BY created_on DESC
+                   LIMIT 20
+                 )
+            SELECT id, name, note, parent_account, category_id, valid, fin_account.created_on FROM fin_account JOIN distinct_ids ON fin_account.id = distinct_ids.account
+            ORDER BY distinct_ids.created_on DESC
+            LIMIT 20;`;
+        const result: DBQueryResult = await this.db.query(statement);
+        return result.rows as AccountModel[];
     }
 
     static validAccountId(accountId: string | number): boolean {

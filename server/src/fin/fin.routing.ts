@@ -83,8 +83,22 @@ export const init = (): Router => {
         }
     });
 
+    finRouter.get('/recentlyUsedAccounts', async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const result: AccountModel[] = await finService.getRecentlyUsedAccount();
+            res.status(200).send({
+                data: {
+                    result
+                }
+            });
+        } catch (e) {
+            ErrorCodeUtil.resolveErrorOnRoute(e, res);
+        }
+    });
+
     const categoryModelCRUD: CRUDConstructor<CategoryModel> = new CRUDConstructor(new CategoryModel(), 'fin_category', {
-        softDelete: true
+        softDelete: true,
+        dbType: DBType.PGSQL
     });
     finRouter.use('/category', categoryModelCRUD.getRouter());
 
