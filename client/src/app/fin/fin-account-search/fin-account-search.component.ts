@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FinAccount} from "../fin-account";
 import {FinService} from "../fin.service";
-import {FinTransaction} from "../fin-transaction";
 import {Router} from "@angular/router";
 
 @Component({
@@ -45,7 +44,8 @@ export class FinAccountSearchComponent implements OnInit {
         this.listTitle = "Search Results";
         if (this.accountsById.size > 0) {
             this.searchResults = Array.from(this.accountsById.values()).filter((value: FinAccount) => {
-                return value.name.includes(this.searchTerm) || value.id.toString().includes(this.searchTerm)
+                return value.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+                    || value.id.toString().toLowerCase().includes(this.searchTerm.toLowerCase())
             });
         }
     }

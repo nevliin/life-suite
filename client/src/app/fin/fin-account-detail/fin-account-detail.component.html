@@ -1,0 +1,65 @@
+<mat-card class="fin-account-detail-container">
+    <mat-card-content>
+        <div *ngIf="account" class="fin-account-detail">
+            <div style="display: flex; align-items: flex-end;">
+                <h3 style="margin-bottom: 5px;">Debit</h3>
+                <h2 class="fill-space" style="text-align: center;">{{account.id}} / {{account.name}}</h2>
+                <h3 style="margin-bottom: 5px;">Credit</h3>
+            </div>
+            <mat-divider [inset]="true" style="border-top-color: rgba(0, 0, 0, 0.5)"></mat-divider>
+            <div *ngIf="accountTransactions" class="transaction-list-container">
+                <div [ngStyle]="{'grid-column': (category.active) ? 1 : 3}"
+                     [ngClass]="{'debit-transaction': category.active, 'credit-transaction': !category.active}"
+                     class="child-account-transaction" style="grid-column: 1;">
+                    <span *ngIf="!category.active" style="margin-right: auto;">
+                        <b>{{initialBalance | currency:'EUR'}}</b></span>
+                    <span>
+                        <span *ngIf="category.active"
+                              style="width: 35px; text-align: right; margin-right: 10px;">0000</span>
+                        <b style="text-align: right;">Initial</b>
+                        <span *ngIf="!category.active"
+                              style="width: 35px; text-align: left; margin-left: 10px;">0000</span></span>
+                    <span *ngIf="category.active" style="margin-left: auto;">
+                        <b>{{initialBalance | currency:'EUR'}}</b></span>
+                </div>
+                <div *ngFor="let transaction of accountTransactions; let i = index" style="grid-column: 1/4"
+                     [ngStyle]="{'grid-row': (i * 2) + 2}">
+                    <mat-divider [inset]="true"></mat-divider>
+                </div>
+                <ng-container *ngFor="let transaction of accountTransactions; let i = index">
+                    <div *ngIf="transaction.debitTransaction" [ngStyle]="{'grid-row': (i * 2) + 2}"
+                         class="debit-transaction"
+                         [ngClass]="{'child-account-transaction': transaction.debitTransaction.childAccount}"
+                         style="grid-column: 1;">
+                        <span><span
+                                style="width: 35px; text-align: right; margin-right: 10px;">{{transaction.debitTransaction.transaction.contra_account}}</span>
+                        <b>{{accountsById.get(transaction.debitTransaction.transaction.contra_account).name}}</b></span>
+                        <span style="margin-left: auto;"><b>{{transaction.debitTransaction.transaction.amount | currency:'EUR'}}</b>
+                            / {{transaction.debitTransaction.transaction.created_on | date:'shortDate':'null':locale}}</span>
+                    </div>
+                </ng-container>
+                <mat-divider [vertical]="true" class="transaction-list-divider"
+                             style="border-right-color: rgba(0, 0, 0, 0.5)"></mat-divider>
+                <ng-container *ngFor="let transaction of accountTransactions; let i = index">
+                    <div *ngIf="transaction.creditTransaction" [ngStyle]="{'grid-row': (i * 2) + 2}"
+                         class="credit-transaction"
+                         [ngClass]="{'child-account-transaction': transaction.creditTransaction.childAccount}"
+                         style="grid-column: 3;">
+                        <span class="desktop">{{transaction.creditTransaction.transaction.created_on | date:'shortDate':'null':locale}}
+                            / <b>{{transaction.creditTransaction.transaction.amount | currency:'EUR'}}</b></span>
+                        <span style="margin-left: auto;"><b
+                                style="text-align: right;">{{accountsById.get(transaction.creditTransaction.transaction.account).name}}</b>
+                        <span style="width: 35px; text-align: left; margin-left: 10px;">{{transaction.creditTransaction.transaction.account}}</span></span>
+                        <span class="mobile">{{transaction.creditTransaction.transaction.created_on | date:'shortDate':'null':locale}}
+                            / <b>{{transaction.creditTransaction.transaction.amount | currency:'EUR'}}</b></span>
+                    </div>
+                </ng-container>
+                <mat-divider [inset]="true" style="grid-column: 1/4"
+                             [ngStyle]="{'grid-row': (accountTransactions.length * 2) + 4}"></mat-divider>
+            </div>
+            <div *ngIf="!accountTransactions" style="display: flex; justify-content: center; margin: 20px;">
+                <mat-spinner></mat-spinner>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>
