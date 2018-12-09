@@ -14,6 +14,7 @@ import {FinRecentComponent} from "./fin/fin-recent/fin-recent.component";
 import {FinAddComponent} from "./fin/fin-add/fin-add.component";
 import {FinAccountsComponent} from "./fin/fin-accounts/fin-accounts.component";
 import {FinAccountSearchComponent} from "./fin/fin-account-search/fin-account-search.component";
+import {FinAccountDetailComponent} from "./fin/fin-account-detail/fin-account-detail.component";
 
 const routes: Routes = [
     {
@@ -89,6 +90,9 @@ const routes: Routes = [
             },
             {
                 path: 'account-search', component: FinAccountSearchComponent
+            },
+            {
+                path: 'account/:accountId', component: FinAccountDetailComponent
             },
             {
                 path: '', redirectTo: 'dashboard', pathMatch: 'full'

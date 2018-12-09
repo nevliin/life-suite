@@ -12,6 +12,7 @@ import {AlertDialogModule} from "../core/alert-dialog/alert-dialog.module";
 import {MatComponentCollectorModule} from "../core/mat-component-collector.module";
 import {FinService} from "./fin.service";
 import {FinAccountSearchComponent} from './fin-account-search/fin-account-search.component';
+import { FinAccountDetailComponent } from './fin-account-detail/fin-account-detail.component';
 
 @NgModule({
     imports: [
@@ -29,7 +30,8 @@ import {FinAccountSearchComponent} from './fin-account-search/fin-account-search
         FinAccountsComponent,
         FinAccountAddComponent,
         FinCategoryAddComponent,
-        FinAccountSearchComponent
+        FinAccountSearchComponent,
+        FinAccountDetailComponent
     ],
     entryComponents: [FinAccountAddComponent, FinCategoryAddComponent, FinAddComponent],
     providers: [FinService]

@@ -22,6 +22,19 @@ export class FinService {
     ) {
     }
 
+    async getAccountBalance(accountId: number, year?: number): Promise<number> {
+        const options: any = {
+            accountId: accountId.toString()
+        };
+        year ? options.from = year.toString() : null;
+        return await this.http.get(API_ROOT + 'accountBalance', {
+            params: options
+        }).pipe(map((response: any) => Number.parseFloat(response.data.amount))).toPromise().catch((e) => {
+            this.errorHandlingService.handleHTTPError(e);
+            return null;
+        })
+    }
+
     async getCategoryTotal(categoryId: number, from?: Date, to?: Date): Promise<number> {
         return await this.http.post(API_ROOT + 'getCategoryTotal', {
             categoryId: categoryId,
@@ -107,6 +120,7 @@ export class FinService {
                             .map(value => {
                                 value.created_on = new Date(value.created_on);
                                 value.executed_on = new Date(value.executed_on);
+                                value.amount = Number.parseFloat(<string><unknown>value.amount);
                                 return value;
                             })
                             .sort((a: FinTransaction, b: FinTransaction) =>
@@ -114,8 +128,8 @@ export class FinService {
                             );
                     }
                 )).toPromise().catch((e) => {
-                    this.errorHandlingService.handleHTTPError(e);
-                    return [];
+                this.errorHandlingService.handleHTTPError(e);
+                return [];
             })
     }
 
@@ -211,6 +225,10 @@ export class FinService {
 
     async getCategories(): Promise<FinCategory[]> {
         return ((await this.http.get(API_ROOT + 'category/list').toPromise()) as any).data;
+    }
+
+    async getCategory(categoryId: number): Promise<FinCategory> {
+        return ((await this.http.get(API_ROOT + 'category/read/' + categoryId).toPromise()) as any).data;
     }
 
     async updateCategory(category: FinCategory): Promise<number> {

@@ -1,35 +1,10 @@
-@import '~@angular/material/theming';
-
-@include mat-core();
-
 .fin-account-search-container {
   max-width: 800px;
   min-width: 800px;
 }
 
-.fin-account-search-detail {
-  margin-left: 15px;
-  margin-right: 15px;
-}
-
 .mat-list-item:hover {
   background-color: rgba(0, 0, 0, 0.08);
-}
-
-.transaction-list-container {
-  display: grid;
-  grid-template-columns: 49% 2% 49%;
-}
-
-.transaction-list-divider {
-  grid-row: 1/999;
-  grid-column: 2;
-  margin-right: calc(50% - 0.5px);
-}
-
-.transaction {
-  display: flex;
-  margin: 2px;
 }
 
 @media (max-width: 360px) {

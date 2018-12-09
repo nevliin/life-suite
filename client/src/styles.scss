@@ -32,3 +32,23 @@ $candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent, $candy-
 .mat-card-title {
   margin-bottom: 30px !important;
 }
+
+.desktop {
+  display: initial;
+}
+
+.mobile {
+  display: none;
+}
+
+@media (max-width: 360px) {
+  .desktop {
+    display: none;
+  }
+
+  .mobile {
+    display: initial;
+  }
+}
+
+
