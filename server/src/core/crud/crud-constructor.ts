@@ -193,18 +193,18 @@ export class CRUDConstructor<T extends ICRUDModel, > {
 
         statement += ';';
 
-        const result: DBQueryResult = await this.db.query(statement);
+        const dbQueryResult: DBQueryResult = await this.db.query(statement);
 
-        if (result.rows[0]) {
+        if (dbQueryResult.rows[0]) {
             // Assign fields of the result to an empty object and return it
             const result: any = {};
             properties.forEach((property, index) => {
                 if (this.fieldMappings.get(property).type === DBFieldType.BOOLEAN) {
-                    result[property] = Boolean(result.rows[0][fieldsArray[index]]);
+                    result[property] = Boolean(dbQueryResult.rows[0][fieldsArray[index]]);
                 } else if (this.fieldMappings.get(property).type === DBFieldType.TIMESTAMP) {
-                    result[property] = new Date(Date.parse(result.rows[0][fieldsArray[index]]));
+                    result[property] = new Date(Date.parse(dbQueryResult.rows[0][fieldsArray[index]]));
                 } else {
-                    result[property] = result.rows[0][fieldsArray[index]];
+                    result[property] = dbQueryResult.rows[0][fieldsArray[index]];
                 }
             });
             // @ts-ignore

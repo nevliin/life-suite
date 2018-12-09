@@ -85,11 +85,9 @@ export const init = (): Router => {
 
     finRouter.get('/recentlyUsedAccounts', async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const result: AccountModel[] = await finService.getRecentlyUsedAccount();
+            const data: AccountModel[] = await finService.getRecentlyUsedAccount();
             res.status(200).send({
-                data: {
-                    result
-                }
+                data
             });
         } catch (e) {
             ErrorCodeUtil.resolveErrorOnRoute(e, res);
