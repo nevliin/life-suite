@@ -57,19 +57,6 @@ export const init = (): Router => {
         }
     });
 
-    finRouter.post('/getAllTransactionsAmount', async (req: Request, res: Response, next: NextFunction) => {
-        try {
-            const amount: number = await finService.getAllTransactionsAmount(<AllTransactionsAmountRequest>req.body);
-            res.status(200).send({
-                data: {
-                    amount
-                }
-            });
-        } catch (e) {
-            ErrorCodeUtil.resolveErrorOnRoute(e, res);
-        }
-    });
-
     finRouter.get('/accountBalance', async (req: Request, res: Response, next: NextFunction) => {
         try {
             const amount: number = await finService.getAccountBalance(<AccountBalanceRequest>req.query);
