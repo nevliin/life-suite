@@ -133,7 +133,6 @@ export class FinAddComponent implements OnInit {
             return this.accountNames;
         }
         return this.accountNames.filter((accountName: string) => {
-            debugger;
             return (accountName) ? accountName.toLowerCase().includes(value.toLowerCase()) : true;
         })
     }

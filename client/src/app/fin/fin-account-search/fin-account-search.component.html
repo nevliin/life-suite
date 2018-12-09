@@ -1,0 +1,63 @@
+<mat-card class="fin-account-search-container">
+    <mat-card-title style="margin-bottom: 20px;">SEARCH ACCOUNT</mat-card-title>
+    <mat-card-content>
+        <div style="display: flex; align-items: center;">
+            <mat-icon style="margin-right: 10px;">search</mat-icon>
+            <mat-form-field>
+                <input matInput placeholder="Search" [(ngModel)]="searchTerm" (keyup)="onSearch()"
+                       [disabled]="displayType === 'DETAIL'">
+            </mat-form-field>
+        </div>
+        <mat-divider [inset]="true"></mat-divider>
+        <div style="display: flex;">
+            <h3>{{displayType === 'DETAIL' ? 'Account Detail' : (displayRecentlyUsed) ? 'Recently Used' : 'Search Results (' + this.searchResults.length + ')'}}</h3>
+            <span class="fill-space"></span>
+            <button *ngIf="displayType ==='DETAIL'" mat-icon-button (click)="displayList()">
+                <mat-icon>list</mat-icon>
+            </button>
+        </div>
+        <div *ngIf="displayType === 'LIST'">
+            <mat-list *ngIf="(displayRecentlyUsed ? recentlyUsedAccounts : searchResults).length > 0; else noAccounts">
+                <mat-list-item [disableRipple]="false"
+                               *ngFor="let account of (displayRecentlyUsed ? recentlyUsedAccounts : searchResults)"
+                               (click)="displayDetail(account)">
+                    <span style="width: 50px; text-align: right; margin-right: 15px;">{{account.id}}</span>
+                    <b>{{account.name}}</b>
+                    <mat-divider [inset]="true"></mat-divider>
+                </mat-list-item>
+            </mat-list>
+            <ng-template #noAccounts>
+                <div style="text-align: center;">
+                    <p>No accounts found</p>
+                </div>
+            </ng-template>
+        </div>
+        <div *ngIf="displayType === 'DETAIL' && detailAccount" class="fin-account-search-detail">
+            <div style="display: flex; align-items: flex-end;">
+                <h3 style="margin-bottom: 5px;">Debit</h3>
+                <h2 class="fill-space" style="text-align: center;">{{detailAccount.id}} / {{detailAccount.name}}</h2>
+                <h3 style="margin-bottom: 5px;">Credit</h3>
+            </div>
+            <mat-divider [inset]="true"></mat-divider>
+            <div class="transaction-list-container">
+                <ng-container *ngFor="let transaction of detailAccountTransactions; let i = index">
+                    <div *ngIf="transaction[0]" [ngStyle]="{'grid-row': i}" class="transaction" style="grid-column: 1;">
+                        <span style="width: 35px; text-align: right; margin-right: 10px;">{{transaction[0].account}}</span>
+                        <b>{{accountsById.get(transaction[0].account).name}}</b>
+                        <span class="fill-space"></span>
+                        <span><b>{{transaction[0].amount | currency:'EUR'}}</b> / {{transaction[0].created_on | date:'shortDate':'null':locale}}</span>
+                    </div>
+                </ng-container>
+                <mat-divider [vertical]="true" class="transaction-list-divider"></mat-divider>
+                <ng-container *ngFor="let transaction of detailAccountTransactions; let i = index">
+                    <div *ngIf="transaction[1]" [ngStyle]="{'grid-row': i}" class="transaction" style="grid-column: 3;">
+                        <span>{{transaction[1].created_on | date:'shortDate':'null':locale}} / <b>{{transaction[1].amount | currency:'EUR'}}</b></span>
+                        <span class="fill-space"></span>
+                        <b style="text-align: right;">{{accountsById.get(transaction[1].contra_account).name}}</b>
+                        <span style="width: 35px; text-align: left; margin-left: 10px;">{{transaction[1].account}}</span>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

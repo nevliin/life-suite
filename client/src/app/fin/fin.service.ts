@@ -63,6 +63,21 @@ export class FinService {
             });
     }
 
+    async getRecentlyUsedAccounts(): Promise<FinAccount[]> {
+        return await this.http.get(API_ROOT + 'recentlyUsedAccounts')
+            .pipe(map((response: { data: FinAccount[] }) => {
+                    return response.data
+                        .map((account: FinAccount) => {
+                            account.created_on = new Date(account.created_on);
+                            return account;
+                        })
+                })
+            ).toPromise().catch((e) => {
+                this.errorHandlingService.handleHTTPError(e);
+                return [];
+            });
+    }
+
     async getTransaction(transactionId: number): Promise<FinTransaction> {
         return await this.http.get(API_ROOT + 'transaction/read/' + transactionId)
             .pipe(map((response: { data: FinTransaction }) => {
@@ -73,6 +88,34 @@ export class FinService {
             )).toPromise().catch((e) => {
                 this.errorHandlingService.handleHTTPError(e);
                 return new FinTransaction();
+            })
+    }
+
+    async getTransactionsByAccount(accountId: number, from?: Date, to?: Date, limit?: number): Promise<FinTransaction[]> {
+        const options: any = {
+            accountId: accountId.toString()
+        };
+        from ? options.from = from.toISOString() : null;
+        to ? options.to = to.toISOString() : null;
+        limit ? options.limit = limit.toString() : null;
+        return await this.http.get(API_ROOT + 'transactionsByAccount', {
+            params: options
+        })
+            .pipe(
+                map((response: { data: FinTransaction[] }) => {
+                        return response.data
+                            .map(value => {
+                                value.created_on = new Date(value.created_on);
+                                value.executed_on = new Date(value.executed_on);
+                                return value;
+                            })
+                            .sort((a: FinTransaction, b: FinTransaction) =>
+                                a.created_on.getTime() - b.created_on.getTime()
+                            );
+                    }
+                )).toPromise().catch((e) => {
+                    this.errorHandlingService.handleHTTPError(e);
+                    return [];
             })
     }
 
@@ -143,7 +186,10 @@ export class FinService {
     }
 
     async updateAccount(account: FinAccount, oldId?: number): Promise<number> {
-        return ((await this.http.put(API_ROOT + 'account/update/', { data: account, oldId: oldId }).pipe(tap(() => this.getAccountsById(true))).toPromise().catch(e => {
+        return ((await this.http.put(API_ROOT + 'account/update/', {
+            data: account,
+            oldId: oldId
+        }).pipe(tap(() => this.getAccountsById(true))).toPromise().catch(e => {
             console.log(e);
             throw e;
         })) as any).id;
@@ -168,7 +214,7 @@ export class FinService {
     }
 
     async updateCategory(category: FinCategory): Promise<number> {
-        return ((await this.http.put(API_ROOT + 'category/update/', { data: category}).toPromise().catch(e => {
+        return ((await this.http.put(API_ROOT + 'category/update/', {data: category}).toPromise().catch(e => {
             console.log(e);
             throw e;
         })) as any).id;

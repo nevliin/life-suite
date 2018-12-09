@@ -58,7 +58,13 @@
         ]
       },
       {
-        "label": "Accounts",
+        "label": "Account Search",
+        "route": [
+          "account-search"
+        ]
+      },
+      {
+        "label": "Account Tree",
         "route": [
           "accounts"
         ]

@@ -13,10 +13,12 @@ import {DashboardComponent} from "./dashboard/dashboard/dashboard.component";
 import {FinRecentComponent} from "./fin/fin-recent/fin-recent.component";
 import {FinAddComponent} from "./fin/fin-add/fin-add.component";
 import {FinAccountsComponent} from "./fin/fin-accounts/fin-accounts.component";
+import {FinAccountSearchComponent} from "./fin/fin-account-search/fin-account-search.component";
 
 const routes: Routes = [
     {
         path: 'home',
+        canActivate: [AuthService],
         resolve: {
             menu: CurrentMenuResolver
         },
@@ -84,6 +86,9 @@ const routes: Routes = [
             },
             {
                 path: 'accounts', component: FinAccountsComponent
+            },
+            {
+                path: 'account-search', component: FinAccountSearchComponent
             },
             {
                 path: '', redirectTo: 'dashboard', pathMatch: 'full'
