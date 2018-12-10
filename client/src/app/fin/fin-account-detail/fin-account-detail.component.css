@@ -19,19 +19,21 @@
     margin-right: calc(50% - 0.5px);
 }
 
-.debit-transaction {
+.transaction {
     display: flex;
     flex-wrap: wrap;
+    margin: 4px 4px 4px 4px;
+}
+
+.debit-transaction {
     margin: 4px 4px 4px 0;
 }
 
 .credit-transaction {
-    display: flex;
-    flex-wrap: wrap;
-    margin: 4px 4px 4px 0;
+    margin: 4px 0 4px 4px;
 }
 
-.child-account-transaction {
+.faded-text {
     color: rgba(0, 0, 0, 0.35);
 }
 

@@ -13,6 +13,7 @@ import {MatComponentCollectorModule} from "../core/mat-component-collector.modul
 import {FinService} from "./fin.service";
 import {FinAccountSearchComponent} from './fin-account-search/fin-account-search.component';
 import { FinAccountDetailComponent } from './fin-account-detail/fin-account-detail.component';
+import { FinTransactionEditComponent } from './fin-transaction-edit/fin-transaction-edit.component';
 
 @NgModule({
     imports: [
@@ -31,7 +32,8 @@ import { FinAccountDetailComponent } from './fin-account-detail/fin-account-deta
         FinAccountAddComponent,
         FinCategoryAddComponent,
         FinAccountSearchComponent,
-        FinAccountDetailComponent
+        FinAccountDetailComponent,
+        FinTransactionEditComponent
     ],
     entryComponents: [FinAccountAddComponent, FinCategoryAddComponent, FinAddComponent],
     providers: [FinService]

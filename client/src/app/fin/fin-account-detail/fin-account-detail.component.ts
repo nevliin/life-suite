@@ -28,6 +28,8 @@ export class FinAccountDetailComponent implements OnInit {
     category: FinCategory = null;
     accountBalance: number = null;
     initialBalance: number = null;
+    debitSum: number = null;
+    creditSum: number = null;
 
     accountsById: Map<number, FinAccount> = new Map();
 
@@ -49,7 +51,8 @@ export class FinAccountDetailComponent implements OnInit {
             this.accountTransactions = await this.getAccountTransactions(accountId, from);
             this.accountBalance = await this.finService.getAccountBalance(accountId);
             this.initialBalance = this.calcInitialBalance(this.accountBalance, this.accountTransactions, this.category.active);
-            console.log(this.accountBalance, this.initialBalance);
+            this.debitSum = this.calcDebitSum(this.initialBalance, this.accountTransactions, this.category.active);
+            this.creditSum = this.calcCreditSum(this.initialBalance, this.accountTransactions, this.category.active);
         });
     }
 
@@ -94,20 +97,53 @@ export class FinAccountDetailComponent implements OnInit {
         let debitSum: number = 0;
         let creditSum: number = 0;
         accountTransactions.forEach((value: TransactionListRow) => {
-            if(value.debitTransaction && !value.debitTransaction.childAccount) {
+            if (value.debitTransaction && !value.debitTransaction.childAccount) {
                 debitSum += value.debitTransaction.transaction.amount;
             }
-            if(value.creditTransaction && !value.creditTransaction.childAccount) {
+            if (value.creditTransaction && !value.creditTransaction.childAccount) {
                 creditSum += value.creditTransaction.transaction.amount;
             }
         });
-        debugger;
 
-        if(active) {
+        if (active) {
             return accountBalance - debitSum + creditSum;
         } else {
             return accountBalance + debitSum - creditSum;
         }
+    }
+
+    calcDebitSum(
+        initialBalance: number,
+        accountTransactions: TransactionListRow[],
+        active: boolean
+    ): number {
+        let sum: number = 0;
+        accountTransactions.forEach((value: TransactionListRow) => {
+            if (value.debitTransaction && !value.debitTransaction.childAccount) {
+                sum += value.debitTransaction.transaction.amount;
+            }
+        });
+        if(active) {
+            sum += initialBalance;
+        }
+        return sum;
+    }
+
+    calcCreditSum(
+        initialBalance: number,
+        accountTransactions: TransactionListRow[],
+        active: boolean
+    ) {
+        let sum: number = 0;
+        accountTransactions.forEach((value: TransactionListRow) => {
+            if (value.creditTransaction && !value.creditTransaction.childAccount) {
+                sum += value.creditTransaction.transaction.amount;
+            }
+        });
+        if(!active) {
+            sum += initialBalance;
+        }
+        return sum;
     }
 
 }
