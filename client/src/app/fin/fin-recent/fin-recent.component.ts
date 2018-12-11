@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FinService} from "../fin.service";
 import {FinTransaction} from "../fin-transaction";
-import {MessageService} from "primeng/api";
-import {AlertDialogService} from "../../core/alert-dialog/alert-dialog.service";
 import {ErrorHandlingService} from "../../core/error-handling/error-handling.service";
+import {MatDialog} from "@angular/material";
+import {FinTransactionEditComponent} from "../fin-transaction-edit/fin-transaction-edit.component";
 
 @Component({
     selector: 'app-fin-recent',
@@ -16,7 +16,8 @@ export class FinRecentComponent implements OnInit {
 
     constructor(
         readonly finService: FinService,
-        readonly errorHandlingService: ErrorHandlingService
+        readonly errorHandlingService: ErrorHandlingService,
+        private readonly dialog: MatDialog
     ) {
     }
 
@@ -45,11 +46,10 @@ export class FinRecentComponent implements OnInit {
     }
 
     async openTransaction(id: number) {
-
-    }
-
-    async openTransactionDetails(transactionId: number) {
-
+        this.dialog.open(FinTransactionEditComponent, {
+            data: { transactionId: id },
+            panelClass: 'mat-card-dialog-container'
+        });
     }
 
 }

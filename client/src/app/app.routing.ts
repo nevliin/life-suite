@@ -11,7 +11,7 @@ import {AuthService} from "./core/auth/auth.service";
 import {AuthLoginWrapperComponent} from "./core/auth/auth-login-wrapper/auth-login-wrapper.component";
 import {DashboardComponent} from "./dashboard/dashboard/dashboard.component";
 import {FinRecentComponent} from "./fin/fin-recent/fin-recent.component";
-import {FinAddComponent} from "./fin/fin-add/fin-add.component";
+import {FinTransactionEditComponent} from "./fin/fin-transaction-edit/fin-transaction-edit.component";
 import {FinAccountsComponent} from "./fin/fin-accounts/fin-accounts.component";
 import {FinAccountSearchComponent} from "./fin/fin-account-search/fin-account-search.component";
 import {FinAccountDetailComponent} from "./fin/fin-account-detail/fin-account-detail.component";
@@ -80,7 +80,7 @@ const routes: Routes = [
                 path: 'dashboard', component: InvListComponent
             },
             {
-                path: 'add', component: FinAddComponent
+                path: 'add', component: FinTransactionEditComponent
             },
             {
                 path: 'recent', component: FinRecentComponent

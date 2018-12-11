@@ -48,5 +48,10 @@
     "id": 9,
     "name": "NO_SUCH_FIELD",
     "text": "Given field doesn't exist on the CRUD Model."
+  },
+  {
+    "id": 10,
+    "name": "NO_ID_PROVIDED",
+    "text": "ID necessary for operation not provided."
   }
 ]

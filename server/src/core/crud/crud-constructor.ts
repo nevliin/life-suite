@@ -284,6 +284,9 @@ export class CRUDConstructor<T extends ICRUDModel, > {
      * @returns Object ID
      */
     public async update(data: T, oldId?: number): Promise<number> {
+        if(isNullOrUndefined(oldId) && isNullOrUndefined(data.id)) {
+            ErrorCodeUtil.findErrorCodeAndThrow('NO_ID_PROVIDED');
+        }
         if(oldId === null || oldId === data.id) {
             oldId = undefined;
         }
@@ -321,8 +324,9 @@ export class CRUDConstructor<T extends ICRUDModel, > {
         statement += ` WHERE ${this.fieldMappings.get('id').name} = ${this.db.escNumber((oldId) ? oldId : data.id)};`;
 
         const result: DBExecuteResult = await this.db.execute(statement);
+        console.log(result);
         if (result.affectedRows != 1) {
-            ErrorCodeUtil.findErrorCodeAndThrow('UPDATED_FAILED');
+            ErrorCodeUtil.findErrorCodeAndThrow('UPDATE_FAILED');
         }
         return data.id;
     }

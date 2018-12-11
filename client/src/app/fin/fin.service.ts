@@ -185,6 +185,13 @@ export class FinService {
         })) as any).id;
     }
 
+    async updateTransaction(transaction: FinTransaction): Promise<number> {
+        return ((await this.http.put(API_ROOT + 'transaction/update/', {data: transaction}).toPromise().catch(e => {
+            console.log(e);
+            throw e;
+        })) as any).id;
+    }
+
     async deleteTransaction(transactionId: number): Promise<number> {
         return ((await this.http.delete(API_ROOT + 'transaction/delete/' + transactionId).toPromise().catch(e => {
             console.log(e);

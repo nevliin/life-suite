@@ -87,7 +87,10 @@
     </mat-card-content>
     <mat-card-actions style="display: flex;">
         <div class="fill-space"></div>
-        <button color="secondary" mat-flat-button (click)="reset()" [tabindex]="6">Reset</button>
-        <button color="primary" mat-flat-button (click)="submit()" [tabindex]="5">Submit</button>
+        <button color="secondary" mat-flat-button (click)="cancel()"
+                [tabindex]="6">{{new ? 'Reset' : 'Cancel'}}</button>
+        <button color="primary" mat-flat-button (click)="submit()" [tabindex]="5"
+                [disabled]="transactionForm.untouched || transactionForm.invalid">Submit
+        </button>
     </mat-card-actions>
 </mat-card>

@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FinDashboardComponent} from './fin-dashboard/fin-dashboard.component';
-import {FinAddComponent} from './fin-add/fin-add.component';
+import {FinTransactionEditComponent} from './fin-transaction-edit/fin-transaction-edit.component';
 import {FinRecentComponent} from './fin-recent/fin-recent.component';
 import {FinAccountsComponent} from './fin-accounts/fin-accounts.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -12,8 +12,7 @@ import {AlertDialogModule} from "../core/alert-dialog/alert-dialog.module";
 import {MatComponentCollectorModule} from "../core/mat-component-collector.module";
 import {FinService} from "./fin.service";
 import {FinAccountSearchComponent} from './fin-account-search/fin-account-search.component';
-import { FinAccountDetailComponent } from './fin-account-detail/fin-account-detail.component';
-import { FinTransactionEditComponent } from './fin-transaction-edit/fin-transaction-edit.component';
+import {FinAccountDetailComponent} from './fin-account-detail/fin-account-detail.component';
 
 @NgModule({
     imports: [
@@ -26,16 +25,15 @@ import { FinTransactionEditComponent } from './fin-transaction-edit/fin-transact
     ],
     declarations: [
         FinDashboardComponent,
-        FinAddComponent,
+        FinTransactionEditComponent,
         FinRecentComponent,
         FinAccountsComponent,
         FinAccountAddComponent,
         FinCategoryAddComponent,
         FinAccountSearchComponent,
-        FinAccountDetailComponent,
-        FinTransactionEditComponent
+        FinAccountDetailComponent
     ],
-    entryComponents: [FinAccountAddComponent, FinCategoryAddComponent, FinAddComponent],
+    entryComponents: [FinAccountAddComponent, FinCategoryAddComponent, FinTransactionEditComponent, FinTransactionEditComponent],
     providers: [FinService]
 })
 export class FinModule {

@@ -2,7 +2,7 @@
     <mat-card-title>RECENT TRANSACTIONS</mat-card-title>
     <mat-card-content>
         <div class="list-container">
-            <ng-container *ngFor="let transaction of recentTransactions" (click)="openTransactionDetails(transaction.id)">
+            <ng-container *ngFor="let transaction of recentTransactions">
                 <mat-card class="account-card transaction-list-child">
                     {{transaction.account}}<span class="optional"> / {{transaction.accountName}}</span>
                 </mat-card>

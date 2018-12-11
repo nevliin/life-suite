@@ -97,8 +97,8 @@ export class PgSqlUtil extends DbUtil {
 
     queryResultToDBExecuteResult(result: QueryResult): DBExecuteResult {
         return {
-            affectedRows: result.rows.length,
-            changedRows: result.rows.length,
+            affectedRows: result.rowCount,
+            changedRows:  result.rowCount,
             insertId: (result.rows[0]) ? result.rows[0].id : null
         }
     }

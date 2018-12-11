@@ -1,23 +1,25 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, OnInit, Optional, ViewChild} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {FinAccount} from "../fin-account";
 import {FinService} from "../fin.service";
 import {Observable} from "rxjs";
 import {map, startWith} from "rxjs/operators";
 import {TwoWayMap} from "../../core/auth/two-way-map";
-import {MatAutocompleteTrigger} from "@angular/material";
+import {MAT_DIALOG_DATA, MatAutocompleteTrigger, MatDialogRef} from "@angular/material";
 import {FinTransaction} from "../fin-transaction";
 import {MessageService} from "primeng/api";
 
 @Component({
-    selector: 'app-fin-add',
-    templateUrl: './fin-add.component.html',
-    styleUrls: ['./fin-add.component.css']
+    selector: 'app-fin-transaction-edit',
+    templateUrl: './fin-transaction-edit.component.html',
+    styleUrls: ['./fin-transaction-edit.component.css']
 })
-export class FinAddComponent implements OnInit {
+export class FinTransactionEditComponent implements OnInit {
 
     @ViewChild('account', {read: MatAutocompleteTrigger}) account: MatAutocompleteTrigger;
     @ViewChild('contraAccount', {read: MatAutocompleteTrigger}) contraAccount: MatAutocompleteTrigger;
+
+    new: boolean = true;
 
     accountsTwoWay: TwoWayMap<number, string>;
     accountIds: number[];
@@ -29,6 +31,7 @@ export class FinAddComponent implements OnInit {
     filteredContraAccountNameOptions: Observable<string[]>;
 
     transactionForm: FormGroup = this.fb.group({
+        id: [null],
         account: [null, Validators.compose([
             Validators.required,
             Validators.min(0),
@@ -57,7 +60,13 @@ export class FinAddComponent implements OnInit {
     constructor(
         readonly fb: FormBuilder,
         readonly finService: FinService,
-        readonly messageService: MessageService
+        readonly messageService: MessageService,
+        @Optional() @Inject(MAT_DIALOG_DATA) private readonly data: {
+            transactionId: number,
+            transaction?: FinTransaction,
+            accountsById?: Map<number, FinTransaction>
+        },
+        @Optional() private readonly dialogRef: MatDialogRef<FinTransactionEditComponent>
     ) {
     }
 
@@ -68,12 +77,42 @@ export class FinAddComponent implements OnInit {
         this.accountIds = Array.from(this.accountsTwoWay.map.keys());
         this.accountNames = Array.from(this.accountsTwoWay.reverseMap.keys());
         this.setUpAutoComplete();
+        if (this.data) {
+            this.new = false;
+            await this.insertEditData();
+        }
+    }
+
+    async insertEditData() {
+        let transaction: FinTransaction;
+        if (this.data.transaction) {
+            transaction = this.data.transaction;
+        } else {
+            transaction = await this.finService.getTransaction(this.data.transactionId);
+        }
+        this.transactionForm.get('id').setValue(transaction.id);
+        this.transactionForm.get('account').setValue(transaction.account);
+        this.updateAccountName(transaction.account.toString(), 'accountName');
+        this.transactionForm.get('contraAccount').setValue(transaction.contra_account);
+        this.updateAccountName(transaction.contra_account.toString(), 'contraAccountName');
+        this.transactionForm.get('amount').setValue(transaction.amount);
+        this.transactionForm.get('createdOn').setValue(transaction.created_on.toISOString().split('T')[0]);
+        this.transactionForm.get('note').setValue(transaction.note);
+    }
+
+    cancel() {
+        if(this.new) {
+            this.reset();
+        } else {
+            this.dialogRef.close();
+        }
     }
 
     reset() {
         this.transactionForm.reset();
         this.transactionForm.get('currency').setValue('euro');
         this.transactionForm.get('createdOn').setValue(new Date().toISOString().split('T')[0]);
+
     }
 
     setUpAutoComplete() {
@@ -97,19 +136,36 @@ export class FinAddComponent implements OnInit {
 
     async submit() {
         if (this.transactionForm.valid) {
-            let transaction: FinTransaction = new FinTransaction();
-            transaction.account = Number.parseInt(this.transactionForm.get('account').value);
-            transaction.contra_account = Number.parseInt(this.transactionForm.get('contraAccount').value);
-            transaction.amount = Number.parseFloat(this.transactionForm.get('amount').value);
-            transaction.created_on = this.transactionForm.get('createdOn').value;
-            transaction.note = this.transactionForm.get('note').value;
-            this.messageService.add({
-                severity: 'success',
-                summary: 'Success',
-                life: 3000,
-                detail: 'Successfully created transaction #' + await this.finService.createTransaction(transaction)
-            });
-            this.reset();
+            if (this.new) {
+                let transaction: FinTransaction = new FinTransaction();
+                transaction.account = Number.parseInt(this.transactionForm.get('account').value);
+                transaction.contra_account = Number.parseInt(this.transactionForm.get('contraAccount').value);
+                transaction.amount = Number.parseFloat(this.transactionForm.get('amount').value);
+                transaction.created_on = this.transactionForm.get('createdOn').value;
+                transaction.note = this.transactionForm.get('note').value;
+                this.messageService.add({
+                    severity: 'success',
+                    summary: 'Success',
+                    life: 3000,
+                    detail: 'Successfully created transaction #' + await this.finService.createTransaction(transaction)
+                });
+                this.reset();
+            } else {
+                let transaction: FinTransaction = new FinTransaction();
+                transaction.id = Number.parseInt(this.transactionForm.get('id').value);
+                transaction.account = Number.parseInt(this.transactionForm.get('account').value);
+                transaction.contra_account = Number.parseInt(this.transactionForm.get('contraAccount').value);
+                transaction.amount = Number.parseFloat(this.transactionForm.get('amount').value);
+                transaction.created_on = this.transactionForm.get('createdOn').value;
+                transaction.note = this.transactionForm.get('note').value;
+                this.messageService.add({
+                    severity: 'success',
+                    summary: 'Success',
+                    life: 3000,
+                    detail: 'Successfully updated transaction #' + await this.finService.updateTransaction(transaction)
+                });
+                this.dialogRef.close();
+            }
         } else {
             this.messageService.add({severity: 'warn', summary: 'Warning', life: 3000, detail: 'Form is invalid'});
         }
@@ -129,7 +185,7 @@ export class FinAddComponent implements OnInit {
     }
 
     private _filterByName(value: string): string[] {
-        if(value === null) {
+        if (value === null) {
             return this.accountNames;
         }
         return this.accountNames.filter((accountName: string) => {
@@ -138,6 +194,9 @@ export class FinAddComponent implements OnInit {
     }
 
     changeFocus($event, formControlName: string, previous, next) {
+        if (!this.new) {
+            return;
+        }
         let autoCompleteTrigger: MatAutocompleteTrigger;
         switch (formControlName) {
             case 'account':
