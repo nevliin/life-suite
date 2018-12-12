@@ -4,8 +4,8 @@
 }
 
 .fin-account-detail {
-    margin-left: 15px;
-    margin-right: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 .transaction-list-container {
@@ -22,15 +22,11 @@
 .transaction {
     display: flex;
     flex-wrap: wrap;
-    margin: 4px 4px 4px 4px;
+    padding: 4px 4px 4px 4px;
 }
 
-.debit-transaction {
-    margin: 4px 4px 4px 0;
-}
-
-.credit-transaction {
-    margin: 4px 0 4px 4px;
+.editable-transaction:hover {
+    background-color: rgba(0, 0, 0, 0.08);
 }
 
 .faded-text {
@@ -44,7 +40,7 @@
     }
 
     .fin-account-detail {
-        margin-left: 5px;
-        margin-right: 5px;
+        padding-left: 5px;
+        padding-right: 5px;
     }
 }

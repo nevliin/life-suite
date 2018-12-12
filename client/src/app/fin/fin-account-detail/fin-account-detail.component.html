@@ -28,9 +28,9 @@
                 </div>
                 <ng-container *ngFor="let transaction of accountTransactions; let i = index">
                     <div *ngIf="transaction.debitTransaction" [ngStyle]="{'grid-row': (i * 2) + 2}"
-                         class="debit-transaction transaction"
+                         class="editable-transaction transaction"
                          [ngClass]="{'faded-text': transaction.debitTransaction.childAccount}"
-                         style="grid-column: 1;">
+                         style="grid-column: 1;" (click)="openTransaction(transaction.debitTransaction.transaction)">
                         <span><span
                                 style="width: 35px; text-align: right; margin-right: 10px;">{{transaction.debitTransaction.transaction.contra_account}}</span>
                         <b>{{accountsById.get(transaction.debitTransaction.transaction.contra_account).name}}</b></span>
@@ -42,9 +42,9 @@
                              style="border-right-color: rgba(0, 0, 0, 0.5)"></mat-divider>
                 <ng-container *ngFor="let transaction of accountTransactions; let i = index">
                     <div *ngIf="transaction.creditTransaction" [ngStyle]="{'grid-row': (i * 2) + 2}"
-                         class="credit-transaction transaction"
+                         class="editable-transaction transaction"
                          [ngClass]="{'faded-text': transaction.creditTransaction.childAccount}"
-                         style="grid-column: 3;">
+                         style="grid-column: 3;" (click)="openTransaction(transaction.debitTransaction.transaction)">
                         <span class="desktop">{{transaction.creditTransaction.transaction.created_on | date:'shortDate':'null':locale}}
                             / <b>{{transaction.creditTransaction.transaction.amount | currency:'EUR'}}</b></span>
                         <span style="margin-left: auto;"><b

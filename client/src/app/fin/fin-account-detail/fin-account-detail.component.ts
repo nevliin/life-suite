@@ -4,6 +4,8 @@ import {ActivatedRoute} from "@angular/router";
 import {FinService} from "../fin.service";
 import {FinTransaction} from "../fin-transaction";
 import {FinCategory} from "../fin-category";
+import {FinTransactionEditComponent} from "../fin-transaction-edit/fin-transaction-edit.component";
+import {MatDialog} from "@angular/material";
 
 export interface TransactionListRow {
     creditTransaction?: DisplayTransaction;
@@ -35,7 +37,8 @@ export class FinAccountDetailComponent implements OnInit {
 
     constructor(
         private readonly route: ActivatedRoute,
-        private readonly finService: FinService
+        private readonly finService: FinService,
+        private readonly dialog: MatDialog
     ) {
         this.locale = navigator.language;
     }
@@ -74,6 +77,13 @@ export class FinAccountDetailComponent implements OnInit {
                 }
                 return result;
             });
+    }
+
+    async openTransaction(transaction: FinTransaction) {
+        this.dialog.open(FinTransactionEditComponent, {
+            data: { transactionId: transaction.id, transaction: transaction },
+            panelClass: 'mat-card-dialog-container'
+        });
     }
 
     isAccountParent(accountId: number, possibleParentId: number, accountsById: Map<number, FinAccount>): boolean {
