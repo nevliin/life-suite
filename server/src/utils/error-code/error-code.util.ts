@@ -86,7 +86,7 @@ export class ErrorCodeUtil {
      */
     static resolveErrorOnRoute(e: Error, res: Response) {
         if(ErrorCodeUtil.isErrorWithCode(e)) {
-            res.status(900).send(e);
+            res.status((e as ErrorWithCode).http_code).send(e);
         } else {
             this.logger.error(e, 'resolveErrorOnRoute');
             res.status(500).send({
@@ -102,10 +102,17 @@ export class ErrorCodeUtil {
 class ErrorWithCode extends Error {
 
     error_code_id: number;
+    http_code: number;
 
     constructor(id: number) {
         super();
-        super.message = ErrorCodeUtil.errors.find(value => value.id === id).text;
+        const errorCode: IErrorCode = ErrorCodeUtil.errors.find(value => value.id === id);
+        if(errorCode) {
+            super.message = errorCode.text;
+            this.http_code = errorCode.code;
+        } else {
+            this.http_code = 500;
+        }
         this.error_code_id = id;
     }
 

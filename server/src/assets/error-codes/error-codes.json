@@ -1,8 +1,9 @@
 [
   {
     "id": 0,
-    "name": "Undefined Error",
-    "text": "Undefined internal error"
+    "name": "INTERNAL_ERROR",
+    "text": "Undefined internal error",
+    "code": 500
   },
   {
     "id": 1,
@@ -22,7 +23,8 @@
   {
     "id": 4,
     "name": "ACC_DENIED",
-    "text": "Access denied for this route"
+    "text": "Access denied for this route",
+    "code": 401
   },
   {
     "id": 5,
