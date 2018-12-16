@@ -23,7 +23,7 @@ export class AuthLoginWrapperComponent implements OnInit {
             if(Array.isArray(params['intendedRoute'])) {
                 this.intendedRoute = params['intendedRoute'];
             } else {
-                this.intendedRoute = [params['intendedRoute']];
+                this.intendedRoute = params['intendedRoute'] ? [params['intendedRoute']] : null;
             }
         }))
     }

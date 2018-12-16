@@ -23,6 +23,9 @@ const routes: Routes = [
         resolve: {
             menu: CurrentMenuResolver
         },
+        data: {
+            requiredPower: 1
+        },
         component: DashboardComponent
     },
     {

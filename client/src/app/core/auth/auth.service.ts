@@ -56,6 +56,7 @@ export class AuthService implements CanActivate {
             this.cookieService.deleteCookie('auth_token');
         }
         this.verified.next(false);
+        window.location.reload();
     }
 
     async verifyUser(): Promise<boolean> {

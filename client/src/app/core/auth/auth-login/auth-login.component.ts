@@ -4,6 +4,8 @@ import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {AuthService} from "../auth.service";
 import {MessageService} from "primeng/api";
+import {ErrorHandlingService} from "../../error-handling/error-handling.service";
+import {isNullOrUndefined} from "util";
 
 @Component({
     selector: 'auth-login',
@@ -26,7 +28,8 @@ export class AuthLoginComponent implements OnInit {
         readonly http: HttpClient,
         readonly router: Router,
         readonly authService: AuthService,
-        readonly messageService: MessageService
+        readonly messageService: MessageService,
+        private readonly errorHandlingService: ErrorHandlingService
     ) {
 
     }
@@ -40,25 +43,24 @@ export class AuthLoginComponent implements OnInit {
             try {
                 const result: boolean = await this.authService.logIn(this.loginForm.get('username')!.value, this.loginForm.get('password')!.value, this.loginForm.get('rememberMe')!.value);
                 if (result) {
-                    this.messages.push({severity: 'success', summary: 'Success', detail: 'Successfully logged in.'});
                     this.navigateIntended();
                     this.messageService.add({ severity: 'success', summary: 'Logged in', detail: 'Login was successful!', life: 3000, closable: true});
                 } else {
-                    this.messages.push({severity: 'error', summary: 'Warn', detail: 'Invalid credentials provided.'});
+                    this.messages.push({severity: 'warn', summary: 'Warning', detail: 'Invalid credentials provided.'});
                 }
             } catch (e) {
-                this.messages.push({severity: 'error', summary: 'Error', detail: e.message});
+                this.messages.push({severity: 'error', summary: 'Error', detail: this.errorHandlingService.getMessageFromHTTPError(e)});
             }
         } else {
-            this.messages.push({severity: 'error', summary: 'Error', detail: 'Please fill all fields'});
+            this.messages.push({severity: 'warn', summary: 'Warning', detail: 'Please fill all fields'});
         }
     }
 
     navigateIntended() {
-        if(this.intendedRoute !== undefined) {
+        if(!isNullOrUndefined(this.intendedRoute)) {
             this.router.navigate(this.intendedRoute);
         } else {
-            this.router.navigate(['home']);
+            this.router.navigate(['/']);
         }
     }
 
