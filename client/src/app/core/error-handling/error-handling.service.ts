@@ -14,6 +14,17 @@ export class ErrorHandlingService {
 
     public handleHTTPError(e: any) {
         this.messageService.clear();
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: (e.status === 900) ? e.error.message : e.message, life: 3000, closable: true});
+        debugger;
+        this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: this.getMessageFromHTTPError(e),
+            life: 3000,
+            closable: true
+        });
+    }
+
+    public getMessageFromHTTPError(e: any): string {
+        return (e.status === 900 || e.hasOwnProperty('error')) ? e.error.message : e.message;
     }
 }
