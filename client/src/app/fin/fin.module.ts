@@ -15,6 +15,7 @@ import {FinAccountSearchComponent} from './fin-account-search/fin-account-search
 import {FinAccountDetailComponent} from './fin-account-detail/fin-account-detail.component';
 import {PipesModule} from "../core/pipes/pipes.module";
 import {ChartModule} from "primeng/chart";
+import {MatDatepickerModule, MatNativeDateModule} from "@angular/material";
 
 @NgModule({
     imports: [
@@ -25,7 +26,9 @@ import {ChartModule} from "primeng/chart";
         ComponentsModule,
         AlertDialogModule,
         PipesModule,
-        ChartModule
+        ChartModule,
+        MatDatepickerModule,
+        MatNativeDateModule
     ],
     declarations: [
         FinDashboardComponent,

@@ -46,7 +46,7 @@
         ]
       },
       {
-        "label": "Add",
+        "label": "Add Transaction",
         "route": [
           "add"
         ]

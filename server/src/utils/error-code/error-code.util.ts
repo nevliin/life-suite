@@ -1,6 +1,7 @@
 import {Response} from "express";
 import {IErrorCode} from "../../assets/error-codes/error-codes.model";
 import {Logger, LoggingUtil} from "../logging/logging.util";
+import {error} from "util";
 
 /**
  * Utility for easily returning meaningful error codes to the client
@@ -109,10 +110,8 @@ class ErrorWithCode extends Error {
         const errorCode: IErrorCode = ErrorCodeUtil.errors.find(value => value.id === id);
         if(errorCode) {
             super.message = errorCode.text;
-            this.http_code = errorCode.code;
-        } else {
-            this.http_code = 500;
         }
+        this.http_code = errorCode && errorCode.code ? errorCode.code : 900;
         this.error_code_id = id;
     }
 
