@@ -25,6 +25,11 @@ export interface DisplayTransaction {
 export class FinAccountDetailComponent implements OnInit {
     locale: string = "en";
 
+    displayTransactionsFrom: Date;
+
+    maxDate = new Date();
+    minDate = new Date(2018, 10, 1);
+
     account: FinAccount = null;
     accountTransactions: TransactionListRow[] = null;
     category: FinCategory = null;
@@ -41,6 +46,8 @@ export class FinAccountDetailComponent implements OnInit {
         private readonly dialog: MatDialog
     ) {
         this.locale = navigator.language;
+        this.displayTransactionsFrom = new Date();
+        this.displayTransactionsFrom.setMonth(this.displayTransactionsFrom.getMonth() - 1);
     }
 
     async ngOnInit() {
@@ -49,14 +56,17 @@ export class FinAccountDetailComponent implements OnInit {
             this.accountsById = await this.finService.getAccountsById();
             this.account = this.accountsById.get(accountId);
             this.category = await this.finService.getCategory(this.account.category_id);
-            const from: Date = new Date();
-            from.setMonth(from.getMonth() - 1);
-            this.accountTransactions = await this.getAccountTransactions(accountId, from);
-            this.accountBalance = await this.finService.getAccountBalance(accountId);
-            this.initialBalance = this.calcInitialBalance(this.accountBalance, this.accountTransactions);
-            this.debitSum = this.calcDebitSum(this.initialBalance, this.accountTransactions, this.category.active);
-            this.creditSum = this.calcCreditSum(this.initialBalance, this.accountTransactions);
+            await this.displayTransactions();
         });
+    }
+
+    async displayTransactions() {
+        this.accountTransactions = await this.getAccountTransactions(this.account.id, this.displayTransactionsFrom);
+        this.accountBalance = await this.finService.getAccountBalance(this.account.id);
+        this.initialBalance = this.calcInitialBalance(this.accountBalance, this.accountTransactions);
+        this.debitSum = this.calcDebitSum(this.initialBalance, this.accountTransactions);
+        this.creditSum = this.calcCreditSum(this.initialBalance, this.accountTransactions);
+
     }
 
     async getAccountTransactions(id: number, from?: Date, to?: Date): Promise<TransactionListRow[]> {
@@ -119,8 +129,7 @@ export class FinAccountDetailComponent implements OnInit {
 
     calcDebitSum(
         initialBalance: number,
-        accountTransactions: TransactionListRow[],
-        active: boolean
+        accountTransactions: TransactionListRow[]
     ): number {
         let sum: number = 0;
         accountTransactions.forEach((value: TransactionListRow) => {

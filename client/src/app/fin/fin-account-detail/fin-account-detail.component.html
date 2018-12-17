@@ -92,6 +92,14 @@
             <div *ngIf="!accountTransactions" style="display: flex; justify-content: center; margin: 20px;">
                 <mat-spinner></mat-spinner>
             </div>
+            <mat-form-field class="date-picker">
+                <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker"
+                       [(ngModel)]="displayTransactionsFrom"
+                       (dateChange)="displayTransactions()"
+                       placeholder="Display transactions from">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
         </div>
     </mat-card-content>
 </mat-card>

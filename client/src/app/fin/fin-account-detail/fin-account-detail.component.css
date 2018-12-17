@@ -33,6 +33,12 @@
     color: rgba(0, 0, 0, 0.35);
 }
 
+.date-picker {
+    max-width: 360px;
+    margin-left: 4px;
+    margin-top: 20px;
+}
+
 @media (max-width: 360px) {
     .fin-account-detail-container {
         max-width: 360px;
