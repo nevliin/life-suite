@@ -148,13 +148,16 @@ export class FinService {
     }
 
     async getRecentlyUsedAccount(): Promise<AccountModel[]> {
-        const statement = `WITH account_ids AS (
+        const statement =
+            `WITH account_ids AS (
               (SELECT account, created_on
                FROM fin_transaction f_t1
+               WHERE valid = 1
                ORDER BY created_on DESC)
               UNION
               (SELECT contra_account AS account, created_on
                FROM fin_transaction f_t1
+               WHERE valid = 1
                ORDER BY created_on DESC)),
                  distinct_ids AS (
                    SELECT account, created_on
@@ -166,7 +169,9 @@ export class FinService {
                    ORDER BY created_on DESC
                    LIMIT 20
                  )
-            SELECT id, name, note, parent_account, category_id, valid, fin_account.created_on FROM fin_account JOIN distinct_ids ON fin_account.id = distinct_ids.account
+            SELECT id, name, note, parent_account, category_id, valid, fin_account.created_on 
+            FROM fin_account 
+            JOIN distinct_ids ON fin_account.id = distinct_ids.account
             ORDER BY distinct_ids.created_on DESC
             LIMIT 20;`;
         const result: DBQueryResult = await this.db.query(statement);
