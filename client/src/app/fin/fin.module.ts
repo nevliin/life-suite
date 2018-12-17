@@ -13,6 +13,8 @@ import {MatComponentCollectorModule} from "../core/mat-component-collector.modul
 import {FinService} from "./fin.service";
 import {FinAccountSearchComponent} from './fin-account-search/fin-account-search.component';
 import {FinAccountDetailComponent} from './fin-account-detail/fin-account-detail.component';
+import {PipesModule} from "../core/pipes/pipes.module";
+import {ChartModule} from "primeng/chart";
 
 @NgModule({
     imports: [
@@ -21,7 +23,9 @@ import {FinAccountDetailComponent} from './fin-account-detail/fin-account-detail
         FormsModule,
         ReactiveFormsModule,
         ComponentsModule,
-        AlertDialogModule
+        AlertDialogModule,
+        PipesModule,
+        ChartModule
     ],
     declarations: [
         FinDashboardComponent,

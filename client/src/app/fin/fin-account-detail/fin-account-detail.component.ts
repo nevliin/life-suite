@@ -53,9 +53,9 @@ export class FinAccountDetailComponent implements OnInit {
             from.setMonth(from.getMonth() - 1);
             this.accountTransactions = await this.getAccountTransactions(accountId, from);
             this.accountBalance = await this.finService.getAccountBalance(accountId);
-            this.initialBalance = this.calcInitialBalance(this.accountBalance, this.accountTransactions, this.category.active);
+            this.initialBalance = this.calcInitialBalance(this.accountBalance, this.accountTransactions);
             this.debitSum = this.calcDebitSum(this.initialBalance, this.accountTransactions, this.category.active);
-            this.creditSum = this.calcCreditSum(this.initialBalance, this.accountTransactions, this.category.active);
+            this.creditSum = this.calcCreditSum(this.initialBalance, this.accountTransactions);
         });
     }
 
@@ -81,7 +81,7 @@ export class FinAccountDetailComponent implements OnInit {
 
     async openTransaction(transaction: FinTransaction) {
         this.dialog.open(FinTransactionEditComponent, {
-            data: { transactionId: transaction.id, transaction: transaction },
+            data: {transactionId: transaction.id, transaction: transaction},
             panelClass: 'mat-card-dialog-container'
         });
     }
@@ -101,8 +101,7 @@ export class FinAccountDetailComponent implements OnInit {
 
     calcInitialBalance(
         accountBalance: number,
-        accountTransactions: TransactionListRow[],
-        active: boolean
+        accountTransactions: TransactionListRow[]
     ): number {
         let debitSum: number = 0;
         let creditSum: number = 0;
@@ -115,11 +114,7 @@ export class FinAccountDetailComponent implements OnInit {
             }
         });
 
-        if (active) {
-            return accountBalance - debitSum + creditSum;
-        } else {
-            return accountBalance + debitSum - creditSum;
-        }
+        return accountBalance - debitSum + creditSum;
     }
 
     calcDebitSum(
@@ -133,7 +128,7 @@ export class FinAccountDetailComponent implements OnInit {
                 sum += value.debitTransaction.transaction.amount;
             }
         });
-        if(active) {
+        if (initialBalance >= 0) {
             sum += initialBalance;
         }
         return sum;
@@ -141,8 +136,7 @@ export class FinAccountDetailComponent implements OnInit {
 
     calcCreditSum(
         initialBalance: number,
-        accountTransactions: TransactionListRow[],
-        active: boolean
+        accountTransactions: TransactionListRow[]
     ) {
         let sum: number = 0;
         accountTransactions.forEach((value: TransactionListRow) => {
@@ -150,7 +144,7 @@ export class FinAccountDetailComponent implements OnInit {
                 sum += value.creditTransaction.transaction.amount;
             }
         });
-        if(!active) {
+        if (initialBalance < 0) {
             sum += initialBalance;
         }
         return sum;

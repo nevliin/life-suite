@@ -8,24 +8,27 @@
             </div>
             <mat-divider [inset]="true" style="border-top-color: rgba(0, 0, 0, 0.5)"></mat-divider>
             <div *ngIf="accountTransactions" class="transaction-list-container">
-                <div [ngStyle]="{'grid-column': (category.active) ? 1 : 3}"
-                     [ngClass]="{'debit-transaction': category.active, 'credit-transaction': !category.active}"
+                <!-- Initial Balance Transaction -->
+                <div [ngStyle]="{'grid-column': initialBalance >= 0 ? 1 : 3}"
+                     [ngClass]="{'debit-transaction': initialBalance >= 0, 'credit-transaction': initialBalance < 0}"
                      class="faded-text transaction" style="grid-row: 1;">
-                    <span *ngIf="!category.active" style="margin-right: auto;">
+                    <span *ngIf="initialBalance < 0" style="margin-right: auto;">
                         <b>{{initialBalance | currency:'EUR'}}</b></span>
                     <span>
-                        <span *ngIf="category.active"
+                        <span *ngIf="initialBalance >= 0"
                               style="width: 35px; text-align: right; margin-right: 10px;">0000</span>
                         <b style="text-align: right;">Initial</b>
-                        <span *ngIf="!category.active"
+                        <span *ngIf="initialBalance < 0"
                               style="width: 35px; text-align: left; margin-left: 10px;">0000</span></span>
-                    <span *ngIf="category.active" style="margin-left: auto;">
+                    <span *ngIf="initialBalance >= 0" style="margin-left: auto;">
                         <b>{{initialBalance | currency:'EUR'}}</b></span>
                 </div>
+                <!-- Horizontal Dividers -->
                 <div *ngFor="let transaction of accountTransactions; let i = index" style="grid-column: 1/4"
                      [ngStyle]="{'grid-row': (i * 2) + 2}">
                     <mat-divider [inset]="true"></mat-divider>
                 </div>
+                <!-- Debit Transactions -->
                 <ng-container *ngFor="let transaction of accountTransactions; let i = index">
                     <div *ngIf="transaction.debitTransaction" [ngStyle]="{'grid-row': (i * 2) + 2}"
                          class="editable-transaction transaction"
@@ -38,8 +41,10 @@
                             / {{transaction.debitTransaction.transaction.created_on | date:'shortDate':'null':locale}}</span>
                     </div>
                 </ng-container>
+                <!-- Vertical Divider -->
                 <mat-divider [vertical]="true" class="transaction-list-divider"
                              style="border-right-color: rgba(0, 0, 0, 0.5)"></mat-divider>
+                <!-- Credit Transactions -->
                 <ng-container *ngFor="let transaction of accountTransactions; let i = index">
                     <div *ngIf="transaction.creditTransaction" [ngStyle]="{'grid-row': (i * 2) + 2}"
                          class="editable-transaction transaction"
@@ -54,28 +59,33 @@
                             / <b>{{transaction.creditTransaction.transaction.amount | currency:'EUR'}}</b></span>
                     </div>
                 </ng-container>
+                <!-- Horizontal Divider -->
                 <mat-divider [inset]="true" style="grid-column: 1/4; border-top-color: rgba(0, 0, 0, 0.5)"
                              [ngStyle]="{'grid-row': (accountTransactions.length * 2) + 4}"></mat-divider>
+                <!-- Debit Sum -->
                 <div [ngStyle]="{'grid-row': (accountTransactions.length * 2) + 5}" style="grid-column: 1"
                      class="transaction">
                     <b>Sum</b>
                     <b style="margin-left: auto;">{{debitSum | currency:'EUR'}}</b>
                 </div>
+                <!-- Credit Sum -->
                 <div [ngStyle]="{'grid-row': (accountTransactions.length * 2) + 5}" style="grid-column: 3"
                      class="transaction">
                     <b style="margin-right: auto;">{{creditSum | currency:'EUR'}}</b>
                     <b>Sum</b>
                 </div>
+                <!-- Horizontal Divider -->
                 <mat-divider [inset]="true" style="grid-column: 1/4; border-top-color: rgba(0, 0, 0, 0.5)"
                              [ngStyle]="{'grid-row': (accountTransactions.length * 2) + 6}"></mat-divider>
-                <div [ngStyle]="{'grid-column': (category.active) ? 1 : 3, 'grid-row': (accountTransactions.length * 2) + 7}"
+                <!-- Account Balance -->
+                <div [ngStyle]="{'grid-column': accountBalance >= 0 ? 1 : 3, 'grid-row': (accountTransactions.length * 2) + 7}"
                      class="transaction">
-                    <span *ngIf="!category.active" style="margin-right: auto;">
+                    <span *ngIf="accountBalance < 0" style="margin-right: auto;">
                         <b>{{accountBalance | currency:'EUR'}}</b></span>
                     <span>
                         <b style="text-align: right;">Balance</b>
                     </span>
-                    <span *ngIf="category.active" style="margin-left: auto;">
+                    <span *ngIf="accountBalance >= 0" style="margin-left: auto;">
                         <b>{{accountBalance | currency:'EUR'}}</b></span>
                 </div>
             </div>
