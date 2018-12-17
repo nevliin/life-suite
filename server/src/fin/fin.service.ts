@@ -51,15 +51,7 @@ export class FinService {
                       WHERE fin_transaction.valid = 1
                         AND fin_transaction.created_on > ((SELECT interval_year FROM constants) + interval '3 hours')
                         AND fin_transaction.created_on < ((SELECT interval_year FROM constants) + interval '1 year' - interval '3 hours')
-                        AND (CASE
-                               WHEN (
-                                      SELECT active
-                                      FROM fin_account
-                                             JOIN fin_category on fin_account.category_id = fin_category.id
-                                      WHERE fin_account.id = (SELECT account_id FROM constants)) = 1
-                                 THEN fin_transaction.account
-                               ELSE fin_transaction.contra_account
-                        END) IN
+                        AND fin_transaction.account IN
                             (
                               SELECT *
                               FROM accounts
@@ -70,15 +62,7 @@ export class FinService {
                       WHERE fin_transaction.valid = 1
                         AND fin_transaction.created_on > ((SELECT interval_year FROM constants) + interval '3 hours')
                         AND fin_transaction.created_on < ((SELECT interval_year FROM constants) + interval '1 year' - interval '3 hours')
-                        AND (CASE
-                               WHEN (
-                                      SELECT active
-                                      FROM fin_account
-                                             JOIN fin_category on fin_account.category_id = fin_category.id
-                                      WHERE fin_account.id = (SELECT account_id FROM constants)) = 1
-                                 THEN fin_transaction.contra_account
-                               ELSE fin_transaction.account
-                        END) IN (
+                        AND fin_transaction.contra_account IN (
                               SELECT *
                               FROM accounts
                             )
