@@ -1,7 +1,8 @@
 import {DBQueryResult, DbUtil} from "../utils/db/db.util";
 import {
     AccountBalanceByCategoryRequest,
-    AccountBalanceRequest, AccountBalanceResponse,
+    AccountBalanceRequest,
+    AccountBalanceResponse,
     AccountTransactionsRequest,
     AllTransactionsAmountRequest,
     CategoryTotalRequest
@@ -21,12 +22,12 @@ export class FinService {
     }
 
     async getAccountBalancesByCategory(reqParams: AccountBalanceByCategoryRequest): Promise<AccountBalanceResponse[]> {
-        if(isNullOrUndefined(reqParams.categoryId) || !Number.isInteger(Number.parseInt(reqParams.categoryId))) {
+        if (isNullOrUndefined(reqParams.categoryId) || !Number.isInteger(Number.parseInt(reqParams.categoryId))) {
             ErrorCodeUtil.findErrorCodeAndThrow('INVALID_PARAMETER');
         }
         let to: Date = new Date();
-        if(!isNullOrUndefined(reqParams.to)) {
-            if(Number.isNaN(Date.parse(reqParams.to))) {
+        if (!isNullOrUndefined(reqParams.to)) {
+            if (Number.isNaN(Date.parse(reqParams.to))) {
                 ErrorCodeUtil.findErrorCodeAndThrow('INVALID_PARAMETER');
             } else {
                 to = new Date(Date.parse(reqParams.to));
@@ -34,8 +35,8 @@ export class FinService {
         }
 
         let from: Date = new Date(0);
-        if(!isNullOrUndefined(reqParams.from)) {
-            if(Number.isNaN(Date.parse(reqParams.from))) {
+        if (!isNullOrUndefined(reqParams.from)) {
+            if (Number.isNaN(Date.parse(reqParams.from))) {
                 ErrorCodeUtil.findErrorCodeAndThrow('INVALID_PARAMETER');
             } else {
                 from = new Date(Date.parse(reqParams.from));
@@ -83,10 +84,11 @@ export class FinService {
         FROM fin_account AS fa
         WHERE fa.category_id = (SELECT category_id FROM constants);`;
 
-        console.log(statement);
-
         const result: DBQueryResult = await this.db.query(statement);
-        return result.rows;
+        return result.rows.map((row: any) => {
+            row.balance = Number.parseFloat(row.balance);
+            return row;
+        });
     }
 
     async getAccountBalance(reqParams: AccountBalanceRequest): Promise<number | null> {
@@ -161,13 +163,13 @@ export class FinService {
                   AND (account IN (SELECT id FROM accounts)
                          OR
                        contra_account IN (SELECT id FROM accounts))`;
-            if(reqParams.from) {
+            if (reqParams.from) {
                 statement += ` AND fin_transaction.created_on > to_timestamp('${this.db.esc(reqParams.from)}', 'YYYY-MM-DD HH24:MI:SS.MS')`;
             }
-            if(reqParams.to) {
+            if (reqParams.to) {
                 statement += ` AND fin_transaction.created_on < to_timestamp('${this.db.esc(reqParams.to)}', 'YYYY-MM-DD HH24:MI:SS.MS')`;
             }
-            if(reqParams.limit && Number.isInteger(Number.parseInt(reqParams.limit))) {
+            if (reqParams.limit && Number.isInteger(Number.parseInt(reqParams.limit))) {
                 statement += ` LIMIT ${this.db.escNumber(Number.parseInt(reqParams.limit))}`;
             }
             statement += `;`;
