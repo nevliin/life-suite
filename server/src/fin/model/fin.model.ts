@@ -3,20 +3,9 @@ export class CategoryModel {
     active: boolean;
 }
 
-export class CategoryAddModel extends CategoryModel {
-
-}
-
-export class CategoryUpdateModel extends CategoryModel {
-    id: number;
-}
-
-export class CategoryDeleteModel {
-    id: number;
-}
-
 export class AccountTransactionsRequest {
     accountId: string;
+    children?: boolean;
     from?: string;
     to?: string;
     limit?: string;
@@ -38,5 +27,16 @@ export class AccountBalanceRequest {
     year?: string;
 }
 
+export class AccountBalanceByCategoryRequest {
+    categoryId: string;
+    from?: string;
+    to?: string;
+}
+
+export class AccountBalanceResponse {
+    id: number;
+    name: string;
+    balance: number;
+}
 
 

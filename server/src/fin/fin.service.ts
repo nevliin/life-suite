@@ -1,6 +1,7 @@
 import {DBQueryResult, DbUtil} from "../utils/db/db.util";
 import {
-    AccountBalanceRequest,
+    AccountBalanceByCategoryRequest,
+    AccountBalanceRequest, AccountBalanceResponse,
     AccountTransactionsRequest,
     AllTransactionsAmountRequest,
     CategoryTotalRequest
@@ -17,6 +18,75 @@ export class FinService {
 
     constructor() {
         this.db = new PgSqlUtil();
+    }
+
+    async getAccountBalancesByCategory(reqParams: AccountBalanceByCategoryRequest): Promise<AccountBalanceResponse[]> {
+        if(isNullOrUndefined(reqParams.categoryId) || !Number.isInteger(Number.parseInt(reqParams.categoryId))) {
+            ErrorCodeUtil.findErrorCodeAndThrow('INVALID_PARAMETER');
+        }
+        let to: Date = new Date();
+        if(!isNullOrUndefined(reqParams.to)) {
+            if(Number.isNaN(Date.parse(reqParams.to))) {
+                ErrorCodeUtil.findErrorCodeAndThrow('INVALID_PARAMETER');
+            } else {
+                to = new Date(Date.parse(reqParams.to));
+            }
+        }
+
+        let from: Date = new Date(0);
+        if(!isNullOrUndefined(reqParams.from)) {
+            if(Number.isNaN(Date.parse(reqParams.from))) {
+                ErrorCodeUtil.findErrorCodeAndThrow('INVALID_PARAMETER');
+            } else {
+                from = new Date(Date.parse(reqParams.from));
+            }
+        }
+
+        let statement: string = `WITH constants (category_id, "from", "to") AS (
+          VALUES (${this.db.escNumber(Number.parseInt(reqParams.categoryId))},
+                  to_timestamp('${this.db.esc(from.toISOString())}', 'YYYY-MM-DD HH24:MI:SS.MS'),
+                  to_timestamp('${this.db.esc(to.toISOString())}', 'YYYY-MM-DD HH24:MI:SS.MS'))
+        )
+        SELECT id,
+               name,
+               ((
+                  SELECT COALESCE(SUM(amount), 0) as balance
+                  FROM fin_transaction
+                  WHERE fin_transaction.valid = 1
+                    AND fin_transaction.created_on > (SELECT "from" FROM constants)
+                    AND fin_transaction.created_on < (SELECT "to" FROM constants)
+                    AND (CASE
+                           WHEN (
+                                  SELECT active
+                                  FROM fin_account
+                                         JOIN fin_category on fin_account.category_id = fin_category.id
+                                  WHERE fin_account.id = fa.id) = 1
+                             THEN fin_transaction.account
+                           ELSE fin_transaction.contra_account
+                    END) = fa.id
+                ) - (
+                  SELECT COALESCE(SUM(amount), 0) as balance
+                  FROM fin_transaction
+                  WHERE fin_transaction.valid = 1
+                    AND fin_transaction.created_on > (SELECT "from" FROM constants)
+                    AND fin_transaction.created_on < (SELECT "to" FROM constants)
+                    AND (CASE
+                           WHEN (
+                                  SELECT active
+                                  FROM fin_account
+                                         JOIN fin_category on fin_account.category_id = fin_category.id
+                                  WHERE fin_account.id = fa.id) = 1
+                             THEN fin_transaction.contra_account
+                           ELSE fin_transaction.account
+                    END) = fa.id
+                )) as balance
+        FROM fin_account AS fa
+        WHERE fa.category_id = (SELECT category_id FROM constants);`;
+
+        console.log(statement);
+
+        const result: DBQueryResult = await this.db.query(statement);
+        return result.rows;
     }
 
     async getAccountBalance(reqParams: AccountBalanceRequest): Promise<number | null> {

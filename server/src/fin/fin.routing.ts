@@ -7,7 +7,8 @@ import {TransactionModel} from "./model/transaction.model";
 import {ConstraintModel} from "./model/constraint.model";
 import {ErrorCodeUtil} from "../utils/error-code/error-code.util";
 import {
-    AccountBalanceRequest,
+    AccountBalanceByCategoryRequest,
+    AccountBalanceRequest, AccountBalanceResponse,
     AccountTransactionsRequest,
     AllTransactionsAmountRequest,
     CategoryTotalRequest
@@ -63,6 +64,19 @@ export const init = (): Router => {
             res.status(200).send({
                 data: {
                     amount
+                }
+            });
+        } catch (e) {
+            ErrorCodeUtil.resolveErrorOnRoute(e, res);
+        }
+    });
+
+    finRouter.get('/accountBalancesByCategory', async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const balances: AccountBalanceResponse[] = await finService.getAccountBalancesByCategory(<AccountBalanceByCategoryRequest>req.query);
+            res.status(200).send({
+                data: {
+                    balances
                 }
             });
         } catch (e) {
