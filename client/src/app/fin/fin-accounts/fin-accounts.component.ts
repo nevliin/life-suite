@@ -182,7 +182,7 @@ class AccountTreeWrapper {
 
     constructor(database: AccountDatabase) {
         this.database = database;
-        this.database.dataChange.subscribe(data => this.nestedDataSource.data = data);
+        this.database.dataChange.subscribe(data => this.nestedDataSource.expensesData = data);
     }
 
     private _getChildren(node: AccountNode): AccountNode[] {

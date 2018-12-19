@@ -15,6 +15,7 @@ import {FinTransactionEditComponent} from "./fin/fin-transaction-edit/fin-transa
 import {FinAccountsComponent} from "./fin/fin-accounts/fin-accounts.component";
 import {FinAccountSearchComponent} from "./fin/fin-account-search/fin-account-search.component";
 import {FinAccountDetailComponent} from "./fin/fin-account-detail/fin-account-detail.component";
+import {FinDashboardComponent} from "./fin/fin-dashboard/fin-dashboard.component";
 
 const routes: Routes = [
     {
@@ -80,7 +81,7 @@ const routes: Routes = [
         },
         children: [
             {
-                path: 'dashboard', component: InvListComponent
+                path: 'dashboard', component: FinDashboardComponent
             },
             {
                 path: 'add', component: FinTransactionEditComponent

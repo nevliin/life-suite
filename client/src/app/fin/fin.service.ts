@@ -8,6 +8,12 @@ import {FinCategory} from "./fin-category";
 
 const API_ROOT: string = '/api/fin/';
 
+export interface AccountBalance {
+    id: number;
+    name: string;
+    balance: number;
+}
+
 @Injectable({
     providedIn: 'root'
 })
@@ -32,6 +38,20 @@ export class FinService {
         }).pipe(map((response: any) => Number.parseFloat(response.data.amount))).toPromise().catch((e) => {
             this.errorHandlingService.handleHTTPError(e);
             return null;
+        })
+    }
+
+    async getAccountBalancesByCategory(categoryId: number, from?: Date, to?: Date): Promise<AccountBalance[]> {
+        const options: any = {
+            categoryId: categoryId.toString()
+        };
+        from ? options.from = from.toISOString() : null;
+        to ? options.to = to.toISOString() : null;
+        return await this.http.get(API_ROOT + 'accountBalancesByCategory', {
+            params: options
+        }).pipe(map((response: any) => response.data.balances)).toPromise().catch((e) => {
+            this.errorHandlingService.handleHTTPError(e);
+            return [];
         })
     }
 

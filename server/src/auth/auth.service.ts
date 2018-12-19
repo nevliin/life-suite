@@ -31,7 +31,7 @@ export class AuthService {
     static routePermissions: Map<string, RouteWithPermissionsModel> = new Map();
 
     /**
-     * Init dependencies and route data
+     * Init dependencies and route expensesData
      */
     static async init() {
         this.db = new MySqlUtil(config.auth);
