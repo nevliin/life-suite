@@ -1,0 +1,9 @@
+.fin-dashboard-container {
+    max-width: 1200px;
+}
+
+@media (max-width: 360px) {
+    .fin-dashboard-container {
+        max-width: 360px;
+    }
+}
