@@ -59,7 +59,7 @@ export class CRUDConstructor<T extends ICRUDModel, > {
             this.autoIncrementId = (!isNullOrUndefined(options.autoIncrementId)) ? options.autoIncrementId : true;
             this.softDelete = options.softDelete;
             this.db = this.mapDbTypeToClass(options.dbType, options.dbConfig);
-            this.fieldMappings = this.completeFieldMappings(model, options.fieldMappings);
+            this.fieldMappings = this.completeFieldMappings(model, new Map<string, string>(Object.entries(options.fieldMappings)));
             this.autoFilledFields = (options.autoFilledFields) ? options.autoFilledFields : [];
             this.validFieldMapping = (options.validFieldMapping) ? options.validFieldMapping : 'valid';
         } else {
@@ -71,7 +71,7 @@ export class CRUDConstructor<T extends ICRUDModel, > {
 
     mapDbTypeToClass(type?: DBType, dbconfig?: IDBConfig): DbUtil {
         let result: DbUtil;
-        switch(type) {
+        switch (type) {
             case DBType.MYSQL:
                 result = new MySqlUtil(dbconfig);
                 break;
@@ -284,10 +284,10 @@ export class CRUDConstructor<T extends ICRUDModel, > {
      * @returns Object ID
      */
     public async update(data: T, oldId?: number): Promise<number> {
-        if(isNullOrUndefined(oldId) && isNullOrUndefined(data.id)) {
+        if (isNullOrUndefined(oldId) && isNullOrUndefined(data.id)) {
             ErrorCodeUtil.findErrorCodeAndThrow('NO_ID_PROVIDED');
         }
-        if(oldId === null || oldId === data.id) {
+        if (oldId === null || oldId === data.id) {
             oldId = undefined;
         }
         let properties: string[] = Array.from(this.fieldMappings.keys());
@@ -500,8 +500,8 @@ interface CRUDOptions {
     autoIncrementId?: boolean;
     // list of names of fields that are auto-filled by the db and should be omitted if empty
     autoFilledFields?: string[];
-    // mapping of object fields to DB table fields, default is the same name for both
-    fieldMappings?: Map<string, string>;
+    // mapping of object fields to DB table fields, default is the same name for both; the object keys are used as javascript names, the object values as sql names
+    fieldMappings?: object;
 
     // remap the field 'valid' for soft-deleting to a different DB table field
     validFieldMapping?: string;
