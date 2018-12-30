@@ -5,7 +5,7 @@ import {Logger, LoggingUtil} from "../../utils/logging/logging.util";
 import {ErrorCodeUtil} from "../../utils/error-code/error-code.util";
 import {NextFunction, Request, Response, Router} from "express";
 import {isNullOrUndefined} from "../../utils/util";
-import {CRUDListOptions} from "./crud-list-options";
+import {CRUDListFilter, CRUDListOptions} from "./crud-list-options";
 import {MySqlUtil} from "../../utils/db/mysql.util";
 import {PgSqlUtil} from "../../utils/db/pgsql.util";
 
@@ -59,7 +59,7 @@ export class CRUDConstructor<T extends ICRUDModel, > {
             this.autoIncrementId = (!isNullOrUndefined(options.autoIncrementId)) ? options.autoIncrementId : true;
             this.softDelete = options.softDelete;
             this.db = this.mapDbTypeToClass(options.dbType, options.dbConfig);
-            this.fieldMappings = this.completeFieldMappings(model, new Map<string, string>(Object.entries(options.fieldMappings)));
+            this.fieldMappings = this.completeFieldMappings(model, new Map<string, string>(Object.entries(options.fieldMappings ? options.fieldMappings : {})));
             this.autoFilledFields = (options.autoFilledFields) ? options.autoFilledFields : [];
             this.validFieldMapping = (options.validFieldMapping) ? options.validFieldMapping : 'valid';
         } else {
@@ -100,6 +100,7 @@ export class CRUDConstructor<T extends ICRUDModel, > {
             if (typeof model[key] === ('undefined' || 'function')) {
                 this.logger.warn(`Illegal model '${model.constructor.name}' provided; property '${key}' is undefined or a function.`, 'completeFieldMappings');
             } else {
+                console.log(model[key] + ' - ' + typeof model[key]);
                 if (typeof model[key] === 'number') {
                     dbField.type = DBFieldType.NUMBER;
                 } else if (typeof model[key] === 'boolean') {
@@ -234,9 +235,36 @@ export class CRUDConstructor<T extends ICRUDModel, > {
                 statement += ` WHERE ${this.validFieldMapping} = 1`;
             }
         } else {
+            this.validateCRUDListFilter(options.filter);
+            let whereOpened: boolean = false;
             if ((isNullOrUndefined(options.bypassSoftDelete) || typeof options.bypassSoftDelete !== "boolean" || !options.bypassSoftDelete) && this.softDelete) {
                 // Add check for validity if the objects are soft-deleted
                 statement += ` WHERE ${this.validFieldMapping} = 1`;
+                whereOpened = true;
+            }
+            if (options.filter) {
+                options.filter.forEach((filter: CRUDListFilter, index: number) => {
+                    if (index === 0 && !whereOpened) {
+                        statement += ' WHERE';
+                    } else {
+                        statement += ' AND';
+                    }
+                    statement += ` ${this.fieldMappings.get(filter.field).name}`;
+                    if (filter.partialMatch) {
+                        statement += ' LIKE';
+                    } else {
+                        statement += ' =';
+                    }
+                    console.log(this.fieldMappings.get(filter.field));
+                    if (this.fieldMappings.get(filter.field).type === (DBFieldType.STRING || DBFieldType.TIMESTAMP)) {
+                        statement += ` '${this.db.esc(filter.value)}'`;
+                    } else if (this.fieldMappings.get(filter.field).type === DBFieldType.BOOLEAN) {
+                        const value: number = filter.value ? 1 : 0;
+                        statement += ` ${value}`;
+                    } else {
+                        statement += ` ${this.db.escNumber(Number(filter.value))}`;
+                    }
+                })
             }
             if (!isNullOrUndefined(options.orderField)) {
                 if (typeof options.orderField === 'string' && this.fieldMappings.has(options.orderField)) {
@@ -254,6 +282,7 @@ export class CRUDConstructor<T extends ICRUDModel, > {
             }
         }
         statement += `;`;
+        console.log(statement);
 
         const queryResult: DBQueryResult = await this.db.query(statement);
 
@@ -461,6 +490,30 @@ export class CRUDConstructor<T extends ICRUDModel, > {
             });
         }
         return router;
+    }
+
+    validateCRUDListFilter(filter: [CRUDListFilter]) {
+        if (Array.isArray(filter)) {
+            filter.forEach(filterEntry => {
+                if (!this.fieldMappings.has((filterEntry.field))) {
+                    ErrorCodeUtil.findErrorCodeAndThrow('INVALID_LIST_FILTER');
+                }
+                const fieldType: DBFieldType = this.fieldMappings.get(filterEntry.field).type;
+                if (
+                    (fieldType === DBFieldType.BOOLEAN && typeof filterEntry.value !== 'boolean')
+                    || (fieldType === DBFieldType.NUMBER && typeof filterEntry.value !== 'number')
+                    || (fieldType === DBFieldType.STRING && typeof filterEntry.value !== 'string')
+                    || (fieldType === DBFieldType.TIMESTAMP && !((filterEntry.value instanceof Date) || typeof filterEntry.value !== 'string'))
+                ) {
+                    ErrorCodeUtil.findErrorCodeAndThrow('INVALID_LIST_FILTER');
+                }
+                if (filterEntry.partialMatch && (fieldType === DBFieldType.BOOLEAN || fieldType === DBFieldType.NUMBER || fieldType === DBFieldType.TIMESTAMP)) {
+                    ErrorCodeUtil.findErrorCodeAndThrow('INVALID_LIST_FILTER');
+                }
+            })
+        } else if (!isNullOrUndefined(filter)) {
+            ErrorCodeUtil.findErrorCodeAndThrow('INVALID_PARAMETER');
+        }
     }
 }
 

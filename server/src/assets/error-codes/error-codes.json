@@ -55,5 +55,10 @@
     "id": 10,
     "name": "NO_ID_PROVIDED",
     "text": "ID necessary for operation not provided."
+  },
+  {
+    "id": 11,
+    "name": "INVALID_LIST_FILTER",
+    "text": "The provided list filter contained non-existent fields, values not matching the field type or requested partial matches for full match only types."
   }
 ]

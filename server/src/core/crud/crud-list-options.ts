@@ -3,4 +3,11 @@ export interface CRUDListOptions {
     orderField?: string;
     orderDirection?: string;
     bypassSoftDelete?: boolean;
+    filter?: [CRUDListFilter]
+}
+
+export interface CRUDListFilter {
+    field: string;
+    value: any;
+    partialMatch?: boolean;
 }

@@ -12,6 +12,7 @@ import {Singletons} from "./core/singletons";
 import {MySqlUtil} from "./utils/db/mysql.util";
 import {PgSqlUtil} from "./utils/db/pgsql.util";
 import {AuthService} from "./auth/auth.service";
+import {ErrorCodeUtil} from "./utils/error-code/error-code.util";
 
 
 /**
