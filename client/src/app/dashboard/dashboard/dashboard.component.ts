@@ -5,6 +5,7 @@ import {Tile} from "../tile";
 import {ObservableMedia} from "@angular/flex-layout";
 import {Observable} from "rxjs";
 import {TileFinFiguresComponent} from "../tile-fin-figures/tile-fin-figures.component";
+import {AuthService} from "../../core/auth/auth.service";
 
 @Component({
     selector: 'dashboard',
@@ -20,21 +21,32 @@ export class DashboardComponent implements OnInit {
             title: 'INV - Expirations',
             link: ['inv', 'expirations'],
             component: TileInvExpirationsComponent,
-            rowspan: 1
+            rowspan: 1,
+            permittedRoles: ['inv'],
+            requiredPower: 50
         },
         {
             title: 'FIN - Figures',
             link: ['fin'],
             component: TileFinFiguresComponent,
-            rowspan: 1
+            rowspan: 1,
+            permittedRoles: ['inv'],
+            requiredPower: 50
         }
     ];
 
 
-    constructor(private observableMedia: ObservableMedia) {
+    constructor(
+        private observableMedia: ObservableMedia,
+        private readonly authService: AuthService
+    ) {
     }
 
-    ngOnInit(): void {
+    async ngOnInit() {
+        this.tiles = this.tiles.filter(async (tile: Tile) => {
+            return await this.authService.isUserPermitted(await this.authService.convertRoleNamesToIds(tile.permittedRoles), tile.requiredPower);
+        });
+
         const grid: Map<string, number> = new Map<string, number>([
             ["xs", 1],
             ["sm", 2],

@@ -9,6 +9,7 @@ import {CookieService} from "../cookie.service";
 import {BehaviorSubject} from "rxjs";
 import {isNullOrUndefined, sleep} from "../util";
 import {MessageService} from "primeng/api";
+import {FinAccount} from "../../fin/fin-account";
 
 const defaultPayload: JwtPayload = {
     power: 0,
@@ -25,6 +26,9 @@ export class AuthService implements CanActivate {
     verified: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
     verificationStarted: boolean;
     waitForVerification: Promise<void>;
+
+    rolesByName: Map<string, number> | undefined;
+    rolesPromise: Promise<void>;
 
     constructor(
         readonly http: HttpClient,
@@ -118,6 +122,25 @@ export class AuthService implements CanActivate {
             ? route.data.permittedRoles.map((role: string) => this.roles.revGet(role)).filter((role: number) => !isNullOrUndefined(role))
             : [];
 
+        const permitted: boolean | null = await this.isUserPermitted(permittedRoles, requiredPower);
+
+        if(permitted === true) {
+            return true;
+        } else if(permitted === false) {
+            this.messageService.add({ severity: 'error', summary: 'Access Denied', detail: 'Your permissions do not meet the requirements for this route. Redirecting to Home.', life: 3000, closable: true});
+            await sleep(1500);
+            this.router.navigate(['/home']);
+            return false;
+        }
+        this.router.navigate(['/auth', 'login'], { queryParams: {intendedRoute: route.url } });
+        return false;
+    }
+
+    async isUserPermitted(permittedRoles: number[], requiredPower: number): Promise<boolean | null> {
+        if (this.roles === undefined) {
+            await this.fetchRoleIds();
+        }
+
         if(requiredPower === 0 || permittedRoles.includes(0)) {
             return true;
         }
@@ -138,16 +161,19 @@ export class AuthService implements CanActivate {
         } else {
             jwtPayload = defaultPayload;
         }
-        if(jwtPayload.power >= requiredPower || permittedRoles.some((role: number) => jwtPayload.roles.includes(role))) {
+        if (jwtPayload.power >= requiredPower || permittedRoles.some((role: number) => jwtPayload.roles.includes(role))) {
             return true;
         } else if(loggedInUser) {
-            this.messageService.add({ severity: 'error', summary: 'Access Denied', detail: 'Your permissions do not meet the requirements for this route. Redirecting to Home.', life: 3000, closable: true});
-            await sleep(1500);
-            this.router.navigate(['/home']);
             return false;
         }
-        this.router.navigate(['/auth', 'login'], { queryParams: {intendedRoute: route.url } });
-        return false;
+        return null;
+    }
+
+    async convertRoleNamesToIds(roles: string[]): Promise<number[]> {
+        const rolesByName: Map<string, number> = await this.getRolesByName();
+        return roles.map((role: string) => {
+            return rolesByName.get(role);
+        });
     }
 
     /**
@@ -161,6 +187,37 @@ export class AuthService implements CanActivate {
             });
             this.roles = new TwoWayMap(tempMap);
         })).toPromise();
+    }
+
+    async getRolesByName(forceReload?: boolean): Promise<Map<string, number>> {
+        if (this.rolesByName !== undefined && !forceReload) {
+            return this.rolesByName;
+        }
+        if (this.rolesPromise !== undefined && !forceReload) {
+            await this.rolesPromise;
+            return this.rolesByName;
+        }
+        if (this.rolesByName === undefined || forceReload) {
+            let resolveFunc: Function;
+            this.rolesPromise = new Promise(resolve => {
+                resolveFunc = resolve;
+            });
+            const roles: any[] = await this.http.get('/api/auth/role/list')
+                .pipe(map((response: { data: FinAccount[] }) => {
+                        return response.data
+                    })
+                ).toPromise().catch((e) => {
+                    console.log(e);
+                    return [];
+                });
+            const rolesByName: Map<string, number> = new Map<string, number>();
+            roles.forEach((role: any) => {
+                rolesByName.set(role.name, role.id);
+            });
+            this.rolesByName = rolesByName;
+            resolveFunc();
+        }
+        return this.rolesByName;
     }
 
 }

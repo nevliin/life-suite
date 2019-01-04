@@ -5,4 +5,6 @@ export class Tile {
     link: string[];
     component: Type<any>;
     rowspan: number;
+    permittedRoles?: string[];
+    requiredPower?: number;
 }

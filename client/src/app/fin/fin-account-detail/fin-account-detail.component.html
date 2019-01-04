@@ -13,7 +13,7 @@
                      [ngClass]="{'debit-transaction': initialBalance >= 0, 'credit-transaction': initialBalance < 0}"
                      class="faded-text transaction" style="grid-row: 1;">
                     <span *ngIf="initialBalance < 0" style="margin-right: auto;">
-                        <b>{{initialBalance | currency:'EUR'}}</b></span>
+                        <b>{{initialBalance | abs | currency:'EUR'}}</b></span>
                     <span>
                         <span *ngIf="initialBalance >= 0"
                               style="width: 35px; text-align: right; margin-right: 10px;">0000</span>
@@ -21,7 +21,7 @@
                         <span *ngIf="initialBalance < 0"
                               style="width: 35px; text-align: left; margin-left: 10px;">0000</span></span>
                     <span *ngIf="initialBalance >= 0" style="margin-left: auto;">
-                        <b>{{initialBalance | currency:'EUR'}}</b></span>
+                        <b>{{initialBalance | abs | currency:'EUR'}}</b></span>
                 </div>
                 <!-- Horizontal Dividers -->
                 <div *ngFor="let transaction of accountTransactions; let i = index" style="grid-column: 1/4"
@@ -81,12 +81,12 @@
                 <div [ngStyle]="{'grid-column': accountBalance >= 0 ? 1 : 3, 'grid-row': (accountTransactions.length * 2) + 7}"
                      class="transaction">
                     <span *ngIf="accountBalance < 0" style="margin-right: auto;">
-                        <b>{{accountBalance | currency:'EUR'}}</b></span>
+                        <b>{{accountBalance | abs | currency:'EUR'}}</b></span>
                     <span>
                         <b style="text-align: right;">Balance</b>
                     </span>
                     <span *ngIf="accountBalance >= 0" style="margin-left: auto;">
-                        <b>{{accountBalance | currency:'EUR'}}</b></span>
+                        <b>{{accountBalance | abs | currency:'EUR'}}</b></span>
                 </div>
             </div>
             <div *ngIf="!accountTransactions" style="display: flex; justify-content: center; margin: 20px;">
