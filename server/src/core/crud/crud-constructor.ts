@@ -100,7 +100,6 @@ export class CRUDConstructor<T extends ICRUDModel, > {
             if (typeof model[key] === ('undefined' || 'function')) {
                 this.logger.warn(`Illegal model '${model.constructor.name}' provided; property '${key}' is undefined or a function.`, 'completeFieldMappings');
             } else {
-                console.log(model[key] + ' - ' + typeof model[key]);
                 if (typeof model[key] === 'number') {
                     dbField.type = DBFieldType.NUMBER;
                 } else if (typeof model[key] === 'boolean') {
@@ -157,10 +156,11 @@ export class CRUDConstructor<T extends ICRUDModel, > {
                     ErrorCodeUtil.findErrorCodeAndThrow('INVALID_DATA');
                 }
             } else {
-                statement += `${Number(data[property])}`;
+                let value: number | null = Number.isNaN(Number(data[property])) ? null : Number(data[property]);
+                statement += `${this.db.escNumber(value)}`;
             }
         });
-        statement += ');';
+        statement += ') RETURNING id;';
 
         try {
             const result: DBExecuteResult = await this.db.execute(statement);
@@ -255,7 +255,6 @@ export class CRUDConstructor<T extends ICRUDModel, > {
                     } else {
                         statement += ' =';
                     }
-                    console.log(this.fieldMappings.get(filter.field));
                     if (this.fieldMappings.get(filter.field).type === (DBFieldType.STRING || DBFieldType.TIMESTAMP)) {
                         statement += ` '${this.db.esc(filter.value)}'`;
                     } else if (this.fieldMappings.get(filter.field).type === DBFieldType.BOOLEAN) {
@@ -282,7 +281,6 @@ export class CRUDConstructor<T extends ICRUDModel, > {
             }
         }
         statement += `;`;
-        console.log(statement);
 
         const queryResult: DBQueryResult = await this.db.query(statement);
 
@@ -353,7 +351,6 @@ export class CRUDConstructor<T extends ICRUDModel, > {
         statement += ` WHERE ${this.fieldMappings.get('id').name} = ${this.db.escNumber((oldId) ? oldId : data.id)};`;
 
         const result: DBExecuteResult = await this.db.execute(statement);
-        console.log(result);
         if (result.affectedRows != 1) {
             ErrorCodeUtil.findErrorCodeAndThrow('UPDATE_FAILED');
         }

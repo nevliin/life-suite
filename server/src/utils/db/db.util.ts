@@ -69,7 +69,10 @@ export abstract class DbUtil {
         });
     }
 
-    escNumber(num: number): number {
+    escNumber(num: number | null): number | null {
+        if(num === null) {
+            return null;
+        }
         if(Number.isNaN(Number.parseFloat(num.toString()))) {
             throw new Error('Not a number!');
         }
