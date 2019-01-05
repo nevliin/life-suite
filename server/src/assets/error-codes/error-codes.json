@@ -60,5 +60,10 @@
     "id": 11,
     "name": "INVALID_LIST_FILTER",
     "text": "The provided list filter contained non-existent fields, values not matching the field type or requested partial matches for full match only types."
+  },
+  {
+    "id": 12,
+    "name": "ALREADY_DONE",
+    "text": "The action you attempted to perform can only be done once and was already performed before."
   }
 ]

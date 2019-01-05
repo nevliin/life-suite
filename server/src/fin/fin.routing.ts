@@ -11,7 +11,7 @@ import {
     AccountBalanceRequest, AccountBalanceResponse,
     AccountTransactionsRequest,
     AllTransactionsAmountRequest,
-    CategoryTotalRequest
+    CategoryTotalRequest, YearlyCloseRequest
 } from "./model/fin.model";
 
 const express = require('express');
@@ -26,6 +26,19 @@ export const init = (): Router => {
             const result: TransactionModel[] = await finService.getAccountTransactions(<AccountTransactionsRequest>req.query);
             res.status(200).send({
                 data: result
+            });
+        } catch (e) {
+            ErrorCodeUtil.resolveErrorOnRoute(e, res);
+        }
+    });
+
+    finRouter.post('/yearlyClose', async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            await finService.doYearlyClose(<YearlyCloseRequest>req.body);
+            res.status(200).send({
+                data: {
+                    success: true
+                }
             });
         } catch (e) {
             ErrorCodeUtil.resolveErrorOnRoute(e, res);

@@ -37,6 +37,7 @@ export class PgSqlUtil extends DbUtil {
                 port: 5432
             });
         }
+        this.setTimezone().then();
         this.testConnection().then();
     }
 
@@ -48,6 +49,10 @@ export class PgSqlUtil extends DbUtil {
         } catch (e) {
             this.logger.warn('Connection to PostgreSQL DB failed because ' + e.message, 'testConnection');
         }
+    }
+
+    async setTimezone() {
+        this.pool.query("SET TIME ZONE 'UTC';").then();
     }
 
     /**

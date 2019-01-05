@@ -5,7 +5,7 @@ import {
     AccountBalanceResponse,
     AccountTransactionsRequest,
     AllTransactionsAmountRequest,
-    CategoryTotalRequest
+    CategoryTotalRequest, YearlyCloseRequest
 } from "./model/fin.model";
 import {TransactionModel} from "./model/transaction.model";
 import {ErrorCodeUtil} from "../utils/error-code/error-code.util";
@@ -13,12 +13,94 @@ import {isNullOrUndefined} from "../utils/util";
 import {PgSqlUtil} from "../utils/db/pgsql.util";
 import {AccountModel} from "./model/account.model";
 
+const closingBalanceAccountId: number = 9998;
+
 export class FinService {
 
     db: DbUtil;
 
     constructor() {
         this.db = new PgSqlUtil();
+    }
+
+    async doYearlyClose(reqParams: YearlyCloseRequest): Promise<void> {
+        const year = reqParams.year;
+        if (!Number.isInteger(year) || year < 2018 || year > (new Date()).getFullYear() - 1) {
+            ErrorCodeUtil.findErrorCodeAndThrow("INVALID_PARAMETER");
+        }
+
+        const yearlyCloseDoneStatement =
+            `SELECT *
+            FROM fin_transaction
+            WHERE account = 9998
+               OR contra_account = 9998 AND created_on > '${this.db.escNumber(year)}-12-31 00:00:00.000' AND created_on < '${this.db.escNumber(year + 1)}-01-02 00:00:00.000';`;
+
+        if ((await this.db.query(yearlyCloseDoneStatement)).rows.length > 0) {
+            ErrorCodeUtil.findErrorCodeAndThrow("ALREADY_DONE");
+        }
+
+        const accountBalancesStatement =
+            `WITH constants (interval_year) AS (
+              VALUES (
+                       date_trunc('year',
+                                  to_timestamp('${this.db.escNumber(year)}-01-01 00:00:00.000', 'YYYY-MM-DD HH24:MI:SS.MS')))
+            )
+            SELECT fa.id,
+                   fa.name, 
+                   ((
+                      SELECT COALESCE(SUM(amount), 0) as balance
+                      FROM fin_transaction
+                      WHERE fin_transaction.valid = 1
+                        AND fin_transaction.created_on > ((SELECT interval_year FROM constants) + interval '3 hours')
+                        AND fin_transaction.created_on <
+                            ((SELECT interval_year FROM constants) + interval '1 year' - interval '3 hours')
+                        AND fin_transaction.account = fa.id
+                    ) - (
+                      SELECT COALESCE(SUM(amount), 0) as balance
+                      FROM fin_transaction
+                      WHERE fin_transaction.valid = 1
+                        AND fin_transaction.created_on > ((SELECT interval_year FROM constants) + interval '3 hours')
+                        AND fin_transaction.created_on <
+                            ((SELECT interval_year FROM constants) + interval '1 year' - interval '3 hours')
+                        AND fin_transaction.contra_account = fa.id
+                    )) AS balance,
+                   active
+            FROM fin_account fa
+                   JOIN fin_category ON fa.category_id = fin_category.id;`;
+
+        const accountBalancesResult: DBQueryResult = await this.db.query(accountBalancesStatement);
+
+        let yearlyCloseTransactionsStatement: string = `INSERT INTO fin_transaction(account, contra_account, amount, note, created_on) VALUES`;
+
+        const closeDate: Date = new Date(this.db.escNumber(year) + '-12-31T23:59:00');
+        const openDate: Date = new Date(this.db.escNumber(year + 1) + '-01-01T00:01:00');
+
+        accountBalancesResult.rows.forEach((accountBalance: any, index: number) => {
+            if (index !== 0) {
+                yearlyCloseTransactionsStatement += ',';
+            }
+            let debitInPlus: boolean = ((accountBalance.active && accountBalance.balance < 0) || (accountBalance.passive && accountBalance.balance >= 0));
+            yearlyCloseTransactionsStatement += ` (
+                ${debitInPlus ? accountBalance.id : closingBalanceAccountId},
+                ${debitInPlus ? closingBalanceAccountId : accountBalance.id},
+                ${Math.abs(accountBalance.balance)}, 
+                ${null},
+                '${closeDate.toISOString()}'
+            ), `;
+            yearlyCloseTransactionsStatement += ` (
+                ${debitInPlus ? closingBalanceAccountId : accountBalance.id}, 
+                ${debitInPlus ? accountBalance.id : closingBalanceAccountId}, 
+                ${Math.abs(accountBalance.balance)}, 
+                ${null},
+                '${openDate.toISOString()}'
+            )`;
+        });
+
+        yearlyCloseTransactionsStatement += ';';
+
+        console.log(yearlyCloseTransactionsStatement);
+
+        await this.db.execute(yearlyCloseTransactionsStatement);
     }
 
     async getAccountBalancesByCategory(reqParams: AccountBalanceByCategoryRequest): Promise<AccountBalanceResponse[]> {
@@ -43,7 +125,8 @@ export class FinService {
             }
         }
 
-        let statement: string = `WITH constants (category_id, "from", "to") AS (
+        let statement: string =
+            `WITH constants (category_id, "from", "to") AS (
           VALUES (${this.db.escNumber(Number.parseInt(reqParams.categoryId))},
                   to_timestamp('${this.db.esc(from.toISOString())}', 'YYYY-MM-DD HH24:MI:SS.MS'),
                   to_timestamp('${this.db.esc(to.toISOString())}', 'YYYY-MM-DD HH24:MI:SS.MS'))
@@ -115,14 +198,14 @@ export class FinService {
                  ),
                  constants (account_id, interval_year) AS (
                    VALUES (${this.db.escNumber(Number.parseInt(reqParams.accountId))},
-                           date_trunc('year', to_timestamp('${this.db.escNumber(year)}-06-01 00:00:00.000', 'YYYY-MM-DD HH24:MI:SS.MS')))
+                           date_trunc('year', to_timestamp('${this.db.escNumber(year)}-01-01 00:00:00.000', 'YYYY-MM-DD HH24:MI:SS.MS')))
                  )
             SELECT ((
                       SELECT COALESCE(SUM(amount), 0) as balance
                       FROM fin_transaction
                       WHERE fin_transaction.valid = 1
-                        AND fin_transaction.created_on > ((SELECT interval_year FROM constants) + interval '3 hours')
-                        AND fin_transaction.created_on < ((SELECT interval_year FROM constants) + interval '1 year' - interval '3 hours')
+                        AND fin_transaction.created_on > ((SELECT interval_year FROM constants))
+                        AND fin_transaction.created_on < ((SELECT interval_year FROM constants) + interval '1 year')
                         AND fin_transaction.account IN
                             (
                               SELECT *
@@ -132,8 +215,8 @@ export class FinService {
                       SELECT COALESCE(SUM(amount), 0) as balance
                       FROM fin_transaction
                       WHERE fin_transaction.valid = 1
-                        AND fin_transaction.created_on > ((SELECT interval_year FROM constants) + interval '3 hours')
-                        AND fin_transaction.created_on < ((SELECT interval_year FROM constants) + interval '1 year' - interval '3 hours')
+                        AND fin_transaction.created_on > ((SELECT interval_year FROM constants))
+                        AND fin_transaction.created_on < ((SELECT interval_year FROM constants) + interval '1 year')
                         AND fin_transaction.contra_account IN (
                               SELECT *
                               FROM accounts

@@ -39,4 +39,8 @@ export class AccountBalanceResponse {
     balance: number;
 }
 
+export class YearlyCloseRequest {
+    year: number;
+}
+
 
