@@ -1,6 +1,6 @@
 import {NextFunction, Request, Response, Router} from "express";
 import {ErrorCodeUtil} from "../utils/error-code/error-code.util";
-import {CRUDConstructor} from "../core/crud/crud-constructor";
+import {CRUDConstructor, DBType} from "../core/crud/crud-constructor";
 import {EntryModel} from "./model/entry.model";
 import {TargetEntryModel} from "./model/target-entry.model";
 import {InvService} from "./inv.service";
@@ -16,12 +16,14 @@ export const init = (): Router => {
     // CRUD Routes
     const entryModelCRUD: CRUDConstructor<EntryModel> = new CRUDConstructor(new EntryModel(), 'inv_entry', {
         softDelete: true,
-        autoIncrementId: true
+        autoIncrementId: true,
+        dbType: DBType.PGSQL
     });
 
     const targetEntryModelCRUD: CRUDConstructor<TargetEntryModel> = new CRUDConstructor(new TargetEntryModel(), 'inv_target_entry', {
         softDelete: false,
-        autoIncrementId: true
+        autoIncrementId: true,
+        dbType: DBType.PGSQL
     });
 
     invRouter.use('/entry', entryModelCRUD.getRouter());
