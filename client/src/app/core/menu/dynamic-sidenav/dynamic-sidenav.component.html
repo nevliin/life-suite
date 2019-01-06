@@ -26,12 +26,19 @@
                     <mat-icon aria-label="User Details">person</mat-icon>
                 </button>
             </mat-toolbar-row>
-            <mat-toolbar-row>
-                {{menuTitle}}
-            </mat-toolbar-row>
         </mat-toolbar>
         <mat-nav-list>
-            <a mat-list-item *ngFor="let menuItem of menuItems" (click)="menuItem.command(); drawer.toggle()">{{menuItem.label}}</a>
+            <mat-accordion displayMode="flat">
+                <mat-expansion-panel *ngFor="let menu of menus" [(expanded)]="expansionStatus[menu.routeName]">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title style="font-weight: bold">{{menu.menuTitle}}</mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <mat-nav-list>
+                        <a mat-list-item *ngFor="let menuItem of menu.menuEntries"
+                           (click)="menuItem.command(); drawer.toggle()">{{menuItem.label}}</a>
+                    </mat-nav-list>
+                </mat-expansion-panel>
+            </mat-accordion>
         </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content id="main-outlet">

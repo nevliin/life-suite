@@ -1,12 +1,9 @@
 import {Component} from '@angular/core';
-import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
 import {MenuItem} from "primeng/api";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MenuService} from "../menu.service";
 import {AuthService} from "../../auth/auth.service";
-import {MenuEntry} from "../menu-structure";
+import {DisplayMenu, Menu, MenuEntry} from "../menu-structure";
 
 @Component({
     selector: 'dynamic-sidenav',
@@ -15,9 +12,10 @@ import {MenuEntry} from "../menu-structure";
 })
 export class DynamicSidenavComponent {
 
+    expansionStatus: any = {};
+
     isVerified: boolean = false;
-    menuTitle: string;
-    menuItems: MenuItem[] = [];
+    menus: DisplayMenu[] = [];
 
     constructor(
         readonly route: ActivatedRoute,
@@ -28,18 +26,31 @@ export class DynamicSidenavComponent {
     }
 
     async ngOnInit() {
-        (await this.menuService.getCurrentMenuRoute()).subscribe(value => {
-            if (value !== null) {
-                this.menuTitle = this.menuService.getMenu(value).menuTitle;
-                this.menuItems = this.menuService.getMenu(value).menuEntries.map((entry: MenuEntry): MenuItem => {
+        this.menus = (await this.menuService.getMenus()).map((menu: Menu) => {
+            return {
+                menuTitle: menu.menuTitle,
+                routeName: menu.routeName,
+                menuEntries: menu.menuEntries.map((entry: MenuEntry): MenuItem => {
                     return {
                         label: entry.label,
                         command: () => {
-                            this.router.navigate(entry.route);
+                            this.router.navigate(entry.route).then();
                         }
                     }
-                });
+                })
             }
+        });
+        this.menus.forEach((menu: DisplayMenu) => {
+            this.expansionStatus[menu.routeName] = false;
+        });
+        this.menuService.currentMenu$.subscribe((currentMenu: string) => {
+                Object.entries(this.expansionStatus).forEach((value: [string, any]) => {
+                    if(value[0] === currentMenu) {
+                        this.expansionStatus[value[0]] = true;
+                    } else {
+                        this.expansionStatus[value[0]] = false;
+                    }
+                });
         });
         this.authService.getVerification$().subscribe((verified: boolean) => {
             return this.isVerified = verified;
@@ -49,5 +60,4 @@ export class DynamicSidenavComponent {
     async logOut() {
         await this.authService.logOut();
     }
-
 }
