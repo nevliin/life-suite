@@ -1,25 +1,29 @@
 import {DBQueryResult, DbUtil} from "../utils/db/db.util";
 import {CompareEntryModel} from "./model/compare-entry.model";
-import {MySqlUtil} from "../utils/db/mysql.util";
+import {PgSqlUtil} from "../utils/db/pgsql.util";
 
 export class InvService {
 
     db: DbUtil;
 
     constructor() {
-        this.db = new MySqlUtil();
+        this.db = new PgSqlUtil();
     }
 
     async getComparison(): Promise<CompareEntryModel[]> {
-        let statement: string = `SELECT inv_entry.name,(COUNT(*)-amount) AS 'comparison' 
-            FROM inv_entry JOIN inv_target_entry USING(name) 
-            WHERE valid = 1 
-            GROUP BY name 
-            UNION 
-            SELECT inv_target_entry.name, 0-amount AS 'comparison' 
-            FROM inv_target_entry 
-            WHERE inv_target_entry.name NOT IN 
-                (SELECT name FROM inv_entry WHERE valid = 1);`;
+        let statement: string = `SELECT ite.name, (sq.entry_count - ite.amount) AS comparison
+            FROM (
+                   SELECT target_id, COUNT(*) AS entry_count
+                   FROM inv_entry
+                   WHERE valid = 1
+                   GROUP BY inv_entry.target_id
+                 ) sq
+            JOIN inv_target_entry ite on sq.target_id = ite.id
+            UNION
+            SELECT inv_target_entry.name, 0 - amount AS comparison
+            FROM inv_target_entry
+            WHERE inv_target_entry.id NOT IN
+                  (SELECT target_id FROM inv_entry WHERE valid = 1);`;
 
         const result: DBQueryResult = await this.db.query(statement);
 
@@ -43,6 +47,5 @@ export class InvService {
         let statement: string = 'SELECT MAX(id) AS maxid FROM inv_entry;';
         const result: DBQueryResult = await this.db.query(statement);
         return Number.parseInt(result.rows[0].maxid)+1;
-
     }
 }
