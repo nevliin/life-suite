@@ -5,7 +5,8 @@ import {
     AccountBalanceResponse,
     AccountTransactionsRequest,
     AllTransactionsAmountRequest,
-    CategoryTotalRequest, YearlyCloseRequest
+    CategoryTotalRequest,
+    YearlyCloseRequest
 } from "./model/fin.model";
 import {TransactionModel} from "./model/transaction.model";
 import {ErrorCodeUtil} from "../utils/error-code/error-code.util";
@@ -55,7 +56,7 @@ export class FinService {
                         AND fin_transaction.created_on <
                             ((SELECT interval_year FROM constants) + interval '1 year' - interval '3 hours')
                         AND fin_transaction.account = fa.id
-                    ) - (
+                   ) - (
                       SELECT COALESCE(SUM(amount), 0) as balance
                       FROM fin_transaction
                       WHERE fin_transaction.valid = 1
@@ -63,7 +64,7 @@ export class FinService {
                         AND fin_transaction.created_on <
                             ((SELECT interval_year FROM constants) + interval '1 year' - interval '3 hours')
                         AND fin_transaction.contra_account = fa.id
-                    )) AS balance,
+                   )) AS balance,
                    active
             FROM fin_account fa
                    JOIN fin_category ON fa.category_id = fin_category.id;`;
@@ -72,8 +73,8 @@ export class FinService {
 
         let yearlyCloseTransactionsStatement: string = `INSERT INTO fin_transaction(account, contra_account, amount, note, created_on) VALUES`;
 
-        const closeDate: Date = new Date(this.db.escNumber(year) + '-12-31T23:59:00');
-        const openDate: Date = new Date(this.db.escNumber(year + 1) + '-01-01T00:01:00');
+        const closeDate: Date = new Date(this.db.escNumber(year) + '-12-31T23:59:00Z');
+        const openDate: Date = new Date(this.db.escNumber(year + 1) + '-01-01T00:01:00Z');
 
         accountBalancesResult.rows.forEach((accountBalance: any, index: number) => {
             if (index !== 0) {
@@ -97,8 +98,6 @@ export class FinService {
         });
 
         yearlyCloseTransactionsStatement += ';';
-
-        console.log(yearlyCloseTransactionsStatement);
 
         await this.db.execute(yearlyCloseTransactionsStatement);
     }
@@ -222,7 +221,6 @@ export class FinService {
                               FROM accounts
                             )
                     )) AS balance; `;
-
         const result: DBQueryResult = await this.db.query(statement);
         return (result.rows[0]) ? result.rows[0].balance : null;
     }
@@ -247,10 +245,10 @@ export class FinService {
                          OR
                        contra_account IN (SELECT id FROM accounts))`;
             if (reqParams.from) {
-                statement += ` AND fin_transaction.created_on > to_timestamp('${this.db.esc(reqParams.from)}', 'YYYY-MM-DD HH24:MI:SS.MS')`;
+                statement += ` AND fin_transaction.created_on > to_timestamp('${this.db.esc(FinService.extractDate(reqParams.from))}', 'YYYY-MM-DD HH24:MI:SS.MS')`;
             }
             if (reqParams.to) {
-                statement += ` AND fin_transaction.created_on < to_timestamp('${this.db.esc(reqParams.to)}', 'YYYY-MM-DD HH24:MI:SS.MS')`;
+                statement += ` AND fin_transaction.created_on < to_timestamp('${this.db.esc(FinService.extractDate(reqParams.to))}', 'YYYY-MM-DD HH24:MI:SS.MS')`;
             }
             if (reqParams.limit && Number.isInteger(Number.parseInt(reqParams.limit))) {
                 statement += ` LIMIT ${this.db.escNumber(Number.parseInt(reqParams.limit))}`;
@@ -338,6 +336,14 @@ export class FinService {
             return false;
         }
         return true;
+    }
+
+    static extractDate(date: Date | string): string {
+        if(date instanceof Date) {
+            return date.toISOString().split('T')[0];
+        } else {
+            return date.split('T')[0];
+        }
     }
 
 }

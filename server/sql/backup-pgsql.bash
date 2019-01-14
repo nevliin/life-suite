@@ -1,0 +1,1 @@
+ pg_dump -U <username> <db> -N topology -T spatial_ref_sys -T batch_id_seq > <filename>
