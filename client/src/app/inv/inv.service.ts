@@ -4,8 +4,9 @@ import {InvTargetEntry} from "./inv-target-entry";
 import {HttpClient} from "@angular/common/http";
 import {InvEntry} from "./inv-entry";
 import {CompareEntry} from "./compare-entry";
+import {TargetEntriesCacheService} from "./target-entries-cache.service";
 
-const API_ROOT: string = '/api/inv/';
+export const API_ROOT: string = '/api/inv/';
 
 @Injectable({
     providedIn: 'root'
@@ -13,26 +14,32 @@ const API_ROOT: string = '/api/inv/';
 export class InvService {
 
     constructor(
-        readonly http: HttpClient
+        readonly http: HttpClient,
+        readonly cachedTargetEntries: TargetEntriesCacheService
     ) {
     }
 
     async getTargetEntries(): Promise<InvTargetEntry[]> {
-        return await this.http.get(API_ROOT + 'targetEntry/list')
-            .pipe(map((response: { data: InvTargetEntry[] }) => response.data)
-            ).toPromise();
+        return await this.cachedTargetEntries.getValue();
     }
 
-    async getEntries(): Promise<InvEntry[]> {
-        return this.http.get(API_ROOT + 'entry/list')
-            .pipe(map((response: { data: InvEntry[] }) => {
-                    return response.data
-                        .map((entry: InvEntry) => {
-                            entry.expirationDate = new Date(entry.expirationDate);
-                            return entry;
-                        })
-                })
-            ).toPromise();
+    async getEntries(stockId: number): Promise<InvEntry[]> {
+        return this.http.post(API_ROOT + 'entry/list', {
+            filter: [
+                {
+                    field: "stock_id",
+                    value: stockId
+                }
+            ]
+        }).pipe(map((response: { data: InvEntry[] }) => {
+                return response.data
+                    .map((entry: InvEntry) => {
+                        entry.expiration_date = new Date(entry.expiration_date);
+                        entry.created_on = new Date(entry.created_on);
+                        return entry;
+                    })
+            })
+        ).toPromise();
     }
 
     async deleteEntry(id: number): Promise<void> {
