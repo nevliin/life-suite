@@ -143,22 +143,7 @@ export class CRUDConstructor<T extends ICRUDModel, > {
             if (index != 0) {
                 statement += ', ';
             }
-            if (this.fieldMappings.get(property).type === (DBFieldType.STRING || DBFieldType.TIMESTAMP)) {
-                (data[property] != null)
-                    ? statement += `'${this.db.esc(data[property].toString())}'`
-                    : statement += `null`;
-            } else if (this.fieldMappings.get(property).type === DBFieldType.BOOLEAN) {
-                if (typeof data[property] === 'boolean') {
-                    const value: number = data[property] ? 1 : 0;
-                    statement += `${value}`;
-                } else {
-                    this.logger.debug(`Invalid value '${data[property]}' provided for type boolean.`, 'create');
-                    ErrorCodeUtil.findErrorCodeAndThrow('INVALID_DATA');
-                }
-            } else {
-                let value: number | null = Number.isNaN(Number(data[property])) ? null : Number(data[property]);
-                statement += `${this.db.escNumber(value)}`;
-            }
+            statement += this.objectPropertyToSQLString(property, data);
         });
         statement += ') RETURNING id;';
 
@@ -170,7 +155,6 @@ export class CRUDConstructor<T extends ICRUDModel, > {
                 return data['id'];
             }
         } catch (e) {
-            this.logger.error(e);
             ErrorCodeUtil.findErrorCodeAndThrow(e);
         }
     }
@@ -216,7 +200,6 @@ export class CRUDConstructor<T extends ICRUDModel, > {
     }
 
     /**
-     * List objects
      * List objects
      * @returns Object with properties read from the DB table
      * @param options
@@ -332,21 +315,7 @@ export class CRUDConstructor<T extends ICRUDModel, > {
             } else {
                 statement += this.fieldMappings.get(property).name + ' = ';
             }
-            if (this.fieldMappings.get(property).type === (DBFieldType.STRING || DBFieldType.TIMESTAMP)) {
-                (data[property] != null)
-                    ? statement += `'${this.db.esc(data[property].toString())}'`
-                    : statement += `null`;
-            } else if (this.fieldMappings.get(property).type === DBFieldType.BOOLEAN) {
-                if (typeof data[property] === 'boolean') {
-                    const value: number = data[property] ? 1 : 0;
-                    statement += `${value}`;
-                } else {
-                    this.logger.debug(`Invalid value '${data[property]}' provided for type boolean.`, 'update');
-                    ErrorCodeUtil.findErrorCodeAndThrow('INVALID_DATA');
-                }
-            } else {
-                statement += `${Number(data[property])}`;
-            }
+            statement += this.objectPropertyToSQLString(property, data);
         });
         statement += ` WHERE ${this.fieldMappings.get('id').name} = ${this.db.escNumber((oldId) ? oldId : data.id)};`;
 
@@ -511,6 +480,30 @@ export class CRUDConstructor<T extends ICRUDModel, > {
         } else if (!isNullOrUndefined(filter)) {
             ErrorCodeUtil.findErrorCodeAndThrow('INVALID_PARAMETER');
         }
+    }
+
+    objectPropertyToSQLString(property: string, data: any): string {
+        let sqlString = "";
+        if (this.fieldMappings.get(property).type === (DBFieldType.STRING || DBFieldType.TIMESTAMP)) {
+            (data[property] != null)
+                ? sqlString += `'${this.db.esc(data[property].toString())}'`
+                : sqlString += `null`;
+        } else if (this.fieldMappings.get(property).type === DBFieldType.BOOLEAN) {
+            if (typeof data[property] === 'boolean') {
+                const value: number = data[property] ? 1 : 0;
+                sqlString += `${value}`;
+            } else {
+                this.logger.debug(`Invalid value '${data[property]}' provided for type boolean.`, 'create');
+                ErrorCodeUtil.findErrorCodeAndThrow('INVALID_DATA');
+            }
+        } else {
+            let value: number | null = null;
+            if(!isNullOrUndefined(data[property])) {
+                value = Number.isNaN(Number(data[property])) ? null : Number(data[property])
+            }
+            sqlString += `${this.db.escNumber(value)}`;
+        }
+        return sqlString;
     }
 }
 
