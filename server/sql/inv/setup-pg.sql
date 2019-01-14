@@ -13,11 +13,11 @@ CREATE TABLE inv_stock(
 CREATE TABLE inv_constants(
     key VARCHAR(255),
     value VARCHAR(255)
-)
+);
 
 CREATE TABLE inv_target_entry(
   id SERIAL PRIMARY KEY,
-  stock_id INT FOREIGN KEY REFERENCES inv_stock(id),
+  stock_id INT REFERENCES inv_stock(id),
   name VARCHAR(255),
   amount INT NOT NULL
 );
@@ -25,8 +25,8 @@ CREATE TABLE inv_target_entry(
 CREATE TABLE inv_entry(
   id SERIAL PRIMARY KEY,
   valid INT DEFAULT 1,
-  stock_id INT FOREIGN KEY REFERENCES inv_stock(id),
-  target_id INT FOREIGN KEY REFERENCES inv_target_entry(id),
+  stock_id INT REFERENCES inv_stock(id),
+  target_id INT REFERENCES inv_target_entry(id),
   name VARCHAR(255) NOT NULL,
   producer VARCHAR(60),
   market VARCHAR(60),
