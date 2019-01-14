@@ -5,6 +5,7 @@ import {EntryModel} from "./model/entry.model";
 import {TargetEntryModel} from "./model/target-entry.model";
 import {InvService} from "./inv.service";
 import {CompareEntryModel} from "./model/compare-entry.model";
+import {StockModel} from "./model/stock.model";
 
 const express = require('express');
 
@@ -26,9 +27,17 @@ export const init = (): Router => {
         dbType: DBType.PGSQL
     });
 
+    const stockModelCRUD: CRUDConstructor<StockModel> = new CRUDConstructor(new StockModel(), 'inv_stock', {
+        softDelete: false,
+        autoIncrementId: true,
+        dbType: DBType.PGSQL
+    });
+
     invRouter.use('/entry', entryModelCRUD.getRouter());
 
     invRouter.use('/targetEntry', targetEntryModelCRUD.getRouter());
+
+    invRouter.use('/stock', stockModelCRUD.getRouter());
 
     invRouter.get('/comparison', async (req: Request, res: Response, next: NextFunction) => {
         try {
