@@ -44,10 +44,10 @@ export class InvListComponent implements OnInit {
     }
 
     async fetchEntries() {
-        this.entries = await this.invService.getEntries().catch((e) => {
+        /*this.entries = await this.invService.getEntries().catch((e) => {
             this.errorHandlingService.handleHTTPError(e);
             return [];
-        });
+        });*/
     }
 
     async eatConfirmation(id: number) {
@@ -66,7 +66,7 @@ export class InvListComponent implements OnInit {
                 return value1.name.localeCompare(value2.name);
             }
             if (value === OrderOptions.EXPIRATION) {
-                return value1.expirationDate.getTime() - value2.expirationDate.getTime();
+                return value1.expiration_date.getTime() - value2.expiration_date.getTime();
             }
         });
     }

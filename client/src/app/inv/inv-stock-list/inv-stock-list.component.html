@@ -1,0 +1,15 @@
+<mat-card class="small-card">
+    <mat-card-title>Stocks</mat-card-title>
+    <mat-card-content>
+        <mat-list>
+            <mat-list-item [disableRipple]="false"
+                           *ngFor="let stock of stocks"
+                           (click)="router.navigate(['/inv', stock.id])">
+                <b>{{stock.name}}</b>
+                <span style="margin-left: auto; display: inline-block;">{{stock.target_kcal | number:'1.0-1'}}
+                    kcal</span>
+                <mat-divider [inset]="true"></mat-divider>
+            </mat-list-item>
+        </mat-list>
+    </mat-card-content>
+</mat-card>

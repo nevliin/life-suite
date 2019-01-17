@@ -33,8 +33,8 @@ export class InvExpirationsComponent implements OnInit {
 
     async fetchEntries() {
         try {
-            this.entries = (await this.invService.getEntries()).sort((entry1, entry2) => entry1.expirationDate.getTime() - entry2.expirationDate.getTime());
-            this.expiredEntries = this.entries.filter(entry => entry.expirationDate.getTime() < (new Date()).getTime());
+            //this.entries = (await this.invService.getEntries()).sort((entry1, entry2) => entry1.expiration_date.getTime() - entry2.expiration_date.getTime());
+            this.expiredEntries = this.entries.filter(entry => entry.expiration_date.getTime() < (new Date()).getTime());
             this.findNextExpirations();
         } catch (e) {
             this.errorHandlingService.handleHTTPError(e);
@@ -46,7 +46,7 @@ export class InvExpirationsComponent implements OnInit {
         this.nextExpiringEntries = this.entries.filter(entry => {
             const date: Date = new Date();
             date.setMonth(date.getMonth() + months);
-            return date.getTime() > entry.expirationDate.getTime() && entry.expirationDate.getTime() > (new Date()).getTime();
+            return date.getTime() > entry.expiration_date.getTime() && entry.expiration_date.getTime() > (new Date()).getTime();
         });
     }
 

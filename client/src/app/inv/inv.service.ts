@@ -1,10 +1,12 @@
 import {Injectable} from '@angular/core';
-import {map} from "rxjs/operators";
-import {InvTargetEntry} from "./inv-target-entry";
-import {HttpClient} from "@angular/common/http";
-import {InvEntry} from "./inv-entry";
-import {CompareEntry} from "./compare-entry";
-import {TargetEntriesCacheService} from "./target-entries-cache.service";
+import {map} from 'rxjs/operators';
+import {InvTargetEntry} from './inv-target-entry';
+import {HttpClient} from '@angular/common/http';
+import {InvEntry} from './inv-entry';
+import {CompareEntry} from './compare-entry';
+import {TargetEntriesCacheService} from './target-entries-cache.service';
+import {InvStock} from './inv-stock';
+import {BehaviorSubject} from 'rxjs';
 
 export const API_ROOT: string = '/api/inv/';
 
@@ -12,6 +14,8 @@ export const API_ROOT: string = '/api/inv/';
     providedIn: 'root'
 })
 export class InvService {
+
+    public currentStockId$: BehaviorSubject<number | null> = new BehaviorSubject(null);
 
     constructor(
         readonly http: HttpClient,
@@ -27,7 +31,7 @@ export class InvService {
         return this.http.post(API_ROOT + 'entry/list', {
             filter: [
                 {
-                    field: "stock_id",
+                    field: 'stock_id',
                     value: stockId
                 }
             ]
@@ -37,7 +41,7 @@ export class InvService {
                         entry.expiration_date = new Date(entry.expiration_date);
                         entry.created_on = new Date(entry.created_on);
                         return entry;
-                    })
+                    });
             })
         ).toPromise();
     }
@@ -53,7 +57,7 @@ export class InvService {
     async getAutoFill(name: string): Promise<InvEntry> {
         return ((await this.http.post(API_ROOT + 'autoFill', {
             name: name
-        }).toPromise()) as any).data
+        }).toPromise()) as any).data;
     }
 
     async createEntry(entry: InvEntry): Promise<number> {
@@ -61,6 +65,10 @@ export class InvService {
     }
 
     async getNextId(): Promise<number> {
-        return ((await this.http.get(API_ROOT + 'nextId').toPromise()) as any).nextId
+        return ((await this.http.get(API_ROOT + 'nextId').toPromise()) as any).nextId;
+    }
+
+    async getStocks(): Promise<InvStock[]> {
+        return ((await this.http.get(API_ROOT + 'stock/list', {}).toPromise()) as any).data;
     }
 }

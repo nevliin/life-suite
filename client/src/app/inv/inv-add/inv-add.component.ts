@@ -41,12 +41,15 @@ export class InvAddComponent implements OnInit {
             kcal: this.entryForm.get('kcal').value,
             market: this.entryForm.get('market').value,
             note: this.entryForm.get('note').value,
-            expirationDate: this.entryForm.get('expirationDate').value,
+            expiration_date: this.entryForm.get('expirationDate').value,
             price: this.entryForm.get('price').value,
             producer: this.entryForm.get('producer').value,
-            weight: this.entryForm.get('weight').value,
+            weight_in_g: this.entryForm.get('weight').value,
             valid: null,
-            id: null
+            id: null,
+            created_on: null,
+            stock_id: null,
+            target_id: null
         };
         if (this.entryForm.get('amount').value === 1) {
             entry.id = this.entryForm.get('id').value;
@@ -61,7 +64,7 @@ export class InvAddComponent implements OnInit {
     async autoFill() {
         const result: InvEntry = await this.invService.getAutoFill(this.entryForm.get('name').value);
         this.entryForm.patchValue(result as any);
-        const expirationDate: Date = new Date(result.expirationDate);
+        const expirationDate: Date = new Date(result.expiration_date);
         this.entryForm.get('expirationDate').setValue(expirationDate.getFullYear() + '-' + expirationDate.getUTCMonth() + '-' + expirationDate.getUTCDay());
     }
 

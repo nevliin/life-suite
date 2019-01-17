@@ -14,6 +14,5 @@ export class InvEntry {
     created_on: Date;
 
     constructor() {
-
     }
 }
