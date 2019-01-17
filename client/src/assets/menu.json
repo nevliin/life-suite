@@ -70,24 +70,5 @@
         ]
       }
     ]
-  },
-  {
-    "routeName": "default",
-    "menuTitle": "Life Suite",
-    "absolute": true,
-    "menuEntries": [
-      {
-        "label": "INV",
-        "route": [
-          "inv"
-        ]
-      },
-      {
-        "label": "FIN",
-        "route": [
-          "fin"
-        ]
-      }
-    ]
   }
 ]

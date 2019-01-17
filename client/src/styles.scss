@@ -41,6 +41,14 @@ $candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent, $candy-
   display: none;
 }
 
+.small-card {
+  min-width: 600px;
+}
+
+.large-card {
+  min-width: 900px;
+}
+
 .mat-card-dialog-container > .mat-dialog-container {
   padding: 0 !important;
 }
@@ -53,6 +61,15 @@ $candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent, $candy-
   .mobile {
     display: initial;
   }
+
+  .small-card {
+    min-width: 360px;
+  }
+
+  .large-card {
+    min-width: 360px;
+  }
+
 }
 
 

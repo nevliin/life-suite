@@ -1,21 +1,22 @@
 import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from "@angular/router";
-import {PageNotFoundComponent} from "./core/error-handling/page-not-found/page-not-found.component";
-import {InvListComponent} from "./inv/inv-list/inv-list.component";
-import {InvComparisonComponent} from "./inv/inv-comparison/inv-comparison.component";
-import {CurrentMenuResolver} from "./core/menu/current-menu.resolver";
-import {InvTargetComponent} from "./inv/inv-target/inv-target.component";
-import {InvExpirationsComponent} from "./inv/inv-expirations/inv-expirations.component";
-import {InvAddComponent} from "./inv/inv-add/inv-add.component";
-import {AuthService} from "./core/auth/auth.service";
-import {AuthLoginWrapperComponent} from "./core/auth/auth-login-wrapper/auth-login-wrapper.component";
-import {DashboardComponent} from "./dashboard/dashboard/dashboard.component";
-import {FinRecentComponent} from "./fin/fin-recent/fin-recent.component";
-import {FinTransactionEditComponent} from "./fin/fin-transaction-edit/fin-transaction-edit.component";
-import {FinAccountsComponent} from "./fin/fin-accounts/fin-accounts.component";
-import {FinAccountSearchComponent} from "./fin/fin-account-search/fin-account-search.component";
-import {FinAccountDetailComponent} from "./fin/fin-account-detail/fin-account-detail.component";
-import {FinDashboardComponent} from "./fin/fin-dashboard/fin-dashboard.component";
+import {RouterModule, Routes} from '@angular/router';
+import {PageNotFoundComponent} from './core/error-handling/page-not-found/page-not-found.component';
+import {InvListComponent} from './inv/inv-list/inv-list.component';
+import {InvComparisonComponent} from './inv/inv-comparison/inv-comparison.component';
+import {CurrentMenuResolver} from './core/menu/current-menu.resolver';
+import {InvTargetComponent} from './inv/inv-target/inv-target.component';
+import {InvExpirationsComponent} from './inv/inv-expirations/inv-expirations.component';
+import {InvAddComponent} from './inv/inv-add/inv-add.component';
+import {AuthService} from './core/auth/auth.service';
+import {AuthLoginWrapperComponent} from './core/auth/auth-login-wrapper/auth-login-wrapper.component';
+import {DashboardComponent} from './dashboard/dashboard/dashboard.component';
+import {FinRecentComponent} from './fin/fin-recent/fin-recent.component';
+import {FinTransactionEditComponent} from './fin/fin-transaction-edit/fin-transaction-edit.component';
+import {FinAccountsComponent} from './fin/fin-accounts/fin-accounts.component';
+import {FinAccountSearchComponent} from './fin/fin-account-search/fin-account-search.component';
+import {FinAccountDetailComponent} from './fin/fin-account-detail/fin-account-detail.component';
+import {FinDashboardComponent} from './fin/fin-dashboard/fin-dashboard.component';
+import {InvStockListComponent} from './inv/inv-stock-list/inv-stock-list.component';
 
 const routes: Routes = [
     {
@@ -51,22 +52,30 @@ const routes: Routes = [
         },
         children: [
             {
-                path: 'list', component: InvListComponent
+                path: '', pathMatch: 'full', component: InvStockListComponent
             },
             {
-                path: 'comparison', component: InvComparisonComponent
-            },
-            {
-                path: 'target', component: InvTargetComponent
-            },
-            {
-                path: 'expirations', component: InvExpirationsComponent
-            },
-            {
-                path: 'add', component: InvAddComponent
-            },
-            {
-                path: '', redirectTo: 'list', pathMatch: 'full'
+                path: ':stockId',
+                children: [
+                    {
+                        path: 'list', component: InvListComponent
+                    },
+                    {
+                        path: 'comparison', component: InvComparisonComponent
+                    },
+                    {
+                        path: 'target', component: InvTargetComponent
+                    },
+                    {
+                        path: 'expirations', component: InvExpirationsComponent
+                    },
+                    {
+                        path: 'add', component: InvAddComponent
+                    },
+                    {
+                        path: '', redirectTo: 'list', pathMatch: 'full'
+                    }
+                ]
             }
         ]
     },
