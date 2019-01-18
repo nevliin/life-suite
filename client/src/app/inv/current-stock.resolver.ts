@@ -3,7 +3,7 @@ import {ActivatedRouteSnapshot, Resolve} from '@angular/router';
 import {InvService} from './inv.service';
 
 @Injectable()
-export class TransactionResolver implements Resolve<any> {
+export class CurrentStockResolver implements Resolve<any> {
 
     constructor(
         private invService: InvService
@@ -11,6 +11,7 @@ export class TransactionResolver implements Resolve<any> {
     }
 
     resolve(route: ActivatedRouteSnapshot) {
-        this.invService.currentStockId$.next(route.params.stockId);
+        debugger;
+        this.invService.currentStockId$.next(Number(route.params.stockId));
     }
 }

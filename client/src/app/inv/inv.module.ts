@@ -13,6 +13,8 @@ import {InvService} from './inv.service';
 import {InvStockListComponent} from './inv-stock-list/inv-stock-list.component';
 import {MatComponentCollectorModule} from '../core/mat-component-collector.module';
 import { InvWrapperComponent } from './inv-wrapper/inv-wrapper.component';
+import {RouterModule} from '@angular/router';
+import {CurrentStockResolver} from './current-stock.resolver';
 
 @NgModule({
     imports: [
@@ -22,7 +24,8 @@ import { InvWrapperComponent } from './inv-wrapper/inv-wrapper.component';
         FormsModule,
         BrowserAnimationsModule,
         PipesModule,
-        MatComponentCollectorModule
+        MatComponentCollectorModule,
+        RouterModule
     ],
     declarations: [
         InvListComponent,
@@ -34,7 +37,7 @@ import { InvWrapperComponent } from './inv-wrapper/inv-wrapper.component';
         InvStockListComponent,
         InvWrapperComponent
     ],
-    providers: [InvService]
+    providers: [InvService, CurrentStockResolver]
 })
 export class InvModule {
 }

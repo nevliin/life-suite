@@ -7,6 +7,7 @@ import {CompareEntry} from './compare-entry';
 import {TargetEntriesCacheService} from './target-entries-cache.service';
 import {InvStock} from './inv-stock';
 import {BehaviorSubject} from 'rxjs';
+import {ErrorHandlingService} from '../core/error-handling/error-handling.service';
 
 export const API_ROOT: string = '/api/inv/';
 
@@ -19,7 +20,8 @@ export class InvService {
 
     constructor(
         readonly http: HttpClient,
-        readonly cachedTargetEntries: TargetEntriesCacheService
+        readonly cachedTargetEntries: TargetEntriesCacheService,
+        private readonly errorHandlingService: ErrorHandlingService
     ) {
     }
 
@@ -70,5 +72,14 @@ export class InvService {
 
     async getStocks(): Promise<InvStock[]> {
         return ((await this.http.get(API_ROOT + 'stock/list', {}).toPromise()) as any).data;
+    }
+
+    async stockExists(stockId: string): Promise<boolean> {
+        return await this.http.get(API_ROOT + 'stock/read/' + stockId, {})
+            .pipe(map((response: any) => {
+                return !!response.data.id;
+            })).toPromise().catch(error => {
+                return false;
+            });
     }
 }

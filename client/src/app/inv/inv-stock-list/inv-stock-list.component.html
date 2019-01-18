@@ -4,7 +4,7 @@
         <mat-list>
             <mat-list-item [disableRipple]="false"
                            *ngFor="let stock of stocks"
-                           (click)="router.navigate(['/inv', stock.id])">
+                           (click)="router.navigate(['/inv', stock.id, {outlets: {inv: ['list']}}])">
                 <b>{{stock.name}}</b>
                 <span style="margin-left: auto; display: inline-block;">{{stock.target_kcal | number:'1.0-1'}}
                     kcal</span>

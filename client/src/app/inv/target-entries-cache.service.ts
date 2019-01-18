@@ -1,20 +1,21 @@
-import { Injectable } from '@angular/core';
-import {CachedObject} from "../core/cached-object";
-import {InvTargetEntry} from "./inv-target-entry";
-import {HttpClient} from "@angular/common/http";
-import {map} from "rxjs/operators";
-import {API_ROOT} from "./inv.service";
+import {Injectable} from '@angular/core';
+import {CachedObject} from '../core/cached-object';
+import {InvTargetEntry} from './inv-target-entry';
+import {HttpClient} from '@angular/common/http';
+import {map} from 'rxjs/operators';
+
+export const API_ROOT: string = '/api/inv/';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
-export class TargetEntriesCacheService extends CachedObject<InvTargetEntry[]>{
+export class TargetEntriesCacheService extends CachedObject<InvTargetEntry[]> {
 
-  constructor(
-      private readonly http: HttpClient
-  ) {
-      super();
-  }
+    constructor(
+        private readonly http: HttpClient
+    ) {
+        super();
+    }
 
     async loadValue(): Promise<InvTargetEntry[]> {
         return await this.http.get(API_ROOT + 'targetEntry/list')
