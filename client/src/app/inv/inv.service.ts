@@ -9,6 +9,7 @@ import {InvStock} from './inv-stock';
 import {BehaviorSubject} from 'rxjs';
 import {ErrorHandlingService} from '../core/error-handling/error-handling.service';
 
+export const LOCAL_STORAGE_STOCK_TOKEN = 'life-suite-inv-stock';
 export const API_ROOT: string = '/api/inv/';
 
 @Injectable({
@@ -72,14 +73,5 @@ export class InvService {
 
     async getStocks(): Promise<InvStock[]> {
         return ((await this.http.get(API_ROOT + 'stock/list', {}).toPromise()) as any).data;
-    }
-
-    async stockExists(stockId: string): Promise<boolean> {
-        return await this.http.get(API_ROOT + 'stock/read/' + stockId, {})
-            .pipe(map((response: any) => {
-                return !!response.data.id;
-            })).toPromise().catch(error => {
-                return false;
-            });
     }
 }

@@ -11,7 +11,6 @@ export class CurrentStockResolver implements Resolve<any> {
     }
 
     resolve(route: ActivatedRouteSnapshot) {
-        debugger;
         this.invService.currentStockId$.next(Number(route.params.stockId));
     }
 }

@@ -22,4 +22,9 @@ export class InvStockListComponent implements OnInit {
         this.stocks = await this.invService.getStocks();
     }
 
+    async openStock(stockId) {
+        localStorage.setItem('life-suite-inv-stock', stockId.toString());
+        await this.router.navigate(['/inv', stockId, {outlets: {inv: ['list']}}]);
+    }
+
 }

@@ -18,15 +18,13 @@ export class InvWrapperComponent implements OnInit {
     constructor(
         private readonly invService: InvService,
         private readonly router: Router,
-        private readonly location: Location,
-        private readonly route: ActivatedRoute
+        private readonly location: Location
     ) {
         this.invService.currentStockId$.subscribe(async (value: number) => {
             if (this.stocks === null) {
                 this.stocks = await this.invService.getStocks();
             }
             if (value === null || this.stocks.findIndex(stock => stock.id === value) === -1) {
-                debugger;
                 await this.router.navigate(['/inv']);
             }
             if (value !== this.stockId) {
@@ -41,6 +39,7 @@ export class InvWrapperComponent implements OnInit {
     async switchStock($event: MatSelectChange) {
         if ($event.value !== this.stockId) {
             this.stockId = $event.value;
+            localStorage.setItem('life-suite-inv-stock', this.stockId.toString());
             const oldRoute: string[] = this.location.path().split('/');
             const newRoute = [oldRoute[1], this.stockId, {outlets: {inv: [oldRoute[3].split(':')[1].replace(')', '')]}}];
             await this.router.navigate(newRoute);
