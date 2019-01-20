@@ -1,22 +1,50 @@
-<div id="center">
-  <div class="entry header">
-    <p>Abgelaufende Produkte</p>
-  </div>
-  <div class="entry" *ngFor="let entry of expiredEntries">
-    <button type="button" class="eaten-btn" (click)="eatConfirmation(entry.id)">ESSEN</button>
-    <h1>{{entry.id}} - {{entry.name}}</h1>
-    <p>Verfallsdatum: {{entry.expirationDate.toLocaleDateString()}}</p>
-  </div>
-  <div class="entry header" [formGroup]="expirationsForm">
-    <p>
-      Läuft in den nächsten
-      <input type="text" formControlName="months" size="2" id="months" (change)="findNextExpirations()">
-      Monaten ab
-    </p>
-  </div>
-  <div class="entry" *ngFor="let entry of nextExpiringEntries">
-    <button type="button" class="eaten-btn" (click)="eatConfirmation(entry.id)">ESSEN</button>
-    <h1>{{entry.id}} - {{entry.name}}</h1>
-    <p>Verfallsdatum: {{entry.expirationDate.toLocaleDateString()}}</p>
-  </div>
-</div>
+<mat-card class="small-card">
+    <mat-card-title style="margin-bottom: 20px;">EXPIRATIONS</mat-card-title>
+    <mat-card-content>
+        <div style="display: flex; align-items: center; margin-bottom: 16px; font-size: 16px;">
+            <b>Expired Products</b>
+        </div>
+        <mat-divider [inset]="true"></mat-divider>
+        <div style="margin-bottom: 20px;">
+            <mat-list *ngIf="entries.length > 0; else noEntries">
+                <mat-list-item [disableRipple]="false"
+                               *ngFor="let entry of expiredEntries">
+                    <span style="width: 30px; text-align: center; margin-right: 15px;">{{entry.id}}</span>
+                    <b>{{entry.name}}</b>
+                    <span style="margin-left: auto;">{{entry.expiration_date | date:'dd.MM.yyyy'}}</span>
+                    <mat-divider [inset]="true"></mat-divider>
+                </mat-list-item>
+            </mat-list>
+            <ng-template #noEntries>
+                <div style="text-align: center;">
+                    <p>No entries expired.</p>
+                </div>
+            </ng-template>
+        </div>
+        <mat-divider></mat-divider>
+        <div style="display: flex; align-items: center; font-size: 16px;" [formGroup]="expirationsForm">
+            <b>Products expiring in the next</b>
+            <mat-form-field style="width: 20px; margin: 0 8px; text-align: center;" class="months-form-field">
+                <input type="text" formControlName="months" size="2" (change)="findNextExpirations()" matInput>
+            </mat-form-field>
+            <b>months</b>
+        </div>
+        <mat-divider [inset]="true"></mat-divider>
+        <div>
+            <mat-list *ngIf="nextExpiringEntries.length > 0; else noEntries">
+                <mat-list-item [disableRipple]="false"
+                               *ngFor="let entry of nextExpiringEntries">
+                    <span style="width: 30px; text-align: right; margin-right: 15px;">{{entry.id}}</span>
+                    <b>{{entry.name}}</b>
+                    <span style="margin-left: auto;">{{entry.expiration_date | date:'dd.MM.yyyy'}}</span>
+                    <mat-divider [inset]="true"></mat-divider>
+                </mat-list-item>
+            </mat-list>
+            <ng-template #noEntries>
+                <div style="text-align: center;">
+                    <p>No entries expiring in the provided timeframe.</p>
+                </div>
+            </ng-template>
+        </div>
+    </mat-card-content>
+</mat-card>

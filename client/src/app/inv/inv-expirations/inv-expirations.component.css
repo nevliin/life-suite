@@ -1,1 +1,5 @@
 @import '../inv.css';
+
+.months-form-field >>> .mat-form-field-infix {
+    padding-bottom: 3px;
+}
