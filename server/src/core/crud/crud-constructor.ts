@@ -1,13 +1,13 @@
-import {IDBConfig} from "../../assets/config/server-config.model";
-import {DBExecuteResult, DBQueryResult, DbUtil} from "../../utils/db/db.util";
-import {ICRUDModel} from "./crud.model";
-import {Logger, LoggingUtil} from "../../utils/logging/logging.util";
-import {ErrorCodeUtil} from "../../utils/error-code/error-code.util";
-import {NextFunction, Request, Response, Router} from "express";
-import {isNullOrUndefined} from "../../utils/util";
-import {CRUDListFilter, CRUDListOptions} from "./crud-list-options";
-import {MySqlUtil} from "../../utils/db/mysql.util";
-import {PgSqlUtil} from "../../utils/db/pgsql.util";
+import {IDBConfig} from '../../assets/config/server-config.model';
+import {DBExecuteResult, DBQueryResult, DbUtil} from '../../utils/db/db.util';
+import {ICRUDModel} from './crud.model';
+import {Logger, LoggingUtil} from '../../utils/logging/logging.util';
+import {ErrorCodeUtil} from '../../utils/error-code/error-code.util';
+import {NextFunction, Request, Response, Router} from 'express';
+import {isNullOrUndefined} from '../../utils/util';
+import {CRUDListFilter, CRUDListOptions} from './crud-list-options';
+import {MySqlUtil} from '../../utils/db/mysql.util';
+import {PgSqlUtil} from '../../utils/db/pgsql.util';
 
 const express = require('express');
 
@@ -59,7 +59,10 @@ export class CRUDConstructor<T extends ICRUDModel, > {
             this.autoIncrementId = (!isNullOrUndefined(options.autoIncrementId)) ? options.autoIncrementId : true;
             this.softDelete = options.softDelete;
             this.db = this.mapDbTypeToClass(options.dbType, options.dbConfig);
-            this.fieldMappings = this.completeFieldMappings(model, new Map<string, string>(Object.entries(options.fieldMappings ? options.fieldMappings : {})));
+            this.fieldMappings = this.completeFieldMappings(
+                model,
+                new Map<string, string>(Object.entries(options.fieldMappings ? options.fieldMappings : {}))
+            );
             this.autoFilledFields = (options.autoFilledFields) ? options.autoFilledFields : [];
             this.validFieldMapping = (options.validFieldMapping) ? options.validFieldMapping : 'valid';
         } else {
@@ -98,7 +101,10 @@ export class CRUDConstructor<T extends ICRUDModel, > {
             const dbField: DBField = new DBField();
             dbField.name = (inputMap.has(key)) ? inputMap.get(key) : key;
             if (typeof model[key] === ('undefined' || 'function')) {
-                this.logger.warn(`Illegal model '${model.constructor.name}' provided; property '${key}' is undefined or a function.`, 'completeFieldMappings');
+                this.logger.warn(
+                    `Illegal model '${model.constructor.name}' provided; property '${key}' is undefined or a function.`,
+                    'completeFieldMappings'
+                );
             } else {
                 if (typeof model[key] === 'number') {
                     dbField.type = DBFieldType.NUMBER;
@@ -131,7 +137,7 @@ export class CRUDConstructor<T extends ICRUDModel, > {
         if (this.autoIncrementId) {
             // If the ID is auto-incremented, remove the ID field
             properties = properties.filter(property => {
-                return property != 'id';
+                return property !== 'id';
             });
         }
         // Get the DB field mappings
@@ -140,7 +146,7 @@ export class CRUDConstructor<T extends ICRUDModel, > {
 
         // Add the value of each property to the statement
         properties.forEach((property, index) => {
-            if (index != 0) {
+            if (index !== 0) {
                 statement += ', ';
             }
             statement += this.objectPropertyToSQLString(property, data);
@@ -202,7 +208,6 @@ export class CRUDConstructor<T extends ICRUDModel, > {
     /**
      * List objects
      * @returns Object with properties read from the DB table
-     * @param options
      */
     public async list(options: CRUDListOptions): Promise<T[]> {
         // Get fields to be read and add create the statement with them
@@ -220,7 +225,11 @@ export class CRUDConstructor<T extends ICRUDModel, > {
         } else {
             this.validateCRUDListFilter(options.filter);
             let whereOpened: boolean = false;
-            if ((isNullOrUndefined(options.bypassSoftDelete) || typeof options.bypassSoftDelete !== "boolean" || !options.bypassSoftDelete) && this.softDelete) {
+            if (
+                (isNullOrUndefined(options.bypassSoftDelete)
+                    || typeof options.bypassSoftDelete !== 'boolean'
+                    || !options.bypassSoftDelete)
+                && this.softDelete) {
                 // Add check for validity if the objects are soft-deleted
                 statement += ` WHERE ${this.validFieldMapping} = 1`;
                 whereOpened = true;
@@ -239,14 +248,14 @@ export class CRUDConstructor<T extends ICRUDModel, > {
                         statement += ' =';
                     }
                     if (this.fieldMappings.get(filter.field).type === (DBFieldType.STRING || DBFieldType.TIMESTAMP)) {
-                        statement += ` '${this.db.esc(filter.value)}'`;
+                        statement += ` '%${this.db.esc(filter.value)}%'`;
                     } else if (this.fieldMappings.get(filter.field).type === DBFieldType.BOOLEAN) {
                         const value: number = filter.value ? 1 : 0;
                         statement += ` ${value}`;
                     } else {
                         statement += ` ${this.db.escNumber(Number(filter.value))}`;
                     }
-                })
+                });
             }
             if (!isNullOrUndefined(options.orderField)) {
                 if (typeof options.orderField === 'string' && this.fieldMappings.has(options.orderField)) {
@@ -254,20 +263,22 @@ export class CRUDConstructor<T extends ICRUDModel, > {
                     if (!isNullOrUndefined(options.orderDirection) && options.orderDirection.toUpperCase() === 'DESC') {
                         orderDirection = 'DESC';
                     }
-                    statement += ` ORDER BY ${this.fieldMappings.get(options.orderField).name} ${orderDirection}`
+                    statement += ` ORDER BY ${this.fieldMappings.get(options.orderField).name} ${orderDirection}`;
                 } else {
                     ErrorCodeUtil.findErrorCodeAndThrow('NO_SUCH_FIELD');
                 }
             }
-            if (!isNullOrUndefined(options.limit) && typeof options.limit === "number") {
+            if (!isNullOrUndefined(options.limit) && typeof options.limit === 'number') {
                 statement += ` LIMIT ${this.db.escNumber(options.limit)}`;
             }
         }
         statement += `;`;
 
+        console.log(statement);
+
         const queryResult: DBQueryResult = await this.db.query(statement);
 
-        let result: T[] = [];
+        const result: T[] = [];
         queryResult.rows.forEach(row => {
             if (row) {
                 const rowResult: any = {};
@@ -281,7 +292,7 @@ export class CRUDConstructor<T extends ICRUDModel, > {
                     }
                 });
                 // @ts-ignore
-                result.push(<T>rowResult)
+                result.push(<T>rowResult);
             }
         });
         return result;
@@ -290,7 +301,7 @@ export class CRUDConstructor<T extends ICRUDModel, > {
     /**
      * Update object
      * @param data - Object to be written to the DB table
-     * @param oldId
+     * @param oldId - Previous ID before the update
      * @returns Object ID
      */
     public async update(data: T, oldId?: number): Promise<number> {
@@ -303,14 +314,14 @@ export class CRUDConstructor<T extends ICRUDModel, > {
         let properties: string[] = Array.from(this.fieldMappings.keys());
         if (this.autoIncrementId && !oldId) {
             properties = properties.filter(property => {
-                return property != 'id'
+                return property !== 'id';
             });
         }
 
         let statement: string = `UPDATE ${this.dbTable} SET `;
 
         properties.forEach((property, index) => {
-            if (index != 0) {
+            if (index !== 0) {
                 statement += ', ' + this.fieldMappings.get(property).name + ' = ';
             } else {
                 statement += this.fieldMappings.get(property).name + ' = ';
@@ -320,7 +331,7 @@ export class CRUDConstructor<T extends ICRUDModel, > {
         statement += ` WHERE ${this.fieldMappings.get('id').name} = ${this.db.escNumber((oldId) ? oldId : data.id)};`;
 
         const result: DBExecuteResult = await this.db.execute(statement);
-        if (result.affectedRows != 1) {
+        if (result.affectedRows !== 1) {
             ErrorCodeUtil.findErrorCodeAndThrow('UPDATE_FAILED');
         }
         return data.id;
@@ -356,9 +367,9 @@ export class CRUDConstructor<T extends ICRUDModel, > {
 
         statement += ';';
 
-        const result: DBQueryResult = await this.db.query(statement);
+        const dbQueryResult: DBQueryResult = await this.db.query(statement);
 
-        if (result.rows[0]) {
+        if (dbQueryResult.rows[0]) {
             // Assign fields of the result to an empty object and return it
             const result: any = {};
             properties.forEach((property, index) => {
@@ -469,23 +480,25 @@ export class CRUDConstructor<T extends ICRUDModel, > {
                     (fieldType === DBFieldType.BOOLEAN && typeof filterEntry.value !== 'boolean')
                     || (fieldType === DBFieldType.NUMBER && typeof filterEntry.value !== 'number')
                     || (fieldType === DBFieldType.STRING && typeof filterEntry.value !== 'string')
-                    || (fieldType === DBFieldType.TIMESTAMP && !((filterEntry.value instanceof Date) || typeof filterEntry.value !== 'string'))
+                    || (fieldType === DBFieldType.TIMESTAMP && !((filterEntry.value instanceof Date)
+                    || typeof filterEntry.value !== 'string'))
                 ) {
                     ErrorCodeUtil.findErrorCodeAndThrow('INVALID_LIST_FILTER');
                 }
-                if (filterEntry.partialMatch && (fieldType === DBFieldType.BOOLEAN || fieldType === DBFieldType.NUMBER || fieldType === DBFieldType.TIMESTAMP)) {
+                if (filterEntry.partialMatch
+                    && (fieldType === DBFieldType.BOOLEAN || fieldType === DBFieldType.NUMBER || fieldType === DBFieldType.TIMESTAMP)) {
                     ErrorCodeUtil.findErrorCodeAndThrow('INVALID_LIST_FILTER');
                 }
-            })
+            });
         } else if (!isNullOrUndefined(filter)) {
             ErrorCodeUtil.findErrorCodeAndThrow('INVALID_PARAMETER');
         }
     }
 
     objectPropertyToSQLString(property: string, data: any): string {
-        let sqlString = "";
+        let sqlString = '';
         if (this.fieldMappings.get(property).type === (DBFieldType.STRING || DBFieldType.TIMESTAMP)) {
-            (data[property] != null)
+            (data[property] !== null)
                 ? sqlString += `'${this.db.esc(data[property].toString())}'`
                 : sqlString += `null`;
         } else if (this.fieldMappings.get(property).type === DBFieldType.BOOLEAN) {
@@ -498,8 +511,8 @@ export class CRUDConstructor<T extends ICRUDModel, > {
             }
         } else {
             let value: number | null = null;
-            if(!isNullOrUndefined(data[property])) {
-                value = Number.isNaN(Number(data[property])) ? null : Number(data[property])
+            if (!isNullOrUndefined(data[property])) {
+                value = Number.isNaN(Number(data[property])) ? null : Number(data[property]);
             }
             sqlString += `${this.db.escNumber(value)}`;
         }
@@ -543,7 +556,8 @@ interface CRUDOptions {
     autoIncrementId?: boolean;
     // list of names of fields that are auto-filled by the db and should be omitted if empty
     autoFilledFields?: string[];
-    // mapping of object fields to DB table fields, default is the same name for both; the object keys are used as javascript names, the object values as sql names
+    // mapping of object fields to DB table fields, default is the same name for both;
+    // the object keys are used as javascript names, the object values as sql names
     fieldMappings?: object;
 
     // remap the field 'valid' for soft-deleting to a different DB table field
