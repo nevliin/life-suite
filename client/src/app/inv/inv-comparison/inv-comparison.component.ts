@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {CompareEntry} from "../compare-entry";
-import {HttpClient} from "@angular/common/http";
-import {ErrorHandlingService} from "../../core/error-handling/error-handling.service";
-import {InvService} from "../inv.service";
+import {CompareEntry} from '../compare-entry';
+import {ErrorHandlingService} from '../../core/error-handling/error-handling.service';
+import {InvService} from '../inv.service';
 
 @Component({
     selector: 'app-inv-comparison',
@@ -11,21 +10,21 @@ import {InvService} from "../inv.service";
 })
 export class InvComparisonComponent implements OnInit {
 
-    comparison: CompareEntry[];
+    comparison: CompareEntry[] = [];
 
     constructor(
         readonly invService: InvService,
         readonly errorHandlingService: ErrorHandlingService
     ) {
+        this.invService.currentStockId$.subscribe(async value => {
+            if (value) {
+                this.comparison = await this.invService.getComparison(value);
+                this.comparison = this.comparison.filter(compareEntry => compareEntry.amount !== 0);
+            }
+        });
     }
 
     async ngOnInit() {
-        try {
-            this.comparison = await this.invService.getComparison();
-            this.comparison = this.comparison.filter(compareEntry => compareEntry.amount != 0);
-        } catch (e) {
-            this.errorHandlingService.handleHTTPError(e);
-        }
     }
 
 

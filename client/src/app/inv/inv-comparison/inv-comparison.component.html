@@ -1,9 +1,20 @@
-<div id="center">
-  <div class="entry header">
-    <p>Soll-Ist-Vergleich</p>
-  </div>
-  <div class="entry" *ngFor="let compareEntry of comparison">
-    <p class="difference" [ngClass]="{'missing': compareEntry.amount < 0, 'overflow': compareEntry.amount > 0}">{{compareEntry.amount | abs}}</p>
-    <h1>{{compareEntry.name}}</h1>
-  </div>
-</div>
+<mat-card class="small-card">
+    <mat-card-title style="margin-bottom: 20px;">TARGET-PERFORMANCE COMPARISON</mat-card-title>
+    <mat-card-content>
+        <div>
+            <mat-list *ngIf="comparison.length > 0; else noEntries">
+                <mat-list-item [disableRipple]="false"
+                               *ngFor="let compareEntry of comparison">
+                    <b>{{compareEntry.name}}</b>
+                    <b style="margin-left: auto;" [ngClass]="{'negative': compareEntry.amount < 0, 'positive': compareEntry.amount > 0}">{{compareEntry.amount | abs}}</b>
+                    <mat-divider [inset]="true"></mat-divider>
+                </mat-list-item>
+            </mat-list>
+            <ng-template #noEntries>
+                <div style="text-align: center;">
+                    <p>No entries found</p>
+                </div>
+            </ng-template>
+        </div>
+    </mat-card-content>
+</mat-card>
