@@ -1,8 +1,10 @@
-<mat-select style="right: 0; width: 250px; margin-right: 8px; position: absolute;" [value]="stockId" (selectionChange)="switchStock($event)">
-    <mat-option *ngFor="let stock of stocks"
-                [value]="stock.id">{{stock.name}}
-    </mat-option>
-</mat-select>
+<div class="stock-select-div">
+    <mat-select class="stock-select" [value]="stockId" (selectionChange)="switchStock($event)">
+        <mat-option *ngFor="let stock of stocks"
+                    [value]="stock.id">{{stock.name}}
+        </mat-option>
+    </mat-select>
+</div>
 <div style="margin: 0 auto 0 auto; display: flex; align-items: center; flex-direction: column; width: 100%;">
     <router-outlet name="inv"></router-outlet>
 </div>

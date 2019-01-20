@@ -1,3 +1,26 @@
 :host {
     width: 100%;
 }
+
+.stock-select-div {
+    float: right;
+}
+
+.stock-select {
+    width: 250px;
+    margin-right: 8px;
+}
+
+@media (max-width: 960px) {
+    .stock-select {
+        float: initial;
+    }
+
+    .stock-select-div {
+        float: initial;
+        margin-bottom: 20px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+}
