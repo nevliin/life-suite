@@ -4,7 +4,6 @@ import {InvTargetEntry} from './inv-target-entry';
 import {HttpClient} from '@angular/common/http';
 import {InvEntry} from './inv-entry';
 import {CompareEntry} from './compare-entry';
-import {TargetEntriesCacheService} from './target-entries-cache.service';
 import {InvStock} from './inv-stock';
 import {BehaviorSubject} from 'rxjs';
 import {ErrorHandlingService} from '../core/error-handling/error-handling.service';
@@ -17,17 +16,34 @@ export const API_ROOT: string = '/api/inv/';
 })
 export class InvService {
 
+    public get stockId() {
+        return this.currentStockId$.getValue();
+    }
+
     public currentStockId$: BehaviorSubject<number | null> = new BehaviorSubject(null);
 
     constructor(
         readonly http: HttpClient,
-        readonly cachedTargetEntries: TargetEntriesCacheService,
         private readonly errorHandlingService: ErrorHandlingService
     ) {
     }
 
-    async getTargetEntries(): Promise<InvTargetEntry[]> {
-        return await this.cachedTargetEntries.getValue();
+    async getTargetEntries(stockId: number): Promise<InvTargetEntry[]> {
+        return await this.http
+            .post(API_ROOT + 'targetEntry/list', {
+                filter: [
+                    {
+                        field: 'stock_id',
+                        value: stockId,
+                        partialMatch: false
+                    }
+                ]
+            })
+            .pipe(map((response: { data: InvTargetEntry[] }) => response.data))
+            .toPromise().catch(e => {
+                this.errorHandlingService.handleHTTPError(e);
+                return [];
+            });
     }
 
     async getEntries(stockId: number): Promise<InvEntry[]> {
@@ -49,12 +65,44 @@ export class InvService {
         ).toPromise();
     }
 
+    async searchEntries(stockId: number, filter: any[]): Promise<InvEntry[]> {
+        if (filter) {
+            filter.push({
+                field: 'stock_id',
+                value: stockId,
+                partialMatch: false
+            });
+        } else {
+            filter = [{
+                field: 'stock_id',
+                value: stockId,
+                partialMatch: false
+            }];
+        }
+        return this.http.post(API_ROOT + 'entry/list', {
+            filter: filter
+        }).pipe(map((response: { data: InvEntry[] }) => {
+                return response.data
+                    .map((entry: InvEntry) => {
+                        entry.expiration_date = new Date(entry.expiration_date);
+                        entry.created_on = new Date(entry.created_on);
+                        return entry;
+                    });
+            })
+        ).toPromise();
+    }
+
+
     async deleteEntry(id: number): Promise<void> {
         await this.http.delete(API_ROOT + 'entry/delete/' + id).toPromise();
     }
 
-    async getComparison(): Promise<CompareEntry[]> {
-        return ((await this.http.get(API_ROOT + 'comparison').toPromise()) as any).comparison;
+    async getComparison(stockId: number): Promise<CompareEntry[]> {
+        return ((await this.http.get(API_ROOT + 'comparison', {
+            params: {
+                stockId: stockId.toString()
+            }
+        }).toPromise()) as any).comparison;
     }
 
     async getAutoFill(name: string): Promise<InvEntry> {

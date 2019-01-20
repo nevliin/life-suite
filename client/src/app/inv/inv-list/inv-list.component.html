@@ -1,13 +1,17 @@
-<mat-card class="large-card">
+<mat-card class="small-card">
     <mat-card-title style="margin-bottom: 20px;">LIST</mat-card-title>
     <mat-card-content>
         <div style="display: flex; align-items: center; margin-bottom: 16px;">
-            <span style="margin-right: 10px;">Order</span>
-            <mat-select [(value)]="order" (selectionChange)="changeOrder($event.value)">
+            <span style="margin-right: 20px;">Order:</span>
+            <mat-select [(value)]="order" (selectionChange)="changeOrder($event.value)" style="width: 25%;">
                 <mat-option *ngFor="let orderOption of orderOptions"
                             [value]="orderOption.value">{{orderOption.label}}
                 </mat-option>
             </mat-select>
+            <mat-icon style="margin-right: 10px; margin-left: auto;">search</mat-icon>
+            <mat-form-field style="width: 25%;">
+                <input matInput placeholder="Search" [(ngModel)]="searchTerm" (keyup)="search()">
+            </mat-form-field>
         </div>
         <mat-divider [inset]="true"></mat-divider>
         <div>
@@ -16,7 +20,9 @@
                                *ngFor="let entry of entries">
                     <span style="width: 30px; text-align: right; margin-right: 15px;">{{entry.id}}</span>
                     <b>{{entry.name}}</b>
-                    <button style="margin-left: auto;" color="primary" mat-flat-button>Eat</button>
+                    <button style="margin-left: auto;" color="primary" mat-flat-button (click)="deleteEntry(entry.id)">
+                        Eat
+                    </button>
                     <mat-divider [inset]="true"></mat-divider>
                 </mat-list-item>
             </mat-list>

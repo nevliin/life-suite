@@ -3,6 +3,9 @@ import {SelectItem} from 'primeng/api';
 import {InvEntry} from '../inv-entry';
 import {ErrorHandlingService} from '../../core/error-handling/error-handling.service';
 import {InvService} from '../inv.service';
+import {AlertDialogService} from '../../core/alert-dialog/alert-dialog.service';
+import {Observable, Subject} from 'rxjs';
+import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
 
 @Component({
     selector: 'app-inv-list',
@@ -28,21 +31,42 @@ export class InvListComponent implements OnInit {
 
     order: OrderOptions = OrderOptions.ID;
 
+    searchTerm: string = '';
+    private searchTerm$ = new Subject<string>();
+    private searchChange$: Observable<string> = this.searchTerm$.pipe(
+        debounceTime(200),
+        distinctUntilChanged()
+    );
+
     entries: InvEntry[] = [];
 
     constructor(
         readonly invService: InvService,
-        readonly errorHandlingService: ErrorHandlingService
+        readonly errorHandlingService: ErrorHandlingService,
+        private readonly alertDialogService: AlertDialogService
     ) {
-    }
-
-    async ngOnInit() {
-        await this.fetchEntries();
         this.invService.currentStockId$.subscribe(async value => {
             if (value) {
                 await this.fetchEntries();
             }
         });
+        this.searchChange$.subscribe(async searchTerm => {
+            if (searchTerm && searchTerm.trim()) {
+                this.entries = await this.invService.searchEntries(this.invService.stockId, [
+                    {
+                        field: 'name',
+                        value: searchTerm,
+                        partialMatch: true
+                    }
+                ]);
+                this.changeOrder(this.order);
+            } else {
+                await this.fetchEntries();
+            }
+        });
+    }
+
+    async ngOnInit() {
     }
 
     async fetchEntries() {
@@ -53,11 +77,13 @@ export class InvListComponent implements OnInit {
         this.changeOrder(this.order);
     }
 
-    async eatConfirmation(id: number) {
-        await this.invService.deleteEntry(id);
-        const index: number = this.entries.findIndex((entry: InvEntry) => entry.id === id);
-        this.entries.splice(index, 1);
-        await this.fetchEntries();
+    async deleteEntry(entryId: number) {
+        if (await this.alertDialogService.confirm('Are you sure you want to remove this entry?')) {
+            await this.invService.deleteEntry(entryId);
+            const index: number = this.entries.findIndex((entry: InvEntry) => entry.id === entryId);
+            this.entries.splice(index, 1);
+            await this.fetchEntries();
+        }
     }
 
     changeOrder(value: OrderOptions) {
@@ -72,6 +98,10 @@ export class InvListComponent implements OnInit {
                 return value1.expiration_date.getTime() - value2.expiration_date.getTime();
             }
         });
+    }
+
+    search(): void {
+        this.searchTerm$.next(this.searchTerm);
     }
 
 }
