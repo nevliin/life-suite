@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {SelectItem} from "primeng/api";
-import {FormControl, FormGroup} from "@angular/forms";
-import {InvEntry} from "../inv-entry";
-import {ErrorHandlingService} from "../../core/error-handling/error-handling.service";
-import {InvService} from "../inv.service";
+import {SelectItem} from 'primeng/api';
+import {InvEntry} from '../inv-entry';
+import {ErrorHandlingService} from '../../core/error-handling/error-handling.service';
+import {InvService} from '../inv.service';
 
 @Component({
     selector: 'app-inv-list',
@@ -27,11 +26,9 @@ export class InvListComponent implements OnInit {
         }
     ];
 
-    orderForm: FormGroup = new FormGroup({
-        selectedOrder: new FormControl('id')
-    });
+    order: OrderOptions = OrderOptions.ID;
 
-    entries: InvEntry[];
+    entries: InvEntry[] = [];
 
     constructor(
         readonly invService: InvService,
@@ -41,23 +38,29 @@ export class InvListComponent implements OnInit {
 
     async ngOnInit() {
         await this.fetchEntries();
+        this.invService.currentStockId$.subscribe(async value => {
+            if (value) {
+                await this.fetchEntries();
+            }
+        });
     }
 
     async fetchEntries() {
-        /*this.entries = await this.invService.getEntries().catch((e) => {
+        this.entries = await this.invService.getEntries(this.invService.currentStockId$.getValue()).catch((e) => {
             this.errorHandlingService.handleHTTPError(e);
             return [];
-        });*/
+        });
+        this.changeOrder(this.order);
     }
 
     async eatConfirmation(id: number) {
         await this.invService.deleteEntry(id);
         const index: number = this.entries.findIndex((entry: InvEntry) => entry.id === id);
         this.entries.splice(index, 1);
-        this.fetchEntries();
+        await this.fetchEntries();
     }
 
-    sortEntries(value: OrderOptions) {
+    changeOrder(value: OrderOptions) {
         this.entries.sort((value1: InvEntry, value2: InvEntry): number => {
             if (value === OrderOptions.ID) {
                 return value1.id - value2.id;
