@@ -1,8 +1,20 @@
-<div id="center">
-  <div class="entry header">
-    <p>Zielbestand</p>
-  </div>
-  <div class="entry" *ngFor="let targetEntry of targetEntries">
-    <h1>{{targetEntry.name}} - {{targetEntry.amount}} Stück</h1>
-  </div>
-</div>
+<mat-card class="small-card">
+    <mat-card-title style="margin-bottom: 20px;">TARGET</mat-card-title>
+    <mat-card-content>
+        <div>
+            <mat-list *ngIf="targetEntries.length > 0; else noEntries">
+                <mat-list-item [disableRipple]="false"
+                               *ngFor="let targetEntry of targetEntries">
+                    <b>{{targetEntry.name}}</b>
+                    <b style="margin-left: auto;">{{targetEntry.amount}}</b>
+                    <mat-divider [inset]="true"></mat-divider>
+                </mat-list-item>
+            </mat-list>
+            <ng-template #noEntries>
+                <div style="text-align: center;">
+                    <p>No entries found</p>
+                </div>
+            </ng-template>
+        </div>
+    </mat-card-content>
+</mat-card>
