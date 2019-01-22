@@ -1,11 +1,11 @@
-import {NextFunction, Request, Response, Router} from "express";
-import {ErrorCodeUtil} from "../utils/error-code/error-code.util";
-import {CRUDConstructor, DBType} from "../core/crud/crud-constructor";
-import {EntryModel} from "./model/entry.model";
-import {TargetEntryModel} from "./model/target-entry.model";
-import {InvService} from "./inv.service";
-import {CompareEntryModel} from "./model/compare-entry.model";
-import {StockModel} from "./model/stock.model";
+import {NextFunction, Request, Response, Router} from 'express';
+import {ErrorCodeUtil} from '../utils/error-code/error-code.util';
+import {CRUDConstructor, DBType} from '../core/crud/crud-constructor';
+import {EntryModel} from './model/entry.model';
+import {TargetEntryModel} from './model/target-entry.model';
+import {InvService} from './inv.service';
+import {CompareEntryModel} from './model/compare-entry.model';
+import {StockModel} from './model/stock.model';
 
 const express = require('express');
 
@@ -41,7 +41,7 @@ export const init = (): Router => {
 
     invRouter.get('/comparison', async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const result: CompareEntryModel[] = await invService.getComparison();
+            const result: CompareEntryModel[] = await invService.getComparison(req.query);
             res.status(200).send({
                 comparison: result
             });
@@ -72,6 +72,18 @@ export const init = (): Router => {
             const result: number = await invService.getNextId();
             res.status(200).send({
                 nextId: result
+            });
+        } catch (e) {
+            ErrorCodeUtil.resolveErrorOnRoute(e, res);
+        }
+    });
+
+    invRouter.post('/createMultipleEntries', async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const result: number[] = await invService.createMultipleEntries(req.body);
+
+            res.status(200).send({
+                data: result
             });
         } catch (e) {
             ErrorCodeUtil.resolveErrorOnRoute(e, res);
