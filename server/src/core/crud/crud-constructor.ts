@@ -142,16 +142,12 @@ export class CRUDConstructor<T extends ICRUDModel, > {
         }
         // Get the DB field mappings
         const fields: string = properties.map(property => this.fieldMappings.get(property).name).join(', ');
-        let statement: string = `INSERT INTO ${this.dbTable}(${fields}) VALUES (`;
+        let statement: string = `INSERT INTO ${this.dbTable}(${fields}) VALUES `;
 
         // Add the value of each property to the statement
-        properties.forEach((property, index) => {
-            if (index !== 0) {
-                statement += ', ';
-            }
-            statement += this.objectPropertyToSQLString(property, data);
-        });
-        statement += ') RETURNING id;';
+        statement += this.objectToSQLInsertString(properties, data);
+
+        statement += ' RETURNING id;';
 
         try {
             const result: DBExecuteResult = await this.db.execute(statement);
@@ -320,14 +316,7 @@ export class CRUDConstructor<T extends ICRUDModel, > {
 
         let statement: string = `UPDATE ${this.dbTable} SET `;
 
-        properties.forEach((property, index) => {
-            if (index !== 0) {
-                statement += ', ' + this.fieldMappings.get(property).name + ' = ';
-            } else {
-                statement += this.fieldMappings.get(property).name + ' = ';
-            }
-            statement += this.objectPropertyToSQLString(property, data);
-        });
+        statement += this.objectToSQLUpdateString(properties, data);
         statement += ` WHERE ${this.fieldMappings.get('id').name} = ${this.db.escNumber((oldId) ? oldId : data.id)};`;
 
         const result: DBExecuteResult = await this.db.execute(statement);
@@ -495,10 +484,34 @@ export class CRUDConstructor<T extends ICRUDModel, > {
         }
     }
 
-    objectPropertyToSQLString(property: string, data: any): string {
+    public objectToSQLInsertString(properties: string[], data: T): string {
+        let sqlString = '(';
+        properties.forEach((property, index) => {
+            if (index !== 0) {
+                sqlString += ', ';
+            }
+            sqlString += this.objectPropertyToSQLString(property, data);
+        });
+        return sqlString + ')';
+    }
+
+    public objectToSQLUpdateString(properties: string[], data: T): string {
+        let sqlString = '';
+        properties.forEach((property, index) => {
+            if (index !== 0) {
+                sqlString += ', ' + this.fieldMappings.get(property).name + ' = ';
+            } else {
+                sqlString += this.fieldMappings.get(property).name + ' = ';
+            }
+            sqlString += this.objectPropertyToSQLString(property, data);
+        });
+        return sqlString;
+    }
+
+    public objectPropertyToSQLString(property: string, data: any): string {
         let sqlString = '';
         if (this.fieldMappings.get(property).type === (DBFieldType.STRING || DBFieldType.TIMESTAMP)) {
-            (data[property] !== null)
+            (data[property] !== null && data[property] !== undefined)
                 ? sqlString += `'${this.db.esc(data[property].toString())}'`
                 : sqlString += `null`;
         } else if (this.fieldMappings.get(property).type === DBFieldType.BOOLEAN) {
