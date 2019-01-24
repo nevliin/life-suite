@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from "@angular/router";
-import {MenuService} from "./menu.service";
+import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
+import {MenuService} from './menu.service';
 
 @Injectable({
     providedIn: 'root'

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {Menu} from "./menu-structure";
-import {HttpClient} from "@angular/common/http";
-import {BehaviorSubject} from "rxjs";
+import {Menu, menus} from './menu-structure';
+import {HttpClient} from '@angular/common/http';
+import {BehaviorSubject} from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -17,14 +17,15 @@ export class MenuService {
     }
 
     public async getMenus() {
-        const menus: Menu[] = [];
-        (<Menu[]>(await this.http.get('./assets/menu.json').toPromise())).forEach((menu: Menu) => {
+        return menus.map((menu: Menu) => {
             if (!menu.absolute) {
-                menu.menuEntries.forEach(menuEntry => menuEntry.route.unshift(menu.routeName));
+                menu.menuEntries.forEach(menuEntry => {
+                    if (menuEntry.route) {
+                        menuEntry.route.unshift(menu.routeName);
+                    }
+                });
             }
-            menus.push(menu);
+            return menu;
         });
-        return menus;
     }
-
 }

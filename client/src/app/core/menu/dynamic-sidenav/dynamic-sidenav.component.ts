@@ -1,9 +1,10 @@
 import {Component} from '@angular/core';
-import {MenuItem} from "primeng/api";
-import {ActivatedRoute, Router} from "@angular/router";
-import {MenuService} from "../menu.service";
-import {AuthService} from "../../auth/auth.service";
-import {DisplayMenu, Menu, MenuEntry} from "../menu-structure";
+import {MenuItem} from 'primeng/api';
+import {ActivatedRoute, Router} from '@angular/router';
+import {MenuService} from '../menu.service';
+import {AuthService} from '../../auth/auth.service';
+import {DisplayMenu, Menu, MenuEntry} from '../menu-structure';
+import {Location} from '@angular/common';
 
 @Component({
     selector: 'dynamic-sidenav',
@@ -21,7 +22,8 @@ export class DynamicSidenavComponent {
         readonly route: ActivatedRoute,
         readonly menuService: MenuService,
         readonly router: Router,
-        readonly authService: AuthService
+        readonly authService: AuthService,
+        private readonly location: Location
     ) {
     }
 
@@ -34,23 +36,23 @@ export class DynamicSidenavComponent {
                     return {
                         label: entry.label,
                         command: () => {
+                            if (entry.command) {
+                                this.router.navigate(entry.command.onMenuEntryClick(this.location)).then();
+                                return;
+                            }
                             this.router.navigate(entry.route).then();
                         }
-                    }
+                    };
                 })
-            }
+            };
         });
         this.menus.forEach((menu: DisplayMenu) => {
             this.expansionStatus[menu.routeName] = false;
         });
         this.menuService.currentMenu$.subscribe((currentMenu: string) => {
-                Object.entries(this.expansionStatus).forEach((value: [string, any]) => {
-                    if(value[0] === currentMenu) {
-                        this.expansionStatus[value[0]] = true;
-                    } else {
-                        this.expansionStatus[value[0]] = false;
-                    }
-                });
+            Object.entries(this.expansionStatus).forEach((value: [string, any]) => {
+                this.expansionStatus[value[0]] = value[0] === currentMenu;
+            });
         });
         this.authService.getVerification$().subscribe((verified: boolean) => {
             return this.isVerified = verified;
