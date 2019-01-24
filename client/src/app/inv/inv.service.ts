@@ -111,8 +111,11 @@ export class InvService {
         }).toPromise()) as any).data;
     }
 
-    async createEntry(entry: InvEntry): Promise<number> {
-        return ((await this.http.post(API_ROOT + 'entry/create', entry)) as any).id;
+    async createEntries(entry: InvEntry, amount: number): Promise<number[]> {
+        return ((await this.http.post(API_ROOT + 'createMultipleEntries', {
+            entry: entry,
+            amount: amount
+        }).toPromise()) as any).data;
     }
 
     async getNextId(): Promise<number> {

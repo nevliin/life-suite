@@ -1,6 +1,6 @@
 export class InvEntry {
-    id: number;
-    valid: boolean;
+    id?: number;
+    valid?: boolean;
     stock_id: number;
     target_id: number;
     name: string;
@@ -11,7 +11,7 @@ export class InvEntry {
     expiration_date: Date;
     price: number;
     note: number;
-    created_on: Date;
+    created_on?: Date;
 
     constructor() {
     }

@@ -1,7 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
-import {InvEntry} from "../inv-entry";
-import {InvService} from "../inv.service";
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {InvEntry} from '../inv-entry';
+import {InvService} from '../inv.service';
+import {InvTargetEntry} from '../inv-target-entry';
+import {AlertDialogService} from '../../core/alert-dialog/alert-dialog.service';
 
 @Component({
     selector: 'app-inv-add',
@@ -10,29 +12,34 @@ import {InvService} from "../inv.service";
 })
 export class InvAddComponent implements OnInit {
 
-    nextId: number;
-
-    entryForm: FormGroup = new FormGroup({
-        id: new FormControl(),
-        name: new FormControl(),
-        amount: new FormControl(),
-        market: new FormControl(),
-        price: new FormControl(),
-        producer: new FormControl(),
-        weight: new FormControl(),
-        kcal: new FormControl(),
-        expirationDate: new FormControl(),
-        note: new FormControl()
+    entryForm: FormGroup = this.fb.group({
+        name: ['', Validators.required],
+        target_id: [null, Validators.required],
+        amount: [1, Validators.required],
+        market: [null],
+        price: [null],
+        producer: [null],
+        weight_in_g: [null],
+        kcal: [null, Validators.required],
+        expiration_date: [new Date(), Validators.required],
+        note: [null]
     });
 
+    targetEntries: InvTargetEntry[] = [];
+
     constructor(
-        readonly invService: InvService
+        readonly invService: InvService,
+        readonly fb: FormBuilder,
+        private readonly alertDialogService: AlertDialogService
     ) {
+        this.invService.currentStockId$.subscribe(async value => {
+            if (value) {
+                this.targetEntries = await this.invService.getTargetEntries(value);
+            }
+        });
     }
 
     async ngOnInit() {
-        this.nextId = await this.invService.getNextId();
-        this.entryForm.get('id').setValue(this.nextId);
     }
 
     async submit() {
@@ -41,39 +48,26 @@ export class InvAddComponent implements OnInit {
             kcal: this.entryForm.get('kcal').value,
             market: this.entryForm.get('market').value,
             note: this.entryForm.get('note').value,
-            expiration_date: this.entryForm.get('expirationDate').value,
+            expiration_date: this.entryForm.get('expiration_date').value,
             price: this.entryForm.get('price').value,
             producer: this.entryForm.get('producer').value,
-            weight_in_g: this.entryForm.get('weight').value,
-            valid: null,
-            id: null,
-            created_on: null,
-            stock_id: null,
-            target_id: null
+            weight_in_g: this.entryForm.get('weight_in_g').value,
+            stock_id: this.invService.currentStockId$.getValue(),
+            target_id: this.entryForm.get('target_id').value
         };
-        if (this.entryForm.get('amount').value === 1) {
-            entry.id = this.entryForm.get('id').value;
-            await this.invService.createEntry(entry);
-        } else if(this.entryForm.get('amount').value >= 1) {
-
-        }
-
-        await this.invService.createEntry(entry);
+        const ids: number[] = await this.invService.createEntries(entry, this.entryForm.get('amount').value);
+        debugger;
+        await this.alertDialogService.info(`The entries were created with the following identifiers: ${ids.join(', ')}`);
     }
 
     async autoFill() {
         const result: InvEntry = await this.invService.getAutoFill(this.entryForm.get('name').value);
-        this.entryForm.patchValue(result as any);
-        const expirationDate: Date = new Date(result.expiration_date);
-        this.entryForm.get('expirationDate').setValue(expirationDate.getFullYear() + '-' + expirationDate.getUTCMonth() + '-' + expirationDate.getUTCDay());
-    }
-
-    adjustIds(amount: number) {
-        if (amount === 1) {
-            this.entryForm.get('id').setValue(this.nextId);
-        } else if (amount > 1) {
-            this.entryForm.get('id').setValue(this.nextId + '-' + (this.nextId + amount - 1));
+        if (result) {
+            this.entryForm.patchValue(result as any);
+            const expirationDate: Date = new Date(result.expiration_date);
+            this.entryForm.get('expiration_date').setValue(expirationDate.toISOString().split('T')[0]);
         }
     }
+
 
 }

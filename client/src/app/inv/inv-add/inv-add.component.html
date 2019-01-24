@@ -1,52 +1,51 @@
-<div id="center" class="p-grid">
-  <form id="add-product" [formGroup]="entryForm">
-    <fieldset>
-      <legend>Produkt hinf&uuml;gen</legend>
-      <button type="button" (click)="submit()" id="btn-save">Speichern</button>
-      <button type="button" id="btn-autofill" (click)="autoFill()">Ausf&uuml;llen</button>
-      <span width="100%"></span>
-      <table>
-        <tr>
-          <td>ID</td>
-          <td><input type="text" size="5" formControlName="id"/></td>
-        </tr>
-        <tr>
-          <td>Menge</td>
-          <td><input type="number" size="2" formControlName="amount" value="1" (change)="adjustIds($event.value)"/></td>
-        </tr>
-        <tr>
-          <td>Produktname</td>
-          <td><input type="text" size="60" formControlName="name"/></td>
-        </tr>
-        <tr>
-          <td>Hersteller</td>
-          <td><input type="text" size="60" formControlName="producer"/></td>
-        </tr>
-        <tr>
-          <td>Discounter</td>
-          <td><input type="text" size="60" formControlName="market"/></td>
-        </tr>
-        <tr>
-          <td>Gewicht (g)</td>
-          <td><input type="number" size="6" formControlName="weight"/></td>
-        </tr>
-        <tr>
-          <td>Brennwert (kcal)</td>
-          <td><input type="number" size="7" formControlName="kcal"/></td>
-        </tr>
-        <tr>
-          <td>Verfallsdatum</td>
-          <td><input type="date" formControlName="expirationDate"/></td>
-        </tr>
-        <tr>
-          <td>Preis (€)</td>
-          <td><input type="number" size="10" formControlName="price"/></td>
-        </tr>
-        <tr>
-          <td>Notiz</td>
-          <td><textarea type="text" rows="3" cols="50" formControlName="note"></textarea></td>
-        </tr>
-      </table>
-    </fieldset>
-  </form>
-</div>
+<mat-card class="medium-card">
+    <mat-card-title style="margin-bottom: 20px;">ADD ENTRY</mat-card-title>
+    <mat-card-content [formGroup]="entryForm">
+        <div class="form-container" style="justify-content: space-between;">
+            <mat-form-field style="width: 318px;">
+                <input matInput type="text" placeholder="Name" [formControlName]="'name'">
+            </mat-form-field>
+            <button color="primary" mat-flat-button (click)="autoFill().then()" style="width: 300px; margin: 0px 16px 16px 16px;">Autofill
+            </button>
+            <mat-form-field style="width: 318px;">
+                <mat-select [formControlName]="'target_id'" style="width: 318px;" placeholder="Target Entry">
+                    <mat-option *ngFor="let targetEntry of targetEntries"
+                                [value]="targetEntry.id">{{targetEntry.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field style="width: 318px;">
+                <input matInput type="number" [formControlName]="'amount'" placeholder="Amount">
+            </mat-form-field>
+            <mat-form-field style="width: 318px;">
+                <input matInput type="text" placeholder="Market" [formControlName]="'market'">
+            </mat-form-field>
+            <mat-form-field style="width: 318px;">
+                <input matInput type="text" placeholder="Producer" [formControlName]="'producer'">
+            </mat-form-field>
+            <mat-form-field style="width: 318px;">
+                <input matInput type="number" placeholder="Weight (g)" [formControlName]="'weight_in_g'">
+            </mat-form-field>
+            <mat-form-field style="width: 318px;">
+                <input matInput type="number" placeholder="Kilocalories" [formControlName]="'kcal'">
+            </mat-form-field>
+            <mat-form-field style="width: 318px;">
+                <input matInput type="date" placeholder="Date" formControlName="expiration_date"
+                       [placeholder]="'Expiration Date'"
+                       matNativeControl>
+            </mat-form-field>
+            <mat-form-field style="width: 318px;">
+                <input matInput type="number" placeholder="Price" [formControlName]="'price'">
+            </mat-form-field>
+            <mat-form-field style="width: 708px;">
+                <textarea matInput placeholder="Note" formControlName="note"></textarea>
+            </mat-form-field>
+        </div>
+    </mat-card-content>
+    <mat-card-actions style="display: flex;">
+        <div class="fill-space"></div>
+        <button color="primary" mat-flat-button (click)="submit().then()"
+                [disabled]="entryForm.untouched || entryForm.invalid">Submit
+        </button>
+    </mat-card-actions>
+</mat-card>
