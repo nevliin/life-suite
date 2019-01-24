@@ -363,11 +363,11 @@ export class CRUDConstructor<T extends ICRUDModel, > {
             const result: any = {};
             properties.forEach((property, index) => {
                 if (this.fieldMappings.get(property).type === DBFieldType.BOOLEAN) {
-                    result[property] = Boolean(result.rows[0][fieldsArray[index]]);
+                    result[property] = Boolean(dbQueryResult.rows[0][fieldsArray[index]]);
                 } else if (this.fieldMappings.get(property).type === DBFieldType.TIMESTAMP) {
-                    result[property] = new Date(Date.parse(result.rows[0][fieldsArray[index]]));
+                    result[property] = new Date(Date.parse(dbQueryResult.rows[0][fieldsArray[index]]));
                 } else {
-                    result[property] = result.rows[0][fieldsArray[index]];
+                    result[property] = dbQueryResult.rows[0][fieldsArray[index]];
                 }
             });
             // @ts-ignore
