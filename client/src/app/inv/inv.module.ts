@@ -8,13 +8,14 @@ import {InvComparisonComponent} from './inv-comparison/inv-comparison.component'
 import {PipesModule} from '../core/pipes/pipes.module';
 import {InvTargetComponent} from './inv-target/inv-target.component';
 import {InvExpirationsComponent} from './inv-expirations/inv-expirations.component';
-import {InvAddComponent} from './inv-add/inv-add.component';
+import {InvEditEntryComponent} from './inv-edit-entry/inv-edit-entry.component';
 import {InvService} from './inv.service';
 import {InvStockListComponent} from './inv-stock-list/inv-stock-list.component';
 import {MatComponentCollectorModule} from '../core/mat-component-collector.module';
 import { InvWrapperComponent } from './inv-wrapper/inv-wrapper.component';
 import {RouterModule} from '@angular/router';
 import {CurrentStockResolver} from './current-stock.resolver';
+import {InvEditTargetEntryComponent} from './inv-edit-target-entry/inv-edit-target-entry.component';
 
 @NgModule({
     imports: [
@@ -33,11 +34,13 @@ import {CurrentStockResolver} from './current-stock.resolver';
         InvTargetComponent,
         InvTargetComponent,
         InvExpirationsComponent,
-        InvAddComponent,
+        InvEditEntryComponent,
         InvStockListComponent,
-        InvWrapperComponent
+        InvWrapperComponent,
+        InvEditTargetEntryComponent
     ],
-    providers: [InvService, CurrentStockResolver]
+    providers: [InvService, CurrentStockResolver],
+    entryComponents: [InvEditEntryComponent, InvEditTargetEntryComponent]
 })
 export class InvModule {
 }

@@ -1,12 +1,29 @@
 <mat-card class="small-card">
     <mat-card-title style="margin-bottom: 20px;">TARGET</mat-card-title>
     <mat-card-content>
+        <button mat-icon-button (click)="newTargetEntry()" style="margin-left: auto; display: block;">
+            <mat-icon aria-label="Add">add</mat-icon>
+        </button>
         <div>
             <mat-list *ngIf="targetEntries.length > 0; else noEntries">
                 <mat-list-item [disableRipple]="false"
                                *ngFor="let targetEntry of targetEntries">
                     <b>{{targetEntry.name}}</b>
                     <b style="margin-left: auto;">{{targetEntry.amount}}</b>
+                    <button mat-icon-button [matMenuTriggerFor]="menu"
+                            aria-label="Toggle menu" style="margin-left: 8px;">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu" xPosition="before">
+                        <button mat-menu-item (click)="editTargetEntry(targetEntry)">
+                            <mat-icon>edit</mat-icon>
+                            Edit
+                        </button>
+                        <button mat-menu-item (click)="deleteTargetEntry(targetEntry.id).then()">
+                            <mat-icon>remove</mat-icon>
+                            Remove
+                        </button>
+                    </mat-menu>
                     <mat-divider [inset]="true"></mat-divider>
                 </mat-list-item>
             </mat-list>

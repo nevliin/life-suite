@@ -6,6 +6,8 @@ import {InvService} from '../inv.service';
 import {AlertDialogService} from '../../core/alert-dialog/alert-dialog.service';
 import {Observable, Subject} from 'rxjs';
 import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
+import {MatDialog} from '@angular/material';
+import {InvEditEntryComponent} from '../inv-edit-entry/inv-edit-entry.component';
 
 @Component({
     selector: 'app-inv-list',
@@ -43,7 +45,8 @@ export class InvListComponent implements OnInit {
     constructor(
         readonly invService: InvService,
         readonly errorHandlingService: ErrorHandlingService,
-        private readonly alertDialogService: AlertDialogService
+        private readonly alertDialogService: AlertDialogService,
+        private readonly dialog: MatDialog
     ) {
         this.invService.currentStockId$.subscribe(async value => {
             if (value) {
@@ -102,6 +105,15 @@ export class InvListComponent implements OnInit {
 
     search(): void {
         this.searchTerm$.next(this.searchTerm);
+    }
+
+    editEntry(entry: InvEntry) {
+        this.dialog.open(InvEditEntryComponent, {
+            panelClass: 'mat-card-dialog-container',
+            data: {
+                entry: entry
+            }
+        });
     }
 
 }

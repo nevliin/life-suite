@@ -118,6 +118,32 @@ export class InvService {
         }).toPromise()) as any).data;
     }
 
+    async updateEntry(entry: InvEntry): Promise<number> {
+        return ((await this.http.put(API_ROOT + 'entry/update', {
+            data: entry
+        }).toPromise().catch(e => {
+            this.errorHandlingService.handleHTTPError(e);
+            return {};
+        })) as any);
+    }
+
+    async createTargetEntry(entry: InvTargetEntry): Promise<number> {
+        return ((await this.http.post(API_ROOT + 'targetEntry/create', entry).toPromise()) as any);
+    }
+
+    async updateTargetEntry(entry: InvTargetEntry): Promise<number> {
+        return ((await this.http.put(API_ROOT + 'targetEntry/update', {
+            data: entry
+        }).toPromise().catch(e => {
+            this.errorHandlingService.handleHTTPError(e);
+            return {};
+        })) as any);
+    }
+
+    async deleteTargetEntry(id: number): Promise<void> {
+        await this.http.delete(API_ROOT + 'targetEntry/delete/' + id).toPromise();
+    }
+
     async getNextId(): Promise<number> {
         return ((await this.http.get(API_ROOT + 'nextId').toPromise()) as any).nextId;
     }

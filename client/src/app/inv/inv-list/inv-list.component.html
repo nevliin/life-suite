@@ -23,6 +23,16 @@
                     <button style="margin-left: auto;" color="primary" mat-flat-button (click)="deleteEntry(entry.id)">
                         Eat
                     </button>
+                    <button mat-icon-button [matMenuTriggerFor]="menu"
+                            aria-label="Toggle menu" style="margin-left: 8px;">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu" xPosition="before">
+                        <button mat-menu-item (click)="editEntry(entry)">
+                            <mat-icon>edit</mat-icon>
+                            Edit
+                        </button>
+                    </mat-menu>
                     <mat-divider [inset]="true"></mat-divider>
                 </mat-list-item>
             </mat-list>
