@@ -1,12 +1,10 @@
-import * as mysql from "mysql";
-import {OkPacket, Pool} from "mysql";
-import {QueryError, RowDataPacket} from 'mysql';
-import {IDBConfig, IServerConfig} from "../../assets/config/server-config.model";
+import {IDBConfig} from '../../assets/config/server-config.model';
 
 export interface DBResultBase {
     affectedRows: number;
     changedRows: number;
     insertId: number;
+    nativeResult: any;
 }
 
 export interface DBQueryResult extends DBResultBase {
@@ -24,7 +22,8 @@ export abstract class DbUtil {
      * Create the db pool; uses database credentials from configs if none are provided
      * @param dbconfig
      */
-    constructor(dbconfig?: IDBConfig) {};
+    constructor(dbconfig?: IDBConfig) {
+    };
 
     /**
      * Execute a query
@@ -47,33 +46,33 @@ export abstract class DbUtil {
     esc(str: string): string {
         return str.replace(/[\0\x08\x09\x1a\n\r"'\\\%]/g, function (char) {
             switch (char) {
-                case "\0":
-                    return "\\0";
-                case "\x08":
-                    return "\\b";
-                case "\x09":
-                    return "\\t";
-                case "\x1a":
-                    return "\\z";
-                case "\n":
-                    return "\\n";
-                case "\r":
-                    return "\\r";
-                case "\"":
-                case "'":
-                case "\\":
-                case "%":
-                    return "\\" + char; // prepends a backslash to backslash, percent,
+                case '\0':
+                    return '\\0';
+                case '\x08':
+                    return '\\b';
+                case '\x09':
+                    return '\\t';
+                case '\x1a':
+                    return '\\z';
+                case '\n':
+                    return '\\n';
+                case '\r':
+                    return '\\r';
+                case '"':
+                case '\'':
+                case '\\':
+                case '%':
+                    return '\\' + char; // prepends a backslash to backslash, percent,
                                         // and double/single quotes
             }
         });
     }
 
     escNumber(num: number | null): number | null {
-        if(num === null) {
+        if (num === null) {
             return null;
         }
-        if(Number.isNaN(Number.parseFloat(num.toString()))) {
+        if (Number.isNaN(Number.parseFloat(num.toString()))) {
             throw new Error('Not a number!');
         }
         return num;

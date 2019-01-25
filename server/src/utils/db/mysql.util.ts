@@ -1,8 +1,8 @@
-import * as mysql from "mysql";
-import {OkPacket, Pool, QueryError, RowDataPacket} from "mysql";
-import {IDBConfig, IServerConfig} from "../../assets/config/server-config.model";
+import * as mysql from 'mysql';
+import {OkPacket, Pool, QueryError, RowDataPacket} from 'mysql';
+import {IDBConfig, IServerConfig} from '../../assets/config/server-config.model';
 import {DBExecuteResult, DBQueryResult, DbUtil} from './db.util';
-import {Logger, LoggingUtil} from "../logging/logging.util";
+import {Logger, LoggingUtil} from '../logging/logging.util';
 
 const config: IServerConfig = require('../../assets/config/server-config.json');
 
@@ -62,8 +62,9 @@ export class MySqlUtil extends DbUtil {
             affectedRows: rows.length,
             changedRows: 0,
             insertId: null,
-            rows: rows
-        }
+            rows: rows,
+            nativeResult: rows
+        };
     }
 
     /**
@@ -87,8 +88,9 @@ export class MySqlUtil extends DbUtil {
         return {
             insertId: result.insertId,
             changedRows: result.changedRows,
-            affectedRows: result.affectedRows
-        }
+            affectedRows: result.affectedRows,
+            nativeResult: result
+        };
     }
 
 }

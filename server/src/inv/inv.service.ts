@@ -29,13 +29,14 @@ export class InvService {
                    AND stock_id = ${this.db.escNumber(Number(reqParams.stockId))}
                    GROUP BY inv_entry.target_id
                  ) sq
-            JOIN inv_target_entry ite on sq.target_id = ite.id
+            JOIN inv_target_entry ite ON sq.target_id = ite.id
+            WHERE valid = 1
             UNION
             SELECT inv_target_entry.name, 0 - amount AS comparison
             FROM inv_target_entry
             WHERE inv_target_entry.id NOT IN
                   (SELECT target_id FROM inv_entry WHERE valid = 1)
-            AND stock_id = ${this.db.escNumber(Number(reqParams.stockId))};`;
+            AND stock_id = ${this.db.escNumber(Number(reqParams.stockId))} AND valid = 1;`;
 
         const result: DBQueryResult = await this.db.query(statement);
 

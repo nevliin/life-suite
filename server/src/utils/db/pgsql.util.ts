@@ -1,7 +1,7 @@
-import {IDBConfig, IServerConfig} from "../../assets/config/server-config.model";
+import {IDBConfig, IServerConfig} from '../../assets/config/server-config.model';
 import {DBExecuteResult, DBQueryResult, DbUtil} from './db.util';
-import {Pool, QueryResult} from "pg";
-import {Logger, LoggingUtil} from "../logging/logging.util";
+import {Pool, QueryResult} from 'pg';
+import {Logger, LoggingUtil} from '../logging/logging.util';
 
 const config: IServerConfig = require('../../assets/config/server-config.json');
 
@@ -44,7 +44,7 @@ export class PgSqlUtil extends DbUtil {
     async testConnection() {
         try {
             const client = await this.pool.connect();
-            await client.query("SELECT NOW()");
+            await client.query('SELECT NOW()');
             client.release();
         } catch (e) {
             this.logger.warn('Connection to PostgreSQL DB failed because ' + e.message, 'testConnection');
@@ -52,7 +52,7 @@ export class PgSqlUtil extends DbUtil {
     }
 
     async setTimezone() {
-        this.pool.query("SET TIME ZONE 'UTC';").then();
+        this.pool.query('SET TIME ZONE \'UTC\';').then();
     }
 
     /**
@@ -78,8 +78,9 @@ export class PgSqlUtil extends DbUtil {
             rows: result.rows,
             affectedRows: result.rows.length,
             changedRows: 0,
-            insertId: null
-        }
+            insertId: null,
+            nativeResult: result
+        };
     }
 
     /**
@@ -103,9 +104,10 @@ export class PgSqlUtil extends DbUtil {
     queryResultToDBExecuteResult(result: QueryResult): DBExecuteResult {
         return {
             affectedRows: result.rowCount,
-            changedRows:  result.rowCount,
-            insertId: (result.rows[0]) ? result.rows[0].id : null
-        }
+            changedRows: result.rowCount,
+            insertId: (result.rows[0]) ? result.rows[0].id : null,
+            nativeResult: result
+        };
     }
 
 

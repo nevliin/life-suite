@@ -2,7 +2,6 @@ import {ICRUDModel} from '../../core/crud/crud.model';
 
 export class EntryModel implements ICRUDModel {
     id: number = 0;
-    valid: boolean = false;
     stock_id: number = 0;
     target_id: number = 0;
     name: string = '';

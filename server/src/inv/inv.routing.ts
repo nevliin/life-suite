@@ -22,13 +22,13 @@ export const init = (): Router => {
     });
 
     const targetEntryModelCRUD: CRUDConstructor<TargetEntryModel> = new CRUDConstructor(new TargetEntryModel(), 'inv_target_entry', {
-        softDelete: false,
+        softDelete: true,
         autoIncrementId: true,
         dbType: DBType.PGSQL
     });
 
     const stockModelCRUD: CRUDConstructor<StockModel> = new CRUDConstructor(new StockModel(), 'inv_stock', {
-        softDelete: false,
+        softDelete: true,
         autoIncrementId: true,
         dbType: DBType.PGSQL
     });

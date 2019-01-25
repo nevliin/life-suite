@@ -1,4 +1,4 @@
-import {DBQueryResult, DbUtil} from "../utils/db/db.util";
+import {DBQueryResult, DbUtil} from '../utils/db/db.util';
 import {
     AccountBalanceByCategoryRequest,
     AccountBalanceRequest,
@@ -7,12 +7,12 @@ import {
     AllTransactionsAmountRequest,
     CategoryTotalRequest,
     YearlyCloseRequest
-} from "./model/fin.model";
-import {TransactionModel} from "./model/transaction.model";
-import {ErrorCodeUtil} from "../utils/error-code/error-code.util";
-import {isNullOrUndefined} from "../utils/util";
-import {PgSqlUtil} from "../utils/db/pgsql.util";
-import {AccountModel} from "./model/account.model";
+} from './model/fin.model';
+import {TransactionModel} from './model/transaction.model';
+import {ErrorCodeUtil} from '../utils/error-code/error-code.util';
+import {isNullOrUndefined} from '../utils/util';
+import {PgSqlUtil} from '../utils/db/pgsql.util';
+import {AccountModel} from './model/account.model';
 
 const closingBalanceAccountId: number = 9998;
 
@@ -27,7 +27,7 @@ export class FinService {
     async doYearlyClose(reqParams: YearlyCloseRequest): Promise<void> {
         const year = reqParams.year;
         if (!Number.isInteger(year) || year < 2018 || year > (new Date()).getFullYear() - 1) {
-            ErrorCodeUtil.findErrorCodeAndThrow("INVALID_PARAMETER");
+            ErrorCodeUtil.findErrorCodeAndThrow('INVALID_PARAMETER');
         }
 
         const yearlyCloseDoneStatement =
@@ -37,7 +37,7 @@ export class FinService {
                OR contra_account = 9998 AND created_on > '${this.db.escNumber(year)}-12-31 00:00:00.000' AND created_on < '${this.db.escNumber(year + 1)}-01-02 00:00:00.000';`;
 
         if ((await this.db.query(yearlyCloseDoneStatement)).rows.length > 0) {
-            ErrorCodeUtil.findErrorCodeAndThrow("ALREADY_DONE");
+            ErrorCodeUtil.findErrorCodeAndThrow('ALREADY_DONE');
         }
 
         const accountBalancesStatement =
@@ -80,7 +80,7 @@ export class FinService {
             if (index !== 0) {
                 yearlyCloseTransactionsStatement += ',';
             }
-            let debitInPlus: boolean = ((accountBalance.active && accountBalance.balance < 0) || (accountBalance.passive && accountBalance.balance >= 0));
+            const debitInPlus: boolean = ((accountBalance.active && accountBalance.balance < 0) || (accountBalance.passive && accountBalance.balance >= 0));
             yearlyCloseTransactionsStatement += ` (
                 ${debitInPlus ? accountBalance.id : closingBalanceAccountId},
                 ${debitInPlus ? closingBalanceAccountId : accountBalance.id},
@@ -184,7 +184,7 @@ export class FinService {
             ErrorCodeUtil.findErrorCodeAndThrow('INVALID_PARAMETER');
         }
 
-        let statement: string =
+        const statement: string =
             `WITH RECURSIVE
                  accounts AS (
                    SELECT id
@@ -288,13 +288,13 @@ export class FinService {
             ErrorCodeUtil.findErrorCodeAndThrow('INVALID_PARAMETER');
         }
 
-        let statement: string = `SELECT active FROM fin_category WHERE id = ${this.db.escNumber(categoryId)};`;
+        const statement: string = `SELECT active FROM fin_category WHERE id = ${this.db.escNumber(categoryId)};`;
         const result: DBQueryResult = await this.db.query(statement);
         if (result.rows.length === 1 && !isNullOrUndefined(result.rows[0])) {
             const otherClauses: string = `AND valid = 1 AND created_on >= '${this.db.esc(from.toISOString().slice(0, 19).replace('T', ' '))}' AND created_on <= '${this.db.esc(to.toISOString().slice(0, 19).replace('T', ' '))}'`;
             const sum1: string = `SELECT sum(amount) FROM fin_transaction WHERE account IN (SELECT id FROM fin_account WHERE category_id = ${this.db.escNumber(categoryId)}) ${otherClauses}`;
             const sum2: string = `SELECT sum(amount) FROM fin_transaction WHERE contra_account IN (SELECT id FROM fin_account WHERE category_id = ${this.db.escNumber(categoryId)}) ${otherClauses}`;
-            let statement2: string = `SELECT COALESCE((${result.rows[0].active ? sum1 : sum2}), 0) - COALESCE((${result.rows[0].active ? sum2 : sum1}), 0) AS amount`;
+            const statement2: string = `SELECT COALESCE((${result.rows[0].active ? sum1 : sum2}), 0) - COALESCE((${result.rows[0].active ? sum2 : sum1}), 0) AS amount`;
             const result2: DBQueryResult = await this.db.query(statement2);
             return result2.rows[0].amount;
         }
@@ -339,7 +339,7 @@ export class FinService {
     }
 
     static extractDate(date: Date | string): string {
-        if(date instanceof Date) {
+        if (date instanceof Date) {
             return date.toISOString().split('T')[0];
         } else {
             return date.split('T')[0];
