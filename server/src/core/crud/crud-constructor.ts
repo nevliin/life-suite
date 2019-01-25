@@ -497,13 +497,17 @@ export class CRUDConstructor<T extends ICRUDModel, > {
 
     public objectToSQLUpdateString(properties: string[], data: T): string {
         let sqlString = '';
-        properties.forEach((property, index) => {
-            if (index !== 0) {
-                sqlString += ', ' + this.fieldMappings.get(property).name + ' = ';
-            } else {
-                sqlString += this.fieldMappings.get(property).name + ' = ';
+        let needsComma: boolean = false;
+        properties.forEach((property) => {
+            if (data[property] !== undefined) {
+                if (needsComma) {
+                    sqlString += ', ' + this.fieldMappings.get(property).name + ' = ';
+                } else {
+                    sqlString += this.fieldMappings.get(property).name + ' = ';
+                    needsComma = true;
+                }
+                sqlString += this.objectPropertyToSQLString(property, data);
             }
-            sqlString += this.objectPropertyToSQLString(property, data);
         });
         return sqlString;
     }
