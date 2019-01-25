@@ -1,16 +1,20 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, Optional} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {InvEntry} from '../inv-entry';
 import {InvService} from '../inv.service';
 import {InvTargetEntry} from '../inv-target-entry';
 import {AlertDialogService} from '../../core/alert-dialog/alert-dialog.service';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {MessageService} from 'primeng/api';
 
 @Component({
-    selector: 'app-inv-add',
-    templateUrl: './inv-add.component.html',
-    styleUrls: ['./inv-add.component.css']
+    selector: 'app-inv-edit-entry',
+    templateUrl: './inv-edit-entry.component.html',
+    styleUrls: ['./inv-edit-entry.component.css']
 })
-export class InvAddComponent implements OnInit {
+export class InvEditEntryComponent implements OnInit {
+
+    new = true;
 
     entryForm: FormGroup = this.fb.group({
         name: ['', Validators.required],
@@ -30,7 +34,10 @@ export class InvAddComponent implements OnInit {
     constructor(
         readonly invService: InvService,
         readonly fb: FormBuilder,
-        private readonly alertDialogService: AlertDialogService
+        private readonly alertDialogService: AlertDialogService,
+        private readonly messageService: MessageService,
+        @Optional() @Inject(MAT_DIALOG_DATA) private readonly data: { entry?: InvEntry },
+        @Optional() private readonly dialogRef: MatDialogRef<InvEditEntryComponent>
     ) {
         this.invService.currentStockId$.subscribe(async value => {
             if (value) {
@@ -40,6 +47,17 @@ export class InvAddComponent implements OnInit {
     }
 
     async ngOnInit() {
+        if (this.data) {
+            this.new = false;
+            await this.initData(this.data.entry);
+        }
+    }
+
+    async initData(entry: InvEntry) {
+        this.entryForm.patchValue(entry);
+        const expirationDate: Date = new Date(entry.expiration_date);
+        this.entryForm.get('expiration_date').setValue(expirationDate.toISOString().split('T')[0]);
+        this.entryForm.updateValueAndValidity();
     }
 
     async submit() {
@@ -55,9 +73,22 @@ export class InvAddComponent implements OnInit {
             stock_id: this.invService.currentStockId$.getValue(),
             target_id: this.entryForm.get('target_id').value
         };
-        const ids: number[] = await this.invService.createEntries(entry, this.entryForm.get('amount').value);
-        debugger;
-        await this.alertDialogService.info(`The entries were created with the following identifiers: ${ids.join(', ')}`);
+        if (this.new) {
+            const ids: number[] = await this.invService.createEntries(entry, this.entryForm.get('amount').value);
+            await this.alertDialogService.info(`The entries were created with the following identifiers: ${ids.join(', ')}`);
+        } else {
+            entry.id = this.data.entry.id;
+            entry.stock_id = this.data.entry.stock_id;
+            entry.valid = this.data.entry.valid;
+            await this.invService.updateEntry(entry);
+            this.messageService.add({
+                severity: 'success',
+                summary: 'Success',
+                life: 3000,
+                detail: 'Successfully updated transaction #'
+            });
+            this.dialogRef.close();
+        }
     }
 
     async autoFill() {
@@ -66,6 +97,14 @@ export class InvAddComponent implements OnInit {
             this.entryForm.patchValue(result as any);
             const expirationDate: Date = new Date(result.expiration_date);
             this.entryForm.get('expiration_date').setValue(expirationDate.toISOString().split('T')[0]);
+        }
+    }
+
+    cancel() {
+        if (this.new) {
+            this.entryForm.reset();
+        } else {
+            this.dialogRef.close();
         }
     }
 

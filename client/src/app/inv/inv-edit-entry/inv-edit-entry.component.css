@@ -1,0 +1,15 @@
+.mat-form-field {
+    margin: auto 5px;
+}
+
+.form-grid-container {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-column-gap: 16px;
+}
+
+@media (max-width: 360px) {
+    .form-grid-container {
+        grid-template-columns: 100%;
+    }
+}
