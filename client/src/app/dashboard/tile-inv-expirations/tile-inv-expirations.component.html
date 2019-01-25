@@ -3,7 +3,7 @@
         <div style="display: flex; width: 100%;">
             <h3>{{entry.name}}</h3>
             <div class="fill-space"></div>
-            <p>{{entry.expirationDate.toLocaleDateString()}}</p>
+            <p>{{entry.expiration_date | date:dateFormat}}</p>
         </div>
     </mat-list-item>
 </mat-list>

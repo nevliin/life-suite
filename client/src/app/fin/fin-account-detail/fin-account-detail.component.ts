@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {FinAccount} from "../fin-account";
-import {ActivatedRoute} from "@angular/router";
-import {FinService} from "../fin.service";
-import {FinTransaction} from "../fin-transaction";
-import {FinCategory} from "../fin-category";
-import {FinTransactionEditComponent} from "../fin-transaction-edit/fin-transaction-edit.component";
-import {MatDialog} from "@angular/material";
+import {FinAccount} from '../fin-account';
+import {ActivatedRoute} from '@angular/router';
+import {FinService} from '../fin.service';
+import {FinTransaction} from '../fin-transaction';
+import {FinCategory} from '../fin-category';
+import {FinTransactionEditComponent} from '../fin-transaction-edit/fin-transaction-edit.component';
+import {MatDialog} from '@angular/material';
 
 export interface TransactionListRow {
     creditTransaction?: DisplayTransaction;
@@ -23,12 +23,14 @@ export interface DisplayTransaction {
     styleUrls: ['./fin-account-detail.component.css']
 })
 export class FinAccountDetailComponent implements OnInit {
-    locale: string = "en";
+    locale: string = 'en';
+
+    loaded: boolean = false;
 
     displayTransactionsFrom: Date;
 
-    maxDate = new Date();
-    minDate = new Date(2018, 10, 1);
+    maxDate: Date = new Date();
+    minDate: Date;
 
     account: FinAccount = null;
     accountTransactions: TransactionListRow[] = null;
@@ -46,8 +48,12 @@ export class FinAccountDetailComponent implements OnInit {
         private readonly dialog: MatDialog
     ) {
         this.locale = navigator.language;
+        this.minDate = new Date((new Date()).getFullYear() + '-01-01');
         this.displayTransactionsFrom = new Date();
         this.displayTransactionsFrom.setMonth(this.displayTransactionsFrom.getMonth() - 1);
+        if (this.displayTransactionsFrom.getTime() < this.minDate.getTime()) {
+            this.displayTransactionsFrom.setTime(this.minDate.getTime());
+        }
     }
 
     async ngOnInit() {
@@ -61,11 +67,13 @@ export class FinAccountDetailComponent implements OnInit {
     }
 
     async displayTransactions() {
+        this.loaded = false;
         this.accountTransactions = await this.getAccountTransactions(this.account.id, this.displayTransactionsFrom);
         this.accountBalance = await this.finService.getAccountBalance(this.account.id);
         this.initialBalance = this.calcInitialBalance(this.accountBalance, this.accountTransactions);
         this.debitSum = this.calcDebitSum(this.initialBalance, this.accountTransactions);
         this.creditSum = this.calcCreditSum(this.initialBalance, this.accountTransactions);
+        this.loaded = true;
 
     }
 

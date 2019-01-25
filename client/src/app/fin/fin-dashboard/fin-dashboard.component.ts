@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AccountBalance, FinService} from "../fin.service";
 import {chartColors} from "../../core/chart-colors";
+import {BreakpointObserver, Breakpoints, BreakpointState} from "@angular/cdk/layout";
 
 @Component({
     selector: 'app-fin-dashboard',
@@ -8,6 +9,7 @@ import {chartColors} from "../../core/chart-colors";
     styleUrls: ['./fin-dashboard.component.css']
 })
 export class FinDashboardComponent implements OnInit {
+    doughnutWidth: number = 400;
 
     expensesData: any;
     incomeData: any;
@@ -17,11 +19,22 @@ export class FinDashboardComponent implements OnInit {
     };
 
     constructor(
-        private readonly finService: FinService
+        private readonly finService: FinService,
+        private readonly breakpointObserver: BreakpointObserver
     ) {
     }
 
     async ngOnInit() {
+        this.breakpointObserver
+            .observe([Breakpoints.Small])
+            .subscribe((state: BreakpointState) => {
+                debugger;
+                if (state.matches) {
+                    this.doughnutWidth = 400;
+                } else {
+                    this.doughnutWidth = 296;
+                }
+            });
         let expenseBalances: AccountBalance[] = this.summarizeOther(await this.finService.getAccountBalancesByCategory(3));
         this.expensesData = {
             labels: expenseBalances.map(balance => balance.name),

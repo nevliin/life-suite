@@ -7,7 +7,7 @@
                 <h3 style="margin-bottom: 5px;">Credit</h3>
             </div>
             <mat-divider [inset]="true" style="border-top-color: rgba(0, 0, 0, 0.5)"></mat-divider>
-            <div *ngIf="accountTransactions" class="transaction-list-container">
+            <div *ngIf="loaded" class="transaction-list-container">
                 <!-- Initial Balance Transaction -->
                 <div [ngStyle]="{'grid-column': initialBalance >= 0 ? 1 : 3}"
                      [ngClass]="{'debit-transaction': initialBalance >= 0, 'credit-transaction': initialBalance < 0}"
@@ -89,13 +89,13 @@
                         <b>{{accountBalance | abs | currency:'EUR'}}</b></span>
                 </div>
             </div>
-            <div *ngIf="!accountTransactions" style="display: flex; justify-content: center; margin: 20px;">
+            <div *ngIf="!loaded" style="display: flex; justify-content: center; margin: 20px;">
                 <mat-spinner></mat-spinner>
             </div>
             <mat-form-field class="date-picker">
                 <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker"
                        [(ngModel)]="displayTransactionsFrom"
-                       (dateChange)="displayTransactions()"
+                       (dateChange)="displayTransactions().then()"
                        placeholder="Display transactions from">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>

@@ -6,7 +6,7 @@ import {InvComparisonComponent} from './inv/inv-comparison/inv-comparison.compon
 import {CurrentMenuResolver} from './core/menu/current-menu.resolver';
 import {InvTargetComponent} from './inv/inv-target/inv-target.component';
 import {InvExpirationsComponent} from './inv/inv-expirations/inv-expirations.component';
-import {InvAddComponent} from './inv/inv-add/inv-add.component';
+import {InvEditEntryComponent} from './inv/inv-edit-entry/inv-edit-entry.component';
 import {AuthService} from './core/auth/auth.service';
 import {AuthLoginWrapperComponent} from './core/auth/auth-login-wrapper/auth-login-wrapper.component';
 import {DashboardComponent} from './dashboard/dashboard/dashboard.component';
@@ -17,6 +17,8 @@ import {FinAccountSearchComponent} from './fin/fin-account-search/fin-account-se
 import {FinAccountDetailComponent} from './fin/fin-account-detail/fin-account-detail.component';
 import {FinDashboardComponent} from './fin/fin-dashboard/fin-dashboard.component';
 import {InvStockListComponent} from './inv/inv-stock-list/inv-stock-list.component';
+import {InvWrapperComponent} from './inv/inv-wrapper/inv-wrapper.component';
+import {CurrentStockResolver} from './inv/current-stock.resolver';
 
 const routes: Routes = [
     {
@@ -56,21 +58,25 @@ const routes: Routes = [
             },
             {
                 path: ':stockId',
+                component: InvWrapperComponent,
+                resolve: {
+                    stockId: CurrentStockResolver
+                },
                 children: [
                     {
-                        path: 'list', component: InvListComponent
+                        path: 'list', component: InvListComponent, outlet: 'inv'
                     },
                     {
-                        path: 'comparison', component: InvComparisonComponent
+                        path: 'comparison', component: InvComparisonComponent, outlet: 'inv'
                     },
                     {
-                        path: 'target', component: InvTargetComponent
+                        path: 'target', component: InvTargetComponent, outlet: 'inv'
                     },
                     {
-                        path: 'expirations', component: InvExpirationsComponent
+                        path: 'expirations', component: InvExpirationsComponent, outlet: 'inv'
                     },
                     {
-                        path: 'add', component: InvAddComponent
+                        path: 'add', component: InvEditEntryComponent, outlet: 'inv'
                     },
                     {
                         path: '', redirectTo: 'list', pathMatch: 'full'

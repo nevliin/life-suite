@@ -43,6 +43,12 @@ $candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent, $candy-
 
 .small-card {
   min-width: 600px;
+  width: 600px;
+}
+
+.medium-card {
+  min-width: 750px;
+  width: 750px;
 }
 
 .large-card {
@@ -51,6 +57,18 @@ $candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent, $candy-
 
 .mat-card-dialog-container > .mat-dialog-container {
   padding: 0 !important;
+}
+
+.negative {
+  color: #bf4040
+}
+
+.positive {
+  color: #7fcc66
+}
+
+.neutral {
+  color: black;
 }
 
 @media (max-width: 360px) {
@@ -64,6 +82,12 @@ $candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent, $candy-
 
   .small-card {
     min-width: 360px;
+    width: 360px;
+  }
+
+  .medium-card {
+    min-width: 360px;
+    width: 360px;
   }
 
   .large-card {

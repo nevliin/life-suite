@@ -1,13 +1,13 @@
 import {Component, Inject, OnInit, Optional, ViewChild} from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {FinAccount} from "../fin-account";
-import {FinService} from "../fin.service";
-import {Observable} from "rxjs";
-import {map, startWith} from "rxjs/operators";
-import {TwoWayMap} from "../../core/auth/two-way-map";
-import {MAT_DIALOG_DATA, MatAutocompleteTrigger, MatDialogRef} from "@angular/material";
-import {FinTransaction} from "../fin-transaction";
-import {MessageService} from "primeng/api";
+import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FinAccount} from '../fin-account';
+import {FinService} from '../fin.service';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
+import {TwoWayMap} from '../../core/auth/two-way-map';
+import {MAT_DIALOG_DATA, MatAutocompleteTrigger, MatDialogRef} from '@angular/material';
+import {FinTransaction} from '../fin-transaction';
+import {MessageService} from 'primeng/api';
 
 @Component({
     selector: 'app-fin-transaction-edit',
@@ -101,7 +101,7 @@ export class FinTransactionEditComponent implements OnInit {
     }
 
     cancel() {
-        if(this.new) {
+        if (this.new) {
             this.reset();
         } else {
             this.dialogRef.close();
@@ -137,7 +137,7 @@ export class FinTransactionEditComponent implements OnInit {
     async submit() {
         if (this.transactionForm.valid) {
             if (this.new) {
-                let transaction: FinTransaction = new FinTransaction();
+                const transaction: FinTransaction = new FinTransaction();
                 transaction.account = Number.parseInt(this.transactionForm.get('account').value);
                 transaction.contra_account = Number.parseInt(this.transactionForm.get('contraAccount').value);
                 transaction.amount = Number.parseFloat(this.transactionForm.get('amount').value);
@@ -151,7 +151,7 @@ export class FinTransactionEditComponent implements OnInit {
                 });
                 this.reset();
             } else {
-                let transaction: FinTransaction = new FinTransaction();
+                const transaction: FinTransaction = new FinTransaction();
                 transaction.id = Number.parseInt(this.transactionForm.get('id').value);
                 transaction.account = Number.parseInt(this.transactionForm.get('account').value);
                 transaction.contra_account = Number.parseInt(this.transactionForm.get('contraAccount').value);
@@ -181,7 +181,7 @@ export class FinTransactionEditComponent implements OnInit {
 
         return this.accountIds.filter((accountId: number) => {
             return accountId.toString().includes(filterValue);
-        })
+        });
     }
 
     private _filterByName(value: string): string[] {
@@ -190,7 +190,7 @@ export class FinTransactionEditComponent implements OnInit {
         }
         return this.accountNames.filter((accountName: string) => {
             return (accountName) ? accountName.toLowerCase().includes(value.toLowerCase()) : true;
-        })
+        });
     }
 
     changeFocus($event, formControlName: string, previous, next) {
