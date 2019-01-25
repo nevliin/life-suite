@@ -1,0 +1,21 @@
+<mat-card class="medium-card">
+    <mat-card-title style="margin-bottom: 20px;">ADD TARGET ENTRY</mat-card-title>
+    <mat-card-content [formGroup]="entryForm">
+        <div class="form-container" style="justify-content: space-between;">
+            <mat-form-field style="width: 318px;">
+                <input matInput type="text" placeholder="Name" [formControlName]="'name'">
+            </mat-form-field>
+            <mat-form-field style="width: 318px;">
+                <input matInput type="number" [formControlName]="'amount'" placeholder="Amount">
+            </mat-form-field>
+        </div>
+    </mat-card-content>
+    <mat-card-actions style="display: flex;">
+        <div class="fill-space"></div>
+        <button color="secondary" mat-flat-button (click)="cancel()"
+                [tabindex]="6">Cancel</button>
+        <button color="primary" mat-flat-button (click)="submit().then()"
+                [disabled]="entryForm.untouched || entryForm.invalid">Submit
+        </button>
+    </mat-card-actions>
+</mat-card>
