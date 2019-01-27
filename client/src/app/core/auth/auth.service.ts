@@ -1,15 +1,15 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {TwoWayMap} from "./two-way-map";
-import {map} from "rxjs/operators";
-import {ActivatedRouteSnapshot, CanActivate, Router} from "@angular/router";
+import {HttpClient} from '@angular/common/http';
+import {TwoWayMap} from './two-way-map';
+import {map} from 'rxjs/operators';
+import {ActivatedRouteSnapshot, CanActivate, Router} from '@angular/router';
 import decode from 'jwt-decode';
-import {JwtPayload} from "./jwt-payload";
-import {CookieService} from "../cookie.service";
-import {BehaviorSubject} from "rxjs";
-import {isNullOrUndefined, sleep} from "../util";
-import {MessageService} from "primeng/api";
-import {FinAccount} from "../../fin/fin-account";
+import {JwtPayload} from './jwt-payload';
+import {CookieService} from '../cookie.service';
+import {BehaviorSubject} from 'rxjs';
+import {isNullOrUndefined, sleep} from '../util';
+import {MessageService} from 'primeng/api';
+import {FinAccount} from '../../fin/fin-account';
 
 const defaultPayload: JwtPayload = {
     power: 0,
@@ -44,7 +44,7 @@ export class AuthService implements CanActivate {
             password: password,
             rememberMe: rememberMe
         }).toPromise());
-        if(!isNullOrUndefined(res.success)) {
+        if (!isNullOrUndefined(res.success)) {
             this.verified.next(res.success);
             return res.success;
         }
@@ -64,7 +64,7 @@ export class AuthService implements CanActivate {
     }
 
     async verifyUser(): Promise<boolean> {
-        if(this.verificationStarted) {
+        if (this.verificationStarted) {
             await this.waitForVerification;
             return this.verified.getValue();
         }
@@ -86,7 +86,7 @@ export class AuthService implements CanActivate {
                     result = true;
                 }
             })).toPromise();
-        } catch(e) {
+        } catch (e) {
             this.verified.next(false);
         }
         resolveFunc();
@@ -95,7 +95,7 @@ export class AuthService implements CanActivate {
     }
 
     async verifyUserLight(): Promise<boolean> {
-        if(this.verified.getValue() === null) {
+        if (this.verified.getValue() === null) {
             await this.verifyUser();
             return this.verified.getValue();
         }
@@ -103,7 +103,7 @@ export class AuthService implements CanActivate {
     }
 
     getVerification$(): BehaviorSubject<boolean> {
-        if(this.verified.getValue() === null) {
+        if (this.verified.getValue() === null) {
             this.verifyUser();
         }
         return this.verified;
@@ -124,15 +124,19 @@ export class AuthService implements CanActivate {
 
         const permitted: boolean | null = await this.isUserPermitted(permittedRoles, requiredPower);
 
-        if(permitted === true) {
+        if (permitted === true) {
             return true;
-        } else if(permitted === false) {
-            this.messageService.add({ severity: 'error', summary: 'Access Denied', detail: 'Your permissions do not meet the requirements for this route. Redirecting to Home.', life: 3000, closable: true});
-            await sleep(1500);
-            this.router.navigate(['/home']);
+        } else if (permitted === false) {
+            this.messageService.add({
+                severity: 'error',
+                summary: 'Access Denied',
+                detail: 'Your permissions do not meet the requirements for this route.',
+                life: 3000,
+                closable: true
+            });
             return false;
         }
-        this.router.navigate(['/auth', 'login'], { queryParams: {intendedRoute: route.url } });
+        await this.router.navigate(['/auth', 'login'], {queryParams: {intendedRoute: route.url}});
         return false;
     }
 
@@ -141,13 +145,13 @@ export class AuthService implements CanActivate {
             await this.fetchRoleIds();
         }
 
-        if(requiredPower === 0 || permittedRoles.includes(0)) {
+        if (requiredPower === 0 || permittedRoles.includes(0)) {
             return true;
         }
         let jwtPayload: JwtPayload;
 
         const loggedInUser: boolean = await this.verifyUser();
-        if(loggedInUser === true) {
+        if (loggedInUser === true) {
             const cookie: string = this.cookieService.readCookie('auth_token');
             if (cookie !== '' && cookie !== undefined && cookie !== null) {
                 try {
@@ -163,7 +167,7 @@ export class AuthService implements CanActivate {
         }
         if (jwtPayload.power >= requiredPower || permittedRoles.some((role: number) => jwtPayload.roles.includes(role))) {
             return true;
-        } else if(loggedInUser) {
+        } else if (loggedInUser) {
             return false;
         }
         return null;
@@ -204,7 +208,7 @@ export class AuthService implements CanActivate {
             });
             const roles: any[] = await this.http.get('/api/auth/role/list')
                 .pipe(map((response: { data: FinAccount[] }) => {
-                        return response.data
+                        return response.data;
                     })
                 ).toPromise().catch((e) => {
                     console.log(e);
