@@ -11,6 +11,12 @@ $candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent, $candy-
 
 @include angular-material-theme($candy-app-theme);
 
+$small-width: 600px;
+$medium-width: 750px;
+$large-width: 900px;
+
+$width-mobile: 360px;
+
 .fill-space {
   flex: 1 1 auto;
 }
@@ -42,17 +48,31 @@ $candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent, $candy-
 }
 
 .small-card {
-  min-width: 600px;
-  width: 600px;
+  min-width: $small-width;
+  width: $small-width;
 }
 
 .medium-card {
-  min-width: 750px;
-  width: 750px;
+  min-width: $medium-width;
+  width: $medium-width;
 }
 
 .large-card {
-  min-width: 900px;
+  min-width: $large-width;
+}
+
+.small-dialog-content {
+  min-width: $small-width - 48px;
+  width: $small-width - 48px;
+}
+
+.medium-dialog-content {
+  min-width: $medium-width - 48px;
+  width: $medium-width - 48px;
+}
+
+.large-dialog-content {
+  min-width: $large-width - 48px;
 }
 
 .mat-card-dialog-container > .mat-dialog-container {
@@ -81,17 +101,31 @@ $candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent, $candy-
   }
 
   .small-card {
-    min-width: 360px;
-    width: 360px;
+    min-width: $width-mobile;
+    width: $width-mobile;
   }
 
   .medium-card {
-    min-width: 360px;
-    width: 360px;
+    min-width: $width-mobile;
+    width: $width-mobile;
   }
 
   .large-card {
-    min-width: 360px;
+    min-width: $width-mobile;
+  }
+
+  .small-dialog-content {
+    min-width: $width-mobile - 96px;
+    width: $width-mobile - 96px;
+  }
+
+  .medium-dialog-content {
+    min-width: $width-mobile - 96px;
+    width: $width-mobile - 96px;
+  }
+
+  .large-dialog-content {
+    min-width: $width-mobile - 96px;
   }
 
 }

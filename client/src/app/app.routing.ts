@@ -19,6 +19,7 @@ import {FinDashboardComponent} from './fin/fin-dashboard/fin-dashboard.component
 import {InvStockListComponent} from './inv/inv-stock-list/inv-stock-list.component';
 import {InvWrapperComponent} from './inv/inv-wrapper/inv-wrapper.component';
 import {CurrentStockResolver} from './inv/current-stock.resolver';
+import {InvAddEntryComponent} from './inv/inv-add-entry/inv-add-entry.component';
 
 const routes: Routes = [
     {
@@ -76,7 +77,7 @@ const routes: Routes = [
                         path: 'expirations', component: InvExpirationsComponent, outlet: 'inv'
                     },
                     {
-                        path: 'add', component: InvEditEntryComponent, outlet: 'inv'
+                        path: 'add', component: InvAddEntryComponent, outlet: 'inv'
                     },
                     {
                         path: '', redirectTo: 'list', pathMatch: 'full'

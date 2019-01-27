@@ -3,16 +3,24 @@
 }
 
 .form-grid-container {
+    width: 100%;
     display: grid;
     grid-template-columns: auto auto;
     grid-column-gap: 16px;
 }
 
+.note-form-field {
+    grid-column-start: span 2;
+}
+
 @media (max-width: 360px) {
     .form-grid-container {
-        width: 78%;
         display: grid;
         grid-template-columns: auto;
         grid-column-gap: 0;
+    }
+
+    .note-form-field {
+        grid-column-start: span 1;
     }
 }

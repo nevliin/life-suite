@@ -8,11 +8,11 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {MessageService} from 'primeng/api';
 
 @Component({
-    selector: 'app-inv-edit-entry',
-    templateUrl: './inv-edit-entry.component.html',
-    styleUrls: ['./inv-edit-entry.component.css']
+    selector: 'app-inv-add-entry',
+    templateUrl: './inv-add-entry.component.html',
+    styleUrls: ['./inv-add-entry.component.css']
 })
-export class InvEditEntryComponent implements OnInit {
+export class InvAddEntryComponent implements OnInit {
 
     new = true;
 
@@ -37,7 +37,7 @@ export class InvEditEntryComponent implements OnInit {
         private readonly alertDialogService: AlertDialogService,
         private readonly messageService: MessageService,
         @Optional() @Inject(MAT_DIALOG_DATA) private readonly data: { entry?: InvEntry },
-        @Optional() private readonly dialogRef: MatDialogRef<InvEditEntryComponent>
+        @Optional() private readonly dialogRef: MatDialogRef<InvAddEntryComponent>
     ) {
         this.invService.currentStockId$.subscribe(async value => {
             if (value) {

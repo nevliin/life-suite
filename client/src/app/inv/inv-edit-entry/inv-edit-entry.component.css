@@ -3,13 +3,27 @@
 }
 
 .form-grid-container {
+    width: 100%;
     display: grid;
-    grid-template-columns: 50% 50%;
+    grid-template-columns: auto auto;
     grid-column-gap: 16px;
+    margin-left: 0;
+    margin-right: 0;
+    padding-right: 0;
+    padding-left: 0;
+}
+
+.note-form-field {
+    grid-column-start: span 2;
 }
 
 @media (max-width: 360px) {
     .form-grid-container {
-        grid-template-columns: 100%;
+        display: block;
+        width: 95%;
+    }
+
+    .note-form-field {
+        grid-column-start: span 1;
     }
 }

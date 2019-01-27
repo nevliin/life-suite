@@ -1,10 +1,10 @@
-import {Component, Inject, OnInit} from "@angular/core";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
-import {FinAccount} from "../../fin-account";
-import {FinService} from "../../fin.service";
-import {MessageService} from "primeng/api";
-import {ErrorHandlingService} from "../../../core/error-handling/error-handling.service";
+import {Component, Inject, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {FinAccount} from '../../fin-account';
+import {FinService} from '../../fin.service';
+import {MessageService} from 'primeng/api';
+import {ErrorHandlingService} from '../../../core/error-handling/error-handling.service';
 
 @Component({
     selector: 'app-fin-account-add',
@@ -56,7 +56,7 @@ export class FinAccountAddComponent implements OnInit {
             const account: FinAccount = new FinAccount();
             account.category_id = Number.parseInt(this.accountForm.get('categoryId').value);
             account.parent_account = Number.parseInt(this.accountForm.get('parentAccountId').value);
-            if(Number.isNaN(account.parent_account)) {
+            if (Number.isNaN(account.parent_account)) {
                 account.parent_account = null;
             }
             account.id = Number.parseInt(this.accountForm.get('accountId').value);

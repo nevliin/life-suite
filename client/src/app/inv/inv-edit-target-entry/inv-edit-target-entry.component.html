@@ -1,11 +1,11 @@
-<mat-card class="medium-card">
-    <mat-card-title style="margin-bottom: 20px;">ADD TARGET ENTRY</mat-card-title>
+<mat-card class="small-dialog-content">
+    <mat-card-title style="margin-bottom: 20px;">{{(new) ? "ADD" : "EDIT"}} TARGET ENTRY</mat-card-title>
     <mat-card-content [formGroup]="entryForm">
-        <div class="form-container" style="justify-content: space-between;">
-            <mat-form-field style="width: 318px;">
+        <div class="form-grid-container">
+            <mat-form-field>
                 <input matInput type="text" placeholder="Name" [formControlName]="'name'">
             </mat-form-field>
-            <mat-form-field style="width: 318px;">
+            <mat-form-field>
                 <input matInput type="number" [formControlName]="'amount'" placeholder="Amount">
             </mat-form-field>
         </div>

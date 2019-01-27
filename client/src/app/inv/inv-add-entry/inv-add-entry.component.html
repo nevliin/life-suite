@@ -1,0 +1,56 @@
+<mat-dialog-content>
+    <mat-card class="small-card">
+        <mat-card-title style="margin-bottom: 20px;">ADD ENTRY</mat-card-title>
+        <mat-card-content [formGroup]="entryForm" style="padding-right: 16px;">
+            <div class="form-grid-container">
+                <mat-form-field>
+                    <input matInput type="text" placeholder="Name" [formControlName]="'name'">
+                </mat-form-field>
+                <button color="primary" mat-flat-button (click)="autoFill().then()" style="margin: 16px;">
+                    Autofill
+                </button>
+                <mat-form-field>
+                    <mat-select [formControlName]="'target_id'" placeholder="Target Entry">
+                        <mat-option *ngFor="let targetEntry of targetEntries"
+                                    [value]="targetEntry.id">{{targetEntry.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput type="number" [formControlName]="'amount'" placeholder="Amount">
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput type="text" placeholder="Market" [formControlName]="'market'">
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput type="text" placeholder="Producer" [formControlName]="'producer'">
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput type="number" placeholder="Weight (g)" [formControlName]="'weight_in_g'">
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput type="number" placeholder="Kilocalories" [formControlName]="'kcal'">
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput type="date" placeholder="Date" formControlName="expiration_date"
+                           [placeholder]="'Expiration Date'"
+                           matNativeControl>
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput type="number" placeholder="Price" [formControlName]="'price'">
+                </mat-form-field>
+                <mat-form-field class="note-form-field">
+                    <textarea matInput placeholder="Note" formControlName="note"></textarea>
+                </mat-form-field>
+            </div>
+        </mat-card-content>
+        <mat-card-actions style="display: flex;">
+            <div class="fill-space"></div>
+            <button color="secondary" mat-flat-button (click)="cancel()"
+                    [tabindex]="6">{{new ? 'Reset' : 'Cancel'}}</button>
+            <button color="primary" mat-flat-button (click)="submit().then()"
+                    [disabled]="entryForm.untouched || entryForm.invalid">Submit
+            </button>
+        </mat-card-actions>
+    </mat-card>
+</mat-dialog-content>

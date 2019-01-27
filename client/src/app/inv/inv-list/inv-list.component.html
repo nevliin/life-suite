@@ -19,12 +19,12 @@
                 <mat-list-item [disableRipple]="false"
                                *ngFor="let entry of entries">
                     <span style="width: 30px; text-align: right; margin-right: 15px;">{{entry.id}}</span>
-                    <b>{{entry.name}}</b>
+                    <b style="text-overflow: ellipsis; max-width: 50%;">{{entry.name}}</b>
                     <button style="margin-left: auto;" color="primary" mat-flat-button (click)="deleteEntry(entry.id)">
                         Eat
                     </button>
                     <button mat-icon-button [matMenuTriggerFor]="menu"
-                            aria-label="Toggle menu" style="margin-left: 8px;">
+                            aria-label="Toggle menu" style="margin-left: 8px; margin-right: -8px;">
                         <mat-icon>more_vert</mat-icon>
                     </button>
                     <mat-menu #menu="matMenu" xPosition="before">

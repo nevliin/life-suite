@@ -109,7 +109,6 @@ export class InvListComponent implements OnInit {
 
     editEntry(entry: InvEntry) {
         this.dialog.open(InvEditEntryComponent, {
-            panelClass: 'mat-card-dialog-container',
             data: {
                 entry: entry
             }

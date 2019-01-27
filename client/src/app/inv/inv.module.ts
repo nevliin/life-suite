@@ -16,6 +16,7 @@ import { InvWrapperComponent } from './inv-wrapper/inv-wrapper.component';
 import {RouterModule} from '@angular/router';
 import {CurrentStockResolver} from './current-stock.resolver';
 import {InvEditTargetEntryComponent} from './inv-edit-target-entry/inv-edit-target-entry.component';
+import {InvAddEntryComponent} from './inv-add-entry/inv-add-entry.component';
 
 @NgModule({
     imports: [
@@ -37,7 +38,8 @@ import {InvEditTargetEntryComponent} from './inv-edit-target-entry/inv-edit-targ
         InvEditEntryComponent,
         InvStockListComponent,
         InvWrapperComponent,
-        InvEditTargetEntryComponent
+        InvEditTargetEntryComponent,
+        InvAddEntryComponent
     ],
     providers: [InvService, CurrentStockResolver],
     entryComponents: [InvEditEntryComponent, InvEditTargetEntryComponent]
