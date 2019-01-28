@@ -1,18 +1,17 @@
-import * as bodyParser from "body-parser";
-import * as cookieParser from "cookie-parser";
-import * as express from "express";
-import * as logger from "morgan";
-import * as path from "path";
-import errorHandler = require("errorhandler");
-import methodOverride = require("method-override");
-import {Routes} from "./routes";
-import {LoggingUtil} from "./utils/logging/logging.util";
-import {DbUtil} from "./utils/db/db.util";
-import {Singletons} from "./core/singletons";
-import {MySqlUtil} from "./utils/db/mysql.util";
-import {PgSqlUtil} from "./utils/db/pgsql.util";
-import {AuthService} from "./auth/auth.service";
-import {ErrorCodeUtil} from "./utils/error-code/error-code.util";
+import * as bodyParser from 'body-parser';
+import * as cookieParser from 'cookie-parser';
+import * as express from 'express';
+import * as logger from 'morgan';
+import * as path from 'path';
+import {Routes} from './routes';
+import {LoggingUtil} from './core/logging/logging.util';
+import {DbUtil} from './core/db/db.util';
+import {Singletons} from './core/singletons';
+import {MySqlUtil} from './core/db/mysql.util';
+import {PgSqlUtil} from './core/db/pgsql.util';
+import {AuthService} from './core/auth/auth.service';
+import errorHandler = require('errorhandler');
+import methodOverride = require('method-override');
 
 
 /**
@@ -37,7 +36,7 @@ export class Server {
      * @return {ng.auto.IInjectorService} Returns the newly created injector for this app.
      */
     public static bootstrap(): Server {
-        Singletons.init();
+        Singletons.init().then().catch();
         return new Server();
     }
 
@@ -48,20 +47,20 @@ export class Server {
      * @constructor
      */
     constructor() {
-        //create expressjs application
+        // create expressjs application
         this.app = express();
 
-        //set up singletons
+        // set up singletons
         this.singletons();
 
-        //configure application
-        this.config();
+        // configure application
+        this.config().then().catch();
 
-        //add routing
+        // add routing
         this.routes();
     }
 
-    public singletons()  {
+    public singletons() {
         this.loggingUtil = new LoggingUtil();
         this.mySqlConnection = new MySqlUtil();
         this.mySqlConnection = new PgSqlUtil();
@@ -74,33 +73,33 @@ export class Server {
      * @method config
      */
     public async config() {
-        //add static paths
-        this.app.use(express.static(path.join(__dirname, "public")));
+        // add static paths
+        this.app.use(express.static(path.join(__dirname, 'public')));
 
-        //use logger middlware
-        this.app.use(logger("dev"));
+        // use logger middlware
+        this.app.use(logger('dev'));
 
-        //use json form parser middlware
+        // use json form parser middlware
         this.app.use(bodyParser.json());
 
-        //use query string parser middlware
+        // use query string parser middlware
         this.app.use(bodyParser.urlencoded({
             extended: true
         }));
 
-        //use cookie parser middleware
-        this.app.use(cookieParser("SECRET_GOES_HERE"));
+        // use cookie parser middleware
+        this.app.use(cookieParser('SECRET_GOES_HERE'));
 
-        //use override middlware
+        // use override middlware
         this.app.use(methodOverride());
 
-        //catch 404 and forward to error handler
-        this.app.use(function(err: any, req: express.Request, res: express.Response, next: express.NextFunction) {
+        // catch 404 and forward to error handler
+        this.app.use(function (err: any, req: express.Request, res: express.Response, next: express.NextFunction) {
             err.status = 404;
             next(err);
         });
 
-        //error handling
+        // error handling
         this.app.use(errorHandler());
 
         this.app.use(AuthService.routeGuard);

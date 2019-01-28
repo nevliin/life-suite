@@ -1,7 +1,8 @@
-import {Application} from "express";
-import {authRouter} from "./auth/auth.routing";
-import {invRouter} from "./inv/inv.routing";
-import {finRouter} from "./fin/fin.routing";
+import {Application} from 'express';
+import {authRouter} from './core/auth/auth.routing';
+import {invRouter} from './inv/inv.routing';
+import {finRouter} from './fin/fin.routing';
+import {userRouter} from './core/user/user.routing';
 
 const express = require('express');
 
@@ -13,7 +14,8 @@ export class Routes {
 
         app.use('/auth', authRouter);
         app.use('/inv', invRouter);
-        app.use('/fin', finRouter)
+        app.use('/fin', finRouter);
+        app.use('/user', userRouter);
 
     }
 }

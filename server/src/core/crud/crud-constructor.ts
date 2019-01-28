@@ -1,13 +1,13 @@
 import {IDBConfig} from '../../assets/config/server-config.model';
-import {DBExecuteResult, DBQueryResult, DbUtil} from '../../utils/db/db.util';
+import {DBExecuteResult, DBQueryResult, DbUtil} from '../db/db.util';
 import {ICRUDModel} from './crud.model';
-import {Logger, LoggingUtil} from '../../utils/logging/logging.util';
+import {Logger, LoggingUtil} from '../logging/logging.util';
 import {ErrorCodeUtil} from '../../utils/error-code/error-code.util';
 import {NextFunction, Request, Response, Router} from 'express';
 import {isNullOrUndefined} from '../../utils/util';
 import {CRUDListFilter, CRUDListOptions} from './crud-list-options';
-import {MySqlUtil} from '../../utils/db/mysql.util';
-import {PgSqlUtil} from '../../utils/db/pgsql.util';
+import {MySqlUtil} from '../db/mysql.util';
+import {PgSqlUtil} from '../db/pgsql.util';
 
 const express = require('express');
 

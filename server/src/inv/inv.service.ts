@@ -1,6 +1,6 @@
-import {DBExecuteResult, DBQueryResult, DbUtil} from '../utils/db/db.util';
+import {DBExecuteResult, DBQueryResult, DbUtil} from '../core/db/db.util';
 import {CompareEntryModel} from './model/compare-entry.model';
-import {PgSqlUtil} from '../utils/db/pgsql.util';
+import {PgSqlUtil} from '../core/db/pgsql.util';
 import {ComparisonRequest, CreateMultipleEntriesRequest} from './model/inv.model';
 import {CRUDConstructor, DBType} from '../core/crud/crud-constructor';
 import {EntryModel} from './model/entry.model';

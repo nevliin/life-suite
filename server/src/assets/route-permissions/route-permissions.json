@@ -30,9 +30,6 @@
           ]
         },
         {
-          "route": "userDetail"
-        },
-        {
           "route": "editRoles"
         },
         {
@@ -49,12 +46,34 @@
       ]
     },
     {
+      "route": "user",
+      "requiredPower": 100,
+      "children": [
+        {
+          "route": "self",
+          "requiredPower": 1
+        },
+        {
+          "route": "crud"
+        },
+        {
+          "route": "details"
+        }
+      ]
+    },
+    {
       "route": "fin",
-      "requiredPower": 10
+      "requiredPower": 50,
+      "permittedRoles": [
+        "fin"
+      ]
     },
     {
       "route": "inv",
-      "requiredPower": 10
+      "requiredPower": 50,
+      "permittedRoles": [
+        "inv"
+      ]
     }
   ]
 }

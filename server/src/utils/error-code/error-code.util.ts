@@ -1,6 +1,6 @@
 import {Response} from "express";
 import {IErrorCode} from "../../assets/error-codes/error-codes.model";
-import {Logger, LoggingUtil} from "../logging/logging.util";
+import {Logger, LoggingUtil} from "../../core/logging/logging.util";
 import {error} from "util";
 
 /**

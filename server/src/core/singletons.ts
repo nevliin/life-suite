@@ -1,6 +1,6 @@
 import {ErrorCodeUtil} from "../utils/error-code/error-code.util";
-import {LoggingUtil} from "../utils/logging/logging.util";
-import {AuthService} from "../auth/auth.service";
+import {LoggingUtil} from "./logging/logging.util";
+import {AuthService} from "./auth/auth.service";
 
 export class Singletons {
 

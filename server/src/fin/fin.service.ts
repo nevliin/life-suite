@@ -1,4 +1,4 @@
-import {DBQueryResult, DbUtil} from '../utils/db/db.util';
+import {DBQueryResult, DbUtil} from '../core/db/db.util';
 import {
     AccountBalanceByCategoryRequest,
     AccountBalanceRequest,
@@ -11,7 +11,7 @@ import {
 import {TransactionModel} from './model/transaction.model';
 import {ErrorCodeUtil} from '../utils/error-code/error-code.util';
 import {isNullOrUndefined} from '../utils/util';
-import {PgSqlUtil} from '../utils/db/pgsql.util';
+import {PgSqlUtil} from '../core/db/pgsql.util';
 import {AccountModel} from './model/account.model';
 
 const closingBalanceAccountId: number = 9998;
