@@ -51,7 +51,9 @@
       "children": [
         {
           "route": "self",
-          "requiredPower": 1
+          "permittedRoles": [
+            "none"
+          ]
         },
         {
           "route": "crud"
