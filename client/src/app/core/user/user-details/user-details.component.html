@@ -1,0 +1,31 @@
+<mat-card class="small-card">
+    <mat-card-title>USER DETAILS</mat-card-title>
+    <mat-card-content>
+        <div style="display: grid; grid-template-columns: 50% 50%; grid-column-gap: 16px; margin-left: 16px;" *ngIf="userDetail">
+            <p>
+                <span class="label">Name</span>
+                <span class="content">{{userDetail.name}}</span>
+            </p>
+            <p>
+                <span class="label">ID</span>
+                <span class="content">{{userDetail.id}}</span>
+            </p>
+            <p>
+                <span class="label">Created On</span>
+                <span class="content">{{userDetail.createdOn | date:'dd.MM.yyy HH:mm:SS'}}</span>
+            </p>
+            <p>
+                <span class="label">Last Login</span>
+                <span class="content">{{userDetail.lastLogin | date:'dd.MM.yyy HH:mm:SS'}}</span>
+            </p>
+            <p>
+                <span class="label">Power</span>
+                <span class="content">{{userDetail.power}}</span>
+            </p>
+            <p>
+                <span class="label">Roles</span>
+                <span class="content">{{roles?.join(', ')}}</span>
+            </p>
+        </div>
+    </mat-card-content>
+</mat-card>
