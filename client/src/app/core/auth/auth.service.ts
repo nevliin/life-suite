@@ -7,7 +7,7 @@ import decode from 'jwt-decode';
 import {JwtPayload} from './jwt-payload';
 import {CookieService} from '../cookie.service';
 import {BehaviorSubject} from 'rxjs';
-import {isNullOrUndefined, sleep} from '../util';
+import {isNullOrUndefined} from '../util';
 import {MessageService} from 'primeng/api';
 import {FinAccount} from '../../fin/fin-account';
 
@@ -23,12 +23,14 @@ const defaultPayload: JwtPayload = {
 export class AuthService implements CanActivate {
 
     roles: TwoWayMap<number, string>;
+    rolesPromise: Promise<void>;
+
     verified: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
     verificationStarted: boolean;
     waitForVerification: Promise<void>;
 
-    rolesByName: Map<string, number> | undefined;
-    rolesPromise: Promise<void>;
+    lastVerified: Date | null = null;
+    cacheValidity: number = 60 * 1000;
 
     constructor(
         readonly http: HttpClient,
@@ -69,6 +71,11 @@ export class AuthService implements CanActivate {
             return this.verified.getValue();
         }
 
+        if (this.lastVerified !== null
+            && (this.lastVerified.getTime() + this.cacheValidity) > (new Date()).getTime()) {
+            return true;
+        }
+
         this.verificationStarted = true;
         let resolveFunc: Function = new Function();
         this.waitForVerification = new Promise(resolve => {
@@ -82,6 +89,7 @@ export class AuthService implements CanActivate {
                     this.cookieService.deleteCookie('auth_token');
                     this.verified.next(false);
                 } else {
+                    this.lastVerified = new Date();
                     this.verified.next(true);
                     result = true;
                 }
@@ -104,7 +112,7 @@ export class AuthService implements CanActivate {
 
     getVerification$(): BehaviorSubject<boolean> {
         if (this.verified.getValue() === null) {
-            this.verifyUser();
+            this.verifyUser().then();
         }
         return this.verified;
     }
@@ -174,9 +182,9 @@ export class AuthService implements CanActivate {
     }
 
     async convertRoleNamesToIds(roles: string[]): Promise<number[]> {
-        const rolesByName: Map<string, number> = await this.getRolesByName();
+        const rolesMap: TwoWayMap<number, string> = await this.getRolesMap();
         return roles.map((role: string) => {
-            return rolesByName.get(role);
+            return rolesMap.revGet(role);
         });
     }
 
@@ -193,15 +201,15 @@ export class AuthService implements CanActivate {
         })).toPromise();
     }
 
-    async getRolesByName(forceReload?: boolean): Promise<Map<string, number>> {
-        if (this.rolesByName !== undefined && !forceReload) {
-            return this.rolesByName;
+    async getRolesMap(forceReload?: boolean): Promise<TwoWayMap<number, string>> {
+        if (this.roles !== undefined && !forceReload) {
+            return this.roles;
         }
         if (this.rolesPromise !== undefined && !forceReload) {
             await this.rolesPromise;
-            return this.rolesByName;
+            return this.roles;
         }
-        if (this.rolesByName === undefined || forceReload) {
+        if (this.roles === undefined || forceReload) {
             let resolveFunc: Function;
             this.rolesPromise = new Promise(resolve => {
                 resolveFunc = resolve;
@@ -214,14 +222,15 @@ export class AuthService implements CanActivate {
                     console.log(e);
                     return [];
                 });
-            const rolesByName: Map<string, number> = new Map<string, number>();
+            const rolesByName: Map<number, string> = new Map<number, string>();
             roles.forEach((role: any) => {
-                rolesByName.set(role.name, role.id);
+                rolesByName.set(role.id, role.name);
             });
-            this.rolesByName = rolesByName;
+            this.roles = new TwoWayMap(rolesByName);
             resolveFunc();
         }
-        return this.rolesByName;
+        return this.roles;
     }
+
 
 }

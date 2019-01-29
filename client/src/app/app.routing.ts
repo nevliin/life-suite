@@ -20,6 +20,7 @@ import {InvStockListComponent} from './inv/inv-stock-list/inv-stock-list.compone
 import {InvWrapperComponent} from './inv/inv-wrapper/inv-wrapper.component';
 import {CurrentStockResolver} from './inv/current-stock.resolver';
 import {InvAddEntryComponent} from './inv/inv-add-entry/inv-add-entry.component';
+import {UserDetailsComponent} from './core/user/user-details/user-details.component';
 
 const routes: Routes = [
     {
@@ -45,13 +46,27 @@ const routes: Routes = [
         ]
     },
     {
+        path: 'user',
+        data: {
+            requiredPower: 1,
+            permittedRoles: []
+        },
+        children: [
+            {
+                path: 'details',
+                component: UserDetailsComponent
+            }
+        ]
+    },
+    {
         path: 'inv',
         canActivate: [AuthService],
         resolve: {
             menu: CurrentMenuResolver
         },
         data: {
-            requiredPower: 50
+            requiredPower: 50,
+            permittedRoles: ['inv']
         },
         children: [
             {
@@ -93,7 +108,8 @@ const routes: Routes = [
             menu: CurrentMenuResolver
         },
         data: {
-            requiredPower: 10
+            requiredPower: 20,
+            permittedRoles: ['fin']
         },
         children: [
             {
