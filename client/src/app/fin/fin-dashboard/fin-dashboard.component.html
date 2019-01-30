@@ -2,15 +2,19 @@
     <mat-card-title>ALL TIME STATISTICS</mat-card-title>
     <mat-card-content style="display: flex; flex-wrap: wrap;">
         <mat-card>
-            <mat-card-title>EXPENSES</mat-card-title>
+            <mat-card-title>
+                EXPENSES
+            </mat-card-title>
             <mat-card-content>
-                <p-chart type="doughnut" [width]="doughnutWidth" [height]="500" [data]="expensesData" [options]="options"></p-chart>
+                <p-chart type="doughnut" [width]="doughnutWidth" [height]="500" [data]="expensesData"
+                         [options]="options"></p-chart>
             </mat-card-content>
         </mat-card>
         <mat-card>
             <mat-card-title>INCOME</mat-card-title>
             <mat-card-content>
-                <p-chart type="doughnut" [width]="doughnutWidth" [height]="500" [data]="incomeData" [options]="options"></p-chart>
+                <p-chart type="doughnut" [width]="doughnutWidth" [height]="500" [data]="incomeData"
+                         [options]="options"></p-chart>
             </mat-card-content>
         </mat-card>
     </mat-card-content>

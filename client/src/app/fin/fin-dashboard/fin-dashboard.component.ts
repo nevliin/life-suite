@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {AccountBalance, FinService} from "../fin.service";
-import {chartColors} from "../../core/chart-colors";
-import {BreakpointObserver, Breakpoints, BreakpointState} from "@angular/cdk/layout";
+import {AccountBalance, FinService} from '../fin.service';
+import {chartColors} from '../../core/chart-colors';
+import {BreakpointObserver, Breakpoints, BreakpointState} from '@angular/cdk/layout';
 
 @Component({
     selector: 'app-fin-dashboard',
@@ -28,14 +28,18 @@ export class FinDashboardComponent implements OnInit {
         this.breakpointObserver
             .observe([Breakpoints.Small])
             .subscribe((state: BreakpointState) => {
-                debugger;
                 if (state.matches) {
                     this.doughnutWidth = 400;
                 } else {
                     this.doughnutWidth = 296;
                 }
             });
-        let expenseBalances: AccountBalance[] = this.summarizeOther(await this.finService.getAccountBalancesByCategory(3));
+
+        const firstOfCurrentMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+
+        const expenseBalances: AccountBalance[] = this.summarizeOther(
+            await this.finService.getAccountBalancesByCategory(3, firstOfCurrentMonth)
+        );
         this.expensesData = {
             labels: expenseBalances.map(balance => balance.name),
             datasets: [
@@ -44,7 +48,9 @@ export class FinDashboardComponent implements OnInit {
                     backgroundColor: chartColors
                 }]
         };
-        let incomeBalances: AccountBalance[] = this.summarizeOther(await this.finService.getAccountBalancesByCategory(6));
+        const incomeBalances: AccountBalance[] = this.summarizeOther(
+            await this.finService.getAccountBalancesByCategory(6, firstOfCurrentMonth)
+        );
         this.incomeData = {
             labels: incomeBalances.map(balance => balance.name),
             datasets: [
@@ -69,7 +75,7 @@ export class FinDashboardComponent implements OnInit {
 
         balances.push({
             balance: sumOther,
-            name: "Other",
+            name: 'Other',
             id: null
         });
         return balances;
