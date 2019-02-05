@@ -19,6 +19,8 @@ export class FinTransactionEditComponent implements OnInit {
     @ViewChild('account', {read: MatAutocompleteTrigger}) account: MatAutocompleteTrigger;
     @ViewChild('contraAccount', {read: MatAutocompleteTrigger}) contraAccount: MatAutocompleteTrigger;
 
+    keyDownValue: string = 'placeholder';
+
     new: boolean = true;
 
     accountsTwoWay: TwoWayMap<number, string>;
@@ -47,8 +49,8 @@ export class FinTransactionEditComponent implements OnInit {
             Validators.pattern('[0-9]*')
         ])],
         contraAccountName: [''],
-        amount: [null],
-        currency: ['euro'],
+        amount: [null, Validators.required],
+        currency: ['euro', Validators.required],
         createdOn: [new Date().toISOString().split('T')[0], Validators.required],
         note: ['', Validators.maxLength(255)]
     });
@@ -206,7 +208,11 @@ export class FinTransactionEditComponent implements OnInit {
                 autoCompleteTrigger = this.contraAccount;
                 break;
         }
-        if ($event.key === 'Backspace' && (this.transactionForm.get(formControlName).value === '' || this.transactionForm.get(formControlName).value === null) && previous !== undefined) {
+        if ($event.key === 'Backspace'
+            && (this.transactionForm.get(formControlName).value === '' || this.transactionForm.get(formControlName).value === null)
+            && previous !== undefined
+            && (this.keyDownValue === null || this.keyDownValue === '')
+        ) {
             previous.focus();
             if (autoCompleteTrigger !== undefined) {
                 autoCompleteTrigger.closePanel();

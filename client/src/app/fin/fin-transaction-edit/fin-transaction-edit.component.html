@@ -7,6 +7,7 @@
                     <input matInput type="text" placeholder="#" [formControlName]="'account'"
                            [matAutocomplete]="accountAuto"
                            (keyup)="changeFocus($event, 'account', undefined, contraAccount)" [tabindex]="1"
+                           (keydown)="keyDownValue = $event.target.value"
                            #account
                            matNativeControl>
                 </mat-form-field>
@@ -36,6 +37,7 @@
                     <input matInput type="text" placeholder="#" formControlName="contraAccount"
                            [matAutocomplete]="contraAccountAuto"
                            (keyup)="changeFocus($event, 'contraAccount', account, amount)" [tabindex]="2"
+                           (keydown)="keyDownValue = $event.target.value"
                            #contraAccount
                            matNativeControl>
                 </mat-form-field>
@@ -65,6 +67,7 @@
                 <mat-form-field style="width: 100px;">
                     <input matInput type="number" placeholder="Amount" formControlName="amount"
                            (keyup)="changeFocus($event, 'amount', contraAccount, undefined)" #amount [tabindex]="3"
+                           (keydown)="keyDownValue = $event.target.value"
                            matNativeControl>
                 </mat-form-field>
                 <mat-form-field style="width: 50px;">
