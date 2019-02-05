@@ -5,6 +5,7 @@ import {ErrorHandlingService} from '../core/error-handling/error-handling.servic
 import {FinTransaction} from './fin-transaction';
 import {FinAccount} from './fin-account';
 import {FinCategory} from './fin-category';
+import {Observable} from 'rxjs';
 
 const API_ROOT: string = '/api/fin/';
 
@@ -49,18 +50,15 @@ export class FinService {
         });
     }
 
-    async getAccountBalancesByCategory(categoryId: number, from?: Date, to?: Date): Promise<AccountBalance[]> {
+    getAccountBalancesByCategory(categoryId: number, from?: Date, to?: Date): Observable<AccountBalance[]> {
         const options: any = {
             categoryId: categoryId.toString()
         };
         from ? options.from = from.toISOString() : null;
         to ? options.to = to.toISOString() : null;
-        return await this.http.get(API_ROOT + 'accountBalancesByCategory', {
+        return this.http.get(API_ROOT + 'accountBalancesByCategory', {
             params: options
-        }).pipe(map((response: any) => response.data.balances)).toPromise().catch((e) => {
-            this.errorHandlingService.handleHTTPError(e);
-            return [];
-        });
+        }).pipe(map((response: any) => response.data.balances));
     }
 
     async getCategoryTotal(categoryId: number, from?: Date, to?: Date): Promise<number> {

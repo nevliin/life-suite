@@ -1,0 +1,13 @@
+<mat-card>
+    <mat-card-title class="timeframe-select-title">
+        <span>{{title | uppercase}}</span>
+        <app-time-frame-select class="timeframe-select" (onSelection)="amountsTimeframe.next($event)" [defaultValue]="'currentMonth'"></app-time-frame-select>
+    </mat-card-title>
+    <mat-card-content>
+        <div *ngIf="loading" class="tile-loading">
+            <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+        </div>
+        <p-chart [ngStyle]="{ 'visibility': loading ? 'hidden' : 'initial'}" type="doughnut" [width]="doughnutWidth" [height]="500" [data]="amountsData"
+                 [options]="options"></p-chart>
+    </mat-card-content>
+</mat-card>
