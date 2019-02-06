@@ -9,5 +9,9 @@
         </div>
         <p-chart [ngStyle]="{ 'visibility': loading ? 'hidden' : 'initial'}" type="doughnut" [width]="doughnutWidth" [height]="500" [data]="amountsData"
                  [options]="options"></p-chart>
+        <p style="text-align: center; margin: 8px 0;" [ngStyle]="{ 'visibility': loading ? 'hidden' : 'initial'}">
+            <span style="font-style: italic; font-size: 130%;">Total:</span>
+            <span style="font-size: 150%; margin-left: 16px; font-weight: bolder;">{{amountsTotal | currency:'EUR'}}</span>
+        </p>
     </mat-card-content>
 </mat-card>

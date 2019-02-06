@@ -17,6 +17,7 @@ export class CategoryDoughnutComponent implements OnInit {
     doughnutWidth: number = 400;
     loading: boolean = false;
 
+    amountsTotal: number;
     amountsData: any;
     options = {
         responsive: false,
@@ -37,6 +38,7 @@ export class CategoryDoughnutComponent implements OnInit {
             }
             this.loading = true;
             this.amountsSubscription = this.finService.getAccountBalancesByCategory(this.categoryId, startFrom).subscribe(value => {
+                this.amountsTotal = value.map(accountBalance => accountBalance.balance).reduce((a, b) => a + b);
                 const expenseBalances: AccountBalance[] = this.summarizeOther(value);
                 this.amountsData = {
                     labels: expenseBalances.map(balance => balance.name),

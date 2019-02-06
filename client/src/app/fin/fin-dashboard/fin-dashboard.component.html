@@ -1,7 +1,9 @@
 <mat-card class="fin-dashboard-container">
     <mat-card-title>STATISTICS</mat-card-title>
-    <mat-card-content style="display: flex; flex-wrap: wrap;">
-        <app-category-doughnut [categoryId]="3" [title]="'expenses'"></app-category-doughnut>
-        <app-category-doughnut [categoryId]="6" [title]="'income'"></app-category-doughnut>
+    <mat-card-content>
+        <div class="dashboard-statistics-container">
+            <app-category-doughnut [categoryId]="3" [title]="'expenses'"></app-category-doughnut>
+            <app-category-doughnut [categoryId]="6" [title]="'income'"></app-category-doughnut>
+        </div>
     </mat-card-content>
 </mat-card>
