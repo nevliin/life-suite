@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormControl} from '@angular/forms';
+import {MatSelectChange} from '@angular/material';
+import {Time} from '@angular/common';
 
 export interface TimeFrameOption {
     label: string;
@@ -40,11 +41,20 @@ export class TimeFrameSelectComponent implements OnInit {
     @Output() onSelection: EventEmitter<Date> = new EventEmitter();
 
     @Input() set defaultValue(value: TimeFrameOptions) {
-        this.value = (value);
+        this._value = value;
+        this.onSelectionEmit(value);
+    }
+
+    set value(value: TimeFrameOptions) {
+        this._value = value;
+    }
+
+    get value(): TimeFrameOptions {
+        return this._value;
     }
 
     lastValue: TimeFrameOptions;
-    value: TimeFrameOptions = TimeFrameOptions.CURRENT_MONTH;
+    _value: TimeFrameOptions = TimeFrameOptions.CURRENT_MONTH;
 
     constructor() {
     }
@@ -52,9 +62,9 @@ export class TimeFrameSelectComponent implements OnInit {
     ngOnInit() {
     }
 
-    onSelectionEmit(event: string) {
-        if (this.value && this.value !== this.lastValue) {
-            this.lastValue = this.value;
+    onSelectionEmit(event: TimeFrameOptions) {
+        if (event && event !== this.lastValue) {
+            this.lastValue = event;
             this.onSelection.emit(this.timeFrameOptions.find(option => option.value === event).startDate);
         }
     }

@@ -1,6 +1,6 @@
 <mat-form-field style="width: initial; border-top-width: 0;">
-    <mat-select style="font-size: 16px;" [(ngModel)]="value">
-        <mat-option *ngFor="let timeFrameOption of timeFrameOptions" (onSelectionChange)="onSelectionEmit($event?.source?.value)"
+    <mat-select style="font-size: 16px;" [(ngModel)]="value" (selectionChange)="onSelectionEmit($event?.source?.value)">
+        <mat-option *ngFor="let timeFrameOption of timeFrameOptions"
                     [value]="timeFrameOption.value">
             {{timeFrameOption.label}}
         </mat-option>
