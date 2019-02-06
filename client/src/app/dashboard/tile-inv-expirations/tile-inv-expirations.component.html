@@ -1,5 +1,5 @@
-<mat-list>
-    <mat-list-item *ngFor="let entry of nextExpiringEntries" style="width: 100%;">
+<mat-list style="overflow: auto; height: 300px; margin-right: 16px;" id="box">
+    <mat-list-item *ngFor="let entry of nextExpiringEntries" style="width: 100%; margin-right: 8px;">
         <div style="display: flex; width: 100%;">
             <h3>{{entry.name}}</h3>
             <div class="fill-space"></div>
