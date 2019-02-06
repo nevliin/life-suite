@@ -15,6 +15,7 @@ import {PgSqlUtil} from '../core/db/pgsql.util';
 import {AccountModel} from './model/account.model';
 
 const closingBalanceAccountId: number = 9998;
+const minimumYear: number = 2018;
 
 export class FinService {
 
@@ -22,6 +23,38 @@ export class FinService {
 
     constructor() {
         this.db = new PgSqlUtil();
+    }
+
+    async yearlyClosesDone(): Promise<number[]> {
+        const statement = `WITH grid AS (
+                               SELECT start_time
+                               FROM  (
+                                  SELECT generate_series(${minimumYear}, ${new Date().getUTCFullYear() - 1}) AS start_time
+                                  ) sub
+                               )
+                            SELECT start_time AS year, count(*) AS transactions
+                            FROM grid g
+                            JOIN fin_transaction ft ON
+                                          ft.created_on > (to_timestamp(CAST (g.start_time + 1 AS text), 'YYYY') - interval '1 day')
+                                          AND ft.created_on < (to_timestamp(CAST (g.start_time + 1 AS text), 'YYYY') + interval '2 day')
+                                          AND (ft.account = 9998 OR ft.contra_account = 9998) AND ft.valid = 1
+                            GROUP  BY start_time
+                            ORDER  BY start_time;`;
+
+        const queryResult: DBQueryResult = await this.db.query(statement);
+
+        const closesDone: number[] = queryResult.rows.map(value => value.year);
+        console.log(closesDone);
+        const closesNotDone: number[] = [];
+        let currentYear = new Date().getUTCFullYear();
+        while (currentYear > minimumYear) {
+            currentYear--;
+            if (!closesDone.includes(currentYear)) {
+                closesNotDone.push(currentYear);
+            }
+        }
+
+        return closesNotDone;
     }
 
     async doYearlyClose(reqParams: YearlyCloseRequest): Promise<void> {
@@ -34,7 +67,8 @@ export class FinService {
             `SELECT *
             FROM fin_transaction
             WHERE account = 9998
-               OR contra_account = 9998 AND created_on > '${this.db.escNumber(year)}-12-31 00:00:00.000' AND created_on < '${this.db.escNumber(year + 1)}-01-02 00:00:00.000';`;
+                OR contra_account = 9998 AND created_on > '${this.db.escNumber(year)}-12-31 00:00:00.000'
+                AND created_on < '${this.db.escNumber(year + 1)}-01-02 00:00:00.000';`;
 
         if ((await this.db.query(yearlyCloseDoneStatement)).rows.length > 0) {
             ErrorCodeUtil.findErrorCodeAndThrow('ALREADY_DONE');
@@ -47,7 +81,7 @@ export class FinService {
                                   to_timestamp('${this.db.escNumber(year)}-01-01 00:00:00.000', 'YYYY-MM-DD HH24:MI:SS.MS')))
             )
             SELECT fa.id,
-                   fa.name, 
+                   fa.name,
                    ((
                       SELECT COALESCE(SUM(amount), 0) as balance
                       FROM fin_transaction
@@ -71,7 +105,8 @@ export class FinService {
 
         const accountBalancesResult: DBQueryResult = await this.db.query(accountBalancesStatement);
 
-        let yearlyCloseTransactionsStatement: string = `INSERT INTO fin_transaction(account, contra_account, amount, note, created_on) VALUES`;
+        let yearlyCloseTransactionsStatement: string =
+            `INSERT INTO fin_transaction(account, contra_account, amount, note, created_on) VALUES`;
 
         const closeDate: Date = new Date(this.db.escNumber(year) + '-12-31T23:59:00Z');
         const openDate: Date = new Date(this.db.escNumber(year + 1) + '-01-01T00:01:00Z');
@@ -80,18 +115,21 @@ export class FinService {
             if (index !== 0) {
                 yearlyCloseTransactionsStatement += ',';
             }
-            const debitInPlus: boolean = ((accountBalance.active && accountBalance.balance < 0) || (accountBalance.passive && accountBalance.balance >= 0));
+            const debitInPlus: boolean =
+                ((accountBalance.active && accountBalance.balance < 0)
+                    || (accountBalance.passive && accountBalance.balance >= 0));
+
             yearlyCloseTransactionsStatement += ` (
                 ${debitInPlus ? accountBalance.id : closingBalanceAccountId},
                 ${debitInPlus ? closingBalanceAccountId : accountBalance.id},
-                ${Math.abs(accountBalance.balance)}, 
+                ${Math.abs(accountBalance.balance)},
                 ${null},
                 '${closeDate.toISOString()}'
             ), `;
             yearlyCloseTransactionsStatement += ` (
-                ${debitInPlus ? closingBalanceAccountId : accountBalance.id}, 
-                ${debitInPlus ? accountBalance.id : closingBalanceAccountId}, 
-                ${Math.abs(accountBalance.balance)}, 
+                ${debitInPlus ? closingBalanceAccountId : accountBalance.id},
+                ${debitInPlus ? accountBalance.id : closingBalanceAccountId},
+                ${Math.abs(accountBalance.balance)},
                 ${null},
                 '${openDate.toISOString()}'
             )`;

@@ -1,18 +1,20 @@
-import {NextFunction, Request, Response, Router} from "express";
-import {FinService} from "./fin.service";
-import {CRUDConstructor, DBType} from "../core/crud/crud-constructor";
-import {CategoryModel} from "./model/category.model";
-import {AccountModel} from "./model/account.model";
-import {TransactionModel} from "./model/transaction.model";
-import {ConstraintModel} from "./model/constraint.model";
-import {ErrorCodeUtil} from "../utils/error-code/error-code.util";
+import {NextFunction, Request, Response, Router} from 'express';
+import {FinService} from './fin.service';
+import {CRUDConstructor, DBType} from '../core/crud/crud-constructor';
+import {CategoryModel} from './model/category.model';
+import {AccountModel} from './model/account.model';
+import {TransactionModel} from './model/transaction.model';
+import {ConstraintModel} from './model/constraint.model';
+import {ErrorCodeUtil} from '../utils/error-code/error-code.util';
 import {
     AccountBalanceByCategoryRequest,
-    AccountBalanceRequest, AccountBalanceResponse,
+    AccountBalanceRequest,
+    AccountBalanceResponse,
     AccountTransactionsRequest,
     AllTransactionsAmountRequest,
-    CategoryTotalRequest, YearlyCloseRequest
-} from "./model/fin.model";
+    CategoryTotalRequest,
+    YearlyCloseRequest
+} from './model/fin.model';
 
 const express = require('express');
 
@@ -38,6 +40,19 @@ export const init = (): Router => {
             res.status(200).send({
                 data: {
                     success: true
+                }
+            });
+        } catch (e) {
+            ErrorCodeUtil.resolveErrorOnRoute(e, res);
+        }
+    });
+
+    finRouter.get('/unfinishedYears', async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const unfinishedYears: number[] = await finService.yearlyClosesDone();
+            res.status(200).send({
+                data: {
+                    unfinishedYears: unfinishedYears
                 }
             });
         } catch (e) {
@@ -86,7 +101,8 @@ export const init = (): Router => {
 
     finRouter.get('/accountBalancesByCategory', async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const balances: AccountBalanceResponse[] = await finService.getAccountBalancesByCategory(<AccountBalanceByCategoryRequest>req.query);
+            const balances: AccountBalanceResponse[] =
+                await finService.getAccountBalancesByCategory(<AccountBalanceByCategoryRequest>req.query);
             res.status(200).send({
                 data: {
                     balances
