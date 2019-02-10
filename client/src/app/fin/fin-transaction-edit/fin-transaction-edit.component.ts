@@ -1,8 +1,8 @@
 import {Component, Inject, OnInit, Optional, ViewChild} from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators} from '@angular/forms';
 import {FinAccount} from '../fin-account';
 import {FinService} from '../fin.service';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {TwoWayMap} from '../../core/auth/two-way-map';
 import {MAT_DIALOG_DATA, MatAutocompleteTrigger, MatDialogRef} from '@angular/material';
@@ -24,7 +24,8 @@ export class FinTransactionEditComponent implements OnInit {
     new: boolean = true;
 
     accountsTwoWay: TwoWayMap<number, string>;
-    accountIds: number[];
+    accountIds: number[] = [];
+    accountIds$: BehaviorSubject<number[]> = new BehaviorSubject([]);
     accountNames: string[];
 
     filteredAccountOptions: Observable<number[]>;
@@ -38,7 +39,8 @@ export class FinTransactionEditComponent implements OnInit {
             Validators.required,
             Validators.min(0),
             Validators.max(9999),
-            Validators.pattern('[0-9]*')
+            Validators.pattern('[0-9]*'),
+            this.accountExistsValidatorFactory(this.accountIds$)
         ]),
             this.validateAccountExists.bind(this)],
         accountName: [''],
@@ -46,13 +48,16 @@ export class FinTransactionEditComponent implements OnInit {
             Validators.required,
             Validators.min(0),
             Validators.max(9999),
-            Validators.pattern('[0-9]*')
+            Validators.pattern('[0-9]*'),
+            this.accountExistsValidatorFactory(this.accountIds$)
         ])],
         contraAccountName: [''],
-        amount: [null, Validators.required],
+        amount: [null, Validators.compose([Validators.min(0.01), Validators.required])],
         currency: ['euro', Validators.required],
         createdOn: [new Date().toISOString().split('T')[0], Validators.required],
         note: ['', Validators.maxLength(255)]
+    }, {
+        validator: this.sameAccountValidator
     });
 
     currencies: { value: string, viewValue: string }[] = [
@@ -77,6 +82,14 @@ export class FinTransactionEditComponent implements OnInit {
         (await this.finService.getAccounts()).forEach((value: FinAccount) => tempMap.set(value.id, value.name));
         this.accountsTwoWay = new TwoWayMap(tempMap);
         this.accountIds = Array.from(this.accountsTwoWay.map.keys());
+        this.accountIds$.next(this.accountIds);
+
+        Object.keys(this.transactionForm.controls).forEach(field => {
+            const control = this.transactionForm.get(field);
+            control.updateValueAndValidity();
+
+        });
+
         this.accountNames = Array.from(this.accountsTwoWay.reverseMap.keys());
         this.setUpAutoComplete();
         if (this.data) {
@@ -84,6 +97,26 @@ export class FinTransactionEditComponent implements OnInit {
             await this.insertEditData();
         }
     }
+
+    sameAccountValidator(control: AbstractControl): { [key: string]: any } | null {
+        if (control.get('account').value && control.get('contraAccount')) {
+            return Number.parseInt(control.get('account').value) === Number.parseInt(control.get('contraAccount').value)
+                ? {match: false}
+                : null;
+        } else {
+            return null;
+        }
+    }
+
+    accountExistsValidatorFactory(accountIds$: BehaviorSubject<number[]>): ValidatorFn {
+        return (control: AbstractControl): {[key: string]: any} | null => {
+            return accountIds$.getValue().includes(Number.parseInt(control.value)) ? null : {exists: false};
+        };
+    }
+
+/*    accountExists(control: AbstractControl): { [key: string]: any } | null {
+        return this.accountIds.includes(control.value) ? null : {exists: false};
+    }*/
 
     async insertEditData() {
         let transaction: FinTransaction;
