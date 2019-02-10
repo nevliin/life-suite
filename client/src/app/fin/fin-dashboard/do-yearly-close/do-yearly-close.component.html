@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Yearly Closes</h1>
+<div mat-dialog-content>
+    <mat-list style="width: 100%; margin-bottom: 50px;">
+        <mat-list-item *ngFor="let year of years">
+            <b>Year {{year.year}}</b>
+            <button color="primary" style="margin-left: auto;" mat-flat-button [disabled]="year.done" (click)="doYearlyClose(year.year).then()">{{year.done ? 'DONE' : 'CLOSE'}}</button>
+        </mat-list-item>
+    </mat-list>
+</div>
+<div mat-dialog-actions style="display: flex;">
+    <span class="fill-space"></span>
+    <button mat-flat-button (click)="close()">Close</button>
+</div>

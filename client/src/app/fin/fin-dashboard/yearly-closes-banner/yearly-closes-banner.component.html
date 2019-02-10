@@ -1,0 +1,6 @@
+<mat-card class="warning-card" *ngIf="unfinishedYears.length > 0">
+    <p style="font-style: italic">The following years have not been finished yet: {{unfinishedYears.join(', ')}}. Click
+        <a (click)="onClick().then()">here</a>
+        to finish them now.
+    </p>
+</mat-card>

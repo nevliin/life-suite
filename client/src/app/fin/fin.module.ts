@@ -18,6 +18,8 @@ import {ChartModule} from 'primeng/chart';
 import {MatDatepickerModule, MatNativeDateModule} from '@angular/material';
 import {TimeFrameSelectComponent} from './fin-dashboard/time-frame-select/time-frame-select.component';
 import { CategoryDoughnutComponent } from './fin-dashboard/category-doughnut/category-doughnut.component';
+import { YearlyClosesBannerComponent } from './fin-dashboard/yearly-closes-banner/yearly-closes-banner.component';
+import { DoYearlyCloseComponent } from './fin-dashboard/do-yearly-close/do-yearly-close.component';
 
 @NgModule({
     imports: [
@@ -42,9 +44,11 @@ import { CategoryDoughnutComponent } from './fin-dashboard/category-doughnut/cat
         FinAccountSearchComponent,
         FinAccountDetailComponent,
         TimeFrameSelectComponent,
-        CategoryDoughnutComponent
+        CategoryDoughnutComponent,
+        YearlyClosesBannerComponent,
+        DoYearlyCloseComponent
     ],
-    entryComponents: [FinAccountAddComponent, FinCategoryAddComponent, FinTransactionEditComponent, FinTransactionEditComponent],
+    entryComponents: [FinAccountAddComponent, FinCategoryAddComponent, FinTransactionEditComponent, FinTransactionEditComponent, DoYearlyCloseComponent],
     providers: [FinService]
 })
 export class FinModule {

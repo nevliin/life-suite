@@ -22,6 +22,7 @@ export class ErrorHandlingService {
             life: (errorMessage.length > 30) ? 5000 : 3000,
             closable: true
         });
+        throw e;
     }
 
     public getMessageFromHTTPError(e: any): string {

@@ -280,4 +280,16 @@ export class FinService {
                 throw e;
             })) as any).id;
     }
+
+    async unfinishedYears(): Promise<number[]> {
+        return (await this.http.get(API_ROOT + 'unfinishedYears').toPromise().catch(e => {
+            this.errorHandlingService.handleHTTPError(e);
+        }) as any).data.unfinishedYears;
+    }
+
+    async doYearlyClose(year: number): Promise<void> {
+        await this.http.post(API_ROOT + 'yearlyClose', {year: year}).toPromise().catch(e => {
+            this.errorHandlingService.handleHTTPError(e);
+        });
+    }
 }
