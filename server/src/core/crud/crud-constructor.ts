@@ -157,6 +157,7 @@ export class CRUDConstructor<T extends ICRUDModel, > {
                 return data['id'];
             }
         } catch (e) {
+            this.logger.error('')
             ErrorCodeUtil.findErrorCodeAndThrow(e);
         }
     }

@@ -45,6 +45,7 @@ export class MySqlUtil extends DbUtil {
      * @param query
      */
     async query(query: string): Promise<DBQueryResult> {
+        this.logger.debug(query, 'query');
         return new Promise<DBQueryResult>(((resolve, reject) => {
             this.pool.query(query, (err: QueryError, rows: RowDataPacket[]) => {
                 if (err) {
@@ -72,6 +73,7 @@ export class MySqlUtil extends DbUtil {
      * @param query
      */
     async execute(query: string): Promise<DBExecuteResult> {
+        this.logger.debug(query, 'execute');
         return new Promise<DBExecuteResult>(((resolve, reject) => {
             this.pool.query(query, (err: QueryError, result: OkPacket) => {
                 if (err) {

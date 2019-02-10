@@ -61,6 +61,7 @@ export class PgSqlUtil extends DbUtil {
      * @param values
      */
     async query(query: string, values?: any[]): Promise<DBQueryResult> {
+        this.logger.debug(query, 'query');
         return new Promise<DBQueryResult>(((resolve, reject) => {
             this.pool.query(query, (err: Error, result: QueryResult) => {
                 if (err) {
@@ -89,6 +90,7 @@ export class PgSqlUtil extends DbUtil {
      * @param values
      */
     async execute(query: string, values?: any[]): Promise<DBExecuteResult> {
+        this.logger.debug(query, 'execute');
         return new Promise<DBExecuteResult>(((resolve, reject) => {
             this.pool.query(query, (err: Error, result: QueryResult) => {
                 if (err) {

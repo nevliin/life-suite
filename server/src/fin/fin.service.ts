@@ -59,15 +59,16 @@ export class FinService {
 
     async doYearlyClose(reqParams: YearlyCloseRequest): Promise<void> {
         const year = reqParams.year;
-        if (!Number.isInteger(year) || year < 2018 || year > (new Date()).getFullYear() - 1) {
+        if (!Number.isInteger(year) || year < minimumYear || year > (new Date()).getFullYear() - 1) {
             ErrorCodeUtil.findErrorCodeAndThrow('INVALID_PARAMETER');
         }
 
         const yearlyCloseDoneStatement =
             `SELECT *
             FROM fin_transaction
-            WHERE account = 9998
-                OR contra_account = 9998 AND created_on > '${this.db.escNumber(year)}-12-31 00:00:00.000'
+            WHERE (account = 9998
+                OR contra_account = 9998)
+                AND created_on > '${this.db.escNumber(year)}-12-31 00:00:00.000'
                 AND created_on < '${this.db.escNumber(year + 1)}-01-02 00:00:00.000';`;
 
         if ((await this.db.query(yearlyCloseDoneStatement)).rows.length > 0) {
@@ -360,7 +361,7 @@ export class FinService {
                    ORDER BY created_on DESC
                    LIMIT 20
                  )
-            SELECT id, name, note, parent_account, category_id, valid, fin_account.created_on 
+            SELECT id, name, note, parent_account, category_id, valid, fin_account.created_on
             FROM fin_account 
             JOIN distinct_ids ON fin_account.id = distinct_ids.account
             ORDER BY distinct_ids.created_on DESC
