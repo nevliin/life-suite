@@ -1,6 +1,6 @@
 <div class="grid-container">
-    <h1 class="mat-h1">Life Suite</h1>
-    <mat-grid-list [cols]="cols | async" rowHeight="1:1" gutterSize="16px">
+    <h1 class="dashboard-title">Life Suite</h1>
+    <mat-grid-list [cols]="cols | async" rowHeight="1:1" gutterSize="8px">
         <mat-grid-tile *ngFor="let tile of tiles" [colspan]="1" [rowspan]="tile.rowspan">
             <mat-card class="dashboard-tile">
                 <mat-card-header>
@@ -33,3 +33,4 @@
         </mat-grid-tile>
     </mat-grid-list>
 </div>
+

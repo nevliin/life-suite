@@ -6,7 +6,7 @@ import {DoYearlyCloseComponent} from '../do-yearly-close/do-yearly-close.compone
 @Component({
     selector: 'app-yearly-closes-banner',
     templateUrl: './yearly-closes-banner.component.html',
-    styleUrls: ['./yearly-closes-banner.component.css']
+    styleUrls: ['./yearly-closes-banner.component.scss']
 })
 export class YearlyClosesBannerComponent implements OnInit {
 

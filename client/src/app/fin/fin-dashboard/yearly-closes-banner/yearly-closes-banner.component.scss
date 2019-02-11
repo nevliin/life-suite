@@ -1,0 +1,15 @@
+
+body a {
+    color: rgba(black, 0.7);
+    text-decoration: underline;
+}
+
+body a:hover {
+    color: rgba(black, 0.5);
+    text-decoration: underline;
+}
+
+body a:visited {
+    color: rgba(black, 1);
+    text-decoration: underline;
+}

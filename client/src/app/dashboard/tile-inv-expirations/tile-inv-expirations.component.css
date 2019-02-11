@@ -1,0 +1,19 @@
+.entry-list {
+    height: 260px;
+}
+
+@media(max-width: 960px) {
+    .entry-list {
+        height: 220px;
+    }
+}
+
+@media(max-width: 360px) {
+    .dashboard-title {
+        margin-bottom: 8px;
+    }
+
+    .entry-list {
+        height: 260px;
+    }
+}

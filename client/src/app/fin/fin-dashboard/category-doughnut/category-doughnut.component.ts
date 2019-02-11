@@ -1,26 +1,24 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Subject, Subscription} from 'rxjs';
 import {AccountBalance, FinService} from '../../fin.service';
 import {BreakpointObserver, Breakpoints, BreakpointState} from '@angular/cdk/layout';
 import {chartColors} from '../../../core/chart-colors';
 
 @Component({
-  selector: 'app-category-doughnut',
-  templateUrl: './category-doughnut.component.html',
-  styleUrls: ['./category-doughnut.component.css']
+    selector: 'app-category-doughnut',
+    templateUrl: './category-doughnut.component.html',
+    styleUrls: ['./category-doughnut.component.css']
 })
-export class CategoryDoughnutComponent implements OnInit {
+export class CategoryDoughnutComponent implements OnInit, OnDestroy {
 
     @Input() categoryId: number;
     @Input() title: string;
 
-    doughnutWidth: number = 400;
     loading: boolean = false;
 
     amountsTotal: number;
     amountsData: any;
     options = {
-        responsive: false,
         maintainAspectRatio: false
     };
 
@@ -28,11 +26,13 @@ export class CategoryDoughnutComponent implements OnInit {
 
     amountsSubscription: Subscription;
 
+    subscriptions: Subscription[] = [];
+
     constructor(
         private readonly finService: FinService,
         private readonly breakpointObserver: BreakpointObserver
     ) {
-        this.amountsTimeframe.subscribe(async (startFrom: Date) => {
+        this.subscriptions.push(this.amountsTimeframe.subscribe(async (startFrom: Date) => {
             if (this.amountsSubscription) {
                 this.amountsSubscription.unsubscribe();
             }
@@ -50,19 +50,10 @@ export class CategoryDoughnutComponent implements OnInit {
                 };
                 this.loading = false;
             });
-        });
+        }));
     }
 
     async ngOnInit() {
-        this.breakpointObserver
-            .observe([Breakpoints.Small])
-            .subscribe((state: BreakpointState) => {
-                if (state.matches) {
-                    this.doughnutWidth = 400;
-                } else {
-                    this.doughnutWidth = 296;
-                }
-            });
     }
 
     summarizeOther(balances: AccountBalance[]): AccountBalance[] {
@@ -83,5 +74,9 @@ export class CategoryDoughnutComponent implements OnInit {
             id: null
         });
         return balances;
+    }
+
+    ngOnDestroy(): void {
+        this.subscriptions.forEach(sub => sub.unsubscribe());
     }
 }

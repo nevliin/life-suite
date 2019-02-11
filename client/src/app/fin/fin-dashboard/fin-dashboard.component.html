@@ -1,10 +1,8 @@
 <app-yearly-closes-banner></app-yearly-closes-banner>
-<mat-card class="fin-dashboard-container">
-    <mat-card-title>STATISTICS</mat-card-title>
-    <mat-card-content>
-        <div class="dashboard-statistics-container">
-            <app-category-doughnut [categoryId]="3" [title]="'expenses'"></app-category-doughnut>
-            <app-category-doughnut [categoryId]="6" [title]="'income'"></app-category-doughnut>
-        </div>
-    </mat-card-content>
-</mat-card>
+<div>
+    <h1 class="dashboard-title" style="margin-bottom: 8px;">Statistics</h1>
+    <div class="dashboard-statistics-container">
+        <app-category-doughnut [categoryId]="3" [title]="'expenses'"></app-category-doughnut>
+        <app-category-doughnut [categoryId]="6" [title]="'income'"></app-category-doughnut>
+    </div>
+</div>

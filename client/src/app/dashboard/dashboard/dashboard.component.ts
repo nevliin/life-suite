@@ -54,7 +54,7 @@ export class DashboardComponent implements OnInit {
 
         const grid: Map<string, number> = new Map<string, number>([
             ['xs', 1],
-            ['sm', 2],
+            ['sm', 3],
             ['md', 3],
             ['lg', 3],
             ['xl', 3]

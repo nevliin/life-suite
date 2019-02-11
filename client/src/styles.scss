@@ -18,19 +18,10 @@ $large-width: 900px;
 
 $width-mobile: 360px;
 
-body a {
-  color: rgba(black, 0.7);
-  text-decoration: underline;
-}
-
-body a:hover {
-  color: rgba(black, 0.5);
-  text-decoration: underline;
-}
-
-body a:visited {
-  color: rgba(black, 1);
-  text-decoration: underline;
+.dashboard-title {
+  margin-left: 20px;
+  margin-bottom: 0px;
+  @extend .mat-h1;
 }
 
 .fill-space {

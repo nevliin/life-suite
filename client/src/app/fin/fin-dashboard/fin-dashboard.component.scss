@@ -1,18 +1,31 @@
 .fin-dashboard-container {
-    max-width: 1200px;
+  max-width: 1200px;
 }
 
 .dashboard-statistics-container {
-    display: flex;
-    flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
 
-    &:nth-child(2) {
-      margin-left: 8px;
-    }
+  & > app-category-doughnut {
+    @extend .dashboard-statistics-card;
+  }
+
+}
+
+.dashboard-statistics-card:nth-child(2) {
+  margin-left: 8px;
 }
 
 @media (max-width: 360px) {
-    .fin-dashboard-container {
-        max-width: 360px;
-    }
+  .fin-dashboard-container {
+    max-width: 360px;
+  }
+
+  .dashboard-statistics-card {
+    width: 100%;
+    margin: 0 8px 8px;
+  }
+
+  .dashboard-statistics-card:nth-child(2) {
+  }
 }
