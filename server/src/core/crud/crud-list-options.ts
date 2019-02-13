@@ -3,7 +3,7 @@ export interface CRUDListOptions {
     orderField?: string;
     orderDirection?: string;
     bypassSoftDelete?: boolean;
-    filter?: [CRUDListFilter]
+    filter?: [CRUDListFilter];
 }
 
 export interface CRUDListFilter {
