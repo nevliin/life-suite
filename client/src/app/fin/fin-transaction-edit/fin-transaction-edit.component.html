@@ -2,7 +2,7 @@
     <mat-card-title style="margin-bottom: 20px;">ADD TRANSACTION</mat-card-title>
     <mat-card-content [formGroup]="transactionForm">
         <div class="form-container">
-            <div style="display: flex; flex-direction: row;">
+            <div class="account-input-container">
                 <mat-form-field style="width: 50px;">
                     <input matInput type="text" placeholder="#" [formControlName]="'account'"
                            [matAutocomplete]="accountAuto"
@@ -32,7 +32,7 @@
             <div style="display: flex; margin: 0 10px;">
                 <span style="align-self: center;">to</span>
             </div>
-            <div style="display: flex; flex-direction: row;">
+            <div class="account-input-container">
                 <mat-form-field style="width: 50px;">
                     <input matInput type="text" placeholder="#" formControlName="contraAccount"
                            [matAutocomplete]="contraAccountAuto"

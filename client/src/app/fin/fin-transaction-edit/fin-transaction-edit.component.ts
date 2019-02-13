@@ -8,6 +8,8 @@ import {TwoWayMap} from '../../core/auth/two-way-map';
 import {MAT_DIALOG_DATA, MatAutocompleteTrigger, MatDialogRef} from '@angular/material';
 import {FinTransaction} from '../fin-transaction';
 import {MessageService} from 'primeng/api';
+import {ActivatedRoute} from '@angular/router';
+import {FinTemplate} from '../fin-template';
 
 @Component({
     selector: 'app-fin-transaction-edit',
@@ -73,8 +75,12 @@ export class FinTransactionEditComponent implements OnInit {
             transaction?: FinTransaction,
             accountsById?: Map<number, FinTransaction>
         },
-        @Optional() private readonly dialogRef: MatDialogRef<FinTransactionEditComponent>
+        @Optional() private readonly dialogRef: MatDialogRef<FinTransactionEditComponent>,
+        readonly route: ActivatedRoute
     ) {
+        if (this.data) {
+            this.new = false;
+        }
     }
 
     async ngOnInit() {
@@ -92,9 +98,15 @@ export class FinTransactionEditComponent implements OnInit {
 
         this.accountNames = Array.from(this.accountsTwoWay.reverseMap.keys());
         this.setUpAutoComplete();
-        if (this.data) {
-            this.new = false;
+        if (!this.new) {
             await this.insertEditData();
+        } else {
+            this.route.queryParams.subscribe(async (params: any) => {
+                if (params.template) {
+                    const template = await this.finService.getTemplate(params.template);
+                    this.insertTemplateData(template);
+                }
+            });
         }
     }
 
@@ -109,14 +121,10 @@ export class FinTransactionEditComponent implements OnInit {
     }
 
     accountExistsValidatorFactory(accountIds$: BehaviorSubject<number[]>): ValidatorFn {
-        return (control: AbstractControl): {[key: string]: any} | null => {
+        return (control: AbstractControl): { [key: string]: any } | null => {
             return accountIds$.getValue().includes(Number.parseInt(control.value)) ? null : {exists: false};
         };
     }
-
-/*    accountExists(control: AbstractControl): { [key: string]: any } | null {
-        return this.accountIds.includes(control.value) ? null : {exists: false};
-    }*/
 
     async insertEditData() {
         let transaction: FinTransaction;
@@ -133,6 +141,15 @@ export class FinTransactionEditComponent implements OnInit {
         this.transactionForm.get('amount').setValue(transaction.amount);
         this.transactionForm.get('createdOn').setValue(transaction.created_on.toISOString().split('T')[0]);
         this.transactionForm.get('note').setValue(transaction.note);
+    }
+
+    insertTemplateData(template: FinTemplate) {
+        this.transactionForm.get('account').setValue(template.account);
+        this.updateAccountName(template.account.toString(), 'accountName');
+        this.transactionForm.get('contraAccount').setValue(template.contra_account);
+        this.updateAccountName(template.contra_account.toString(), 'contraAccountName');
+        this.transactionForm.get('amount').setValue(template.amount);
+        this.transactionForm.get('note').setValue(template.note);
     }
 
     cancel() {
