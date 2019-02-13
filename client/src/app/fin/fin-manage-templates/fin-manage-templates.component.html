@@ -1,0 +1,50 @@
+<mat-card class="container">
+    <mat-card-title style="display: flex; justify-content: space-between;">
+        <span>TEMPLATES</span>
+        <button mat-icon-button (click)="createTemplate().then()"><mat-icon>add</mat-icon></button>
+    </mat-card-title>
+    <mat-card-content>
+        <div class="list-container" *ngIf="templates.length; else noTemplates">
+            <ng-container *ngFor="let template of templates">
+                <div class="transaction-list-child" style="justify-self: left; margin-left: 8px;">
+                    <span>{{template.name}}</span>
+                </div>
+                <mat-card class="account-card transaction-list-child">
+                    {{template.account}}<span class="optional"> / {{template.accountName}}</span>
+                </mat-card>
+                <mat-icon class="transaction-list-child">arrow_forward</mat-icon>
+                <mat-card class="account-card transaction-list-child">
+                    {{template.contra_account}}<span class="optional"> / {{template.contraAccountName}}</span>
+                </mat-card>
+                <div class="transaction-list-child optional">
+                    {{template.amount | currency:'EUR'}}
+                </div>
+                <div class="transaction-list-child">
+                    <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu"
+                            aria-label="Toggle menu" style="">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu" xPosition="before">
+                        <button mat-menu-item (click)="deleteTemplate(template.id).then()">
+                            <mat-icon>remove</mat-icon>
+                            Remove
+                        </button>
+                        <button mat-menu-item (click)="editTemplate(template).then()">
+                            <mat-icon>edit</mat-icon>
+                            Open
+                        </button>
+                        <button mat-menu-item [routerLink]="['/fin', 'add']" [queryParams]="{template: template.id}">
+                            <mat-icon>arrow_right_alt</mat-icon>
+                            Execute
+                        </button>
+                    </mat-menu>
+                </div>
+            </ng-container>
+        </div>
+        <ng-template #noTemplates>
+            <div style="text-align: center;">
+                <p>No templates found</p>
+            </div>
+        </ng-template>
+    </mat-card-content>
+</mat-card>

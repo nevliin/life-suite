@@ -106,6 +106,12 @@ export const menus: Menu[] = [
                 route: [
                     'accounts'
                 ]
+            },
+            {
+                label: 'Manage Templates',
+                route: [
+                    'templates'
+                ]
             }
         ]
     }

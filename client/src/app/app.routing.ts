@@ -6,7 +6,6 @@ import {InvComparisonComponent} from './inv/inv-comparison/inv-comparison.compon
 import {CurrentMenuResolver} from './core/menu/current-menu.resolver';
 import {InvTargetComponent} from './inv/inv-target/inv-target.component';
 import {InvExpirationsComponent} from './inv/inv-expirations/inv-expirations.component';
-import {InvEditEntryComponent} from './inv/inv-edit-entry/inv-edit-entry.component';
 import {AuthService} from './core/auth/auth.service';
 import {AuthLoginWrapperComponent} from './core/auth/auth-login-wrapper/auth-login-wrapper.component';
 import {DashboardComponent} from './dashboard/dashboard/dashboard.component';
@@ -21,6 +20,7 @@ import {InvWrapperComponent} from './inv/inv-wrapper/inv-wrapper.component';
 import {CurrentStockResolver} from './inv/current-stock.resolver';
 import {InvAddEntryComponent} from './inv/inv-add-entry/inv-add-entry.component';
 import {UserDetailsComponent} from './core/user/user-details/user-details.component';
+import {FinManageTemplatesComponent} from './fin/fin-manage-templates/fin-manage-templates.component';
 
 const routes: Routes = [
     {
@@ -129,6 +129,9 @@ const routes: Routes = [
             },
             {
                 path: 'account/:accountId', component: FinAccountDetailComponent
+            },
+            {
+                path: 'templates', component: FinManageTemplatesComponent
             },
             {
                 path: '', redirectTo: 'dashboard', pathMatch: 'full'

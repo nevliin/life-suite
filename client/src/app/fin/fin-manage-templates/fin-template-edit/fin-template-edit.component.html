@@ -1,0 +1,97 @@
+<mat-card style="max-width: 800px;">
+    <mat-card-title style="margin-bottom: 20px;">{{new ? 'ADD' : 'EDIT'}} TEMPLATE</mat-card-title>
+    <mat-card-content [formGroup]="templateForm">
+        <div class="account-input-container">
+            <mat-form-field style="width: 100%;">
+                <input matInput type="text" placeholder="Template Name" [formControlName]="'name'">
+            </mat-form-field>
+        </div>
+        <div class="form-container">
+            <div class="account-input-container" style="order: 2;">
+                <mat-form-field style="width: 50px;">
+                    <input matInput type="text" placeholder="#" [formControlName]="'account'"
+                           [matAutocomplete]="accountAuto"
+                           (keydown)="keyDownValue = $event.target.value"
+                           #account
+                           matNativeControl>
+                </mat-form-field>
+                <mat-autocomplete autoActiveFirstOption #accountAuto="matAutocomplete"
+                                  (optionSelected)="updateAccountName($event.option.value, 'accountName')">
+                    <mat-option *ngFor="let account of filteredAccountOptions | async" [value]="account">
+                        {{account}}
+                    </mat-option>
+                </mat-autocomplete>
+                <mat-form-field style="width: 250px;">
+                    <input matInput type="text" placeholder="Account" formControlName="accountName"
+                           [matAutocomplete]="accountNameAuto" matNativeControl>
+                </mat-form-field>
+                <mat-autocomplete autoActiveFirstOption #accountNameAuto="matAutocomplete"
+                                  (optionSelected)="updateAccount($event.option.value, 'account')">
+                    <mat-option *ngFor="let accountName of filteredAccountNameOptions | async"
+                                [value]="accountName">
+                        {{accountName}}
+                    </mat-option>
+                </mat-autocomplete>
+            </div>
+            <div style="display: flex; margin: 0 10px; order: 3">
+                <span style="align-self: center;">to</span>
+            </div>
+            <div class="account-input-container" style="order: 4">
+                <mat-form-field style="width: 50px;">
+                    <input matInput type="text" placeholder="#" formControlName="contraAccount"
+                           [matAutocomplete]="contraAccountAuto"
+                           (keydown)="keyDownValue = $event.target.value"
+                           #contraAccount
+                           matNativeControl>
+                </mat-form-field>
+                <mat-autocomplete autoActiveFirstOption #contraAccountAuto="matAutocomplete"
+                                  (optionSelected)="updateAccountName($event.option.value, 'contraAccountName')">
+                    <mat-option *ngFor="let contraAccount of filteredContraAccountOptions | async"
+                                [value]="contraAccount">
+                        {{contraAccount}}
+                    </mat-option>
+                </mat-autocomplete>
+
+                <mat-form-field style="width: 250px;">
+                    <input matInput type="text" placeholder="Contra Account" formControlName="contraAccountName"
+                           [matAutocomplete]="contraAccountNameAuto" matNativeControl>
+                </mat-form-field>
+                <mat-autocomplete autoActiveFirstOption #contraAccountNameAuto="matAutocomplete"
+                                  (optionSelected)="updateAccount($event.option.value, 'contraAccount')">
+                    <mat-option *ngFor="let contraAccountName of filteredContraAccountNameOptions | async"
+                                [value]="contraAccountName">
+                        {{contraAccountName}}
+                    </mat-option>
+                </mat-autocomplete>
+            </div>
+        </div>
+        <div class="form-container" style="justify-content: space-between;">
+            <div style="display: flex; flex-direction: row;">
+                <mat-form-field style="width: 100px;">
+                    <input matInput type="number" placeholder="Amount" formControlName="amount"
+                           (keydown)="keyDownValue = $event.target.value"
+                           matNativeControl>
+                </mat-form-field>
+                <mat-form-field style="width: 50px;">
+                    <mat-select formControlName="currency">
+                        <mat-option *ngFor="let currency of currencies" [value]="currency.value">
+                            {{currency.viewValue}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <mat-form-field style="width: 500px;">
+                <input matInput type="text" placeholder="Note" formControlName="note"
+                       matNativeControl>
+            </mat-form-field>
+        </div>
+    </mat-card-content>
+    <mat-card-actions style="display: flex;">
+        <div class="fill-space"></div>
+        <button color="secondary" mat-flat-button (click)="cancel()"
+                [tabindex]="6">Cancel</button>
+        <button color="primary" mat-flat-button (click)="submit().then()"
+                [disabled]="templateForm.untouched || templateForm.invalid">Submit
+        </button>
+    </mat-card-actions>
+</mat-card>

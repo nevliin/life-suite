@@ -14,6 +14,7 @@ CREATE TABLE fin_category (
   id SERIAL PRIMARY KEY,
   name TEXT NOT NULL,
   active INT NOT NULL,
+  annual INT NOT NULL DEFAULT 0,
   valid INT NOT NULL DEFAULT 1
 );
 
@@ -51,6 +52,16 @@ CREATE TABLE fin_transaction(
   created_on TIMESTAMP DEFAULT NOW(),
   valid INT NOT NULL DEFAULT 1,
   executed_on TIMESTAMP DEFAULT NOW()
+);
+
+CREATE TABLE fin_template(
+  id SERIAL PRIMARY KEY,
+  name TEXT,
+  account INT REFERENCES fin_account(id) ON UPDATE CASCADE,
+  contra_account INT REFERENCES fin_account(id) ON UPDATE CASCADE,
+  amount DECIMAL(30, 2) NOT NULL,
+  note TEXT,
+  created_on TIMESTAMP DEFAULT NOW()
 );
 
 CREATE TABLE fin_constraint(

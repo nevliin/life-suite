@@ -1,0 +1,50 @@
+.list-container {
+    display: grid;
+    max-width: 1200px;
+    grid-template-columns: 15% 32.5% 5% 32.5% 10% 5%;
+    grid-row-gap: 15px;
+    font-size: 120%;
+}
+
+.account-card {
+    /*background-color: #9c9c9c;*/
+    justify-self: stretch !important;
+}
+
+.transaction-list-child {
+    justify-self: center;
+    align-self: center;
+}
+
+.container {
+    max-width: 1200px;
+    min-width: 800px;
+}
+
+.list-container > .mat-card {
+    padding: 10px;
+}
+
+@media (max-width: 360px) {
+    .container {
+        max-width: 360px;
+        min-width: 360px;
+    }
+
+    .optional {
+        display: none;
+        width: 0;
+    }
+
+    .list-container > div:nth-child(5) {
+        display: none;
+    }
+
+    .list-container {
+        display: grid;
+        grid-template-columns: 25% 30% 5% 30% 10%;
+        grid-row-gap: 10px;
+        font-size: 100%;
+    }
+
+}

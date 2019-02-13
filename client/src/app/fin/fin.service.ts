@@ -6,6 +6,8 @@ import {FinTransaction} from './fin-transaction';
 import {FinAccount} from './fin-account';
 import {FinCategory} from './fin-category';
 import {Observable} from 'rxjs';
+import {FinTemplate} from './fin-template';
+import {CRUDListOptions} from '../core/crud-types/crud-list-options';
 
 const API_ROOT: string = '/api/fin/';
 
@@ -222,6 +224,57 @@ export class FinService {
         return ((await this.http.delete(API_ROOT + 'transaction/delete/' + transactionId).toPromise().catch(e => {
             console.log(e);
             throw e;
+        })) as any).id;
+    }
+
+    async getTemplates(options?: CRUDListOptions): Promise<FinTemplate[]> {
+        return await this.http.get(API_ROOT + 'template/list', {
+            params: {
+                options: options ? JSON.stringify(options) : undefined
+            }
+        })
+            .pipe(map((response: { data: FinTemplate[] }) => {
+                    return response.data
+                        .map((template: FinTemplate) => {
+                            template.created_on = new Date(template.created_on);
+                            return template;
+                        });
+                })
+            ).toPromise().catch((e) => {
+                this.errorHandlingService.handleHTTPError(e);
+                return [];
+            });
+    }
+
+    async getTemplate(templateId: number): Promise<FinTemplate> {
+        return await this.http.get(API_ROOT + 'template/read/' + templateId)
+            .pipe(map((response: { data: FinTemplate }) => {
+                    response.data.created_on = new Date(response.data.created_on);
+                    return response.data;
+                }
+            )).toPromise().catch((e) => {
+                this.errorHandlingService.handleHTTPError(e);
+                return new FinTemplate();
+            });
+    }
+
+    async createTemplate(template: FinTemplate): Promise<number> {
+        return ((await this.http.post(API_ROOT + 'template/create/', template).toPromise().catch(e => {
+            console.log(e);
+            throw e;
+        })) as any).id;
+    }
+
+    async updateTemplate(template: FinTemplate): Promise<number> {
+        return ((await this.http.put(API_ROOT + 'template/update/', {data: template}).toPromise().catch(e => {
+            console.log(e);
+            throw e;
+        })) as any).id;
+    }
+
+    async deleteTemplate(templateId: number): Promise<number> {
+        return ((await this.http.delete(API_ROOT + 'template/delete/' + templateId).toPromise().catch(e => {
+            this.errorHandlingService.handleHTTPError(e);
         })) as any).id;
     }
 

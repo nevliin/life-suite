@@ -15,6 +15,7 @@ import {
     CategoryTotalRequest,
     YearlyCloseRequest
 } from './model/fin.model';
+import {TemplateModel} from './model/template.model';
 
 const express = require('express');
 
@@ -145,6 +146,13 @@ export const init = (): Router => {
         dbType: DBType.PGSQL
     });
     finRouter.use('/transaction', transactionModelCRUD.getRouter());
+
+    const templateModelCRUD: CRUDConstructor<TemplateModel> = new CRUDConstructor(new TemplateModel(), 'fin_template', {
+        autoFilledFields: ['created_on'],
+        autoIncrementId: true,
+        dbType: DBType.PGSQL
+    });
+    finRouter.use('/template', templateModelCRUD.getRouter());
 
     const constraintModelCRUD: CRUDConstructor<ConstraintModel> = new CRUDConstructor(new ConstraintModel(), 'fin_constraint', {
         softDelete: true,

@@ -17,9 +17,12 @@ import {PipesModule} from '../core/pipes/pipes.module';
 import {ChartModule} from 'primeng/chart';
 import {MatDatepickerModule, MatNativeDateModule} from '@angular/material';
 import {TimeFrameSelectComponent} from './fin-dashboard/time-frame-select/time-frame-select.component';
-import { CategoryDoughnutComponent } from './fin-dashboard/category-doughnut/category-doughnut.component';
-import { YearlyClosesBannerComponent } from './fin-dashboard/yearly-closes-banner/yearly-closes-banner.component';
-import { DoYearlyCloseComponent } from './fin-dashboard/do-yearly-close/do-yearly-close.component';
+import {CategoryDoughnutComponent} from './fin-dashboard/category-doughnut/category-doughnut.component';
+import {YearlyClosesBannerComponent} from './fin-dashboard/yearly-closes-banner/yearly-closes-banner.component';
+import {DoYearlyCloseComponent} from './fin-dashboard/do-yearly-close/do-yearly-close.component';
+import {FinManageTemplatesComponent} from './fin-manage-templates/fin-manage-templates.component';
+import {FinTemplateEditComponent} from './fin-manage-templates/fin-template-edit/fin-template-edit.component';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
     imports: [
@@ -32,7 +35,8 @@ import { DoYearlyCloseComponent } from './fin-dashboard/do-yearly-close/do-yearl
         PipesModule,
         ChartModule,
         MatDatepickerModule,
-        MatNativeDateModule
+        MatNativeDateModule,
+        RouterModule
     ],
     declarations: [
         FinDashboardComponent,
@@ -46,9 +50,18 @@ import { DoYearlyCloseComponent } from './fin-dashboard/do-yearly-close/do-yearl
         TimeFrameSelectComponent,
         CategoryDoughnutComponent,
         YearlyClosesBannerComponent,
-        DoYearlyCloseComponent
+        DoYearlyCloseComponent,
+        FinManageTemplatesComponent,
+        FinTemplateEditComponent
     ],
-    entryComponents: [FinAccountAddComponent, FinCategoryAddComponent, FinTransactionEditComponent, FinTransactionEditComponent, DoYearlyCloseComponent],
+    entryComponents: [
+        FinAccountAddComponent,
+        FinCategoryAddComponent,
+        FinTransactionEditComponent,
+        FinTransactionEditComponent,
+        DoYearlyCloseComponent,
+        FinTemplateEditComponent
+    ],
     providers: [FinService]
 })
 export class FinModule {
