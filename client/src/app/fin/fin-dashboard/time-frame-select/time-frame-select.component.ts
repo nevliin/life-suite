@@ -35,6 +35,11 @@ export class TimeFrameSelectComponent implements OnInit {
             label: 'Last Year',
             value: TimeFrameOptions.LAST_YEAR,
             startDate: new Date(new Date().getFullYear() - 1, new Date().getMonth(), new Date().getUTCDate())
+        },
+        {
+            label: 'All Time',
+            value: TimeFrameOptions.ALL_TIME,
+            startDate: undefined
         }
     ];
 
@@ -75,5 +80,6 @@ export enum TimeFrameOptions {
     CURRENT_MONTH = 'currentMonth',
     LAST_MONTH = 'lastMonth',
     CURRENT_YEAR = 'currentYear',
-    LAST_YEAR = 'lastYear'
+    LAST_YEAR = 'lastYear',
+    ALL_TIME = 'allTime'
 }
