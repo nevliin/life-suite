@@ -228,10 +228,10 @@ export class FinService {
     }
 
     async getTemplates(options?: CRUDListOptions): Promise<FinTemplate[]> {
+        const params: any = {};
+        options ? params.options = btoa(JSON.stringify(options)) : null;
         return await this.http.get(API_ROOT + 'template/list', {
-            params: {
-                options: options ? JSON.stringify(options) : undefined
-            }
+            params: params
         })
             .pipe(map((response: { data: FinTemplate[] }) => {
                     return response.data

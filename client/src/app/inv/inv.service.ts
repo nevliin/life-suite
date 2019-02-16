@@ -30,14 +30,18 @@ export class InvService {
 
     async getTargetEntries(stockId: number): Promise<InvTargetEntry[]> {
         return await this.http
-            .post(API_ROOT + 'targetEntry/list', {
-                filter: [
-                    {
-                        field: 'stock_id',
-                        value: stockId,
-                        partialMatch: false
-                    }
-                ]
+            .get(API_ROOT + 'targetEntry/list', {
+                params: {
+                    options: btoa(JSON.stringify({
+                        filter: [
+                            {
+                                field: 'stock_id',
+                                value: stockId,
+                                partialMatch: false
+                            }
+                        ]
+                    }))
+                }
             })
             .pipe(map((response: { data: InvTargetEntry[] }) => response.data))
             .toPromise().catch(e => {
