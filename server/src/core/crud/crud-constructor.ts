@@ -416,7 +416,7 @@ export class CRUDConstructor<T extends ICRUDModel, > {
         });
         router.get('/list', async (req: Request, res: Response, next: NextFunction) => {
             try {
-                const data: T[] = await this.list(req.params.options ? JSON.parse(req.params.options) : {});
+                const data: T[] = await this.list(req.query.options ? JSON.parse(Buffer.from(req.query.options, 'base64').toString()) : {});
                 res.status(200).send({
                     data: data
                 });
