@@ -23,6 +23,7 @@ import {DoYearlyCloseComponent} from './fin-dashboard/do-yearly-close/do-yearly-
 import {FinManageTemplatesComponent} from './fin-manage-templates/fin-manage-templates.component';
 import {FinTemplateEditComponent} from './fin-manage-templates/fin-template-edit/fin-template-edit.component';
 import {RouterModule} from '@angular/router';
+import { TemplateCarouselComponent } from './fin-dashboard/template-carousel/template-carousel.component';
 
 @NgModule({
     imports: [
@@ -52,7 +53,8 @@ import {RouterModule} from '@angular/router';
         YearlyClosesBannerComponent,
         DoYearlyCloseComponent,
         FinManageTemplatesComponent,
-        FinTemplateEditComponent
+        FinTemplateEditComponent,
+        TemplateCarouselComponent
     ],
     entryComponents: [
         FinAccountAddComponent,

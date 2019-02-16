@@ -1,0 +1,33 @@
+.carousel {
+  display: flex;
+  width: 100%;
+  overflow: auto;
+  flex-wrap: nowrap;
+
+  & > .carousel-item {
+    padding: 8px;
+  }
+}
+
+.carousel-item {
+  flex: 0 0 150px;
+  max-width: 150px;
+  height: 150px;
+  text-align: center;
+  border-radius: 4px;
+
+  &:hover {
+    background-color: rgba(black, 0.1);
+  }
+
+}
+
+@media (max-width: 360px) {
+  .carousel-card {
+    margin: 0 8px;
+  }
+
+  .carousel {
+    max-width: 360px;
+  }
+}

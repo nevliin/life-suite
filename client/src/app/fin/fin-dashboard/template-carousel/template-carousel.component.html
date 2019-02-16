@@ -1,0 +1,21 @@
+<mat-card class="carousel-card">
+    <mat-card-content class="carousel" *ngIf="templates.length > 0; else noTemplates">
+        <div class="carousel-item" *ngFor="let template of templates">
+            <div style="font-size: 20px; margin-bottom: 24px; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                {{template.name}}
+            </div>
+            <div style="display: flex; align-items: center; justify-content: space-evenly; margin-bottom: 8px;">
+                <span style="font-size: 16px;">{{template.account}}</span>
+                <mat-icon>arrow_forward</mat-icon>
+                <span style="font-size: 16px;">{{template.contra_account}}</span>
+            </div>
+            <span style="font-size: 16px;">Amount: {{template.amount | currency:'EUR':true}}</span>
+            <mat-divider [vertical]="true"></mat-divider>
+        </div>
+    </mat-card-content>
+    <ng-template #noTemplates>
+        <mat-card-content style="display: flex; justify-content: center; align-items: center; height: 120px;">
+            <span>No Templates Yet</span>
+        </mat-card-content>
+    </ng-template>
+</mat-card>
