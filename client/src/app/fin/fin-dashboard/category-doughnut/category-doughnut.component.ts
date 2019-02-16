@@ -1,7 +1,6 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Subject, Subscription} from 'rxjs';
 import {AccountBalance, FinService} from '../../fin.service';
-import {BreakpointObserver, Breakpoints, BreakpointState} from '@angular/cdk/layout';
 import {chartColors} from '../../../core/chart-colors';
 
 @Component({
@@ -29,8 +28,7 @@ export class CategoryDoughnutComponent implements OnInit, OnDestroy {
     subscriptions: Subscription[] = [];
 
     constructor(
-        private readonly finService: FinService,
-        private readonly breakpointObserver: BreakpointObserver
+        private readonly finService: FinService
     ) {
         this.subscriptions.push(this.amountsTimeframe.subscribe(async (startFrom: Date) => {
             if (this.amountsSubscription) {
@@ -63,16 +61,18 @@ export class CategoryDoughnutComponent implements OnInit, OnDestroy {
         const other = balances.slice(10);
         balances = balances.slice(0, 10);
 
-        let sumOther = 0;
-        other.forEach(balance => {
-            sumOther += balance.balance;
-        });
+        if (other.length > 0) {
+            let sumOther = 0;
+            other.forEach(balance => {
+                sumOther += balance.balance;
+            });
 
-        balances.push({
-            balance: sumOther,
-            name: 'Other',
-            id: null
-        });
+            balances.push({
+                balance: sumOther,
+                name: 'Other',
+                id: null
+            });
+        }
         return balances;
     }
 
