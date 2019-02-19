@@ -8,8 +8,13 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         cwd: "src",
-                        src: ["assets/**/*.json"],
+                        src: ["assets/error-codes/*.json", "assets/route-permissions/*.json"],
                         dest: "../build/server/dist"
+                    },
+                    {
+                        expand: false,
+                        src: ["prod.config.json"],
+                        dest: "../build/server/dist/assets/config/server-config.json"
                     },
                     {
                         expand: false,

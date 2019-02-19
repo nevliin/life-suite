@@ -5,3 +5,4 @@
 /dist
 /src/assets/config/server-config.json
 /sql/fin/initialdata.sql
+/prod.config.json
