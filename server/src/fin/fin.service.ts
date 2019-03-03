@@ -13,16 +13,17 @@ import {ErrorCodeUtil} from '../utils/error-code/error-code.util';
 import {isNullOrUndefined} from '../utils/util';
 import {PgSqlUtil} from '../core/db/pgsql.util';
 import {AccountModel} from './model/account.model';
+import {inject} from 'inversify';
+import {CoreTypes} from '../core/core.types';
 
 const closingBalanceAccountId: number = 9998;
 const minimumYear: number = 2018;
 
 export class FinService {
 
-    db: DbUtil;
+    @inject(CoreTypes.PgSQLUtil) db: DbUtil;
 
     constructor() {
-        this.db = new PgSqlUtil();
     }
 
     async yearlyClosesDone(): Promise<number[]> {

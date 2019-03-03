@@ -86,7 +86,7 @@ export class ErrorCodeUtil {
      * @param res
      */
     static resolveErrorOnRoute(e: Error, res: Response) {
-        if(ErrorCodeUtil.isErrorWithCode(e)) {
+        if (ErrorCodeUtil.isErrorWithCode(e)) {
             res.status((e as ErrorWithCode).http_code).send(e);
         } else {
             this.logger.error(e, 'resolveErrorOnRoute');

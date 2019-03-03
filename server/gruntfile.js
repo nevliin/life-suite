@@ -40,8 +40,12 @@ module.exports = function (grunt) {
                 options: {
                     module: "commonjs",
                     target: "es2017",
+                    lib: ["es2017"],
                     sourceMap: false,
-                    rootDir: "src"
+                    rootDir: "src",
+                    experimentalDecorator: true,
+                    emitDecoratorMetadata: true,
+                    types: ["reflect-metadata"]
                 },
 
             }

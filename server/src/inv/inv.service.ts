@@ -4,19 +4,20 @@ import {PgSqlUtil} from '../core/db/pgsql.util';
 import {ComparisonRequest, CreateMultipleEntriesRequest} from './model/inv.model';
 import {CRUDConstructor, DBType} from '../core/crud/crud-constructor';
 import {EntryModel} from './model/entry.model';
+import {inject} from 'inversify';
+import {CoreTypes} from '../core/core.types';
 
 export class InvService {
 
-    entryModelCRUD: CRUDConstructor<EntryModel> = new CRUDConstructor(new EntryModel(), 'inv_entry', {
+    entryModelCRUD: CRUDConstructor<EntryModel> = new CRUDConstructor(new EntryModel(), 'inv_entry', 'entry',{
         softDelete: true,
         autoIncrementId: true,
         dbType: DBType.PGSQL
     });
 
-    db: DbUtil;
+    @inject(CoreTypes.PgSQLUtil) db: DbUtil;
 
     constructor() {
-        this.db = new PgSqlUtil();
     }
 
     async getComparison(reqParams: ComparisonRequest): Promise<CompareEntryModel[]> {

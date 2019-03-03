@@ -6,8 +6,8 @@ import {ErrorCodeUtil} from '../../utils/error-code/error-code.util';
 import {NextFunction, Request, Response, Router} from 'express';
 import {isNullOrUndefined} from '../../utils/util';
 import {CRUDListFilter, CRUDListOptions} from './crud-list-options';
-import {MySqlUtil} from '../db/mysql.util';
-import {PgSqlUtil} from '../db/pgsql.util';
+import {inject} from 'inversify';
+import {CoreTypes} from '../core.types';
 
 const express = require('express');
 
@@ -17,6 +17,9 @@ const express = require('express');
  * (The fields don't need to have this name in the MySQL table - you can change it in the optional 'fieldMappings').
  */
 export class CRUDConstructor<T extends ICRUDModel, > {
+
+    @inject(CoreTypes.PgSQLUtil) pgSql: DbUtil;
+    @inject(CoreTypes.MySQLUtil) mySql: DbUtil;
 
     private db: DbUtil;
     private logger: Logger;
@@ -50,7 +53,7 @@ export class CRUDConstructor<T extends ICRUDModel, > {
      */
     readonly validFieldMapping: string = 'valid';
 
-    constructor(model: T, dbTable: string, options?: CRUDOptions) {
+    constructor(model: T, dbTable: string, path: string, options?: CRUDOptions) {
         this.logger = LoggingUtil.getLogger('CRUDConstructor');
         this.model = model;
         this.dbTable = dbTable;
@@ -76,14 +79,15 @@ export class CRUDConstructor<T extends ICRUDModel, > {
         let result: DbUtil;
         switch (type) {
             case DBType.MYSQL:
-                result = new MySqlUtil(dbconfig);
+                result = this.mySql;
                 break;
             case DBType.PGSQL:
-                result = new PgSqlUtil(dbconfig);
+                result = this.pgSql;
                 break;
             default:
-                result = new MySqlUtil(dbconfig);
+                result = this.mySql;
         }
+        console.log(result);
         return result;
     }
 
@@ -157,7 +161,7 @@ export class CRUDConstructor<T extends ICRUDModel, > {
                 return data['id'];
             }
         } catch (e) {
-            this.logger.error('')
+            this.logger.error('');
             ErrorCodeUtil.findErrorCodeAndThrow(e);
         }
     }

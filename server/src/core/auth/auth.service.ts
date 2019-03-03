@@ -12,6 +12,8 @@ import {IUpdatePasswordModel} from './model/update-password.model';
 import {isNullOrUndefined} from '../../utils/util';
 import {IEditRolesModel} from './model/edit-roles.model';
 import {MySqlUtil} from '../db/mysql.util';
+import {CoreTypes} from '../core.types';
+import {inject, injectable} from 'inversify';
 
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -22,7 +24,10 @@ const routePermissions: IRoutePermission = require('../../assets/route-permissio
 /**
  * Utility class for user authentication and route guarding
  */
+@injectable()
 export class AuthService {
+
+    @inject(CoreTypes.MySQLUtil) db: DbUtil;
 
     static db: DbUtil;
     static logger: Logger;
@@ -32,7 +37,7 @@ export class AuthService {
      * Init dependencies and route expensesData
      */
     static async init() {
-        this.db = new MySqlUtil(config.auth);
+        this.db = new MySqlUtil();
         this.logger = LoggingUtil.getLogger('auth');
         await this.initRoutePermissions();
     }
@@ -113,7 +118,7 @@ export class AuthService {
         }
     }
 
-    public static async verifyLogin(token: string): Promise<boolean> {
+    public async verifyLogin(token: string): Promise<boolean> {
         if (!isNullOrUndefined(token)) {
             const statement: string = `SELECT valid FROM auth_token WHERE token='${token}';`;
             const result: DBQueryResult = await this.db.query(statement);
@@ -154,7 +159,7 @@ export class AuthService {
      * @param res
      * @param next
      */
-    static routeGuard = async function (req: Request, res: Response, next: NextFunction) {
+    routeGuard = async function (req: Request, res: Response, next: NextFunction) {
         try {
             if (req.cookies.auth_token) {
                 const userId: number = await AuthService.verifyToken(req.cookies.auth_token);
@@ -183,7 +188,7 @@ export class AuthService {
         if (userId) {
             const result: DBQueryResult = await this.db.query(
                 `SELECT auth_user_role.role_id as id, auth_role.power as power
-                    FROM auth_user_role 
+                    FROM auth_user_role
                     JOIN auth_user ON auth_user.id = auth_user_role.user_id
                     JOIN auth_role ON auth_role.id = auth_user_role.role_id
                     WHERE auth_user.id = ${userId};`);

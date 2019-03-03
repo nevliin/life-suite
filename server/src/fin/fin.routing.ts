@@ -125,13 +125,13 @@ export const init = (): Router => {
         }
     });
 
-    const categoryModelCRUD: CRUDConstructor<CategoryModel> = new CRUDConstructor(new CategoryModel(), 'fin_category', {
+    const categoryModelCRUD: CRUDConstructor<CategoryModel> = new CRUDConstructor(new CategoryModel(), 'fin_category', 'category', {
         softDelete: true,
         dbType: DBType.PGSQL
     });
     finRouter.use('/category', categoryModelCRUD.getRouter());
 
-    const accountModelCRUD: CRUDConstructor<AccountModel> = new CRUDConstructor(new AccountModel(), 'fin_account', {
+    const accountModelCRUD: CRUDConstructor<AccountModel> = new CRUDConstructor(new AccountModel(), 'fin_account', 'account', {
         softDelete: true,
         autoFilledFields: ['created_on'],
         autoIncrementId: false,
@@ -139,7 +139,7 @@ export const init = (): Router => {
     });
     finRouter.use('/account', accountModelCRUD.getRouter());
 
-    const transactionModelCRUD: CRUDConstructor<TransactionModel> = new CRUDConstructor(new TransactionModel(), 'fin_transaction', {
+    const transactionModelCRUD: CRUDConstructor<TransactionModel> = new CRUDConstructor(new TransactionModel(), 'fin_transaction', 'transaction', {
         softDelete: true,
         autoFilledFields: ['executed_on'],
         autoIncrementId: true,
@@ -147,14 +147,14 @@ export const init = (): Router => {
     });
     finRouter.use('/transaction', transactionModelCRUD.getRouter());
 
-    const templateModelCRUD: CRUDConstructor<TemplateModel> = new CRUDConstructor(new TemplateModel(), 'fin_template', {
+    const templateModelCRUD: CRUDConstructor<TemplateModel> = new CRUDConstructor(new TemplateModel(), 'fin_template', 'template', {
         autoFilledFields: ['created_on'],
         autoIncrementId: true,
         dbType: DBType.PGSQL
     });
     finRouter.use('/template', templateModelCRUD.getRouter());
 
-    const constraintModelCRUD: CRUDConstructor<ConstraintModel> = new CRUDConstructor(new ConstraintModel(), 'fin_constraint', {
+    const constraintModelCRUD: CRUDConstructor<ConstraintModel> = new CRUDConstructor(new ConstraintModel(), 'fin_constraint', 'constraint', {
         softDelete: true,
         autoFilledFields: ['created_on'],
         autoIncrementId: true,

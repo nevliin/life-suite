@@ -44,7 +44,7 @@ export const init = (): Router => {
         }
     });
 
-    const userModelCRUD: CRUDConstructor<UserModel> = new CRUDConstructor<UserModel>(new UserModel(), 'auth_user', {
+    const userModelCRUD: CRUDConstructor<UserModel> = new CRUDConstructor<UserModel>(new UserModel(), 'auth_user', 'user',{
         autoIncrementId: true,
         autoFilledFields: [
             'created_on'

@@ -1,9 +1,6 @@
+import {inject, injectable} from 'inversify';
 
 export class LoggingUtil {
-
-    static init() {
-
-    }
 
     static getLogger(module: string): Logger {
         return new Logger(module);
@@ -21,7 +18,7 @@ export class Logger {
 
     error(message: Error | string, method?: string) {
         console.error(this.createMessage(message, method));
-        if(message instanceof Error) {
+        if (message instanceof Error) {
             console.error(message.stack);
         }
     }

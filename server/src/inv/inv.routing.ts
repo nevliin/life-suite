@@ -15,19 +15,19 @@ export const init = (): Router => {
     const invService: InvService = new InvService();
 
     // CRUD Routes
-    const entryModelCRUD: CRUDConstructor<EntryModel> = new CRUDConstructor(new EntryModel(), 'inv_entry', {
+    const entryModelCRUD: CRUDConstructor<EntryModel> = new CRUDConstructor(new EntryModel(), 'inv_entry', 'entry', {
         softDelete: true,
         autoIncrementId: true,
         dbType: DBType.PGSQL
     });
 
-    const targetEntryModelCRUD: CRUDConstructor<TargetEntryModel> = new CRUDConstructor(new TargetEntryModel(), 'inv_target_entry', {
+    const targetEntryModelCRUD: CRUDConstructor<TargetEntryModel> = new CRUDConstructor(new TargetEntryModel(), 'inv_target_entry', 'targetEntry',{
         softDelete: true,
         autoIncrementId: true,
         dbType: DBType.PGSQL
     });
 
-    const stockModelCRUD: CRUDConstructor<StockModel> = new CRUDConstructor(new StockModel(), 'inv_stock', {
+    const stockModelCRUD: CRUDConstructor<StockModel> = new CRUDConstructor(new StockModel(), 'inv_stock', 'stock', {
         softDelete: true,
         autoIncrementId: true,
         dbType: DBType.PGSQL

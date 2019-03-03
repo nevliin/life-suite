@@ -20,7 +20,7 @@ export class UserService {
      * Init dependencies and route expensesData
      */
     static async init() {
-        this.db = new MySqlUtil(config.auth);
+        this.db = new MySqlUtil();
         this.logger = LoggingUtil.getLogger('user');
     }
 

@@ -7,14 +7,20 @@ import {IUpdatePasswordModel} from './model/update-password.model';
 import {IEditRolesModel} from './model/edit-roles.model';
 import {CRUDConstructor} from '../crud/crud-constructor';
 import {RoleModel} from './model/role.model';
-
-const express = require('express');
+import {controller, httpGet, httpPost, interfaces} from 'inversify-express-utils';
+import Controller = interfaces.Controller;
+import {inject} from 'inversify';
+import {CoreTypes} from '../core.types';
 
 const authCookieName: string = 'auth_token';
 
-export const init = (): Router => {
-    const authRouter = express.Router();
-    authRouter.post('/signup', async (req: Request, res: Response, next: NextFunction) => {
+@controller('/auth')
+export class AuthController implements Controller {
+
+    @inject(CoreTypes.AuthService) authService: AuthService;
+
+    @httpPost('/signup')
+    private async signUp(req: Request, res: Response, next: NextFunction) {
         try {
             const userId: number = await AuthService.signUp((<ISignUpModel>req.body));
             res.status(200).send({
@@ -23,9 +29,10 @@ export const init = (): Router => {
         } catch (e) {
             ErrorCodeUtil.resolveErrorOnRoute(e, res);
         }
-    });
+    }
 
-    authRouter.post('/login', async (req: Request, res: Response, next: NextFunction) => {
+    @httpPost('/login')
+    private async login(req: Request, res: Response, next: NextFunction) {
         try {
             const token: string = await AuthService.login(<ILoginModel>req.body);
             if ((<ILoginModel>req.body).rememberMe) {
@@ -40,9 +47,10 @@ export const init = (): Router => {
         } catch (e) {
             ErrorCodeUtil.resolveErrorOnRoute(e, res);
         }
-    });
+    }
 
-    authRouter.get('/logout', async (req: Request, res: Response, next: NextFunction) => {
+    @httpPost('/logout')
+    private async logOut(req: Request, res: Response, next: NextFunction) {
         try {
             await AuthService.logOut(req.cookies[authCookieName]);
             res.cookie(authCookieName, '', {expires: new Date()});
@@ -52,20 +60,24 @@ export const init = (): Router => {
         } catch (e) {
             ErrorCodeUtil.resolveErrorOnRoute(e, res);
         }
-    });
+    }
 
-    authRouter.get('/verify', async (req: Request, res: Response, next: NextFunction) => {
+    @httpGet('/verify')
+    private async verify(req: Request, res: Response, next: NextFunction) {
+        console.log('hi');
         try {
-            const result: boolean = await AuthService.verifyLogin(req.cookies[authCookieName]);
+            const result: boolean = await this.authService.verifyLogin(req.cookies[authCookieName]);
             res.status(200).send({
                 valid: result
             });
         } catch (e) {
+            console.error(e);
             ErrorCodeUtil.resolveErrorOnRoute(e, res);
         }
-    });
+    }
 
-    authRouter.post('/updatePassword', async (req: Request, res: Response, next: NextFunction) => {
+    @httpPost('/updatePassword')
+    private async updatePassword(req: Request, res: Response, next: NextFunction) {
         try {
             const userId: number = await AuthService.updatePassword(<IUpdatePasswordModel>req.body);
             res.status(200).send({
@@ -74,9 +86,10 @@ export const init = (): Router => {
         } catch (e) {
             ErrorCodeUtil.resolveErrorOnRoute(e, res);
         }
-    });
+    }
 
-    authRouter.post('/editRoles', async (req: Request, res: Response, next: NextFunction) => {
+    @httpPost('/editRoles')
+    private async editRoles(req: Request, res: Response, next: NextFunction) {
         try {
             const success: boolean = await AuthService.editRoles(<IEditRolesModel>req.body);
             res.status(200).send({
@@ -85,18 +98,16 @@ export const init = (): Router => {
         } catch (e) {
             ErrorCodeUtil.resolveErrorOnRoute(e, res);
         }
-    });
+    }
 
-    const roleModelCRUD: CRUDConstructor<RoleModel> = new CRUDConstructor<RoleModel>(new RoleModel(), 'auth_role', {
-        autoIncrementId: true,
-        autoFilledFields: [
-            'created_on'
-        ]
-    });
-    authRouter.use('/role', roleModelCRUD.getRouter());
+    constructor() {
+        const roleModelCRUD: CRUDConstructor<RoleModel> = new CRUDConstructor<RoleModel>(new RoleModel(), 'auth_role', 'role', {
+            autoIncrementId: true,
+            autoFilledFields: [
+                'created_on'
+            ]
+        });
+    }
+}
 
-    return authRouter;
-};
-
-export const authRouter = init();
 

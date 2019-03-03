@@ -1,31 +1,32 @@
+import 'reflect-metadata';
 import * as bodyParser from 'body-parser';
 import * as cookieParser from 'cookie-parser';
 import * as express from 'express';
 import * as logger from 'morgan';
 import * as path from 'path';
+import * as http from 'http';
 import {Routes} from './routes';
-import {LoggingUtil} from './core/logging/logging.util';
-import {DbUtil} from './core/db/db.util';
-import {Singletons} from './core/singletons';
-import {MySqlUtil} from './core/db/mysql.util';
-import {PgSqlUtil} from './core/db/pgsql.util';
 import {AuthService} from './core/auth/auth.service';
+import {container} from './inversify.config';
+import {inject, injectable} from 'inversify';
+import {InversifyExpressServer} from 'inversify-express-utils';
+import {CoreTypes} from './core/core.types';
 import errorHandler = require('errorhandler');
 import methodOverride = require('method-override');
-
 
 /**
  * The server.
  *
  * @class Server
  */
+@injectable()
 export class Server {
 
-    public app: express.Application;
+    @inject(CoreTypes.AuthService) authService: AuthService;
 
-    private loggingUtil: LoggingUtil;
-    private mySqlConnection: DbUtil;
-    private pgSqlConnection: DbUtil;
+    public app: express.Application;
+    public server: http.Server;
+    public httpPort: string;
 
     /**
      * Bootstrap the application.
@@ -35,9 +36,8 @@ export class Server {
      * @static
      * @return {ng.auto.IInjectorService} Returns the newly created injector for this app.
      */
-    public static bootstrap(): Server {
-        Singletons.init().then().catch();
-        return new Server();
+    public static bootstrap() {
+        new Server();
     }
 
     /**
@@ -47,23 +47,17 @@ export class Server {
      * @constructor
      */
     constructor() {
-        // create expressjs application
-        this.app = express();
+        const server = new InversifyExpressServer(container);
+        server.setConfig(async (appForConfig) => {
+            await this.config(appForConfig);
+        });
 
-        // set up singletons
-        this.singletons();
-
-        // configure application
-        this.config().then().catch();
-
-        // add routing
-        this.routes();
-    }
-
-    public singletons() {
-        this.loggingUtil = new LoggingUtil();
-        this.mySqlConnection = new MySqlUtil();
-        this.mySqlConnection = new PgSqlUtil();
+        this.app = server.build();
+        this.httpPort = this.normalizePort(process.env.PORT || 65432);
+        this.server = this.app.listen(this.httpPort);
+        console.log('Now listening on port ' + this.httpPort);
+        // add error handler
+        this.server.on('error', this.onError);
     }
 
     /**
@@ -72,37 +66,37 @@ export class Server {
      * @class Server
      * @method config
      */
-    public async config() {
+    public async config(app) {
         // add static paths
-        this.app.use(express.static(path.join(__dirname, 'public')));
+        app.use(express.static(path.join(__dirname, 'public')));
 
         // use logger middlware
-        this.app.use(logger('dev'));
+        app.use(logger('dev'));
 
         // use json form parser middlware
-        this.app.use(bodyParser.json());
+        app.use(bodyParser.json());
 
         // use query string parser middlware
-        this.app.use(bodyParser.urlencoded({
+        app.use(bodyParser.urlencoded({
             extended: true
         }));
 
         // use cookie parser middleware
-        this.app.use(cookieParser('SECRET_GOES_HERE'));
+        app.use(cookieParser('SECRET_GOES_HERE'));
 
         // use override middlware
-        this.app.use(methodOverride());
+        app.use(methodOverride());
 
         // catch 404 and forward to error handler
-        this.app.use(function (err: any, req: express.Request, res: express.Response, next: express.NextFunction) {
+        app.use(function (err: any, req: express.Request, res: express.Response, next: express.NextFunction) {
             err.status = 404;
             next(err);
         });
 
         // error handling
-        this.app.use(errorHandler());
+        app.use(errorHandler());
 
-        this.app.use(AuthService.routeGuard);
+        app.use(this.authService.routeGuard);
     }
 
     /**
@@ -114,4 +108,48 @@ export class Server {
     public routes() {
         Routes.init(this.app);
     }
+
+    public normalizePort(val) {
+        const port = parseInt(val, 10);
+
+        if (isNaN(port)) {
+            // named pipe
+            return val;
+        }
+
+        if (port >= 0) {
+            // port number
+            return port;
+        }
+
+        return false;
+    }
+
+    /**
+     * Event listener for HTTP server "error" event.
+     */
+    private onError(error) {
+        if (error.syscall !== 'listen') {
+            throw error;
+        }
+
+        const bind = typeof this.httpPort === 'string'
+            ? 'Pipe ' + this.httpPort
+            : 'Port ' + this.httpPort;
+
+        // handle specific listen errors with friendly messages
+        switch (error.code) {
+            case 'EACCES':
+                console.error(bind + ' requires elevated privileges');
+                process.exit(1);
+                break;
+            case 'EADDRINUSE':
+                console.error(bind + ' is already in use');
+                process.exit(1);
+                break;
+            default:
+                throw error;
+        }
+    }
+
 }

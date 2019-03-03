@@ -2,12 +2,14 @@ import {IDBConfig, IServerConfig} from '../../assets/config/server-config.model'
 import {DBExecuteResult, DBQueryResult, DbUtil} from './db.util';
 import {Pool, QueryResult} from 'pg';
 import {Logger, LoggingUtil} from '../logging/logging.util';
+import {injectable} from 'inversify';
 
 const config: IServerConfig = require('../../assets/config/server-config.json');
 
 /**
  * Utility for interacting with a MySQL database
  */
+@injectable()
 export class PgSqlUtil extends DbUtil {
 
     private pool: Pool;
@@ -28,6 +30,7 @@ export class PgSqlUtil extends DbUtil {
                 database: dbconfig.database,
                 port: 5432
             });
+            this.logger.info(`Successfully connected to PGSQL database ${config.pgsqldb.database}@${config.pgsqldb.host}`);
         } else {
             this.pool = new Pool({
                 host: config.pgsqldb.host,
@@ -36,8 +39,11 @@ export class PgSqlUtil extends DbUtil {
                 database: config.pgsqldb.database,
                 port: 5432
             });
+            this.logger.info(`Successfully connected to PGSQL database ${config.pgsqldb.database}@${config.pgsqldb.host}`);
         }
-        this.setTimezone().then();
+        this.setTimezone()
+            .then()
+            .catch(e => this.logger.warn(`Setting the timezone on the PGSQL connection failed because ${e.toString()}`));
         this.testConnection().then();
     }
 

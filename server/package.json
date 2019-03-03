@@ -23,7 +23,10 @@
     "mysql": "^2.16.0",
     "bcryptjs": "^2.4.3",
     "jsonwebtoken": "^8.3.0",
-    "pg": "~7.7.1"
+    "pg": "~7.7.1",
+    "inversify": "~5.0.1",
+    "inversify-express-utils": "~6.3.2",
+    "reflect-metadata": "~0.1.13"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",

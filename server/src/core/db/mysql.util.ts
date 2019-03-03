@@ -1,14 +1,16 @@
 import * as mysql from 'mysql';
 import {OkPacket, Pool, QueryError, RowDataPacket} from 'mysql';
-import {IDBConfig, IServerConfig} from '../../assets/config/server-config.model';
+import {IServerConfig} from '../../assets/config/server-config.model';
 import {DBExecuteResult, DBQueryResult, DbUtil} from './db.util';
 import {Logger, LoggingUtil} from '../logging/logging.util';
+import {injectable} from 'inversify';
 
 const config: IServerConfig = require('../../assets/config/server-config.json');
 
 /**
  * Utility for interacting with a MySQL database
  */
+@injectable()
 export class MySqlUtil extends DbUtil {
 
     private pool: Pool;
@@ -18,26 +20,18 @@ export class MySqlUtil extends DbUtil {
      * Create the db pool; uses database credentials from configs if none are provided
      * @param dbconfig
      */
-    constructor(dbconfig?: IDBConfig) {
+    constructor() {
         super();
         this.logger = LoggingUtil.getLogger('MySqlUtil');
-        if (dbconfig) {
-            this.pool = mysql.createPool({
-                host: dbconfig.host,
-                user: dbconfig.user,
-                password: dbconfig.password,
-                database: dbconfig.database,
-                port: 3306
-            });
-        } else {
-            this.pool = mysql.createPool({
-                host: config.mysqldb.host,
-                user: config.mysqldb.user,
-                password: config.mysqldb.password,
-                database: config.mysqldb.database,
-                port: 3306
-            });
-        }
+
+        this.pool = mysql.createPool({
+            host: config.mysqldb.host,
+            user: config.mysqldb.user,
+            password: config.mysqldb.password,
+            database: config.mysqldb.database,
+            port: 3306
+        });
+        this.logger.info(`Successfully connected to MySQL database ${config.mysqldb.database}@${config.mysqldb.host}`);
     }
 
     /**

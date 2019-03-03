@@ -6,7 +6,9 @@
     "preserveConstEnums": true,
     "sourceMap": true,
     "experimentalDecorators": true,
-    "target": "es2017"
+    "emitDecoratorMetadata": true,
+    "target": "es2017",
+    "types": ["reflect-metadata"]
   },
   "lib": [
     "es2017"

@@ -1,4 +1,5 @@
 import {IDBConfig} from '../../assets/config/server-config.model';
+import {injectable} from 'inversify';
 
 export interface DBResultBase {
     affectedRows: number;
@@ -17,13 +18,14 @@ export interface DBExecuteResult extends DBResultBase {
 /**
  * Utility for interacting with a SQL database
  */
+@injectable()
 export abstract class DbUtil {
     /**
      * Create the db pool; uses database credentials from configs if none are provided
      * @param dbconfig
      */
-    constructor(dbconfig?: IDBConfig) {
-    };
+    constructor() {
+    }
 
     /**
      * Execute a query
