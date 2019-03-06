@@ -5,20 +5,22 @@ import {IUserDetailsModel} from './model/user-details.model';
 import {ValidatorUtil} from '../../utils/validator/validator.util';
 import {CRUDConstructor} from '../crud/crud-constructor';
 import {UserModel} from './model/user.model';
-import {IServerConfig} from '../../assets/config/server-config.model';
-import {AuthService} from '../auth/auth.service';
+import {ServerConfig} from '../config/server-config.model';
+import {Singletons} from '../singletons';
+import {CoreTypes} from '../core.types';
 
 const express = require('express');
-const config: IServerConfig = require('../../assets/config/server-config.json');
+const config: ServerConfig = require('../../assets/config/server-config.json');
 
-export const init = (): Router => {
+export const userRouter = (): Router => {
     const userRouter = express.Router();
+    const authService = Singletons.get(CoreTypes.AuthService);
 
     userRouter.get('/self', async (req: Request, res: Response, next: NextFunction) => {
         try {
             let userId: number | undefined;
             if (req.cookies && req.cookies.auth_token) {
-                userId = await AuthService.verifyToken(req.cookies.auth_token);
+                userId = await authService.verifyToken(req.cookies.auth_token);
             }
             let userDetails: IUserDetailsModel | undefined;
             if (userId) {
@@ -44,7 +46,7 @@ export const init = (): Router => {
         }
     });
 
-    const userModelCRUD: CRUDConstructor<UserModel> = new CRUDConstructor<UserModel>(new UserModel(), 'auth_user', 'user',{
+    const userModelCRUD: CRUDConstructor<UserModel> = new CRUDConstructor<UserModel>(new UserModel(), 'auth_user', 'user', {
         autoIncrementId: true,
         autoFilledFields: [
             'created_on'
@@ -56,5 +58,4 @@ export const init = (): Router => {
     return userRouter;
 };
 
-export const userRouter = init();
 

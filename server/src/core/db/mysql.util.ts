@@ -1,27 +1,24 @@
 import * as mysql from 'mysql';
 import {OkPacket, Pool, QueryError, RowDataPacket} from 'mysql';
-import {IServerConfig} from '../../assets/config/server-config.model';
+import {ServerConfig} from '../config/server-config.model';
 import {DBExecuteResult, DBQueryResult, DbUtil} from './db.util';
 import {Logger, LoggingUtil} from '../logging/logging.util';
 import {injectable} from 'inversify';
+import {Singleton} from '../singletons';
 
-const config: IServerConfig = require('../../assets/config/server-config.json');
+const config: ServerConfig = require('../../assets/config/server-config.json');
 
 /**
  * Utility for interacting with a MySQL database
  */
 @injectable()
-export class MySqlUtil extends DbUtil {
+export class MySqlUtil extends DbUtil implements Singleton {
 
     private pool: Pool;
     private logger: Logger;
 
-    /**
-     * Create the db pool; uses database credentials from configs if none are provided
-     * @param dbconfig
-     */
-    constructor() {
-        super();
+
+    async init(): Promise<void> {
         this.logger = LoggingUtil.getLogger('MySqlUtil');
 
         this.pool = mysql.createPool({
@@ -32,6 +29,14 @@ export class MySqlUtil extends DbUtil {
             port: 3306
         });
         this.logger.info(`Successfully connected to MySQL database ${config.mysqldb.database}@${config.mysqldb.host}`);
+    }
+
+    /**
+     * Create the db pool; uses database credentials from configs if none are provided
+     * @param dbconfig
+     */
+    constructor() {
+        super();
     }
 
     /**

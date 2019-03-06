@@ -1,46 +1,41 @@
-import {IDBConfig, IServerConfig} from '../../assets/config/server-config.model';
+import {ServerConfig} from '../config/server-config.model';
 import {DBExecuteResult, DBQueryResult, DbUtil} from './db.util';
 import {Pool, QueryResult} from 'pg';
 import {Logger, LoggingUtil} from '../logging/logging.util';
 import {injectable} from 'inversify';
+import {Singleton} from '../singletons';
 
-const config: IServerConfig = require('../../assets/config/server-config.json');
+const config: ServerConfig = require('../../assets/config/server-config.json');
 
 /**
  * Utility for interacting with a MySQL database
  */
 @injectable()
-export class PgSqlUtil extends DbUtil {
+export class PgSqlUtil extends DbUtil implements Singleton {
 
     private pool: Pool;
     private logger: Logger;
+
+
+    async init(): Promise<void> {
+    }
 
     /**
      * Create the db pool; uses database credentials from configs if none are provided
      * @param dbconfig
      */
-    constructor(dbconfig?: IDBConfig) {
+    constructor() {
         super();
         this.logger = LoggingUtil.getLogger('PgSqlUtil');
-        if (dbconfig) {
-            this.pool = new Pool({
-                host: dbconfig.host,
-                user: dbconfig.user,
-                password: dbconfig.password,
-                database: dbconfig.database,
-                port: 5432
-            });
-            this.logger.info(`Successfully connected to PGSQL database ${config.pgsqldb.database}@${config.pgsqldb.host}`);
-        } else {
-            this.pool = new Pool({
-                host: config.pgsqldb.host,
-                user: config.pgsqldb.user,
-                password: config.pgsqldb.password,
-                database: config.pgsqldb.database,
-                port: 5432
-            });
-            this.logger.info(`Successfully connected to PGSQL database ${config.pgsqldb.database}@${config.pgsqldb.host}`);
-        }
+
+        this.pool = new Pool({
+            host: config.pgsqldb.host,
+            user: config.pgsqldb.user,
+            password: config.pgsqldb.password,
+            database: config.pgsqldb.database,
+            port: 5432
+        });
+        this.logger.info(`Successfully connected to PGSQL database ${config.pgsqldb.database}@${config.pgsqldb.host}`);
         this.setTimezone()
             .then()
             .catch(e => this.logger.warn(`Setting the timezone on the PGSQL connection failed because ${e.toString()}`));
@@ -117,6 +112,4 @@ export class PgSqlUtil extends DbUtil {
             nativeResult: result
         };
     }
-
-
 }

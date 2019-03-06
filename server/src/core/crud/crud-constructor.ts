@@ -1,4 +1,4 @@
-import {IDBConfig} from '../../assets/config/server-config.model';
+import {DBConfig} from '../config/server-config.model';
 import {DBExecuteResult, DBQueryResult, DbUtil} from '../db/db.util';
 import {ICRUDModel} from './crud.model';
 import {Logger, LoggingUtil} from '../logging/logging.util';
@@ -8,6 +8,7 @@ import {isNullOrUndefined} from '../../utils/util';
 import {CRUDListFilter, CRUDListOptions} from './crud-list-options';
 import {inject} from 'inversify';
 import {CoreTypes} from '../core.types';
+import {Singletons} from '../singletons';
 
 const express = require('express');
 
@@ -17,9 +18,6 @@ const express = require('express');
  * (The fields don't need to have this name in the MySQL table - you can change it in the optional 'fieldMappings').
  */
 export class CRUDConstructor<T extends ICRUDModel, > {
-
-    @inject(CoreTypes.PgSQLUtil) pgSql: DbUtil;
-    @inject(CoreTypes.MySQLUtil) mySql: DbUtil;
 
     private db: DbUtil;
     private logger: Logger;
@@ -75,19 +73,18 @@ export class CRUDConstructor<T extends ICRUDModel, > {
         }
     }
 
-    mapDbTypeToClass(type?: DBType, dbconfig?: IDBConfig): DbUtil {
+    mapDbTypeToClass(type?: DBType, dbconfig?: DBConfig): DbUtil {
         let result: DbUtil;
         switch (type) {
             case DBType.MYSQL:
-                result = this.mySql;
+                result = Singletons.get(CoreTypes.MySQLUtil);
                 break;
             case DBType.PGSQL:
-                result = this.pgSql;
+                result = Singletons.get(CoreTypes.PgSQLUtil);
                 break;
             default:
-                result = this.mySql;
+                result = Singletons.get(CoreTypes.MySQLUtil);
         }
-        console.log(result);
         return result;
     }
 
@@ -274,8 +271,6 @@ export class CRUDConstructor<T extends ICRUDModel, > {
             }
         }
         statement += `;`;
-
-        console.log(statement);
 
         const queryResult: DBQueryResult = await this.db.query(statement);
 
@@ -572,7 +567,7 @@ interface CRUDOptions {
     // DB to connect to with dbconfig, defaults to MySQL
     dbType?: DBType;
     // config of the DB to connect to
-    dbConfig?: IDBConfig;
+    dbConfig?: DBConfig;
 
     // the field 'id' is auto incremented
     autoIncrementId?: boolean;

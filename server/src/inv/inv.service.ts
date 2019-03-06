@@ -79,7 +79,6 @@ export class InvService {
         }
 
         statement += ' RETURNING id';
-        console.log(statement);
 
         const result: DBExecuteResult = await this.db.execute(statement);
 

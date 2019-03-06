@@ -19,7 +19,7 @@ import {TemplateModel} from './model/template.model';
 
 const express = require('express');
 
-export const init = (): Router => {
+export const finRouter = (): Router => {
     const finRouter = express.Router();
 
     const finService: FinService = new FinService();
@@ -164,5 +164,3 @@ export const init = (): Router => {
 
     return finRouter;
 };
-
-export const finRouter = init();

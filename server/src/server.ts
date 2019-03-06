@@ -6,11 +6,14 @@ import * as logger from 'morgan';
 import * as path from 'path';
 import * as http from 'http';
 import {Routes} from './routes';
+import {injectable} from 'inversify';
 import {AuthService} from './core/auth/auth.service';
-import {container} from './inversify.config';
-import {inject, injectable} from 'inversify';
-import {InversifyExpressServer} from 'inversify-express-utils';
+import {Singletons} from './core/singletons';
+import {MySqlUtil} from './core/db/mysql.util';
 import {CoreTypes} from './core/core.types';
+import {PgSqlUtil} from './core/db/pgsql.util';
+import {routeGuard} from './core/auth/route-guard';
+import {ErrorCodeUtil} from './utils/error-code/error-code.util';
 import errorHandler = require('errorhandler');
 import methodOverride = require('method-override');
 
@@ -21,8 +24,6 @@ import methodOverride = require('method-override');
  */
 @injectable()
 export class Server {
-
-    @inject(CoreTypes.AuthService) authService: AuthService;
 
     public app: express.Application;
     public server: http.Server;
@@ -36,8 +37,19 @@ export class Server {
      * @static
      * @return {ng.auto.IInjectorService} Returns the newly created injector for this app.
      */
-    public static bootstrap() {
+    public static async bootstrap() {
+        await this.initSingletons();
         new Server();
+    }
+
+    public static async initSingletons() {
+        Singletons.bind(MySqlUtil).to(CoreTypes.MySQLUtil);
+        Singletons.bind(PgSqlUtil).to(CoreTypes.PgSQLUtil);
+        Singletons.bind(AuthService).to(CoreTypes.AuthService);
+
+        Singletons.bindStatic(ErrorCodeUtil);
+
+        await Singletons.init();
     }
 
     /**
@@ -47,13 +59,12 @@ export class Server {
      * @constructor
      */
     constructor() {
-        const server = new InversifyExpressServer(container);
-        server.setConfig(async (appForConfig) => {
-            await this.config(appForConfig);
-        });
-
-        this.app = server.build();
+        this.app = express();
         this.httpPort = this.normalizePort(process.env.PORT || 65432);
+
+        this.config(this.app);
+        this.routes(this.app);
+
         this.server = this.app.listen(this.httpPort);
         console.log('Now listening on port ' + this.httpPort);
         // add error handler
@@ -66,7 +77,7 @@ export class Server {
      * @class Server
      * @method config
      */
-    public async config(app) {
+    public config(app) {
         // add static paths
         app.use(express.static(path.join(__dirname, 'public')));
 
@@ -96,7 +107,7 @@ export class Server {
         // error handling
         app.use(errorHandler());
 
-        app.use(this.authService.routeGuard);
+        app.use(routeGuard);
     }
 
     /**
@@ -105,8 +116,8 @@ export class Server {
      * @class Server
      * @method api
      */
-    public routes() {
-        Routes.init(this.app);
+    public routes(app) {
+        Routes.init(app);
     }
 
     public normalizePort(val) {

@@ -1,6 +1,6 @@
-export interface IRoutePermission {
+export interface RoutePermission {
     route: string;
     requiredPower?: number;
     permittedRoles?: string[];
-    children?: IRoutePermission[];
+    children?: RoutePermission[];
 }

@@ -1,4 +1,4 @@
-import {IServerConfig} from '../../assets/config/server-config.model';
+import {ServerConfig} from '../config/server-config.model';
 import {DBQueryResult, DbUtil} from '../db/db.util';
 import {Logger, LoggingUtil} from '../logging/logging.util';
 import {RowDataPacket} from 'mysql';
@@ -6,7 +6,7 @@ import {ErrorCodeUtil} from '../../utils/error-code/error-code.util';
 import {IUserDetailsModel} from './model/user-details.model';
 import {MySqlUtil} from '../db/mysql.util';
 
-const config: IServerConfig = require('../../assets/config/server-config.json');
+const config: ServerConfig = require('../../assets/config/server-config.json');
 
 /**
  * Utility class for user authentication and route guarding

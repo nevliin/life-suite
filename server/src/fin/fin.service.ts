@@ -15,13 +15,14 @@ import {PgSqlUtil} from '../core/db/pgsql.util';
 import {AccountModel} from './model/account.model';
 import {inject} from 'inversify';
 import {CoreTypes} from '../core/core.types';
+import {Singletons} from '../core/singletons';
 
 const closingBalanceAccountId: number = 9998;
 const minimumYear: number = 2018;
 
 export class FinService {
 
-    @inject(CoreTypes.PgSQLUtil) db: DbUtil;
+    db: DbUtil = Singletons.get(CoreTypes.PgSQLUtil);
 
     constructor() {
     }
@@ -45,7 +46,6 @@ export class FinService {
         const queryResult: DBQueryResult = await this.db.query(statement);
 
         const closesDone: number[] = queryResult.rows.map(value => value.year);
-        console.log(closesDone);
         const closesNotDone: number[] = [];
         let currentYear = new Date().getUTCFullYear();
         while (currentYear > minimumYear) {

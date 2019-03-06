@@ -3,6 +3,6 @@
 /config.yml
 /.tscache
 /dist
-/src/assets/config/server-config.json
+/src/assets/server-config.json
 /sql/fin/initialdata.sql
 /prod.config.json

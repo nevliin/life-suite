@@ -1,4 +1,4 @@
-import {IDBConfig} from '../../assets/config/server-config.model';
+import {DBConfig} from '../config/server-config.model';
 import {injectable} from 'inversify';
 
 export interface DBResultBase {

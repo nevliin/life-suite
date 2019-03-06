@@ -9,7 +9,7 @@ import {StockModel} from './model/stock.model';
 
 const express = require('express');
 
-export const init = (): Router => {
+export const invRouter = (): Router => {
     const invRouter = express.Router();
 
     const invService: InvService = new InvService();
@@ -92,5 +92,3 @@ export const init = (): Router => {
 
     return invRouter;
 };
-
-export const invRouter = init();

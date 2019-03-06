@@ -1,4 +1,4 @@
-export interface IErrorCode {
+export interface ErrorCode {
     id: number
     text: string;
     name: string;

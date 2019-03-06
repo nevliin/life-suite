@@ -1,43 +1,39 @@
-import {IServerConfig} from '../../assets/config/server-config.model';
 import {DBExecuteResult, DBQueryResult, DbUtil} from '../db/db.util';
 import {ISignUpModel} from './model/signup.model';
 import {Logger, LoggingUtil} from '../logging/logging.util';
 import {ErrorCodeUtil} from '../../utils/error-code/error-code.util';
 import {ILoginModel} from './model/login.model';
 import {IJWTPayloadModel} from './model/jwt-payload.model';
-import {IRoutePermission} from '../../assets/route-permissions/route-permissions';
 import {RouteWithPermissionsModel} from './model/route-with-permissions.model';
 import {NextFunction, Request, Response} from 'express';
 import {IUpdatePasswordModel} from './model/update-password.model';
 import {isNullOrUndefined} from '../../utils/util';
 import {IEditRolesModel} from './model/edit-roles.model';
 import {MySqlUtil} from '../db/mysql.util';
+import {ServerConfig} from '../config/server-config.model';
+import {RoutePermission} from '../config/route-permissions';
+import {Singletons} from '../singletons';
 import {CoreTypes} from '../core.types';
-import {inject, injectable} from 'inversify';
 
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const config: IServerConfig = require('../../assets/config/server-config.json');
-const routePermissions: IRoutePermission = require('../../assets/route-permissions/route-permissions.json');
+const config: ServerConfig = require('../../assets/config/server-config.json');
+const routePermissions: RoutePermission = require('../../assets/route-permissions/route-permissions.json');
 
 /**
  * Utility class for user authentication and route guarding
  */
-@injectable()
 export class AuthService {
 
-    @inject(CoreTypes.MySQLUtil) db: DbUtil;
-
-    static db: DbUtil;
-    static logger: Logger;
-    static routePermissions: Map<string, RouteWithPermissionsModel> = new Map();
+    db: DbUtil = Singletons.get(CoreTypes.MySQLUtil);
+    logger: Logger;
+    routePermissions: Map<string, RouteWithPermissionsModel> = new Map();
 
     /**
      * Init dependencies and route expensesData
      */
-    static async init() {
-        this.db = new MySqlUtil();
+    async init() {
         this.logger = LoggingUtil.getLogger('auth');
         await this.initRoutePermissions();
     }
@@ -46,7 +42,7 @@ export class AuthService {
      * Creates a user with the provided credentials, returns the user id
      * @param signUpModel
      */
-    public static async signUp(signUpModel: ISignUpModel): Promise<number> {
+    public async signUp(signUpModel: ISignUpModel): Promise<number> {
         const hash: string = await bcrypt.hash(signUpModel.password, 10);
 
         try {
@@ -65,13 +61,13 @@ export class AuthService {
      * Log in the user with the provided credentials, return a JWT token
      * @param loginModel
      */
-    public static async login(loginModel: ILoginModel): Promise<string> {
+    public async login(loginModel: ILoginModel): Promise<string> {
         try {
             const result: DBQueryResult =
                 await this.db.query(`SELECT id, salted_hash FROM auth_user WHERE username = '${loginModel.username}';`);
             if (result.rows[0] && result.rows[0].salted_hash && result.rows[0].id) {
                 if (loginModel.password && bcrypt.compareSync(loginModel.password, result.rows[0].salted_hash)) {
-                    const powerAndRoles: { power: number, roles: number[] } = await AuthService.getPowerAndRoles(result.rows[0].id);
+                    const powerAndRoles: { power: number, roles: number[] } = await this.getPowerAndRoles(result.rows[0].id);
                     const token: string = jwt.sign({
                             userId: result.rows[0].id,
                             power: powerAndRoles.power,
@@ -95,13 +91,13 @@ export class AuthService {
         }
     }
 
-    public static async logOut(token: string) {
+    public async logOut(token: string) {
         if (!isNullOrUndefined(token)) {
             await this.invalidateToken(token);
         }
     }
 
-    public static async updatePassword(updatePasswordModel: IUpdatePasswordModel): Promise<number> {
+    public async updatePassword(updatePasswordModel: IUpdatePasswordModel): Promise<number> {
         const result: DBQueryResult =
             await this.db.query(`SELECT id, salted_hash FROM auth_user WHERE username = '${updatePasswordModel.username}';`);
         if (result.rows[0] && result.rows[0].salted_hash && result.rows[0].id) {
@@ -132,7 +128,7 @@ export class AuthService {
         return false;
     }
 
-    public static async editRoles(editRolesModel: IEditRolesModel): Promise<boolean> {
+    public async editRoles(editRolesModel: IEditRolesModel): Promise<boolean> {
         if (!isNullOrUndefined(editRolesModel.userId)) {
             if (editRolesModel.addRoles.length > 0) {
                 for (const role of editRolesModel.addRoles) {
@@ -152,37 +148,7 @@ export class AuthService {
         return false;
     }
 
-    /**
-     * Router middleware that verifies the validity of the JWT token in the header auth-token and checks if the user
-     * has access to the route; responds with an error if the token is invalid or the user has no access to this route
-     * @param req
-     * @param res
-     * @param next
-     */
-    routeGuard = async function (req: Request, res: Response, next: NextFunction) {
-        try {
-            if (req.cookies.auth_token) {
-                const userId: number = await AuthService.verifyToken(req.cookies.auth_token);
-                const route: RouteWithPermissionsModel = AuthService.isRouteGuarded(req.path);
-                if (await AuthService.verifyRoutePermission(route, userId)) {
-                    next();
-                } else {
-                    ErrorCodeUtil.resolveErrorOnRoute(ErrorCodeUtil.findErrorCode('ACC_DENIED'), res);
-                }
-            } else {
-                const route: RouteWithPermissionsModel = AuthService.isRouteGuarded(req.path);
-                if (await AuthService.verifyRoutePermission(route, null)) {
-                    next();
-                } else {
-                    ErrorCodeUtil.resolveErrorOnRoute(ErrorCodeUtil.findErrorCode('ACC_DENIED'), res);
-                }
-            }
-        } catch (e) {
-            ErrorCodeUtil.resolveErrorOnRoute(ErrorCodeUtil.findErrorCode('ACC_DENIED'), res);
-        }
-    };
-
-    public static async getPowerAndRoles(userId: number): Promise<{ power: number, roles: number[] }> {
+    public async getPowerAndRoles(userId: number): Promise<{ power: number, roles: number[] }> {
         let power: number = 0;
         let roles: number[] = [0];
         if (userId) {
@@ -206,7 +172,7 @@ export class AuthService {
      * Verifies the validity of a JWT token and returns the user id stored in it
      * @param token
      */
-    public static async verifyToken(token: string): Promise<number> {
+    public async verifyToken(token: string): Promise<number> {
         try {
             const payload: IJWTPayloadModel = await jwt.verify(token, config.jwtsecret);
 
@@ -224,12 +190,12 @@ export class AuthService {
         }
     }
 
-    public static async invalidateTokens(userId: number) {
+    public async invalidateTokens(userId: number) {
         const statement: string = `UPDATE auth_token SET valid=0 WHERE user_id=${userId};`;
         await this.db.execute(statement);
     }
 
-    public static async invalidateToken(token: string) {
+    public async invalidateToken(token: string) {
         const statement: string = `UPDATE auth_token SET valid=0 WHERE token='${this.db.esc(token)}';`;
         await this.db.execute(statement);
     }
@@ -238,7 +204,7 @@ export class AuthService {
      * Find the route relevant for the provided route and return it; undefined if no route in the chain is guarded
      * @param routeName
      */
-    public static isRouteGuarded(routeName: string): RouteWithPermissionsModel {
+    public isRouteGuarded(routeName: string): RouteWithPermissionsModel {
         let route: RouteWithPermissionsModel;
         if (this.routePermissions.has(routeName)) {
             route = this.routePermissions.get(routeName);
@@ -261,12 +227,12 @@ export class AuthService {
      * @param route
      * @param userId
      */
-    public static async verifyRoutePermission(route: RouteWithPermissionsModel, userId: number): Promise<boolean> {
+    public async verifyRoutePermission(route: RouteWithPermissionsModel, userId: number): Promise<boolean> {
         if (!route) {
             return true;
         }
         try {
-            const result: { power: number, roles: number[] } = await AuthService.getPowerAndRoles(userId);
+            const result: { power: number, roles: number[] } = await this.getPowerAndRoles(userId);
             const power: number = result.power;
             const roles: number[] = result.roles;
             if (route.requiredPower <= power) {
@@ -286,7 +252,7 @@ export class AuthService {
     /**
      * Initialize the routePermissions map
      */
-    public static async initRoutePermissions() {
+    public async initRoutePermissions() {
         let rows: any[] = [];
         try {
             rows = (await this.db.query('SELECT name, id FROM auth_role;')).rows;
@@ -316,7 +282,7 @@ export class AuthService {
      * @param parentRoute
      * @param roleIds
      */
-    public static generateRoute(route: IRoutePermission, parentPower: number, parentRoute: string, roleIds: Map<string, number>) {
+    public generateRoute(route: RoutePermission, parentPower: number, parentRoute: string, roleIds: Map<string, number>) {
         const power: number = (route.requiredPower > parentPower) ? route.requiredPower : parentPower;
         const absoluteRoute: string = (parentRoute === '/' ? '' : parentRoute) + '/' + route.route;
         this.routePermissions.set(

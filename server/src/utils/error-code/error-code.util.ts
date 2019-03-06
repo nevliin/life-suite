@@ -1,21 +1,20 @@
-import {Response} from "express";
-import {IErrorCode} from "../../assets/error-codes/error-codes.model";
-import {Logger, LoggingUtil} from "../../core/logging/logging.util";
-import {error} from "util";
+import {Response} from 'express';
+import {ErrorCode} from '../../core/config/error-codes.model';
+import {Logger, LoggingUtil} from '../../core/logging/logging.util';
 
 /**
  * Utility for easily returning meaningful error codes to the client
  */
 export class ErrorCodeUtil {
-    static errors: IErrorCode[] = [];
+    static errors: ErrorCode[] = [];
     static logger: Logger;
 
     /**
      * Initialize singleton
      */
-    static init() {
+    static async init() {
         this.logger = LoggingUtil.getLogger('ErrorCodeUtil');
-        this.errors = require('../../assets/error-codes/error-codes.json');
+        this.errors = require('../../assets/error-codes.json');
     }
 
     /**
@@ -25,19 +24,19 @@ export class ErrorCodeUtil {
      */
     static findErrorCodeAndThrow(identifier: number | string | Error) {
         if (typeof identifier === 'string') {
-            const errorCode: IErrorCode = this.errors.find(value => value.name === identifier);
+            const errorCode: ErrorCode = this.errors.find(value => value.name === identifier);
             if (errorCode) {
                 throw new ErrorWithCode(errorCode.id);
             }
         }
         if (typeof identifier === 'number') {
-            const errorCode: IErrorCode = this.errors.find(value => value.id === identifier);
+            const errorCode: ErrorCode = this.errors.find(value => value.id === identifier);
             if (errorCode) {
                 throw new ErrorWithCode(errorCode.id);
             }
         }
         if (identifier instanceof Error) {
-            const errorCode: IErrorCode = this.errors.find(value => identifier.message.startsWith(value.name));
+            const errorCode: ErrorCode = this.errors.find(value => identifier.message.startsWith(value.name));
             if (errorCode) {
                 throw new ErrorWithCode(errorCode.id);
             }
@@ -52,19 +51,19 @@ export class ErrorCodeUtil {
      */
     static findErrorCode(identifier: number | string | Error): ErrorWithCode {
         if (typeof identifier === 'string') {
-            const errorCode: IErrorCode = this.errors.find(value => value.name === identifier);
+            const errorCode: ErrorCode = this.errors.find(value => value.name === identifier);
             if (errorCode) {
                 return new ErrorWithCode(errorCode.id);
             }
         }
         if (typeof identifier === 'number') {
-            const errorCode: IErrorCode = this.errors.find(value => value.id === identifier);
+            const errorCode: ErrorCode = this.errors.find(value => value.id === identifier);
             if (errorCode) {
                 return new ErrorWithCode(errorCode.id);
             }
         }
         if (identifier instanceof Error) {
-            const errorCode: IErrorCode = this.errors.find(value => identifier.message.startsWith(value.name));
+            const errorCode: ErrorCode = this.errors.find(value => identifier.message.startsWith(value.name));
             if (errorCode) {
                 return new ErrorWithCode(errorCode.id);
             }
@@ -107,8 +106,8 @@ class ErrorWithCode extends Error {
 
     constructor(id: number) {
         super();
-        const errorCode: IErrorCode = ErrorCodeUtil.errors.find(value => value.id === id);
-        if(errorCode) {
+        const errorCode: ErrorCode = ErrorCodeUtil.errors.find(value => value.id === id);
+        if (errorCode) {
             super.message = errorCode.text;
         }
         this.http_code = errorCode && errorCode.code ? errorCode.code : 900;
