@@ -1,6 +1,6 @@
-import {ICRUDModel} from "../../core/crud/crud.model";
+import {CRUDModel} from "../../core/crud/crud.model";
 
-export class AccountModel implements ICRUDModel {
+export class AccountModel implements CRUDModel {
     id: number = 0;
     name: string = '';
     note: string = '';

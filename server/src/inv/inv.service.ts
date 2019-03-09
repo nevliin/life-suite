@@ -1,21 +1,20 @@
 import {DBExecuteResult, DBQueryResult, DbUtil} from '../core/db/db.util';
 import {CompareEntryModel} from './model/compare-entry.model';
-import {PgSqlUtil} from '../core/db/pgsql.util';
 import {ComparisonRequest, CreateMultipleEntriesRequest} from './model/inv.model';
 import {CRUDConstructor, DBType} from '../core/crud/crud-constructor';
 import {EntryModel} from './model/entry.model';
-import {inject} from 'inversify';
 import {CoreTypes} from '../core/core.types';
+import {Singletons} from '../core/singletons';
 
 export class InvService {
 
-    entryModelCRUD: CRUDConstructor<EntryModel> = new CRUDConstructor(new EntryModel(), 'inv_entry', 'entry',{
+    entryModelCRUD: CRUDConstructor<EntryModel> = new CRUDConstructor(new EntryModel(), 'inv_entry', 'entry', {
         softDelete: true,
         autoIncrementId: true,
         dbType: DBType.PGSQL
     });
 
-    @inject(CoreTypes.PgSQLUtil) db: DbUtil;
+    db: DbUtil = Singletons.get(CoreTypes.PgSQLUtil);
 
     constructor() {
     }

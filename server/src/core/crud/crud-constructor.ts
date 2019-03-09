@@ -1,6 +1,6 @@
 import {DBConfig} from '../config/server-config.model';
 import {DBExecuteResult, DBQueryResult, DbUtil} from '../db/db.util';
-import {ICRUDModel} from './crud.model';
+import {CRUDModel} from './crud.model';
 import {Logger, LoggingUtil} from '../logging/logging.util';
 import {ErrorCodeUtil} from '../../utils/error-code/error-code.util';
 import {NextFunction, Request, Response, Router} from 'express';
@@ -13,11 +13,11 @@ import {Singletons} from '../singletons';
 const express = require('express');
 
 /**
- * Constructs all CRUD operations for objects (modelled as classes implementing ICRUDModel) and saved in a MySQL table.
+ * Constructs all CRUD operations for objects (modelled as classes implementing CRUDModel) and saved in a MySQL table.
  * Special property is 'id' - 'id' identifies the object and must be a property of all provided models
  * (The fields don't need to have this name in the MySQL table - you can change it in the optional 'fieldMappings').
  */
-export class CRUDConstructor<T extends ICRUDModel, > {
+export class CRUDConstructor<T extends CRUDModel, > {
 
     private db: DbUtil;
     private logger: Logger;
@@ -581,6 +581,17 @@ interface CRUDOptions {
     validFieldMapping?: string;
     // objects should be soft-deleted by setting 'valid' to 0
     softDelete?: boolean;
+
+    additionalLogic?: {
+        beforeCreate?: (statement: string) => string;
+        afterCreate?: (data: any) => any;
+        beforeUpdate?: (statement: string, id: string) => string;
+        afterUpdate?: (data: any) => any;
+        beforeRead?: (statement: string, id: string) => string;
+        afterRead?: (queryResult: DBQueryResult, result: any) => any;
+        beforeList?: (statement: string) => string;
+        afterList?: (queryResult: DBQueryResult, result: any) => any;
+    };
 }
 
 export enum DBType {

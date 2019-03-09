@@ -1,6 +1,6 @@
-import {ICRUDModel} from "../../core/crud/crud.model";
+import {CRUDModel} from "../../core/crud/crud.model";
 
-export class ConstraintModel implements ICRUDModel {
+export class ConstraintModel implements CRUDModel {
     id: number = 0;
     name: string = '';
     message: string = '';

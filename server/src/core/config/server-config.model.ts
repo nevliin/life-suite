@@ -1,5 +1,6 @@
 export interface ServerConfig {
     jwtsecret: string;
+    volume: string;
     mysqldb: DBConfig;
     pgsqldb: DBConfig;
     auth: DBConfig;
