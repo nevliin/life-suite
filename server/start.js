@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 "use strict";
 
-//module dependencies
-const server = require("./dist/server");
+require('ts-node').register({ /* options */ });
+
+const server = require("./src/server");
 
 server.Server.bootstrap().then().catch(e => console.error(e));
