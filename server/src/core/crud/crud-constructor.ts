@@ -8,7 +8,7 @@ import {isNullOrUndefined} from '../../utils/util';
 import {CRUDListFilter, CRUDListOptions} from './crud-list-options';
 import {inject} from 'inversify';
 import {CoreTypes} from '../core.types';
-import {Singletons} from '../singletons';
+import {DIContainer} from '../di-container';
 
 const express = require('express');
 
@@ -75,15 +75,16 @@ export class CRUDConstructor<T extends CRUDModel, > {
 
     mapDbTypeToClass(type?: DBType, dbconfig?: DBConfig): DbUtil {
         let result: DbUtil;
+        // console.log(`Setting db type ${type} for ${this.dbTable}`);
         switch (type) {
             case DBType.MYSQL:
-                result = Singletons.get(CoreTypes.MySQLUtil);
+                result = DIContainer.get(CoreTypes.MySQLUtil);
                 break;
             case DBType.PGSQL:
-                result = Singletons.get(CoreTypes.PgSQLUtil);
+                result = DIContainer.get(CoreTypes.PgSQLUtil);
                 break;
             default:
-                result = Singletons.get(CoreTypes.MySQLUtil);
+                result = DIContainer.get(CoreTypes.MySQLUtil);
         }
         return result;
     }

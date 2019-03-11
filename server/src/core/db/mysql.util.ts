@@ -4,15 +4,15 @@ import {ServerConfig} from '../config/server-config.model';
 import {DBExecuteResult, DBQueryResult, DbUtil} from './db.util';
 import {Logger, LoggingUtil} from '../logging/logging.util';
 import {injectable} from 'inversify';
-import {Singleton} from '../singletons';
+import {Injectable} from '../di-container';
 
-const config: ServerConfig = require('../../assets/config/server-config.json');
+const config: ServerConfig = require('../../assets/server-config.json');
 
 /**
  * Utility for interacting with a MySQL database
  */
 @injectable()
-export class MySqlUtil extends DbUtil implements Singleton {
+export class MySqlUtil extends DbUtil implements Injectable {
 
     private pool: Pool;
     private logger: Logger;

@@ -6,15 +6,18 @@ import {ValidatorUtil} from '../../utils/validator/validator.util';
 import {CRUDConstructor} from '../crud/crud-constructor';
 import {UserModel} from './model/user.model';
 import {ServerConfig} from '../config/server-config.model';
-import {Singletons} from '../singletons';
+import {DIContainer} from '../di-container';
 import {CoreTypes} from '../core.types';
+import {AuthService} from '../auth/auth.service';
 
 const express = require('express');
-const config: ServerConfig = require('../../assets/config/server-config.json');
+const config: ServerConfig = require('../../assets/server-config.json');
 
 export const userRouter = (): Router => {
     const userRouter = express.Router();
-    const authService = Singletons.get(CoreTypes.AuthService);
+    const authService: AuthService = DIContainer.get(CoreTypes.AuthService);
+    const userService: UserService = DIContainer.get(CoreTypes.UserService);
+    const userCRUD: CRUDConstructor<UserModel> = DIContainer.get(CoreTypes.UserCRUD);
 
     userRouter.get('/self', async (req: Request, res: Response, next: NextFunction) => {
         try {
@@ -24,7 +27,7 @@ export const userRouter = (): Router => {
             }
             let userDetails: IUserDetailsModel | undefined;
             if (userId) {
-                userDetails = await UserService.getUserDetails(userId);
+                userDetails = await userService.getUserDetails(userId);
             }
             res.status(200).send({
                 userDetails: userDetails
@@ -37,7 +40,7 @@ export const userRouter = (): Router => {
     userRouter.get('/details/:userId', async (req: Request, res: Response, next: NextFunction) => {
         try {
             ValidatorUtil.valNum(req.params.userId);
-            const userDetails: IUserDetailsModel = await UserService.getUserDetails(req.params.userId);
+            const userDetails: IUserDetailsModel = await userService.getUserDetails(req.params.userId);
             res.status(200).send({
                 userDetails: userDetails
             });
@@ -46,14 +49,7 @@ export const userRouter = (): Router => {
         }
     });
 
-    const userModelCRUD: CRUDConstructor<UserModel> = new CRUDConstructor<UserModel>(new UserModel(), 'auth_user', 'user', {
-        autoIncrementId: true,
-        autoFilledFields: [
-            'created_on'
-        ],
-        dbConfig: config.auth
-    });
-    userRouter.use('/crud', userModelCRUD.getRouter());
+    userRouter.use('/crud', userCRUD.getRouter());
 
     return userRouter;
 };

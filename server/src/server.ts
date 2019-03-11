@@ -6,9 +6,8 @@ import * as logger from 'morgan';
 import * as path from 'path';
 import * as http from 'http';
 import {Routes} from './routes';
-import {injectable} from 'inversify';
 import {AuthService} from './core/auth/auth.service';
-import {Singletons} from './core/singletons';
+import {DIContainer} from './core/di-container';
 import {MySqlUtil} from './core/db/mysql.util';
 import {CoreTypes} from './core/core.types';
 import {PgSqlUtil} from './core/db/pgsql.util';
@@ -16,13 +15,34 @@ import {routeGuard} from './core/auth/route-guard';
 import {ErrorCodeUtil} from './utils/error-code/error-code.util';
 import errorHandler = require('errorhandler');
 import methodOverride = require('method-override');
+import {CRUDConstructor, DBType} from './core/crud/crud-constructor';
+import {UserModel} from './core/user/model/user.model';
+import {ServerConfig} from './core/config/server-config.model';
+import {RoleModel} from './core/auth/model/role.model';
+import {UserService} from './core/user/user.service';
+import {TagModel} from './doc/model/tag.model';
+import {DocTypes} from './doc/doc.types';
+import {DocService} from './doc/doc.service';
+import {CategoryModel} from './fin/model/category.model';
+import {AccountModel} from './fin/model/account.model';
+import {TransactionModel} from './fin/model/transaction.model';
+import {TemplateModel} from './fin/model/template.model';
+import {ConstraintModel} from './fin/model/constraint.model';
+import {FinTypes} from './fin/fin.types';
+import {FinService} from './fin/fin.service';
+import {EntryModel} from './inv/model/entry.model';
+import {TargetEntryModel} from './inv/model/target-entry.model';
+import {StockModel} from './inv/model/stock.model';
+import {InvService} from './inv/inv.service';
+import {InvTypes} from './inv/inv.types';
+
+const config: ServerConfig = require('./assets/server-config.json');
 
 /**
  * The server.
  *
  * @class Server
  */
-@injectable()
 export class Server {
 
     public app: express.Application;
@@ -43,13 +63,100 @@ export class Server {
     }
 
     public static async initSingletons() {
-        Singletons.bind(MySqlUtil).to(CoreTypes.MySQLUtil);
-        Singletons.bind(PgSqlUtil).to(CoreTypes.PgSQLUtil);
-        Singletons.bind(AuthService).to(CoreTypes.AuthService);
+        DIContainer.bind(MySqlUtil).to(CoreTypes.MySQLUtil);
+        DIContainer.bind(PgSqlUtil).to(CoreTypes.PgSQLUtil);
 
-        Singletons.bindStatic(ErrorCodeUtil);
+        DIContainer.bind(AuthService).to(CoreTypes.AuthService);
+        DIContainer.bind(UserService).to(CoreTypes.UserService);
+        DIContainer.bind(DocService).to(DocTypes.DocService);
+        DIContainer.bind(FinService).to(FinTypes.FinService);
+        DIContainer.bind(InvService).to(InvTypes.InvService);
 
-        await Singletons.init();
+        await DIContainer.init();
+
+        DIContainer.bindInstance(new CRUDConstructor<UserModel>(new UserModel(), 'auth_user', 'user', {
+            autoIncrementId: true,
+            autoFilledFields: [
+                'created_on'
+            ],
+            dbConfig: config.auth
+        })).to(CoreTypes.UserCRUD);
+        DIContainer.bindInstance(new CRUDConstructor<RoleModel>(new RoleModel(), 'auth_role', 'role', {
+            autoIncrementId: true,
+            autoFilledFields: [
+                'created_on'
+            ]
+        })).to(CoreTypes.RoleCRUD);
+
+
+        DIContainer.bindInstance(new CRUDConstructor(new TagModel(), 'doc_tag', 'tag', {
+            autoIncrementId: true,
+            dbType: DBType.PGSQL,
+            autoFilledFields: [
+                'created_on'
+            ]
+        })).to(DocTypes.TagCRUD);
+        DIContainer.bindInstance(new CRUDConstructor(new TagModel(), 'doc_document', 'document', {
+            autoIncrementId: true,
+            dbType: DBType.PGSQL,
+            autoFilledFields: [
+                'created_on'
+            ]
+        })).to(DocTypes.DocumentCRUD);
+        DIContainer.bindInstance(new CRUDConstructor(new TagModel(), 'doc_folder', 'folder', {
+            autoIncrementId: true,
+            dbType: DBType.PGSQL,
+            autoFilledFields: [
+                'created_on'
+            ]
+        })).to(DocTypes.FolderCRUD);
+
+
+        DIContainer.bindInstance(new CRUDConstructor(new CategoryModel(), 'fin_category', 'category', {
+            softDelete: true,
+            dbType: DBType.PGSQL
+        })).to(FinTypes.CategoryCRUD);
+        DIContainer.bindInstance(new CRUDConstructor(new AccountModel(), 'fin_account', 'account', {
+            softDelete: true,
+            autoFilledFields: ['created_on'],
+            autoIncrementId: false,
+            dbType: DBType.PGSQL
+        })).to(FinTypes.AccountCRUD);
+        DIContainer.bindInstance(new CRUDConstructor(new TransactionModel(), 'fin_transaction', 'transaction', {
+            softDelete: true,
+            autoFilledFields: ['executed_on'],
+            autoIncrementId: true,
+            dbType: DBType.PGSQL
+        })).to(FinTypes.TransactionCRUD);
+        DIContainer.bindInstance(new CRUDConstructor(new TemplateModel(), 'fin_template', 'template', {
+            autoFilledFields: ['created_on'],
+            autoIncrementId: true,
+            dbType: DBType.PGSQL
+        })).to(FinTypes.TemplateCRUD);
+        DIContainer.bindInstance(new CRUDConstructor(new ConstraintModel(), 'fin_constraint', 'constraint', {
+            softDelete: true,
+            autoFilledFields: ['created_on'],
+            autoIncrementId: true,
+            dbType: DBType.PGSQL
+        })).to(FinTypes.ConstraintCRUD);
+
+
+        DIContainer.bindInstance(new CRUDConstructor(new EntryModel(), 'inv_entry', 'entry', {
+            softDelete: true,
+            autoIncrementId: true,
+            dbType: DBType.PGSQL
+        })).to(InvTypes.EntryCRUD);
+        DIContainer.bindInstance(new CRUDConstructor(new TargetEntryModel(), 'inv_target_entry', 'targetEntry', {
+            softDelete: true,
+            autoIncrementId: true,
+            dbType: DBType.PGSQL
+        })).to(InvTypes.TargetEntryCRUD);
+        DIContainer.bindInstance(new CRUDConstructor(new StockModel(), 'inv_stock', 'stock', {
+            autoIncrementId: true,
+            dbType: DBType.PGSQL
+        })).to(InvTypes.StockCRUD);
+
+        DIContainer.bindStatic(ErrorCodeUtil);
     }
 
     /**

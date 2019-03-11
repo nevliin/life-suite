@@ -5,35 +5,21 @@ import {DocService} from './doc.service';
 import {DocumentModel} from './model/document.model';
 import {FolderModel} from './model/folder.model';
 import {TagModel} from './model/tag.model';
+import {DIContainer} from '../core/di-container';
+import {DocTypes} from './doc.types';
 
 const express = require('express');
 
 export const docRouter = (): Router => {
     const docRouter = express.Router();
 
-    const docService: DocService = new DocService();
+    const docService: DocService = DIContainer.get(DocTypes.DocService);
 
-    // CRUD Routes
-    const documentModelCRUD: CRUDConstructor<DocumentModel> = new CRUDConstructor(new DocumentModel(), 'doc_document', 'document', {
-        autoIncrementId: true,
-        dbType: DBType.PGSQL
-    });
+    docRouter.use('/document', DIContainer.get(DocTypes.DocumentCRUD).getRouter());
 
-    const folderModelCRUD: CRUDConstructor<FolderModel> = new CRUDConstructor(new FolderModel(), 'doc_folder', 'folder', {
-        autoIncrementId: true,
-        dbType: DBType.PGSQL
-    });
+    docRouter.use('/folder', DIContainer.get(DocTypes.FolderCRUD).getRouter());
 
-    const tagModelCRUD: CRUDConstructor<TagModel> = new CRUDConstructor(new TagModel(), 'doc_tag', 'tag', {
-        autoIncrementId: true,
-        dbType: DBType.PGSQL
-    });
-
-    docRouter.use('/document', documentModelCRUD.getRouter());
-
-    docRouter.use('/folder', folderModelCRUD.getRouter());
-
-    docRouter.use('/tag', tagModelCRUD.getRouter());
+    docRouter.use('/tag', DIContainer.get(DocTypes.TagCRUD).getRouter());
 
     return docRouter;
 };

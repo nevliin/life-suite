@@ -5,28 +5,26 @@ import {ErrorCodeUtil} from '../../utils/error-code/error-code.util';
 import {ILoginModel} from './model/login.model';
 import {IJWTPayloadModel} from './model/jwt-payload.model';
 import {RouteWithPermissionsModel} from './model/route-with-permissions.model';
-import {NextFunction, Request, Response} from 'express';
 import {IUpdatePasswordModel} from './model/update-password.model';
 import {isNullOrUndefined} from '../../utils/util';
-import {IEditRolesModel} from './model/edit-roles.model';
-import {MySqlUtil} from '../db/mysql.util';
+import {EditRolesModel} from './model/edit-roles.model';
 import {ServerConfig} from '../config/server-config.model';
 import {RoutePermission} from '../config/route-permissions';
-import {Singletons} from '../singletons';
+import {DIContainer} from '../di-container';
 import {CoreTypes} from '../core.types';
 
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const config: ServerConfig = require('../../assets/config/server-config.json');
-const routePermissions: RoutePermission = require('../../assets/route-permissions/route-permissions.json');
+const config: ServerConfig = require('../../assets/server-config.json');
+const routePermissions: RoutePermission = require('../../assets/route-permissions.json');
 
 /**
  * Utility class for user authentication and route guarding
  */
 export class AuthService {
 
-    db: DbUtil = Singletons.get(CoreTypes.MySQLUtil);
+    db: DbUtil = DIContainer.get(CoreTypes.MySQLUtil);
     logger: Logger;
     routePermissions: Map<string, RouteWithPermissionsModel> = new Map();
 
@@ -128,7 +126,7 @@ export class AuthService {
         return false;
     }
 
-    public async editRoles(editRolesModel: IEditRolesModel): Promise<boolean> {
+    public async editRoles(editRolesModel: EditRolesModel): Promise<boolean> {
         if (!isNullOrUndefined(editRolesModel.userId)) {
             if (editRolesModel.addRoles.length > 0) {
                 for (const role of editRolesModel.addRoles) {

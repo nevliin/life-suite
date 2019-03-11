@@ -1,7 +1,7 @@
 import {NextFunction, Request, Response} from 'express';
 import {RouteWithPermissionsModel} from './model/route-with-permissions.model';
 import {ErrorCodeUtil} from '../../utils/error-code/error-code.util';
-import {Singletons} from '../singletons';
+import {DIContainer} from '../di-container';
 import {CoreTypes} from '../core.types';
 import {AuthService} from './auth.service';
 
@@ -13,7 +13,7 @@ import {AuthService} from './auth.service';
  * @param next
  */
 export async function routeGuard(req: Request, res: Response, next: NextFunction) {
-    const authService: AuthService = Singletons.get(CoreTypes.AuthService);
+    const authService: AuthService = DIContainer.get(CoreTypes.AuthService);
     try {
         if (req.cookies.auth_token) {
             const userId: number = await authService.verifyToken(req.cookies.auth_token);

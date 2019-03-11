@@ -76,6 +76,13 @@
       "permittedRoles": [
         "inv"
       ]
+    },
+    {
+      "route": "doc",
+      "requiredPower": 50,
+      "permittedRoles": [
+        "doc"
+      ]
     }
   ]
 }

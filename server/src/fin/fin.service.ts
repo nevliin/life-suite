@@ -11,18 +11,16 @@ import {
 import {TransactionModel} from './model/transaction.model';
 import {ErrorCodeUtil} from '../utils/error-code/error-code.util';
 import {isNullOrUndefined} from '../utils/util';
-import {PgSqlUtil} from '../core/db/pgsql.util';
 import {AccountModel} from './model/account.model';
-import {inject} from 'inversify';
 import {CoreTypes} from '../core/core.types';
-import {Singletons} from '../core/singletons';
+import {DIContainer, Injectable} from '../core/di-container';
 
 const closingBalanceAccountId: number = 9998;
 const minimumYear: number = 2018;
 
-export class FinService {
+export class FinService implements Injectable {
 
-    db: DbUtil = Singletons.get(CoreTypes.PgSQLUtil);
+    db: DbUtil = DIContainer.get(CoreTypes.PgSQLUtil);
 
     constructor() {
     }
@@ -384,6 +382,10 @@ export class FinService {
         } else {
             return date.split('T')[0];
         }
+    }
+
+    init(): Promise<void> {
+        return undefined;
     }
 
 }

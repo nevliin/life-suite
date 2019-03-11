@@ -5,26 +5,27 @@ import {RowDataPacket} from 'mysql';
 import {ErrorCodeUtil} from '../../utils/error-code/error-code.util';
 import {IUserDetailsModel} from './model/user-details.model';
 import {MySqlUtil} from '../db/mysql.util';
+import {DIContainer} from '../di-container';
+import {CoreTypes} from '../core.types';
 
-const config: ServerConfig = require('../../assets/config/server-config.json');
+const config: ServerConfig = require('../../assets/server-config.json');
 
 /**
  * Utility class for user authentication and route guarding
  */
 export class UserService {
 
-    static db: DbUtil;
-    static logger: Logger;
+    db: DbUtil = DIContainer.get(CoreTypes.MySQLUtil);
+    logger: Logger;
 
     /**
      * Init dependencies and route expensesData
      */
-    static async init() {
-        this.db = new MySqlUtil();
+    async init() {
         this.logger = LoggingUtil.getLogger('user');
     }
 
-    public static async getUserDetails(userId: number): Promise<IUserDetailsModel> {
+    public async getUserDetails(userId: number): Promise<IUserDetailsModel> {
         const statement: string =
             `SELECT a.id, a.username, a.created_on, b.last_login, c.power
             FROM

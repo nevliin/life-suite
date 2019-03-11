@@ -16,13 +16,15 @@ import {
     YearlyCloseRequest
 } from './model/fin.model';
 import {TemplateModel} from './model/template.model';
+import {DIContainer} from '../core/di-container';
+import {FinTypes} from './fin.types';
 
 const express = require('express');
 
 export const finRouter = (): Router => {
     const finRouter = express.Router();
 
-    const finService: FinService = new FinService();
+    const finService: FinService = DIContainer.get(FinTypes.FinService);
 
     finRouter.get('/transactionsByAccount', async (req: Request, res: Response, next: NextFunction) => {
         try {
@@ -125,42 +127,15 @@ export const finRouter = (): Router => {
         }
     });
 
-    const categoryModelCRUD: CRUDConstructor<CategoryModel> = new CRUDConstructor(new CategoryModel(), 'fin_category', 'category', {
-        softDelete: true,
-        dbType: DBType.PGSQL
-    });
-    finRouter.use('/category', categoryModelCRUD.getRouter());
+    finRouter.use('/category', DIContainer.get(FinTypes.CategoryCRUD).getRouter());
 
-    const accountModelCRUD: CRUDConstructor<AccountModel> = new CRUDConstructor(new AccountModel(), 'fin_account', 'account', {
-        softDelete: true,
-        autoFilledFields: ['created_on'],
-        autoIncrementId: false,
-        dbType: DBType.PGSQL
-    });
-    finRouter.use('/account', accountModelCRUD.getRouter());
+    finRouter.use('/account', DIContainer.get(FinTypes.AccountCRUD).getRouter());
 
-    const transactionModelCRUD: CRUDConstructor<TransactionModel> = new CRUDConstructor(new TransactionModel(), 'fin_transaction', 'transaction', {
-        softDelete: true,
-        autoFilledFields: ['executed_on'],
-        autoIncrementId: true,
-        dbType: DBType.PGSQL
-    });
-    finRouter.use('/transaction', transactionModelCRUD.getRouter());
+    finRouter.use('/transaction', DIContainer.get(FinTypes.TransactionCRUD).getRouter());
 
-    const templateModelCRUD: CRUDConstructor<TemplateModel> = new CRUDConstructor(new TemplateModel(), 'fin_template', 'template', {
-        autoFilledFields: ['created_on'],
-        autoIncrementId: true,
-        dbType: DBType.PGSQL
-    });
-    finRouter.use('/template', templateModelCRUD.getRouter());
+    finRouter.use('/template', DIContainer.get(FinTypes.TemplateCRUD).getRouter());
 
-    const constraintModelCRUD: CRUDConstructor<ConstraintModel> = new CRUDConstructor(new ConstraintModel(), 'fin_constraint', 'constraint', {
-        softDelete: true,
-        autoFilledFields: ['created_on'],
-        autoIncrementId: true,
-        dbType: DBType.PGSQL
-    });
-    finRouter.use('/constraint', constraintModelCRUD.getRouter());
+    finRouter.use('/constraint', DIContainer.get(FinTypes.ConstraintCRUD).getRouter());
 
     return finRouter;
 };

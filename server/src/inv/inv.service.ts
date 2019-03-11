@@ -4,17 +4,13 @@ import {ComparisonRequest, CreateMultipleEntriesRequest} from './model/inv.model
 import {CRUDConstructor, DBType} from '../core/crud/crud-constructor';
 import {EntryModel} from './model/entry.model';
 import {CoreTypes} from '../core/core.types';
-import {Singletons} from '../core/singletons';
+import {DIContainer, Injectable} from '../core/di-container';
+import {InvTypes} from './inv.types';
 
-export class InvService {
+export class InvService implements Injectable {
 
-    entryModelCRUD: CRUDConstructor<EntryModel> = new CRUDConstructor(new EntryModel(), 'inv_entry', 'entry', {
-        softDelete: true,
-        autoIncrementId: true,
-        dbType: DBType.PGSQL
-    });
-
-    db: DbUtil = Singletons.get(CoreTypes.PgSQLUtil);
+    entryModelCRUD: CRUDConstructor<EntryModel> = DIContainer.get(InvTypes.EntryCRUD);
+    db: DbUtil = DIContainer.get(CoreTypes.PgSQLUtil);
 
     constructor() {
     }
@@ -82,5 +78,9 @@ export class InvService {
         const result: DBExecuteResult = await this.db.execute(statement);
 
         return result.nativeResult.rows.map(row => row.id);
+    }
+
+    init(): Promise<void> {
+        return undefined;
     }
 }

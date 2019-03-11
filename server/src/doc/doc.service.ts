@@ -1,13 +1,16 @@
-import {DBExecuteResult, DBQueryResult, DbUtil} from '../core/db/db.util';
-import {CRUDConstructor, DBType} from '../core/crud/crud-constructor';
+import {DbUtil} from '../core/db/db.util';
 import {CoreTypes} from '../core/core.types';
-import {Singletons} from '../core/singletons';
+import {DIContainer, Injectable} from '../core/di-container';
 
-export class DocService {
+export class DocService implements Injectable {
 
-    db: DbUtil = Singletons.get(CoreTypes.PgSQLUtil);
+    db: DbUtil = DIContainer.get(CoreTypes.PgSQLUtil);
 
     constructor() {
+    }
+
+    init(): Promise<void> {
+        return undefined;
     }
 
 }

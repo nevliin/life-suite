@@ -6,37 +6,19 @@ import {TargetEntryModel} from './model/target-entry.model';
 import {InvService} from './inv.service';
 import {CompareEntryModel} from './model/compare-entry.model';
 import {StockModel} from './model/stock.model';
+import {DIContainer} from '../core/di-container';
+import {InvTypes} from './inv.types';
 
 const express = require('express');
 
 export const invRouter = (): Router => {
     const invRouter = express.Router();
 
-    const invService: InvService = new InvService();
+    const invService: InvService = DIContainer.get(InvTypes.InvService);
 
-    // CRUD Routes
-    const entryModelCRUD: CRUDConstructor<EntryModel> = new CRUDConstructor(new EntryModel(), 'inv_entry', 'entry', {
-        softDelete: true,
-        autoIncrementId: true,
-        dbType: DBType.PGSQL
-    });
-
-    const targetEntryModelCRUD: CRUDConstructor<TargetEntryModel> = new CRUDConstructor(new TargetEntryModel(), 'inv_target_entry', 'targetEntry', {
-        softDelete: true,
-        autoIncrementId: true,
-        dbType: DBType.PGSQL
-    });
-
-    const stockModelCRUD: CRUDConstructor<StockModel> = new CRUDConstructor(new StockModel(), 'inv_stock', 'stock', {
-        autoIncrementId: true,
-        dbType: DBType.PGSQL
-    });
-
-    invRouter.use('/entry', entryModelCRUD.getRouter());
-
-    invRouter.use('/targetEntry', targetEntryModelCRUD.getRouter());
-
-    invRouter.use('/stock', stockModelCRUD.getRouter());
+    invRouter.use('/entry', DIContainer.get(InvTypes.EntryCRUD).getRouter());
+    invRouter.use('/targetEntry', DIContainer.get(InvTypes.EntryCRUD).getRouter());
+    invRouter.use('/stock', DIContainer.get(InvTypes.EntryCRUD).getRouter());
 
     invRouter.get('/comparison', async (req: Request, res: Response, next: NextFunction) => {
         try {
@@ -54,7 +36,7 @@ export const invRouter = (): Router => {
             const result: number = await invService.getAutoFill(req.body.name);
             if (result !== null) {
                 res.status(200).send({
-                    data: await entryModelCRUD.readAll(result)
+                    data: await DIContainer.get(InvTypes.EntryCRUD).readAll(result)
                 });
             } else {
                 res.status(200).send({
