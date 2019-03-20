@@ -4,7 +4,7 @@ import {RouterModule} from "@angular/router";
 import {ButtonModule, InputTextModule, MenubarModule, MenuModule, SidebarModule} from "primeng/primeng";
 import {DynamicSidenavComponent} from './dynamic-sidenav/dynamic-sidenav.component';
 import {LayoutModule} from '@angular/cdk/layout';
-import {MatComponentCollectorModule} from "../mat-component-collector.module";
+import {MatComponentCollectorModule} from "../../mat-component-collector.module";
 
 @NgModule({
     imports: [

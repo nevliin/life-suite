@@ -2,7 +2,7 @@ import {Component, Inject, OnInit, Optional} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {InvService} from '../inv.service';
 import {InvTargetEntry} from '../inv-target-entry';
-import {AlertDialogService} from '../../core/alert-dialog/alert-dialog.service';
+import {AlertDialogService} from '../../core/components/alert-dialog/alert-dialog.service';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {MessageService} from 'primeng/api';
 

@@ -8,7 +8,7 @@ import {MatDialog, MatTreeNestedDataSource} from "@angular/material";
 import {isNullOrUndefined} from "../../core/util";
 import {FinAccountAddComponent} from "./fin-account-add/fin-account-add.component";
 import {FinCategoryAddComponent} from "./fin-category-add/fin-category-add.component";
-import {AlertDialogService} from "../../core/alert-dialog/alert-dialog.service";
+import {AlertDialogService} from "../../core/components/alert-dialog/alert-dialog.service";
 import {MessageService} from "primeng/api";
 
 export class AccountNode {

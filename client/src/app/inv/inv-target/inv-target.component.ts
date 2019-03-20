@@ -4,7 +4,7 @@ import {ErrorHandlingService} from '../../core/error-handling/error-handling.ser
 import {InvService} from '../inv.service';
 import {MatDialog} from '@angular/material';
 import {InvEditTargetEntryComponent} from '../inv-edit-target-entry/inv-edit-target-entry.component';
-import {AlertDialogService} from '../../core/alert-dialog/alert-dialog.service';
+import {AlertDialogService} from '../../core/components/alert-dialog/alert-dialog.service';
 import {first} from 'rxjs/operators';
 
 @Component({

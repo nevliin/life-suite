@@ -5,7 +5,7 @@ import {DropdownModule} from 'primeng/dropdown';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {InvComparisonComponent} from './inv-comparison/inv-comparison.component';
-import {PipesModule} from '../core/pipes/pipes.module';
+import {PipesModule} from '../util/pipes/pipes.module';
 import {InvTargetComponent} from './inv-target/inv-target.component';
 import {InvExpirationsComponent} from './inv-expirations/inv-expirations.component';
 import {InvEditEntryComponent} from './inv-edit-entry/inv-edit-entry.component';

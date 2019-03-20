@@ -3,7 +3,7 @@ import {SelectItem} from 'primeng/api';
 import {InvEntry} from '../inv-entry';
 import {ErrorHandlingService} from '../../core/error-handling/error-handling.service';
 import {InvService} from '../inv.service';
-import {AlertDialogService} from '../../core/alert-dialog/alert-dialog.service';
+import {AlertDialogService} from '../../core/components/alert-dialog/alert-dialog.service';
 import {Observable, Subject} from 'rxjs';
 import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
 import {MatDialog} from '@angular/material';

@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {MenuItem} from 'primeng/api';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MenuService} from '../menu.service';
-import {AuthService} from '../../auth/auth.service';
+import {AuthService} from '../../../auth/auth.service';
 import {DisplayMenu, Menu, MenuEntry} from '../menu-structure';
 import {Location} from '@angular/common';
 

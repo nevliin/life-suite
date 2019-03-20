@@ -6,7 +6,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {AuthModule} from './core/auth/auth.module';
 import {InvModule} from './inv/inv.module';
 import {CoreModule} from './core/core.module';
-import {DynamicMenuModule} from './core/menu/dynamic-menu.module';
+import {DynamicMenuModule} from './core/components/menu/dynamic-menu.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ComponentsModule} from './core/components/components.module';
 import {DashboardModule} from './dashboard/dashboard.module';

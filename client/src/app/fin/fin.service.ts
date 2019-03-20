@@ -7,7 +7,7 @@ import {FinAccount} from './fin-account';
 import {FinCategory} from './fin-category';
 import {Observable} from 'rxjs';
 import {FinTemplate} from './fin-template';
-import {CRUDListOptions} from '../core/crud-types/crud-list-options';
+import {CRUDListOptions} from '../core/crud-list-options';
 
 const API_ROOT: string = '/api/fin/';
 

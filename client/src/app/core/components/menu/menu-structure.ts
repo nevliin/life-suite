@@ -1,7 +1,7 @@
 import {MenuItem} from 'primeng/api';
 import {AbstractMenuEntryCommand} from './abstract-menu-entry-command';
 import {Location} from '@angular/common';
-import {LOCAL_STORAGE_STOCK_TOKEN} from '../../inv/inv.service';
+import {LOCAL_STORAGE_STOCK_TOKEN} from '../../../inv/inv.service';
 
 export class Menu {
     routeName: string;

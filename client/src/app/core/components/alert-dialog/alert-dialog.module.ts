@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AlertDialogConfirmComponent} from './alert-dialog-confirm/alert-dialog-confirm.component';
 import {AlertDialogService} from './alert-dialog.service';
-import {MatComponentCollectorModule} from '../mat-component-collector.module';
+import {MatComponentCollectorModule} from '../../mat-component-collector.module';
 import {AlertDialogInfoComponent} from './alert-dialog-info/alert-dialog-info.component';
 
 @NgModule({
