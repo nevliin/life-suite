@@ -6,3 +6,6 @@
 /src/assets/server-config.json
 /sql/fin/initialdata.sql
 /prod.config.json
+/sql/.idea/sql.iml
+/sql/.idea/encodings.xml
+/sql/.idea/modules.xml

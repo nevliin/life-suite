@@ -86,17 +86,15 @@ export class FinService implements Injectable {
                       SELECT COALESCE(SUM(amount), 0) as balance
                       FROM fin_transaction
                       WHERE fin_transaction.valid = 1
-                        AND fin_transaction.created_on > ((SELECT interval_year FROM constants) + interval '3 hours')
                         AND fin_transaction.created_on <
-                            ((SELECT interval_year FROM constants) + interval '1 year' - interval '3 hours')
+                            ((SELECT interval_year FROM constants) + interval '1 year' - interval '2 minutes')
                         AND fin_transaction.account = fa.id
                    ) - (
                       SELECT COALESCE(SUM(amount), 0) as balance
                       FROM fin_transaction
                       WHERE fin_transaction.valid = 1
-                        AND fin_transaction.created_on > ((SELECT interval_year FROM constants) + interval '3 hours')
                         AND fin_transaction.created_on <
-                            ((SELECT interval_year FROM constants) + interval '1 year' - interval '3 hours')
+                            ((SELECT interval_year FROM constants) + interval '1 year' - interval '2 minutes')
                         AND fin_transaction.contra_account = fa.id
                    )) AS balance,
                    active
