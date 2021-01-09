@@ -1,10 +1,25 @@
  <IfModule mod_rewrite.c>
-  RewriteEngine On
-  RewriteBase /
-  RewriteRule ^api/(.*)$ http://127.0.0.1:65432/$1 [P,L]
-  RewriteRule ^.well-known - [L]
-  RewriteRule ^index\.html$ - [L]
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule . /index.html [L]
+    RewriteEngine On
+    RewriteBase /
+
+    # don't rewrite requests for Let's Encrypt
+    RewriteCond %{REQUEST_URI} ^/\.well-known/acme-challenge/[0-9a-zA-Z_-]+$
+    RewriteCond %{REQUEST_URI} ^/\.well-known/cpanel-dcv/[0-9a-zA-Z_-]+$
+    RewriteCond %{REQUEST_URI} ^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
+
+    RewriteRule (.*) $1 [QSA,L]
+
+    # force HTTPS
+    RewriteCond %{HTTPS} off
+    RewriteRule (.*) https://k-kohlen.com/$1 [R=301,L]
+
+    # redirect server-API requests to the node.js port
+    RewriteRule ^api/(.*)$ http://127.0.0.1:65432/$1 [P,L]
+
+    RewriteRule ^.well-known - [L]
+    RewriteRule ^index\.html$ - [L]
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule . /index.html [L]
 </IfModule>
