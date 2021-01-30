@@ -1,11 +1,7 @@
 import {NextFunction, Request, Response, Router} from 'express';
 import {ErrorCodeUtil} from '../utils/error-code/error-code.util';
-import {CRUDConstructor, DBType} from '../core/crud/crud-constructor';
-import {EntryModel} from './model/entry.model';
-import {TargetEntryModel} from './model/target-entry.model';
 import {InvService} from './inv.service';
 import {CompareEntryModel} from './model/compare-entry.model';
-import {StockModel} from './model/stock.model';
 import {DIContainer} from '../core/di-container';
 import {InvTypes} from './inv.types';
 
@@ -17,8 +13,8 @@ export const invRouter = (): Router => {
     const invService: InvService = DIContainer.get(InvTypes.InvService);
 
     invRouter.use('/entry', DIContainer.get(InvTypes.EntryCRUD).getRouter());
-    invRouter.use('/targetEntry', DIContainer.get(InvTypes.EntryCRUD).getRouter());
-    invRouter.use('/stock', DIContainer.get(InvTypes.EntryCRUD).getRouter());
+    invRouter.use('/targetEntry', DIContainer.get(InvTypes.TargetEntryCRUD).getRouter());
+    invRouter.use('/stock', DIContainer.get(InvTypes.StockCRUD).getRouter());
 
     invRouter.get('/comparison', async (req: Request, res: Response, next: NextFunction) => {
         try {
