@@ -66,13 +66,13 @@ export class Server {
         DIContainer.bind(MySqlUtil).to(CoreTypes.MySQLUtil);
         DIContainer.bind(PgSqlUtil).to(CoreTypes.PgSQLUtil);
 
+        await DIContainer.init();
+
         DIContainer.bind(AuthService).to(CoreTypes.AuthService);
         DIContainer.bind(UserService).to(CoreTypes.UserService);
         DIContainer.bind(DocService).to(DocTypes.DocService);
         DIContainer.bind(FinService).to(FinTypes.FinService);
         DIContainer.bind(InvService).to(InvTypes.InvService);
-
-        await DIContainer.init();
 
         DIContainer.bindInstance(new CRUDConstructor<UserModel>(new UserModel(), 'auth_user', 'user', {
             autoIncrementId: true,
@@ -157,6 +157,8 @@ export class Server {
         })).to(InvTypes.StockCRUD);
 
         DIContainer.bindStatic(ErrorCodeUtil);
+
+        await DIContainer.init();
     }
 
     /**
