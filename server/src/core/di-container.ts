@@ -12,6 +12,7 @@ export class DIContainer {
             this.instances.set(boundDependency.symbol, instance);
             console.debug(`Instantiated Dependency for [${boundDependency.symbol.toString()}]`);
         }
+        this.boundDependencies = []
 
         for (const staticDependency of this.staticDependencies) {
             await staticDependency.init();
