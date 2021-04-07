@@ -4,7 +4,8 @@
   "description": "Server for life-suite",
   "main": "index.js",
   "scripts": {
-    "server:start:dev": "SET NODE_ENV=development && SET PORT=4000 && node %NODE_DEBUG_OPTION% start.js",
+    "server:start:dev": "npm run server:build:dev && SET NODE_ENV=development && SET PORT=4000 && node start.js",
+    "server:build:dev": "grunt --gruntfile ./gruntfile.dev.js",
     "server:build:prod": "grunt --gruntfile ./gruntfile.js",
     "server:start:nodemon": "nodemon ./start",
     "server:start:node": "node ./start",
